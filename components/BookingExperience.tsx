@@ -4,11 +4,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import AddressField, { type AddressSuggestion } from "@/components/AddressField";
 import RouteMap from "@/components/RouteMap";
+import { locationCoordinates } from "@/data/location-coordinates";
 import type { RoutePrice } from "@/data/routes";
 import { findRoute, locations } from "@/data/routes";
 import { BrowserLocationProvider } from "@/lib/location";
-import { estimateArrival, estimatePrice, type ServiceType, type VehicleType } from "@/lib/pricing";
+import { estimatePrice, type ServiceType, type VehicleType } from "@/lib/pricing";
 import { captureAttribution } from "@/lib/tracking";
 
 const hotline = "0987663883";
@@ -18,47 +20,53 @@ const getTomorrow = () => { const date = new Date(); date.setDate(date.getDate()
 type Props = { routes: RoutePrice[] };
 type BookingState = {
   pickup: string; dropoff: string; need: "ride" | "parcel"; service: ServiceType; vehicle: VehicleType;
-  passengers: number; date: string; time: string; name: string; phone: string; pickupLat?: number; pickupLng?: number;
+  passengers: number; date: string; time: string; name: string; phone: string;
+  pickupCity?: string; dropoffCity?: string; pickupLat?: number; pickupLng?: number; dropoffLat?: number; dropoffLng?: number;
 };
 
+const inferCity = (value: string) => locations.find((location) => value.toLocaleLowerCase("vi").includes(location.toLocaleLowerCase("vi"))) || "";
+const nearestCity = (lat: number, lng: number) => Object.entries(locationCoordinates).sort(([, a], [, b]) => ((a[0] - lat) ** 2 + (a[1] - lng) ** 2) - ((b[0] - lat) ** 2 + (b[1] - lng) ** 2))[0]?.[0] || "";
+
 export default function BookingExperience({ routes }: Props) {
-  const [booking, setBooking] = useState<BookingState>({ pickup: "Hải Dương", dropoff: "", need: "ride", service: "shared", vehicle: "4-seat", passengers: 1, date: getTomorrow(), time: "07:00", name: "", phone: "" });
-  const [stage, setStage] = useState<"search" | "details" | "success">("search");
+  const [booking, setBooking] = useState<BookingState>({ pickup: "Hải Dương", pickupCity: "Hải Dương", pickupLat: locationCoordinates["Hải Dương"][0], pickupLng: locationCoordinates["Hải Dương"][1], dropoff: "", need: "ride", service: "shared", vehicle: "4-seat", passengers: 1, date: getTomorrow(), time: "07:00", name: "", phone: "" });
+  const [stage, setStage] = useState<"form" | "success">("form");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [locationMessage, setLocationMessage] = useState("");
   const [saving, setSaving] = useState(false);
   const [bookingId, setBookingId] = useState("");
   const formRef = useRef<HTMLDivElement>(null);
-  const selectedRoute = useMemo(() => findRoute(booking.pickup, booking.dropoff), [booking.pickup, booking.dropoff]);
+  const selectedRoute = useMemo(() => findRoute(booking.pickupCity || inferCity(booking.pickup), booking.dropoffCity || inferCity(booking.dropoff)), [booking.pickup, booking.pickupCity, booking.dropoff, booking.dropoffCity]);
   const price = useMemo(() => estimatePrice(selectedRoute, booking.need, booking.service, booking.vehicle, booking.passengers), [selectedRoute, booking.need, booking.service, booking.vehicle, booking.passengers]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const from = params.get("from"); const to = params.get("to");
-    if (from || to) queueMicrotask(() => setBooking((old) => ({ ...old, pickup: from || old.pickup, dropoff: to || old.dropoff })));
+    if (from || to) queueMicrotask(() => setBooking((old) => {
+      const pickup = from || old.pickup; const dropoff = to || old.dropoff;
+      const pickupCity = inferCity(pickup) || old.pickupCity; const dropoffCity = inferCity(dropoff);
+      const fromCoordinates = pickupCity ? locationCoordinates[pickupCity] : undefined; const toCoordinates = dropoffCity ? locationCoordinates[dropoffCity] : undefined;
+      return { ...old, pickup, dropoff, pickupCity, dropoffCity, pickupLat: fromCoordinates?.[0] || old.pickupLat, pickupLng: fromCoordinates?.[1] || old.pickupLng, dropoffLat: toCoordinates?.[0], dropoffLng: toCoordinates?.[1] };
+    }));
   }, []);
 
   const update = <K extends keyof BookingState>(key: K, value: BookingState[K]) => setBooking((old) => ({ ...old, [key]: value }));
-  const goToDetails = () => {
-    const nextErrors: Record<string, string> = {};
-    if (!booking.pickup.trim()) nextErrors.pickup = "Vui lòng chọn điểm đón.";
-    if (!booking.dropoff.trim()) nextErrors.dropoff = "Vui lòng chọn điểm đến.";
-    if (booking.pickup.trim() === booking.dropoff.trim()) nextErrors.dropoff = "Điểm đến cần khác điểm đón.";
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
-    setStage("details");
-    requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
-  };
   const chooseRoute = (route: RoutePrice) => {
-    setBooking((old) => ({ ...old, pickup: route.origin, dropoff: route.destination }));
-    setStage("details");
+    const from = locationCoordinates[route.origin]; const to = locationCoordinates[route.destination];
+    setBooking((old) => ({ ...old, pickup: route.origin, pickupCity: route.origin, pickupLat: from?.[0], pickupLng: from?.[1], dropoff: route.destination, dropoffCity: route.destination, dropoffLat: to?.[0], dropoffLng: to?.[1] }));
     requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
   };
+  const selectAddress = (side: "pickup" | "dropoff", suggestion: AddressSuggestion) => setBooking((old) => {
+    const typedValue = side === "pickup" ? old.pickup.trim() : old.dropoff.trim();
+    const label = /\d/.test(typedValue) ? typedValue : suggestion.label;
+    return side === "pickup"
+      ? { ...old, pickup: label, pickupCity: suggestion.city || inferCity(suggestion.label), pickupLat: suggestion.lat, pickupLng: suggestion.lng }
+      : { ...old, dropoff: label, dropoffCity: suggestion.city || inferCity(suggestion.label), dropoffLat: suggestion.lat, dropoffLng: suggestion.lng };
+  });
   const useCurrentLocation = async () => {
     setLocationMessage("Đang xác định vị trí…");
     try {
       const result = await new BrowserLocationProvider().current();
-      setBooking((old) => ({ ...old, pickup: result.label, pickupLat: result.lat, pickupLng: result.lng }));
+      setBooking((old) => ({ ...old, pickup: result.label, pickupCity: result.lat && result.lng ? nearestCity(result.lat, result.lng) : old.pickupCity, pickupLat: result.lat, pickupLng: result.lng }));
       setLocationMessage("Đã lấy vị trí. Bạn vẫn có thể sửa địa chỉ đón.");
     } catch {
       setLocationMessage("Không sao, bạn có thể nhập điểm đón bằng tay.");
@@ -67,6 +75,11 @@ export default function BookingExperience({ routes }: Props) {
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     const nextErrors: Record<string, string> = {};
+    if (!booking.pickup.trim()) nextErrors.pickup = "Nhập điểm đón.";
+    if (!booking.dropoff.trim()) nextErrors.dropoff = "Nhập điểm đến.";
+    if (!booking.pickupLat || !booking.pickupLng) nextErrors.pickup = "Chọn một địa chỉ trong danh sách gợi ý.";
+    if (!booking.dropoffLat || !booking.dropoffLng) nextErrors.dropoff = "Chọn một địa chỉ trong danh sách gợi ý.";
+    if (booking.pickupLat === booking.dropoffLat && booking.pickupLng === booking.dropoffLng) nextErrors.dropoff = "Điểm đến cần khác điểm đón.";
     if (!booking.name.trim()) nextErrors.name = "Vui lòng nhập họ tên để Phong Cách tiện xưng hô.";
     if (!/^(0|\+84)[0-9]{9}$/.test(booking.phone.replace(/\s/g, ""))) nextErrors.phone = "Vui lòng nhập số điện thoại Việt Nam hợp lệ.";
     if (!booking.date) nextErrors.date = "Vui lòng chọn ngày đi.";
@@ -78,7 +91,7 @@ export default function BookingExperience({ routes }: Props) {
     const payload = {
       booking_id: id, created_at: new Date().toISOString(), customer_name: booking.name.trim(), phone: booking.phone.trim(),
       pickup_address: booking.pickup, pickup_lat: booking.pickupLat || null, pickup_lng: booking.pickupLng || null,
-      dropoff_address: booking.dropoff, dropoff_lat: null, dropoff_lng: null, departure_date: booking.date, departure_time: booking.time,
+      dropoff_address: booking.dropoff, dropoff_lat: booking.dropoffLat || null, dropoff_lng: booking.dropoffLng || null, departure_date: booking.date, departure_time: booking.time,
       service_type: booking.need === "parcel" ? "parcel" : booking.service, passenger_count: booking.need === "ride" ? booking.passengers : 0,
       vehicle_type: booking.vehicle, estimated_distance: selectedRoute?.distanceKm || null, estimated_duration: selectedRoute?.durationMinutes || null,
       estimated_price: price, status: "new", ...captureAttribution(),
@@ -121,35 +134,31 @@ export default function BookingExperience({ routes }: Props) {
       <section className="booking-shell" id="dat-xe">
         <div className="booking-card" ref={formRef}>
           {stage === "success" ? (
-            <div className="success-state" role="status"><div className="success-icon">✓</div><span className="success-kicker">Mã yêu cầu {bookingId}</span><h2>Yêu cầu đã được gửi</h2><p className="success-lead">Bên mình đã có thông tin chuyến và sẽ gọi lại để xác nhận xe, giờ đón cùng mức giá cuối.</p><div className="success-route"><strong>{booking.pickup}</strong><span>→</span><strong>{booking.dropoff}</strong></div><div className="summary-grid"><span><small>Ngày đi</small><b>{new Date(booking.date + "T00:00:00").toLocaleDateString("vi-VN")}</b></span><span><small>Giờ đón</small><b>{booking.time}</b></span><span><small>Nhu cầu</small><b>{booking.need === "parcel" ? "Gửi hàng" : `${booking.passengers} khách`}</b></span><span><small>Tham khảo</small><b>{formatPrice(price)}</b></span></div><div className="payment-confirmation"><b>Chưa cần thanh toán</b><span>Tư vấn viên xác nhận trước khi đi · Hoàn thành chuyến rồi mới thanh toán</span></div><div className="success-actions"><a className="btn btn-primary" href={process.env.NEXT_PUBLIC_ZALO_URL || `tel:${hotline}`}>Nhắn Zalo</a><a className="btn btn-ghost" href={`tel:${hotline}`}>Gọi tư vấn viên</a></div><button className="text-button" onClick={() => setStage("search")}>Gửi thêm yêu cầu khác</button></div>
+            <div className="success-state" role="status"><div className="success-icon">✓</div><span className="success-kicker">Mã yêu cầu {bookingId}</span><h2>Yêu cầu đã được gửi</h2><p className="success-lead">Bên mình sẽ gọi lại để xác nhận xe, giờ đón và mức giá cuối.</p><div className="success-route"><strong>{booking.pickup}</strong><span>→</span><strong>{booking.dropoff}</strong></div><div className="summary-grid"><span><small>Ngày đi</small><b>{new Date(booking.date + "T00:00:00").toLocaleDateString("vi-VN")}</b></span><span><small>Giờ đón</small><b>{booking.time}</b></span><span><small>Nhu cầu</small><b>{booking.need === "parcel" ? "Gửi hàng" : `${booking.passengers} khách`}</b></span><span><small>Tham khảo</small><b>{formatPrice(price)}</b></span></div><div className="payment-confirmation"><b>Chưa cần thanh toán</b><span>Hoàn thành chuyến rồi mới thanh toán</span></div><div className="success-actions"><a className="btn btn-primary" href={process.env.NEXT_PUBLIC_ZALO_URL || `tel:${hotline}`}>Nhắn Zalo</a><a className="btn btn-ghost" href={`tel:${hotline}`}>Gọi tư vấn viên</a></div><button className="text-button" onClick={() => setStage("form")}>Gửi thêm yêu cầu khác</button></div>
           ) : (
-            <form onSubmit={submit} noValidate>
-              <div className="booking-head"><div><span className="step-label">YÊU CẦU XE NHANH</span><h2>Bạn cần đi đâu?</h2><p>Nhập tuyến để xem thời gian và mức giá tham khảo.</p></div><span className="safe-note">✓ Chưa cần thanh toán</span></div>
-              <div className="booking-process" aria-label="Quy trình yêu cầu đặt xe"><span><b>1</b> Gửi yêu cầu</span><i>→</i><span><b>2</b> Gọi xác nhận</span><i>→</i><span><b>3</b> Đi xong trả tiền</span></div>
-              <div className="route-inputs">
-                <label><span className="field-label"><i className="pin pickup-pin" />Điểm đón</span><input list="locations" value={booking.pickup} onChange={(e) => update("pickup", e.target.value)} placeholder="Nhập nơi đón" aria-invalid={!!errors.pickup} /><small className="error">{errors.pickup}</small></label>
-                <button type="button" className="swap-button" onClick={() => setBooking((old) => ({ ...old, pickup: old.dropoff, dropoff: old.pickup }))} aria-label="Đổi điểm đón và điểm đến">⇅</button>
-                <label><span className="field-label"><i className="pin dropoff-pin" />Điểm đến</span><input list="locations" value={booking.dropoff} onChange={(e) => update("dropoff", e.target.value)} placeholder="Bạn muốn đi đâu?" aria-invalid={!!errors.dropoff} /><small className="error">{errors.dropoff}</small></label>
-                <datalist id="locations">{locations.map((item) => <option value={item} key={item} />)}</datalist>
+            <form className="compact-booking" onSubmit={submit} noValidate>
+              <div className="booking-head"><div><span className="step-label">ĐẶT XE NHANH</span><h2>Chọn đúng điểm, có xe đón tận nơi</h2><p>Nhập số nhà, tên đường hoặc địa điểm cụ thể.</p></div><span className="safe-note">Chưa thu tiền</span></div>
+              <div className="address-search-stack">
+                <AddressField label="Đón tại" value={booking.pickup} placeholder="Ví dụ: 30 Nguyễn Khuyến, Hà Nội" tone="pickup" error={errors.pickup} onChange={(value) => setBooking((old) => ({ ...old, pickup: value, pickupCity: inferCity(value), pickupLat: undefined, pickupLng: undefined }))} onSelect={(suggestion) => selectAddress("pickup", suggestion)} />
+                <button type="button" className="compact-swap" onClick={() => setBooking((old) => ({ ...old, pickup: old.dropoff, pickupCity: old.dropoffCity, pickupLat: old.dropoffLat, pickupLng: old.dropoffLng, dropoff: old.pickup, dropoffCity: old.pickupCity, dropoffLat: old.pickupLat, dropoffLng: old.pickupLng }))} aria-label="Đổi điểm đón và điểm đến">⇅</button>
+                <AddressField label="Trả tại" value={booking.dropoff} placeholder="Ví dụ: 40 Hồ Sen, Hải Phòng" tone="dropoff" error={errors.dropoff} onChange={(value) => setBooking((old) => ({ ...old, dropoff: value, dropoffCity: inferCity(value), dropoffLat: undefined, dropoffLng: undefined }))} onSelect={(suggestion) => selectAddress("dropoff", suggestion)} />
               </div>
-              <div className="quick-places"><span>Chọn nhanh:</span>{["Hà Nội", "Nội Bài", "Hải Phòng", "Quảng Ninh"].map((place) => <button type="button" key={place} onClick={() => update("dropoff", place)}>{place}</button>)}</div>
-              <button type="button" className="location-button" onClick={useCurrentLocation}>⌖ Dùng vị trí của tôi</button>{locationMessage && <p className="location-message">{locationMessage}</p>}
-              {stage === "search" && <button type="button" className="search-button" onClick={goToDetails}>Xem chuyến phù hợp <span>→</span></button>}
-
-              {stage === "details" && <div className="details-panel">
-                {selectedRoute && <RouteMap origin={selectedRoute.origin} destination={selectedRoute.destination} distanceKm={selectedRoute.distanceKm} durationMinutes={selectedRoute.durationMinutes} />}
-                {selectedRoute ? <div className="route-summary"><div><span>{selectedRoute.origin}</span><b>→</b><span>{selectedRoute.destination}</span></div><p>Khoảng {selectedRoute.distanceKm} km · ~{Math.floor(selectedRoute.durationMinutes / 60)}h{selectedRoute.durationMinutes % 60 ? selectedRoute.durationMinutes % 60 : ""} · Khung giờ đến dự kiến {estimateArrival(selectedRoute.durationMinutes, booking.service)}</p>{booking.service === "shared" && <small>Chuyến ghép có thể chênh 10–30 phút theo lịch đón thực tế. Tư vấn viên sẽ báo rõ trước khi bạn xác nhận.</small>}</div> : <div className="route-summary unknown"><strong>Tuyến này cần tư vấn riêng</strong><p>Bạn cứ gửi yêu cầu. Phong Cách sẽ kiểm tra xe và báo giá trước khi chốt chuyến.</p></div>}
-                <div className="form-section"><h3>1. Bạn cần gì?</h3><div className="choice-grid two"><Choice active={booking.need === "ride"} onClick={() => update("need", "ride")} icon="👤" title="Đi xe" note="Đi cá nhân hoặc theo nhóm" /><Choice active={booking.need === "parcel"} onClick={() => update("need", "parcel")} icon="📦" title="Gửi hàng" note="Gửi theo chuyến liên tỉnh" /></div></div>
-                {booking.need === "ride" && <>
-                  <div className="form-section"><h3>2. Chọn hình thức</h3><div className="choice-grid two"><Choice active={booking.service === "shared"} onClick={() => update("service", "shared")} icon="👥" title="Ghép chuyến" note="Tiết kiệm chi phí" badge="Phổ biến" /><Choice active={booking.service === "private"} onClick={() => update("service", "private")} icon="🚘" title="Bao xe" note="Riêng tư · Chủ động giờ" /></div></div>
-                  <div className="form-section"><h3>3. Chọn loại xe</h3><div className="choice-grid three"><Choice active={booking.vehicle === "4-seat"} onClick={() => update("vehicle", "4-seat")} icon="🚗" title="4 chỗ" note="1–3 khách" /><Choice active={booking.vehicle === "7-seat"} onClick={() => update("vehicle", "7-seat")} icon="🚙" title="7 chỗ" note="4–6 khách" /><Choice active={booking.vehicle === "limo"} onClick={() => update("vehicle", "limo")} icon="🚐" title="Limo" note="Liên hệ báo giá" /></div></div>
-                  <div className="passenger-row"><span><strong>Số người đi</strong><small>Tính cả trẻ em</small></span><div className="stepper"><button type="button" onClick={() => update("passengers", Math.max(1, booking.passengers - 1))}>−</button><b>{booking.passengers}</b><button type="button" onClick={() => update("passengers", Math.min(6, booking.passengers + 1))}>+</button></div></div>
-                </>}
-                <div className="form-section"><h3>{booking.need === "ride" ? "4" : "2"}. Thời gian & liên hệ</h3><div className="field-grid"><label><span>Ngày đi</span><input type="date" min={getTomorrow()} value={booking.date} onChange={(e) => update("date", e.target.value)} /><small className="error">{errors.date}</small></label><label><span>Giờ muốn đón</span><input type="time" value={booking.time} onChange={(e) => update("time", e.target.value)} /><small className="error">{errors.time}</small></label><label><span>Họ tên</span><input value={booking.name} onChange={(e) => update("name", e.target.value)} placeholder="Ví dụ: Anh Long" /><small className="error">{errors.name}</small></label><label><span>Số điện thoại</span><input inputMode="tel" value={booking.phone} onChange={(e) => update("phone", e.target.value)} placeholder="0987 663 883" /><small className="error">{errors.phone}</small></label></div></div>
-                <div className="price-box"><div><span>Mức giá tham khảo</span><strong>{price ? formatPrice(price) : "Liên hệ báo giá"}</strong><small>{booking.service === "shared" && price ? `${formatPrice(selectedRoute?.sharedPrice || null)}/người · Chốt lại qua điện thoại` : "Tư vấn viên báo giá chính xác trước khi bạn xác nhận."}</small></div><span className="demo-label">CHƯA THANH TOÁN</span></div>
-                <div className="pay-later-note"><span>✓</span><p><strong>Gửi yêu cầu hoàn toàn miễn phí</strong><small>Phong Cách gọi lại xác nhận. Bạn thanh toán sau khi hoàn thành chuyến.</small></p></div>
-                <button className="submit-button" disabled={saving}>{saving ? "Đang gửi yêu cầu…" : "GỬI YÊU CẦU ĐẶT XE"}<span>→</span></button><p className="privacy-note">Không cần đăng ký · Không thu tiền ở bước này</p>
-              </div>}
+              <div className="address-actions"><button type="button" onClick={useCurrentLocation}>⌖ Dùng vị trí hiện tại</button><span>{locationMessage || "Chọn địa chỉ trong gợi ý để ghim đúng bản đồ"}</span></div>
+              {booking.pickupLat && booking.pickupLng && booking.dropoffLat && booking.dropoffLng ? <RouteMap compact origin={booking.pickup} destination={booking.dropoff} originCoordinates={[booking.pickupLat, booking.pickupLng]} destinationCoordinates={[booking.dropoffLat, booking.dropoffLng]} distanceKm={selectedRoute?.distanceKm} durationMinutes={selectedRoute?.durationMinutes} /> : <div className="map-awaiting"><span>⌖</span><div><strong>Bản đồ sẽ hiện ngay tại đây</strong><small>Chọn đủ hai địa chỉ để kiểm tra điểm đón và điểm trả.</small></div></div>}
+              <div className="compact-config">
+                <CompactOptions label="Nhu cầu" value={booking.need} options={[{ value: "ride", label: "Đi xe" }, { value: "parcel", label: "Gửi hàng" }]} onChange={(value) => update("need", value as BookingState["need"])} />
+                {booking.need === "ride" && <CompactOptions label="Hình thức" value={booking.service} options={[{ value: "shared", label: "Xe ghép" }, { value: "private", label: "Bao xe" }]} onChange={(value) => update("service", value as ServiceType)} />}
+                {booking.need === "ride" && <CompactOptions label="Loại xe" value={booking.vehicle} options={[{ value: "4-seat", label: "4 chỗ" }, { value: "7-seat", label: "7 chỗ" }]} onChange={(value) => update("vehicle", value as VehicleType)} />}
+                {booking.need === "ride" && <div className="compact-control passenger-compact"><span>Số khách</span><div className="mini-stepper"><button type="button" onClick={() => update("passengers", Math.max(1, booking.passengers - 1))}>−</button><b>{booking.passengers}</b><button type="button" onClick={() => update("passengers", Math.min(6, booking.passengers + 1))}>+</button></div></div>}
+              </div>
+              <div className="compact-fields">
+                <label><span>Ngày đi</span><input type="date" min={getTomorrow()} value={booking.date} onChange={(event) => update("date", event.target.value)} /><small>{errors.date}</small></label>
+                <label><span>Giờ đón</span><input type="time" value={booking.time} onChange={(event) => update("time", event.target.value)} /><small>{errors.time}</small></label>
+                <label><span>Họ tên</span><input value={booking.name} onChange={(event) => update("name", event.target.value)} placeholder="Tên người đi" /><small>{errors.name}</small></label>
+                <label><span>Số điện thoại</span><input inputMode="tel" value={booking.phone} onChange={(event) => update("phone", event.target.value)} placeholder="0987 663 883" /><small>{errors.phone}</small></label>
+              </div>
+              <div className="compact-checkout"><div><span>Giá tham khảo</span><strong>{formatPrice(price)}</strong><small>{selectedRoute ? "Chốt lại qua điện thoại" : "Báo giá trước khi xác nhận"}</small></div><button className="submit-button" disabled={saving}>{saving ? "Đang gửi…" : "Gửi yêu cầu"}<span>→</span></button></div>
+              <div className="compact-payment-note"><b>✓ Không cọc, chưa thanh toán</b><span>Gọi xác nhận trước · Đi xong mới trả tiền</span></div>
             </form>
           )}
         </div>
@@ -181,7 +190,7 @@ export default function BookingExperience({ routes }: Props) {
   );
 }
 
-function Choice({ active, onClick, icon, title, note, badge }: { active: boolean; onClick: () => void; icon: string; title: string; note: string; badge?: string }) { return <button type="button" className={`choice ${active ? "selected" : ""}`} onClick={onClick}>{badge && <em>{badge}</em>}<span className="choice-icon">{icon}</span><span><strong>{title}</strong><small>{note}</small></span><i>{active ? "✓" : ""}</i></button>; }
+function CompactOptions({ label, value, options, onChange }: { label: string; value: string; options: Array<{ value: string; label: string }>; onChange: (value: string) => void }) { return <div className="compact-control"><span>{label}</span><div>{options.map((option) => <button type="button" className={value === option.value ? "active" : ""} key={option.value} onClick={() => onChange(option.value)}>{option.label}</button>)}</div></div>; }
 function Service({ image, position, label, title, text }: { image: string; position: string; label: string; title: string; text: string }) { return <article className="service-card"><div className="service-card-image"><Image src={image} alt="" fill sizes="(max-width: 700px) 50vw, 25vw" style={{ objectPosition: position }} /></div><div className="service-card-body"><span>{label}</span><h3>{title}</h3><p>{text}</p><a href="#dat-xe">Gửi yêu cầu →</a></div></article>; }
 function Reason({ n, title, text }: { n: string; title: string; text: string }) { return <article><span>{n}</span><h3>{title}</h3><p>{text}</p></article>; }
 function Step({ n, title, text }: { n: string; title: string; text: string }) { return <article><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>; }

@@ -1,8 +1,12 @@
 import type { Metadata, Viewport } from "next";
+import { Be_Vietnam_Pro, Manrope } from "next/font/google";
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#087fe7" };
+const beVietnam = Be_Vietnam_Pro({ subsets: ["vietnamese"], weight: ["600", "700", "800"], variable: "--font-heading" });
+const manrope = Manrope({ subsets: ["vietnamese"], variable: "--font-body" });
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#00B7B3" };
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://xe-ghep-phong-cach.vercel.app"),
@@ -15,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="vi"><body>{children}</body></html>;
+  return <html lang="vi" className={`${beVietnam.variable} ${manrope.variable}`}><body>{children}</body></html>;
 }

@@ -1,0 +1,2 @@
+import type { MetadataRoute } from "next"; import { routes } from "@/data/routes";
+export default function sitemap():MetadataRoute.Sitemap{const base=process.env.NEXT_PUBLIC_SITE_URL||"https://xe-ghep-phong-cach.vercel.app";return [{url:base,changeFrequency:"weekly",priority:1},{url:`${base}/tuyen-xe`,changeFrequency:"weekly",priority:.9},...routes.map((route)=>({url:`${base}/${route.slug}`,changeFrequency:"weekly" as const,priority:.8}))]}

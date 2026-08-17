@@ -229,6 +229,13 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 .eyebrow { border-color:#bdebea; background:#f0fdfc; color:#007f80; }
 .hero h1,.section-heading h2,.booking-head h2 { color:#1f2a30; }
 .hero h1 span { color:#00a9a7; }
+.hero-copy { padding-top:8px; }
+.hero-copy .brand-values { color:#008f90; font-family:var(--font-heading),"Be Vietnam Pro",sans-serif; font-size:14px; font-weight:800; letter-spacing:.035em; }
+.hero-copy .brand-values::first-letter { color:inherit; }
+.hero-photo>img { object-position:78% center; }
+.service-showcase { min-height:480px; }
+.service-showcase-photo { min-height:480px; }
+.service-showcase-photo.campaign-photo img { object-position:center 55%; }
 .btn-primary,.search-button,.submit-button { background:linear-gradient(135deg,#00b7b3,#009caa); box-shadow:0 12px 28px rgba(0,183,179,.22); }
 .hero-photo { box-shadow:0 25px 60px rgba(0,110,119,.16); }
 .hero-route-pill i,.pulse { background:#00b7b3; box-shadow:0 0 0 5px rgba(0,183,179,.13); }
@@ -299,6 +306,12 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 .section-kicker,.service-card-body>span,.route-card>span { color:#00a5a3; }
 
 @media (max-width:700px) {
+  .hero h1 { margin-top:0; font-size:38px; }
+  .hero-copy>p { margin-top:14px; }
+  .hero-copy .brand-values { font-size:12px; }
+  .hero-photo>img { object-position:73% center; }
+  .service-showcase-photo { min-height:calc(100vw - 36px); }
+  .service-showcase-photo.campaign-photo img { object-position:center; }
   .compact-booking { padding:18px 16px 14px!important; }
   .compact-booking .booking-head h2 { max-width:260px; font-size:19px; line-height:1.2; }
   .compact-booking .booking-head p { font-size:9px; }

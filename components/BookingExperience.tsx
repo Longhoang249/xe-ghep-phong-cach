@@ -138,17 +138,13 @@ export default function BookingExperience({ routes }: Props) {
       <section className="hero" id="top">
         <div className="hero-inner">
           <div className="hero-copy">
-            <div className="eyebrow"><span className="pulse" /> Kết nối chuyến đi từ Hải Dương</div>
-            <h1>Đi tỉnh nhẹ nhàng.<br /><span>Để Phong Cách lo xe.</span></h1>
-            <p>Một đầu mối để tìm xe ghép, bao xe, đi sân bay và gửi hàng. Bạn chỉ cần cho biết điểm đi — bên mình tư vấn chuyến phù hợp.</p>
-            <div className="hero-actions"><a className="btn btn-primary" href="#dat-xe">Kiểm tra chuyến phù hợp <span>→</span></a><a className="btn btn-ghost" href={`tel:${hotline}`}>☎ Gọi tư vấn ngay</a></div>
-            <div className="trust-row"><span>✓ Xác nhận rõ ràng</span><span>✓ Đón tận nơi</span><span>✓ Thanh toán sau chuyến</span></div>
+            <h1>Đi tỉnh êm ru,<br /><span>Ngủ một hơi là đến!</span></h1>
+            <p>Nhà Xe Phong Cách chuyên xe ghép tuyến tỉnh</p>
+            <div className="hero-actions"><a className="btn btn-primary" href="#dat-xe">Tìm Chuyến Ngay <span>→</span></a><a className="btn btn-ghost" href={`tel:${hotline}`}>Gọi tư vấn</a></div>
+            <div className="trust-row"><span className="brand-values">Văn Minh - An Toàn - Tử Tế</span></div>
           </div>
           <div className="hero-visual hero-photo" aria-label="Xe 7 chỗ Phong Cách trên tuyến liên tỉnh">
-            <Image src="/images/hero-phong-cach.jpg" alt="Xe 7 chỗ hiện đại chạy trên đường liên tỉnh miền Bắc" fill priority sizes="(max-width: 700px) 100vw, 48vw" />
-            <div className="hero-photo-shade" />
-            <div className="hero-photo-badge"><span>PC</span><div><strong>Chuyến đi được chăm sóc từ đầu</strong><small>Tư vấn tuyến · Xác nhận xe · Hỗ trợ hành trình</small></div></div>
-            <div className="hero-route-pill"><i /> Hải Dương <b>→</b> Hà Nội · Nội Bài · Các tỉnh</div>
+            <Image src="/images/hero-xe-ghep-phong-cach.jpg" alt="Xe ghép 4 chỗ và 7 chỗ Phong Cách trên tuyến liên tỉnh" fill priority sizes="(max-width: 700px) 100vw, 48vw" />
           </div>
         </div>
       </section>
@@ -159,7 +155,7 @@ export default function BookingExperience({ routes }: Props) {
             <div className="success-state" role="status"><div className="success-icon">✓</div><span className="success-kicker">Mã yêu cầu {bookingId}</span><h2>Yêu cầu đã được gửi</h2><p className="success-lead">Bên mình sẽ gọi lại để xác nhận xe, giờ đón và mức giá cuối.</p><div className="success-route"><strong>{booking.pickup}</strong><span>→</span><strong>{booking.dropoff}</strong></div><div className="summary-grid"><span><small>Ngày đi</small><b>{new Date(booking.date + "T00:00:00").toLocaleDateString("vi-VN")}</b></span><span><small>Giờ đón</small><b>{booking.time}</b></span><span><small>Nhu cầu</small><b>{booking.need === "parcel" ? "Gửi hàng" : `${booking.passengers} khách`}</b></span><span><small>Tham khảo</small><b>{formatPrice(price)}</b></span></div><div className="payment-confirmation"><b>Đặt trước miễn phí, đến nơi mới thanh toán</b></div><div className="success-actions"><a className="btn btn-primary" href={process.env.NEXT_PUBLIC_ZALO_URL || `tel:${hotline}`}>Nhắn Zalo</a><a className="btn btn-ghost" href={`tel:${hotline}`}>Gọi tư vấn viên</a></div><button className="text-button" onClick={() => setStage("form")}>Gửi thêm yêu cầu khác</button></div>
           ) : (
             <form className="compact-booking" onSubmit={submit} noValidate>
-              <div className="booking-head"><div><span className="step-label">ĐẶT XE NHANH</span><h2>Chọn đúng điểm, có xe đón tận nơi</h2><p>Nhập số nhà, tên đường hoặc địa điểm cụ thể.</p></div></div>
+              <div className="booking-head"><div><span className="step-label">Đặt xe nhanh</span><h2>Đón tận nơi, đưa về tận cửa</h2></div></div>
               <div className="address-search-stack">
                 <AddressField label="Đón tại" value={booking.pickup} placeholder="Ví dụ: 30 Nguyễn Khuyến, Hà Nội" tone="pickup" error={errors.pickup} onChange={(value) => { setShowMobileMap(false); setBooking((old) => ({ ...old, pickup: value, pickupCity: inferCity(value), pickupLat: undefined, pickupLng: undefined })); }} onSelect={(suggestion) => selectAddress("pickup", suggestion)} />
                 <button type="button" className="compact-swap" onClick={() => setBooking((old) => ({ ...old, pickup: old.dropoff, pickupCity: old.dropoffCity, pickupLat: old.dropoffLat, pickupLng: old.dropoffLng, dropoff: old.pickup, dropoffCity: old.pickupCity, dropoffLat: old.pickupLat, dropoffLng: old.pickupLng }))} aria-label="Đổi điểm đón và điểm đến">⇅</button>
@@ -194,7 +190,7 @@ export default function BookingExperience({ routes }: Props) {
       <section className="section services" id="dich-vu">
         <div className="section-heading centered"><div><span className="section-kicker">PHỤC VỤ THEO NHU CẦU</span><h2>Một đầu mối cho mọi chuyến đi tỉnh</h2><p>Từ chuyến đi cá nhân đến cả gia đình, sân bay hay gửi hàng — bên mình đều tư vấn phương án vừa đủ.</p></div></div>
         <div className="service-showcase">
-          <div className="service-showcase-photo"><Image src="/images/don-tan-noi.jpg" alt="Tài xế hỗ trợ khách sắp xếp hành lý trước chuyến đi" fill sizes="(max-width: 700px) 100vw, 54vw" /></div>
+          <div className="service-showcase-photo campaign-photo"><Image src="/images/luon-co-xe-hop-chuyen.jpg" alt="Xe ghép Phong Cách luôn có xe hợp chuyến" fill sizes="(max-width: 700px) 100vw, 54vw" /></div>
           <div className="service-showcase-copy"><span>CHĂM TỪ ĐIỂM ĐÓN</span><h3>Không chỉ tìm xe.<br />Bên mình theo chuyến đến khi bạn tới nơi.</h3><p>Tư vấn viên kiểm tra lịch xe, thống nhất điểm đón, báo rõ chi phí và hỗ trợ khi lịch trình thay đổi.</p><div className="care-points"><b>✓ Tư vấn đúng nhu cầu</b><b>✓ Xác nhận trước khi đi</b><b>✓ Hỗ trợ trong hành trình</b></div></div>
         </div>
         <div className="service-grid"><Service image="/images/hero-phong-cach.jpg" position="68% center" label="01" title="Xe 4 chỗ" text="Gọn gàng, linh hoạt cho 1–3 khách và hành lý vừa phải." /><Service image="/images/hero-phong-cach.jpg" position="42% center" label="02" title="Xe 7 chỗ" text="Thoải mái hơn cho gia đình hoặc nhóm từ 4–6 khách." /><Service image="/images/don-tan-noi.jpg" position="55% center" label="03" title="Bao xe riêng" text="Chủ động giờ đón, không gian riêng và lịch trình theo nhu cầu." /><Service image="/images/don-tan-noi.jpg" position="24% center" label="04" title="Gửi hàng theo chuyến" text="Nhận gửi hàng gọn nhẹ trên các tuyến liên tỉnh đang hoạt động." /></div>

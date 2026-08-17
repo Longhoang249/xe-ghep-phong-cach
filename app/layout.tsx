@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#087fe7" };
@@ -6,10 +7,10 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://xe-ghep-phong-cach.vercel.app"),
   title: { default: "Xe Ghép Phong Cách", template: "%s | Phong Cách" },
-  description: "Xe ghép liên tỉnh từ Hải Dương — đặt nhanh, đón tận nơi.",
+  description: "Xe ghép, bao xe liên tỉnh từ Hải Dương. Gửi yêu cầu miễn phí, tư vấn viên gọi xác nhận và đi xong mới thanh toán.",
   applicationName: "Xe Ghép Phong Cách",
   icons: { icon: "/favicon.svg" },
-  openGraph: { type: "website", locale: "vi_VN", siteName: "Xe Ghép Phong Cách", title: "Xe Ghép Phong Cách", description: "Đi đúng tuyến. Đón đúng giờ. Đặt xe liên tỉnh trong ít phút.", images:[{url:"/og.png",width:1200,height:630,alt:"Xe Ghép Phong Cách — Đi gọn, đến nhanh"}] },
+  openGraph: { type: "website", locale: "vi_VN", siteName: "Xe Ghép Phong Cách", title: "Xe Ghép Phong Cách", description: "Đi tỉnh nhẹ nhàng. Gửi yêu cầu xe, xác nhận rõ ràng và thanh toán sau chuyến.", images:[{url:"/og.png",width:1200,height:630,alt:"Xe Ghép Phong Cách — Kết nối chuyến đi tỉnh từ Hải Dương"}] },
   twitter: { card: "summary_large_image", images:["/og.png"] },
 };
 

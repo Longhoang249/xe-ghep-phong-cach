@@ -20,7 +20,7 @@ export const routes: RoutePrice[] = [
   { id:"hd-nd",origin:"Hải Dương",destination:"Nam Định",slug:"xe-ghep-hai-duong-nam-dinh",distanceKm:93,durationMinutes:125,sharedPrice:240000,private4Price:850000,private7Price:1050000,parcelPrice:160000,region:"mien-bac" },
   { id:"hd-pl",origin:"Hải Dương",destination:"Phủ Lý",slug:"xe-ghep-hai-duong-phu-ly",distanceKm:88,durationMinutes:120,sharedPrice:230000,private4Price:800000,private7Price:1000000,parcelPrice:150000,region:"mien-bac" },
   { id:"hd-nb2",origin:"Hải Dương",destination:"Ninh Bình",slug:"xe-ghep-hai-duong-ninh-binh",distanceKm:125,durationMinutes:155,sharedPrice:300000,private4Price:1100000,private7Price:1350000,parcelPrice:200000,region:"mien-trung-gan",featured:true },
-  { id:"hd-th",origin:"Hải Dương",destination:"Thanh Hoá",slug:"xe-ghep-hai-duong-thanh-hoa",distanceKm:190,durationMinutes:230,sharedPrice:null,private4Price:null,private7Price:null,parcelPrice:null,region:"mien-trung-gan",tag:"Liên hệ báo giá" },
+  { id:"hd-th",origin:"Hải Dương",destination:"Thanh Hoá",slug:"xe-ghep-hai-duong-thanh-hoa",distanceKm:190,durationMinutes:230,sharedPrice:450000,private4Price:1900000,private7Price:2300000,parcelPrice:300000,region:"mien-trung-gan",tag:"Tuyến đường dài" },
 ];
 
 export const popularRoutes = routes.filter((route) => route.featured);

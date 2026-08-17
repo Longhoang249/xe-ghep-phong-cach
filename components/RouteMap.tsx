@@ -46,8 +46,8 @@ export default function RouteMap({ origin, destination, distanceKm, durationMinu
 
     import("leaflet").then((L) => {
       if (cancelled || !mapElement.current) return;
-      map = L.map(mapElement.current, { zoomControl: false, attributionControl: true, scrollWheelZoom: false, dragging: !compact, touchZoom: true });
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(map);
+      map = L.map(mapElement.current, { zoomControl: false, attributionControl: true, scrollWheelZoom: false, dragging: !compact, touchZoom: true, preferCanvas: true });
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", { subdomains: "abcd", maxZoom: 18, keepBuffer: 1, updateWhenIdle: true, attribution: "© OpenStreetMap © CARTO" }).addTo(map);
       L.polyline(liveRoute?.points?.length ? liveRoute.points : [from, to], { color: "#00B7B3", weight: compact ? 5 : 4, opacity: .95, dashArray: liveRoute ? undefined : "8 9", lineCap: "round" }).addTo(map);
       L.circleMarker(from, { radius: compact ? 7 : 8, color: "#ffffff", weight: 3, fillColor: "#00B7B3", fillOpacity: 1 }).bindTooltip("Điểm đón", { permanent: !compact, direction: "top", offset: [0, -9] }).addTo(map);
       L.circleMarker(to, { radius: compact ? 7 : 8, color: "#ffffff", weight: 3, fillColor: "#FFC247", fillOpacity: 1 }).bindTooltip("Điểm đến", { permanent: !compact, direction: "top", offset: [0, -9] }).addTo(map);
@@ -67,10 +67,11 @@ export default function RouteMap({ origin, destination, distanceKm, durationMinu
     <div className={`route-map-card ${compact ? "compact" : ""} ${ready ? "is-ready" : ""}`}>
       <div ref={mapElement} className="route-map" aria-label={`Bản đồ tuyến từ ${origin} đến ${destination}`} />
       <div className="route-map-status">
-        <span>{liveRoute ? "LỘ TRÌNH THEO ĐƯỜNG THỰC TẾ" : "VỊ TRÍ ĐÓN · TRẢ"}</span>
-        <strong>{compact ? "Đã định vị đúng hai điểm" : <>{origin} <b>→</b> {destination}</>}</strong>
-        {shownDistance && shownDuration ? <small>{shownDistance} km · khoảng {Math.floor(shownDuration / 60) ? `${Math.floor(shownDuration / 60)} giờ ` : ""}{shownDuration % 60 || ""} phút</small> : <small>Đang tính lộ trình…</small>}
+        <span>{liveRoute ? "HÀNH TRÌNH DỰ KIẾN" : "ĐANG TÍNH LỘ TRÌNH"}</span>
+        <strong>{compact && shownDistance ? `${shownDistance} km` : <>{origin} <b>→</b> {destination}</>}</strong>
+        {shownDistance && shownDuration ? <small>Khoảng {Math.floor(shownDuration / 60) ? `${Math.floor(shownDuration / 60)} giờ ` : ""}{shownDuration % 60 || ""} phút · theo đường bộ</small> : <small>Đang xác định số km…</small>}
       </div>
+      <div className="map-vietnam-label">Việt Nam · Hoàng Sa · Trường Sa</div>
     </div>
   );
 }

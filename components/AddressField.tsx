@@ -19,6 +19,7 @@ export default function AddressField({ label, value, placeholder, tone, error, o
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<AddressSuggestion[]>([]);
   const blurTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!focused || value.trim().length < 3) return;
@@ -42,6 +43,7 @@ export default function AddressField({ label, value, placeholder, tone, error, o
       <label>
         <span>{label}</span>
         <input
+          ref={inputRef}
           value={value}
           onChange={(event) => onChange(event.target.value)}
           onFocus={() => { if (blurTimer.current) clearTimeout(blurTimer.current); setFocused(true); }}
@@ -53,7 +55,7 @@ export default function AddressField({ label, value, placeholder, tone, error, o
       </label>
       {loading && <span className="address-loading" aria-label="Đang tìm địa chỉ" />}
       {focused && value.trim().length >= 3 && results.length > 0 && <div className="address-suggestions" role="listbox">
-        {results.map((result) => <button type="button" key={result.id} onMouseDown={(event) => event.preventDefault()} onClick={() => { onSelect(result); setFocused(false); setResults([]); }}>
+        {results.map((result) => <button type="button" key={result.id} onMouseDown={(event) => event.preventDefault()} onClick={() => { onSelect(result); inputRef.current?.blur(); setFocused(false); setResults([]); }}>
           <span>⌖</span><span><strong>{result.primary}</strong><small>{result.secondary}</small></span>
         </button>)}
         <p>Dữ liệu địa chỉ © OpenStreetMap</p>

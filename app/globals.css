@@ -329,3 +329,52 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   .compact-checkout .submit-button { min-width:128px; }
   .compact-payment-note span { display:none; }
 }
+
+/* Mobile route preview, cargo quote and stable iOS form scale */
+.route-map-trigger { width:100%; min-height:62px; display:flex; align-items:center; gap:11px; padding:9px 13px; border:1px solid #c9e6e5; border-radius:14px; background:linear-gradient(120deg,#effbfa,#f9fdfd); color:#29444a; text-align:left; cursor:pointer; }
+.route-map-trigger>span { width:35px; height:35px; display:grid; place-items:center; flex:0 0 35px; border-radius:11px; background:#d9f5f3; color:#00a4a2; font-size:18px; }
+.route-map-trigger>div { min-width:0; flex:1; }
+.route-map-trigger strong,.route-map-trigger small { display:block; }
+.route-map-trigger strong { font-family:var(--font-heading); font-size:12px; }
+.route-map-trigger small { margin-top:2px; color:#6e868b; font-size:9px; }
+.route-map-trigger>b { color:#00a4a2; font-size:17px; }
+.booking-map-open { position:relative; }
+.map-collapse { display:block; margin:5px auto 0; padding:3px 8px; border:0; background:transparent; color:#008f90; font-size:8px; font-weight:800; cursor:pointer; }
+.map-vietnam-label { position:absolute; top:8px; right:8px; z-index:500; padding:5px 7px; border:1px solid rgba(255,255,255,.8); border-radius:8px; background:rgba(255,255,255,.9); box-shadow:0 5px 14px rgba(30,63,67,.12); color:#536b71; font-size:6px; font-weight:800; letter-spacing:.02em; pointer-events:none; }
+.compact-control>span { font-size:10px; }
+.compact-control>div>button { min-height:34px; font-size:11px; }
+.mini-stepper b { font-size:13px; }
+.cargo-details { position:relative; display:grid; grid-template-columns:1.2fr 2fr; gap:8px; margin-top:10px; padding:10px; border:1px solid #d3e8e8; border-radius:13px; background:#f6fbfb; }
+.cargo-details label>span { display:block; margin:0 0 3px 1px; color:#71858a; font-size:8px; font-weight:800; }
+.cargo-name { position:relative; }
+.cargo-name input { width:100%; height:36px; padding:0 10px; border:1px solid #d7e5e6; border-radius:9px; outline:0; background:#fff; color:#263d43; font-size:10px; }
+.cargo-name>small { position:absolute; left:2px; top:100%; color:#cf4c4c; font-size:7px; }
+.cargo-measures { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+.cargo-measures label>div { height:36px; display:flex; align-items:center; padding:0 6px; border:1px solid #d7e5e6; border-radius:9px; background:#fff; }
+.cargo-measures input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:#263d43; font-size:10px; font-weight:700; }
+.cargo-measures small { color:#87979b; font-size:7px; }
+.cargo-details>p { grid-column:1/-1; margin:0; color:#7d8e92; font-size:7px; }
+.cargo-error { position:absolute; right:10px; top:100%; color:#cf4c4c; font-size:7px; }
+.compact-payment-note { display:block; padding:7px 10px; border-radius:9px; background:#eaf9f4; color:#008065; font-size:9px; font-weight:800; text-align:center; }
+.payment-confirmation { justify-content:center; }
+.payment-confirmation b { white-space:normal; text-align:center; }
+
+@media (max-width:700px) {
+  .compact-booking input { font-size:16px!important; }
+  .address-field input { height:27px; }
+  .address-suggestions strong { font-size:13px; }
+  .address-suggestions small { font-size:10px; }
+  .compact-control>span { font-size:11px; }
+  .compact-control>div>button { min-height:34px; font-size:11px; }
+  .mini-stepper b { font-size:14px; }
+  .compact-fields label { min-height:53px; }
+  .compact-fields input { height:25px; }
+  .cargo-details { grid-template-columns:1fr; gap:7px; }
+  .cargo-details label>span { font-size:10px; }
+  .cargo-name input,.cargo-measures label>div { height:40px; }
+  .cargo-measures input { padding:0; }
+  .cargo-measures small { font-size:8px; }
+  .cargo-details>p { font-size:8px; line-height:1.5; }
+  .route-map-card.compact { height:210px; }
+  .map-vietnam-label { top:7px; right:7px; }
+}

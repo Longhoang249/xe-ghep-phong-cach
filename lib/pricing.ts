@@ -1,4 +1,24 @@
 import type { RoutePrice } from "@/data/routes";
 export type ServiceType = "shared" | "private"; export type VehicleType = "4-seat" | "7-seat" | "limo";
-export function estimatePrice(route: RoutePrice | undefined, need: "ride" | "parcel", service: ServiceType, vehicle: VehicleType, passengers: number) { if (!route) return null; if (need === "parcel") return route.parcelPrice; if (vehicle === "limo") return null; if (service === "shared") return route.sharedPrice ? route.sharedPrice * passengers : null; return vehicle === "7-seat" ? route.private7Price : route.private4Price; }
+export type CargoDetails = { lengthCm: number; widthCm: number; heightCm: number; weightKg: number };
+const roundTenThousand = (value: number) => Math.ceil(value / 10000) * 10000;
+export function estimatePrice(route: RoutePrice | undefined, need: "ride" | "parcel", service: ServiceType, vehicle: VehicleType, passengers: number, distanceKm?: number, cargo?: CargoDetails) {
+  const distance = route?.distanceKm || distanceKm;
+  if (!distance) return null;
+  if (need === "parcel") {
+    const volumetricWeight = cargo ? (cargo.lengthCm * cargo.widthCm * cargo.heightCm) / 6000 : 0;
+    const chargeableWeight = Math.max(cargo?.weightKg || 0, volumetricWeight, 1);
+    const base = route?.parcelPrice || Math.max(50000, roundTenThousand(distance * 1200));
+    return roundTenThousand(base + Math.max(0, chargeableWeight - 5) * 6000);
+  }
+  if (route) {
+    if (vehicle === "limo") return roundTenThousand(distance * 18000);
+    if (service === "shared") return route.sharedPrice ? route.sharedPrice * passengers : roundTenThousand(distance * 3200) * passengers;
+    return vehicle === "7-seat"
+      ? route.private7Price || Math.max(300000, roundTenThousand(distance * 14500))
+      : route.private4Price || Math.max(250000, roundTenThousand(distance * 11500));
+  }
+  if (service === "shared") return Math.max(120000, roundTenThousand(distance * 3200)) * passengers;
+  return Math.max(vehicle === "7-seat" ? 300000 : 250000, roundTenThousand(distance * (vehicle === "7-seat" ? 14500 : 11500)));
+}
 export function estimateArrival(durationMinutes: number, service: ServiceType) { const now = new Date(); const min = service === "shared" ? 15 : 5; const max = service === "shared" ? 30 : 10; const format = (date: Date) => date.toLocaleTimeString("vi-VN", { hour:"2-digit", minute:"2-digit" }); return `${format(new Date(now.getTime() + (durationMinutes + min) * 60000))} – ${format(new Date(now.getTime() + (durationMinutes + max) * 60000))}`; }

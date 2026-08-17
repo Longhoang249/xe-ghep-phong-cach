@@ -138,13 +138,17 @@ export default function BookingExperience({ routes }: Props) {
       <section className="hero" id="top">
         <div className="hero-inner">
           <div className="hero-copy">
-            <h1>Đi tỉnh êm ru,<br /><span>Ngủ một hơi là đến!</span></h1>
+            <div className="hero-kicker"><span /> XE GHÉP LIÊN TỈNH</div>
+            <h1><span className="hero-line hero-line-dark">Đi tỉnh êm ru,</span><span className="hero-line">Ngủ một hơi là&nbsp;đến!</span></h1>
             <p>Nhà Xe Phong Cách chuyên xe ghép tuyến tỉnh</p>
             <div className="hero-actions"><a className="btn btn-primary" href="#dat-xe">Tìm Chuyến Ngay <span>→</span></a><a className="btn btn-ghost" href={`tel:${hotline}`}>Gọi tư vấn</a></div>
             <div className="trust-row"><span className="brand-values">Văn Minh - An Toàn - Tử Tế</span></div>
           </div>
           <div className="hero-visual hero-photo" aria-label="Xe 7 chỗ Phong Cách trên tuyến liên tỉnh">
-            <Image src="/images/hero-xe-ghep-phong-cach.jpg" alt="Xe ghép 4 chỗ và 7 chỗ Phong Cách trên tuyến liên tỉnh" fill priority sizes="(max-width: 700px) 100vw, 48vw" />
+            <Image src="/images/hero-phong-cach.jpg" alt="Xe Phong Cách di chuyển trên tuyến đường liên tỉnh" fill priority sizes="(max-width: 700px) 100vw, 48vw" />
+            <div className="hero-photo-shade" />
+            <div className="hero-route-pill"><i /> Xe ghép liên tỉnh</div>
+            <div className="hero-service-pill"><span>⌖</span><div><small>Đưa đón tận nơi</small><strong>Xe 4 chỗ · 7 chỗ</strong></div></div>
           </div>
         </div>
       </section>
@@ -193,7 +197,7 @@ export default function BookingExperience({ routes }: Props) {
           <div className="service-showcase-photo campaign-photo"><Image src="/images/luon-co-xe-hop-chuyen.jpg" alt="Xe ghép Phong Cách luôn có xe hợp chuyến" fill sizes="(max-width: 700px) 100vw, 54vw" /></div>
           <div className="service-showcase-copy"><span>CHĂM TỪ ĐIỂM ĐÓN</span><h3>Không chỉ tìm xe.<br />Bên mình theo chuyến đến khi bạn tới nơi.</h3><p>Tư vấn viên kiểm tra lịch xe, thống nhất điểm đón, báo rõ chi phí và hỗ trợ khi lịch trình thay đổi.</p><div className="care-points"><b>✓ Tư vấn đúng nhu cầu</b><b>✓ Xác nhận trước khi đi</b><b>✓ Hỗ trợ trong hành trình</b></div></div>
         </div>
-        <div className="service-grid"><Service image="/images/hero-phong-cach.jpg" position="68% center" label="01" title="Xe 4 chỗ" text="Gọn gàng, linh hoạt cho 1–3 khách và hành lý vừa phải." /><Service image="/images/hero-phong-cach.jpg" position="42% center" label="02" title="Xe 7 chỗ" text="Thoải mái hơn cho gia đình hoặc nhóm từ 4–6 khách." /><Service image="/images/don-tan-noi.jpg" position="55% center" label="03" title="Bao xe riêng" text="Chủ động giờ đón, không gian riêng và lịch trình theo nhu cầu." /><Service image="/images/don-tan-noi.jpg" position="24% center" label="04" title="Gửi hàng theo chuyến" text="Nhận gửi hàng gọn nhẹ trên các tuyến liên tỉnh đang hoạt động." /></div>
+        <div className="service-grid"><Service image="/images/hero-xe-ghep-phong-cach.jpg" position="70% center" label="01" title="Xe 4 chỗ" text="Gọn gàng, linh hoạt cho 1–3 khách và hành lý vừa phải." /><Service image="/images/hero-xe-ghep-phong-cach.jpg" position="88% center" label="02" title="Xe 7 chỗ" text="Thoải mái hơn cho gia đình hoặc nhóm từ 4–6 khách." /><Service image="/images/don-tan-noi.jpg" position="55% center" label="03" title="Bao xe riêng" text="Chủ động giờ đón, không gian riêng và lịch trình theo nhu cầu." /><Service image="/images/don-tan-noi.jpg" position="24% center" label="04" title="Gửi hàng theo chuyến" text="Nhận gửi hàng gọn nhẹ trên các tuyến liên tỉnh đang hoạt động." /></div>
       </section>
 
       <section className="why" id="ly-do"><div className="why-inner"><div className="why-copy"><span className="section-kicker light">PHONG CÁCH PHỤC VỤ</span><h2>Đi đường dài,<br />mọi thứ nên rõ từ đầu.</h2><p>Xe nào đón, giờ nào đi, chi phí dự kiến ra sao — tư vấn viên trao đổi trước để bạn chủ động quyết định.</p><a className="btn btn-white" href={`tel:${hotline}`}>Trao đổi với tư vấn viên</a></div><div className="why-grid"><Reason n="01" title="Rõ xe, rõ giờ" text="Thông tin chuyến được gọi xác nhận trước khi xe đến đón." /><Reason n="02" title="Một đầu mối hỗ trợ" text="Có người tiếp nhận và theo sát yêu cầu trong suốt hành trình." /><Reason n="03" title="Chọn xe vừa nhu cầu" text="Xe ghép, bao xe, 4 chỗ hay 7 chỗ đều được tư vấn phù hợp." /><Reason n="04" title="Đi xong mới trả tiền" text="Không thu tiền khi gửi yêu cầu; thanh toán sau khi hoàn thành chuyến." /></div></div></section>

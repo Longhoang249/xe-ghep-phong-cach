@@ -242,6 +242,8 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 .hero-copy .brand-values { display:inline-flex; align-items:center; min-height:36px; padding:0 13px; border:1px solid #cbe9e7; border-radius:999px; background:rgba(255,255,255,.72); color:#008f90; font-family:var(--font-heading),"Be Vietnam Pro",sans-serif; font-size:12px; font-weight:800; letter-spacing:.035em; box-shadow:0 8px 22px rgba(24,91,95,.07); }
 .hero-copy .brand-values::first-letter { color:inherit; }
 .hero-actions { margin-top:25px; }
+.call-now-button { min-width:300px; min-height:58px; border-radius:17px; font-size:16px; letter-spacing:.01em; }
+.call-now-button>span { font-size:19px; }
 .hero-photo { height:460px; border:7px solid rgba(255,255,255,.9); border-radius:36px 86px 36px 36px; box-shadow:0 32px 70px rgba(12,99,105,.2); transform:rotate(.4deg); }
 .hero-photo>img { object-position:57% center; }
 .hero-photo-shade { background:linear-gradient(180deg,rgba(13,49,58,.02) 45%,rgba(8,42,48,.35) 100%); }
@@ -258,6 +260,7 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 .hero-photo { box-shadow:0 25px 60px rgba(0,110,119,.16); }
 .hero-route-pill i,.pulse { background:#00b7b3; box-shadow:0 0 0 5px rgba(0,183,179,.13); }
 .booking-card { border-color:rgba(0,139,141,.14); box-shadow:0 24px 70px rgba(15,83,89,.14); }
+.booking-shell-bottom { margin:0 auto 76px; }
 .compact-booking { padding:25px 28px 20px!important; }
 .compact-booking .booking-head { align-items:center; }
 .compact-booking .booking-head h2 { margin-top:4px; font-size:25px; }
@@ -432,4 +435,5 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   .cargo-details>p { font-size:8px; line-height:1.5; }
   .route-map-card.compact { height:210px; }
   .map-vietnam-label { top:7px; right:7px; }
+  .booking-shell-bottom { margin:0 auto 50px; }
 }

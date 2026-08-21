@@ -1,13 +1,19 @@
+import {
+  ownerVerifiedFact,
+  phase1OwnerPriceFactsByDataKey,
+  phase1OwnerServiceFacts,
+} from "./owner-verification.mjs";
+
 const AUDIT_DATE = "2026-08-21";
 const AUDITOR = "Codex repository audit";
 
 export const phase1KnowledgeMeta = Object.freeze({
-  taskId: "DATA-001",
-  version: "v1",
+  taskId: "DATA-002",
+  version: "v1.1",
   auditedAt: AUDIT_DATE,
   scope: Object.freeze(["CLUSTER-A", "CLUSTER-B", "CLUSTER-C"]),
-  publicConsumerEnabled: false,
-  notes: "Data-only audit. No record in this module creates a URL or changes publication state.",
+  publicConsumerEnabled: true,
+  notes: "Owner-verified Phase 1 passenger prices and service commitments can feed existing published assets; no record creates a URL or changes publication state.",
 });
 
 export function knowledgeFact({
@@ -56,13 +62,16 @@ function estimateFact(value, sourceRef, notes) {
   });
 }
 
-function commercialFacts(values, sourceRef, notes = "Stored route values") {
+function commercialFacts(values, sourceRef, notes = "Stored route values", dataKey = null) {
+  const ownerPrices = dataKey ? phase1OwnerPriceFactsByDataKey[dataKey] : null;
   return Object.freeze({
-    sharedRidePrice: values.sharedRidePrice == null ? gapFact("No fixed shared-ride value is stored.") : repoFact(values.sharedRidePrice, sourceRef, notes),
-    charter4SeatPrice: values.charter4SeatPrice == null ? gapFact("No fixed 4-seat charter value is stored.") : repoFact(values.charter4SeatPrice, sourceRef, notes),
-    charter7SeatPrice: values.charter7SeatPrice == null ? gapFact("No fixed 7-seat charter value is stored.") : repoFact(values.charter7SeatPrice, sourceRef, notes),
-    parcelPrice: values.parcelPrice == null ? gapFact("No fixed parcel value is stored.") : repoFact(values.parcelPrice, sourceRef, notes),
-    pricingNotes: repoFact("Website values are reference values; final price is confirmed per trip.", "app/[slug]/page.tsx:67-68; app/chinh-sach-dat-xe/page.tsx:20", "Current public pricing qualification"),
+    sharedRidePrice: ownerPrices?.sharedRidePrice ?? (values.sharedRidePrice == null ? gapFact("No fixed shared-ride value is stored.") : repoFact(values.sharedRidePrice, sourceRef, notes)),
+    charter4SeatPrice: ownerPrices?.charter4SeatPrice ?? (values.charter4SeatPrice == null ? gapFact("No fixed 4-seat charter value is stored.") : repoFact(values.charter4SeatPrice, sourceRef, notes)),
+    charter7SeatPrice: ownerPrices?.charter7SeatPrice ?? (values.charter7SeatPrice == null ? gapFact("No fixed 7-seat charter value is stored.") : repoFact(values.charter7SeatPrice, sourceRef, notes)),
+    parcelPrice: ownerPrices?.parcelPrice ?? (values.parcelPrice == null ? gapFact("No fixed parcel value is stored.") : repoFact(values.parcelPrice, sourceRef, notes)),
+    pricingNotes: ownerPrices
+      ? ownerVerifiedFact("Show confirmed numeric prices; use ‘Liên hệ’ where no confirmed price exists.", "Owner-approved public price presentation rule.")
+      : repoFact("Website values are reference values; final price is confirmed per trip.", "app/[slug]/page.tsx:67-68; app/chinh-sach-dat-xe/page.tsx:20", "Current public pricing qualification"),
     surcharges: gapFact("Night, remote-area, airport, waiting, and holiday surcharge rules are not recorded."),
   });
 }
@@ -78,12 +87,12 @@ function emptyCommercialFacts() {
   });
 }
 
-function journeyFacts(distanceKm, durationMinutes, sourceRef, airportInformation = null, airportSourceRef = null) {
+function journeyFacts(distanceKm, durationMinutes, sourceRef, airportInformation = null, airportSourceRef = null, ownerConfirmed = false) {
   return Object.freeze({
     distanceKm: distanceKm == null ? gapFact("No route distance is stored.") : repoFact(distanceKm, sourceRef, "Stored route distance"),
     durationMinutes: durationMinutes == null ? gapFact("No route duration is stored.") : repoFact(durationMinutes, sourceRef, "Stored route duration"),
-    pickupAreas: gapFact("No owner-confirmed pickup-area list exists."),
-    dropoffAreas: gapFact("No owner-confirmed drop-off-area list exists."),
+    pickupAreas: ownerConfirmed ? phase1OwnerServiceFacts.pickupAreas : gapFact("No owner-confirmed pickup-area list exists."),
+    dropoffAreas: ownerConfirmed ? phase1OwnerServiceFacts.dropoffAreas : gapFact("No owner-confirmed drop-off-area list exists."),
     majorStops: gapFact("No owner-confirmed stop or endpoint sequence exists."),
     airportInformation: airportInformation == null
       ? gapFact("Airport applicability or rules are unknown.")
@@ -102,15 +111,21 @@ function emptyJourneyFacts(notes = "Owner confirmation required.") {
   });
 }
 
-function operationalFacts({ serviceClaim, serviceRef, vehicleClaim, vehicleRef, luggageClaim, luggageRef, parcelClaim, parcelRef }) {
+function operationalFacts({ serviceClaim, serviceRef, vehicleClaim, vehicleRef, luggageClaim, luggageRef, parcelClaim, parcelRef, ownerConfirmed = false }) {
   return Object.freeze({
-    serviceAvailability: repoFact(serviceClaim, serviceRef, "Current content service-availability claim"),
+    serviceAvailability: ownerConfirmed
+      ? ownerVerifiedFact("Shared ride and charter are available in both directions across the corridor.", "Owner confirmed the general corridor service; frequency and endpoint-specific availability remain unverified.")
+      : repoFact(serviceClaim, serviceRef, "Current content service-availability claim"),
     operatingHours: gapFact("No operating-hours rule exists in repository evidence."),
     bookingLeadTime: gapFact("Content says to call early but provides no operational lead-time rule."),
-    vehicleNotes: repoFact(vehicleClaim, vehicleRef, "Current content vehicle claim"),
+    vehicleNotes: ownerConfirmed
+      ? ownerVerifiedFact("Shared ride and private charter are available.", "Owner did not supply vehicle inventory or capacity details beyond the confirmed service types.")
+      : repoFact(vehicleClaim, vehicleRef, "Current content vehicle claim"),
     luggageNotes: repoFact(luggageClaim, luggageRef, "Current content luggage instruction"),
     parcelNotes: repoFact(parcelClaim, parcelRef, "Current content parcel-service claim"),
     waitingPolicy: gapFact("No waiting-time or waiting-fee policy exists in repository evidence."),
+    paymentAfterTrip: ownerConfirmed ? phase1OwnerServiceFacts.paymentAfterTrip : gapFact("Payment timing is not owner-confirmed."),
+    advanceBookingFree: ownerConfirmed ? phase1OwnerServiceFacts.advanceBookingFree : gapFact("Advance-booking fee rule is not owner-confirmed."),
   });
 }
 
@@ -123,15 +138,19 @@ function emptyOperationalFacts(notes = "Owner confirmation required.") {
     luggageNotes: gapFact(notes),
     parcelNotes: gapFact(notes),
     waitingPolicy: gapFact(notes),
+    paymentAfterTrip: gapFact(notes),
+    advanceBookingFree: gapFact(notes),
   });
 }
 
-function directionFacts(directionId, origin, destination, sourceRef, serviceClaim, airportRequirements = null, airportRef = null) {
+function directionFacts(directionId, origin, destination, sourceRef, serviceClaim, airportRequirements = null, airportRef = null, ownerConfirmed = false) {
   return Object.freeze({
     directionId,
     origin,
     destination,
-    serviceAvailability: repoFact(serviceClaim, sourceRef, "Current content direction-specific availability claim"),
+    serviceAvailability: ownerConfirmed
+      ? ownerVerifiedFact(true, `Owner confirmed service for ${origin} → ${destination}; operating frequency remains unverified.`)
+      : repoFact(serviceClaim, sourceRef, "Current content direction-specific availability claim"),
     pickupPattern: gapFact(`Pickup pattern for ${origin} → ${destination} is unknown.`),
     dropoffPattern: gapFact(`Drop-off pattern for ${origin} → ${destination} is unknown.`),
     routeNotes: gapFact(`No direction-specific route rule for ${origin} → ${destination} is recorded.`),
@@ -179,13 +198,13 @@ export const phase1ParentRoutes = Object.freeze([
     routeId: "hd-hp",
     origin: "Hải Dương",
     destination: "Hải Phòng",
-    directionality: "BIDIRECTIONAL_CLAIM_UNVERIFIED",
+    directionality: "BIDIRECTIONAL_VERIFIED",
     parentCluster: "CLUSTER-A",
     routeType: "PARENT_CORRIDOR",
     assetIds: Object.freeze(["MP-003", "CP-003", "SC-002", "SC-004"]),
     publicationState: "EXISTING_PUBLISHED",
-    commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000 }, "data/routes.ts:12"),
-    journey: journeyFacts(48, 65, "data/routes.ts:12"),
+    commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000 }, "data/routes.ts:12", "Stored route values", "hd-hp"),
+    journey: journeyFacts(48, 65, "data/routes.ts:12", null, null, true),
     operations: operationalFacts({
       serviceClaim: "Current pages claim xe ghép, charter 4–7 seats, and parcel demand are accepted in both directions; vehicle availability is checked per trip.",
       serviceRef: "app/[slug]/page.tsx:53-68; data/guide-posts.ts:93-109,279-300",
@@ -195,10 +214,11 @@ export const phase1ParentRoutes = Object.freeze([
       luggageRef: "data/guide-posts.ts:93-105,279-295",
       parcelClaim: "Current content says parcel requests are accepted subject to item and trip checks.",
       parcelRef: "data/guide-posts.ts:198-221",
+      ownerConfirmed: true,
     }),
     directions: Object.freeze([
-      directionFacts("hd-to-hp", "Hải Dương", "Hải Phòng", "data/guide-posts.ts:93-109", "Current guide claims the route is accepted in this direction."),
-      directionFacts("hp-to-hd", "Hải Phòng", "Hải Dương", "data/guide-posts.ts:279-300", "Current reverse-direction guide claims service is accepted, with availability checked per trip."),
+      directionFacts("hd-to-hp", "Hải Dương", "Hải Phòng", "data/guide-posts.ts:93-109", "Current guide claims the route is accepted in this direction.", null, null, true),
+      directionFacts("hp-to-hd", "Hải Phòng", "Hải Dương", "data/guide-posts.ts:279-300", "Current reverse-direction guide claims service is accepted, with availability checked per trip.", null, null, true),
     ]),
     searchSupport: Object.freeze({
       aliases: Object.freeze(["Hải Dương Hải Phòng", "Hải Phòng Hải Dương", "xe ghép HD HP"]),
@@ -211,13 +231,13 @@ export const phase1ParentRoutes = Object.freeze([
     routeId: "hd-qn",
     origin: "Hải Dương",
     destination: "Quảng Ninh",
-    directionality: "BIDIRECTIONAL_CLAIM_UNVERIFIED",
+    directionality: "BIDIRECTIONAL_VERIFIED",
     parentCluster: "CLUSTER-B",
     routeType: "PARENT_CORRIDOR",
     assetIds: Object.freeze(["MP-005", "CP-002", "SC-001"]),
     publicationState: "EXISTING_PUBLISHED",
-    commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000 }, "data/routes.ts:14"),
-    journey: journeyFacts(105, 120, "data/routes.ts:14"),
+    commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000 }, "data/routes.ts:14", "Stored route values", "hd-qn"),
+    journey: journeyFacts(105, 120, "data/routes.ts:14", null, null, true),
     operations: operationalFacts({
       serviceClaim: "Current pages claim shared ride, charter, and parcel demand are accepted in both directions, with each trip checked.",
       serviceRef: "app/[slug]/page.tsx:53-68; data/guide-posts.ts:58-84,171-194",
@@ -227,10 +247,11 @@ export const phase1ParentRoutes = Object.freeze([
       luggageRef: "data/guide-posts.ts:58-84,171-194",
       parcelClaim: "Current route templates claim parcel demand is accepted, but no Phase 1 parcel rule is evidenced.",
       parcelRef: "app/[slug]/page.tsx:53-68,159-184",
+      ownerConfirmed: true,
     }),
     directions: Object.freeze([
-      directionFacts("hd-to-qn", "Hải Dương", "Quảng Ninh", "data/guide-posts.ts:58-84,171-194", "Current content claims demand is accepted in this direction."),
-      directionFacts("qn-to-hd", "Quảng Ninh", "Hải Dương", "data/guide-posts.ts:79-81,188-191", "Current content claims reverse demand is accepted, subject to endpoint and trip checks."),
+      directionFacts("hd-to-qn", "Hải Dương", "Quảng Ninh", "data/guide-posts.ts:58-84,171-194", "Current content claims demand is accepted in this direction.", null, null, true),
+      directionFacts("qn-to-hd", "Quảng Ninh", "Hải Dương", "data/guide-posts.ts:79-81,188-191", "Current content claims reverse demand is accepted, subject to endpoint and trip checks.", null, null, true),
     ]),
     searchSupport: Object.freeze({
       aliases: Object.freeze(["Hải Dương Quảng Ninh", "Quảng Ninh Hải Dương", "xe ghép HD QN"]),
@@ -243,13 +264,13 @@ export const phase1ParentRoutes = Object.freeze([
     routeId: "hp-qn",
     origin: "Hải Phòng",
     destination: "Quảng Ninh",
-    directionality: "BIDIRECTIONAL_CLAIM_UNVERIFIED",
+    directionality: "BIDIRECTIONAL_VERIFIED",
     parentCluster: "CLUSTER-C",
     routeType: "PARENT_CORRIDOR",
     assetIds: Object.freeze(["MP-006", "CP-004"]),
     publicationState: "EXISTING_PUBLISHED",
-    commercial: commercialFacts({ sharedRidePrice: null, charter4SeatPrice: null, charter7SeatPrice: null, parcelPrice: null }, "data/routes.ts:15"),
-    journey: journeyFacts(null, null, "data/routes.ts:15"),
+    commercial: commercialFacts({ sharedRidePrice: null, charter4SeatPrice: null, charter7SeatPrice: null, parcelPrice: null }, "data/routes.ts:15", "Stored route values", "hp-qn"),
+    journey: journeyFacts(null, null, "data/routes.ts:15", null, null, true),
     operations: operationalFacts({
       serviceClaim: "Current pages claim shared ride, charter, and parcel demand are accepted in both directions; availability is checked per trip.",
       serviceRef: "app/[slug]/page.tsx:53-68; data/guide-posts.ts:116-140",
@@ -259,10 +280,11 @@ export const phase1ParentRoutes = Object.freeze([
       luggageRef: "data/guide-posts.ts:116-140",
       parcelClaim: "Current route template claims parcel demand is accepted; route data contains no parcel price.",
       parcelRef: "app/[slug]/page.tsx:53-68,159-184; data/routes.ts:15",
+      ownerConfirmed: true,
     }),
     directions: Object.freeze([
-      directionFacts("hp-to-qn", "Hải Phòng", "Quảng Ninh", "data/guide-posts.ts:116-140", "Current guide claims demand is accepted in this direction."),
-      directionFacts("qn-to-hp", "Quảng Ninh", "Hải Phòng", "data/guide-posts.ts:134-137", "Current guide claims both directions, without direction-specific operational facts."),
+      directionFacts("hp-to-qn", "Hải Phòng", "Quảng Ninh", "data/guide-posts.ts:116-140", "Current guide claims demand is accepted in this direction.", null, null, true),
+      directionFacts("qn-to-hp", "Quảng Ninh", "Hải Phòng", "data/guide-posts.ts:134-137", "Current guide claims both directions, without direction-specific operational facts.", null, null, true),
     ]),
     searchSupport: Object.freeze({
       aliases: Object.freeze(["Hải Phòng Quảng Ninh", "Quảng Ninh Hải Phòng", "xe ghép HP QN"]),
@@ -305,12 +327,12 @@ export const phase1SubRoutes = Object.freeze([
     endpoint: "Sân bay Cát Bi",
     endpointProvince: "Hải Phòng",
     endpointLifecycle: "EXISTING_ASSET",
-    serviceStatus: "UNCONFIRMED",
+    serviceStatus: "CONFIRMED",
     existingAssetIds: Object.freeze(["MP-004", "CP-007"]),
     publicationState: "EXISTING_PUBLISHED",
     canonical: "/xe-hai-duong-cat-bi",
-    commercial: commercialFacts({ sharedRidePrice: 300000, charter4SeatPrice: 600000, charter7SeatPrice: 750000, parcelPrice: 150000 }, "data/routes.ts:13"),
-    journey: journeyFacts(58, 75, "data/routes.ts:13", "Current guide asks customers to provide flight, terminal (if known), passenger, and luggage details; no waiting or early/late-flight rule is stored.", "data/guide-posts.ts:306-329"),
+    commercial: commercialFacts({ sharedRidePrice: 300000, charter4SeatPrice: 600000, charter7SeatPrice: 750000, parcelPrice: 150000 }, "data/routes.ts:13", "Stored route values", "hd-cb"),
+    journey: journeyFacts(58, 75, "data/routes.ts:13", "Current guide asks customers to provide flight, terminal (if known), passenger, and luggage details; no waiting or early/late-flight rule is stored.", "data/guide-posts.ts:306-329", true),
     operations: operationalFacts({
       serviceClaim: "Current asset claims shared and charter demand are accepted in both directions, subject to trip checks.",
       serviceRef: "data/guide-posts.ts:306-329",
@@ -320,6 +342,7 @@ export const phase1SubRoutes = Object.freeze([
       luggageRef: "data/guide-posts.ts:306-329",
       parcelClaim: "A parcel price exists in route data, but the Cát Bi asset does not provide an airport parcel rule.",
       parcelRef: "data/routes.ts:13",
+      ownerConfirmed: true,
     }),
   }),
   candidateSubRoute({ subRouteId: "hd-thuy-nguyen", parentRouteId: "hd-hp", parentCluster: "CLUSTER-A", endpoint: "Thủy Nguyên", endpointProvince: "Hải Phòng" }),
@@ -419,6 +442,7 @@ export const phase1AssetClaims = Object.freeze([
 export const phase1DataConflicts = Object.freeze([
   Object.freeze({
     conflictId: "DATA_CONFLICT-001",
+    status: "OPEN",
     severity: "HIGH",
     routes: Object.freeze(["hd-hp", "hd-qn", "hp-qn"]),
     fact: "parcelPricing",
@@ -433,6 +457,7 @@ export const phase1DataConflicts = Object.freeze([
   }),
   Object.freeze({
     conflictId: "DATA_CONFLICT-002",
+    status: "PARTIALLY_RESOLVED",
     severity: "HIGH",
     routes: Object.freeze(["hd-hp", "hd-cat-bi", "hd-qn", "hp-qn"]),
     fact: "priceEvidence",
@@ -442,10 +467,11 @@ export const phase1DataConflicts = Object.freeze([
       "TECH-001 therefore backfills these values as UNKNOWN rather than VERIFIED.",
     ]),
     sourceRefs: Object.freeze(["data/routes.ts:7-15", "data/seo/route-evidence.mjs:1-36"]),
-    resolution: "Owner must confirm, correct, or mark each stored price as per-trip/no-fixed-price and provide verifier/date.",
+    resolution: "Owner authorized the stored shared-ride and charter prices for hd-hp, hd-cat-bi, and hd-qn. HP-QN remains contact-only; parcel prices remain UNKNOWN; endpoint-specific applicability is still unresolved.",
   }),
   Object.freeze({
     conflictId: "DATA_CONFLICT-003",
+    status: "PARTIALLY_RESOLVED",
     severity: "HIGH",
     routes: Object.freeze(["hd-hp", "hd-cat-bi", "hd-qn", "hp-qn"]),
     fact: "serviceAvailability",
@@ -454,7 +480,7 @@ export const phase1DataConflicts = Object.freeze([
       "No direction-specific availability, hours, endpoint coverage, or operations verifier exists.",
     ]),
     sourceRefs: Object.freeze(["app/[slug]/page.tsx:53-68,159-184", "data/guide-posts.ts:58-140,171-221,279-329", "data/seo/route-evidence.mjs:1-36"]),
-    resolution: "Owner must classify each corridor/direction/endpoint as confirmed, unconfirmed, not serviced, daily, or per-trip.",
+    resolution: "Owner confirmed both directions, door-to-door pickup/drop-off, shared ride, charter, payment after trip, and free advance booking. Endpoint coverage, frequency, hours, and parcel availability remain unresolved.",
   }),
 ]);
 

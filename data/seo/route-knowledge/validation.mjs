@@ -30,6 +30,10 @@ export function factValueForEvidenceAwareConsumer(fact) {
   return fact.value;
 }
 
+export function isEndpointEligibleForPublication(record) {
+  return Boolean(record && record.serviceStatus === "CONFIRMED" && record.publicationState !== "DATA_ONLY");
+}
+
 export function summarizePhase1KnowledgeBase() {
   const canonicalRouteFacts = collectKnowledgeFacts({ parentRoutes: phase1ParentRoutes, subRoutes: phase1SubRoutes });
   const claimFacts = phase1AssetClaims.map((claim) => claim.evidence);
@@ -94,6 +98,10 @@ export function validatePhase1KnowledgeBase() {
     if (subRoute.publicationState !== "DATA_ONLY" || subRoute.canonical !== null || subRoute.existingAssetIds.length) {
       errors.push(`${subRoute.subRouteId} candidate must remain data-only with no public asset or canonical.`);
     }
+  }
+
+  for (const subRoute of phase1SubRoutes.filter((route) => route.serviceStatus === "NOT_SERVICED")) {
+    if (isEndpointEligibleForPublication(subRoute)) errors.push(`${subRoute.subRouteId} is NOT_SERVICED but eligible for publication.`);
   }
 
   const mappedAssetIds = new Set([

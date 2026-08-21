@@ -115,6 +115,38 @@ test("evidence statuses cannot become public without traceable provenance", () =
   assert.equal(traceableEstimate.amount, 250000);
 });
 
+test("owner-verified prices can safely replace a backfilled value", () => {
+  const published = { ...fixtureAsset("PUBLISHED"), backfilledExisting: true };
+  const rawRoute = { sharedPrice: null, private4Price: null, private7Price: null, parcelPrice: null };
+  const verifiedPrice = {
+    value: 250000,
+    status: "VERIFIED",
+    sourceType: "OWNER_CONFIRMATION",
+    sourceRef: "OWNER_VERIFICATION_RECORD_PHASE1.md",
+    verifiedAt: "2026-08-21",
+    verifiedBy: "Owner",
+    notes: "Confirmed stored price.",
+  };
+  const governed = governRouteForPublication(rawRoute, published, { price: verifiedPrice });
+  assert.equal(governed.sharedPrice, 250000);
+  assert.equal(governed.priceFallbackPolicy, "LEGACY_FORMULA");
+});
+
+test("a verified variable price clears a legacy numeric value", () => {
+  const published = { ...fixtureAsset("PUBLISHED"), backfilledExisting: true };
+  const variablePrice = {
+    value: null,
+    status: "VERIFIED",
+    sourceType: "OWNER_CONFIRMATION",
+    sourceRef: "owner-record",
+    verifiedAt: "2026-08-21",
+    verifiedBy: "Owner",
+    notes: "No fixed price; quote per trip.",
+  };
+  const governed = governRouteForPublication({ sharedPrice: 250000 }, published, { price: variablePrice });
+  assert.equal(governed.sharedPrice, null);
+});
+
 test("F: migration preserves the exact 38-URL production baseline", () => {
   const migratedPaths = [...corePaths, ...productionAssetPaths(seoAssets)];
   assert.equal(assertValidRegistry(seoAssets), true);

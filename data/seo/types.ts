@@ -54,5 +54,8 @@ export type RouteEvidence = {
   sharedRideAvailable: EvidenceFact<boolean>;
   charterAvailable: EvidenceFact<boolean>;
   parcelAvailable: EvidenceFact<boolean>;
+  bidirectional: EvidenceFact<boolean>;
+  doorToDoor: EvidenceFact<boolean>;
+  paymentAfterTrip: EvidenceFact<boolean>;
+  advanceBookingFree: EvidenceFact<boolean>;
 };
-

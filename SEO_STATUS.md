@@ -6,9 +6,9 @@ Updated by: Codex
 
 ## Current Phase
 
-Phase: Phase 1 Route Knowledge Base
+Phase: Phase 1 Owner Verification
 
-Objective: Inventory current Phase 1 route facts, evidence, conflicts, and data gaps without changing public website output.
+Objective: Record explicit Owner evidence, expose only approved passenger prices on existing Phase 1 pages, and preserve unresolved operational facts as `UNKNOWN`.
 
 ---
 
@@ -30,7 +30,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| DATA-001 | Phase 1 Route Knowledge Base | Data Architecture / Audit | CLUSTER-A/B/C | REVIEW | — | 3 parents, 13 endpoint records, 11 assets, 401 audited facts, 3 conflicts, and 8 fallback paths mapped. No public consumer enabled. |
+| DATA-002 | Owner Verification & Phase 1 Data Remediation | Data Architecture / Existing UI | CLUSTER-A/B/C | REVIEW | Existing Phase 1 route URLs only | 43 facts VERIFIED; nine passenger fares exposed; missing fares use “Liên hệ”; no new URL. |
 
 ---
 
@@ -42,6 +42,7 @@ Blocked: 0
 | TECH-001 | SEO Publication Governance & Evidence Layer | 38 existing URLs preserved | — | `NOT CREATED — isolation unsafe` |
 | OPS-001 | Repository Change Attribution | — | — | Included in recovery baseline |
 | OPS-002 | Establish Recovery Baseline | — | — | `5f9834356de0f536c3528c03d2cc24f694b2e0db` |
+| DATA-001 | Phase 1 Route Knowledge Base | — | — | `c2fa0f091f6fd1adb12332b48060008b2b5ee920` |
 
 ---
 
@@ -49,18 +50,18 @@ Blocked: 0
 
 | ID | Issue | Required From | Impact |
 |---|---|---|---|
-| DATA-001-D01 | Complete `OWNER_DATA_REQUEST_PHASE1.md`: confirm/correct prices, endpoint service, directions, pickup/drop-off coverage, hours, lead time, surcharges, Cát Bi, and parcel rules. | Long / Phong | All 16 route/sub-route records remain `DATA_REQUIRED`; 393 facts remain `UNKNOWN`. |
-| DATA-001-D02 | Resolve the parcel-price, price-provenance, and service-availability conflicts in `DATA_CONFLICTS_PHASE1.md`. | Long / Phong | No new/upgraded content should use these claims until explicit evidence is recorded in DATA-002. |
+| DATA-002-D01 | Confirm endpoint coverage, operating mode/frequency, hours, lead time, surcharges, and Cát Bi exceptions. | Long / Phong | All 16 route/sub-route records correctly remain `DATA_REQUIRED`; no endpoint page should be planned yet. |
+| DATA-002-D02 | Resolve parcel availability/pricing and approve remediation of homepage, booking, route, and guide claims. | Long / Phong / Strategy | Parcel remains `UNKNOWN`; current legacy public surfaces are listed in `PUBLIC_DATA_REMEDIATION_QUEUE.md`. |
 | RES-001-D04 | Confirm whether Google Search Console, Bing Webmaster Tools, GA4, and official Zalo/Facebook profiles are configured outside the repository. | Long / Owner | Production HTML exposes no Google/Bing meta verification or GA4 ID; DNS-level verification cannot be inferred from code. |
 
 ---
 
 ## Next Queue
 
-1. Strategy reviews DATA-001 implementation and removes any unnecessary questions from `OWNER_DATA_REQUEST_PHASE1.md`.
-2. Long/Phong completes the approved confirmation form with verifier and date.
-3. Run `DATA-002 — Owner Verification / Data Remediation`; preserve “theo chuyến / không cố định” as valid data.
-4. Only after DATA-002 approval, run `RES-002 — SEO Battlefield / War Map`.
+1. Strategy reviews DATA-002 evidence interpretation, existing-page price presentation, and remediation queue.
+2. Long/Phong supplies the remaining endpoint, operations, parcel, surcharge, and Cát Bi facts.
+3. Apply any Strategy-approved public remediation as a separate task.
+4. Only after DATA-002 approval and sufficient operating data, run `RES-002 — SEO Battlefield / War Map`.
 5. Do not create or upgrade SEO content from `UNKNOWN` observations.
 
 ---
@@ -71,8 +72,9 @@ Blocked: 0
 - **Resolved for new assets:** `APPROVED` remains non-public, and governed routes cannot use distance-derived numeric price fallbacks.
 - **DATA_REQUIRED, existing output intentionally retained:** all eight legacy public fallback paths are now mapped as traceable `ESTIMATE`; they remain forbidden for new assets and await operational replacement in DATA-002.
 - **Resolved in OPS-002:** validated recovery baseline `5f9834356de0f536c3528c03d2cc24f694b2e0db` provides a clean rollback point.
-- **Mapped in DATA-001:** 393 current route facts/claims remain `UNKNOWN`; zero facts are Owner `VERIFIED` until the confirmation form is returned.
-- **High data conflicts:** parcel pricing, stored-price provenance, and affirmative service claims require Owner resolution.
+- **Resolved in DATA-002 for Phase 1 passenger pages:** evidence-aware tables show nine Owner-approved shared/charter values and render missing values as “Liên hệ”. Future verified facts flow through the same data model.
+- **Verified in DATA-002:** 43 canonical facts now carry Owner provenance, including both directions, door-to-door service, shared ride, charter, payment after trip, and free advance booking.
+- **Still DATA_REQUIRED:** 382 facts remain `UNKNOWN`; parcel pricing is open, while stored-price provenance and service availability conflicts are only partially resolved.
 - **High:** 18 route pages share a mostly generic presentation/content template and do not contain route-specific pickup/drop-off or journey facts.
 - **Architecture ready; UI unchanged by brief:** an explicit cluster graph now exists, while current related-link presentation still uses its legacy ordering among published assets.
 - **Governed:** 20 out-of-scope assets remain `PUBLISHED` with `legacy: true`; `OTHER` is frozen.
@@ -108,5 +110,7 @@ Blocked: 0
 - TECH-001 was approved by Strategy on 2026-08-21. The 20 legacy assets remain live/frozen; the 11 Phase 1 assets are eligible for verified research and later upgrades.
 - OPS-001 classified the opening dirty workspace as 42 `PRE_EXISTING`, 11 `TECH_001`, 10 `MIXED`, and 0 `UNKNOWN`; it created no Git commit.
 - OPS-002 created the approved consolidated recovery baseline on `recovery/seo-baseline-20260821`; future tasks use isolated branches and commits.
-- DATA-001 maps 3 parent corridors, 13 endpoint/sub-route records, all 11 Phase 1 assets, 401 audited facts, and all 8 fallback paths without enabling a public consumer.
-- Current evidence distribution is 0 `VERIFIED`, 0 `PUBLIC_SOURCE`, 8 `ESTIMATE`, and 393 `UNKNOWN`; all 16 route/sub-route records are `DATA_REQUIRED` for new/upgraded content.
+- DATA-001 mapped 3 parent corridors, 13 endpoint/sub-route records, all 11 Phase 1 assets, 401 audited facts, and all 8 fallback paths without enabling a public consumer.
+- DATA-002 expands the canonical schema for payment and advance-booking evidence: 433 total facts, distributed as 43 `VERIFIED`, 0 `PUBLIC_SOURCE`, 8 `ESTIMATE`, and 382 `UNKNOWN`.
+- Owner confirmation did not identify any named Quảng Ninh endpoint. Twelve candidate endpoint records remain `UNCONFIRMED`; Cát Bi is confirmed only at the existing route-asset level.
+- All 16 route/sub-route records remain `DATA_REQUIRED` for new/upgraded content; DATA-002 does not fake readiness from partial confirmation.

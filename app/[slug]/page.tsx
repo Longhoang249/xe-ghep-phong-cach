@@ -5,12 +5,19 @@ import JsonLd from "@/components/JsonLd";
 import RouteViewTracker from "@/components/RouteViewTracker";
 import TrackedLink from "@/components/TrackedLink";
 import { blogPostForSlug, blogPosts } from "@/data/blog-posts";
+import { routeEvidenceByDataKey } from "@/data/seo/route-evidence.mjs";
+import { publicEvidenceValue } from "@/lib/seo/publication.mjs";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.route.slug }));
+}
+
+function formatVnd(value: number | null, suffix = "") {
+  if (value == null) return "Liên hệ";
+  return `${new Intl.NumberFormat("vi-VN").format(value)}đ${suffix}`;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -48,12 +55,26 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
   const relatedPosts = blogPosts
     .filter((item) => item.route.id !== route.id && item.route.region === route.region)
     .slice(0, 3);
-  const publicSeoPrice = route.id === "hd-pt" ? route.sharedPrice : null;
+  const routeEvidence = routeEvidenceByDataKey[route.id as keyof typeof routeEvidenceByDataKey];
+  const legacyPublicSharedPrice = route.id === "hd-pt" ? route.sharedPrice : null;
+  const publicSeoPrice = publicEvidenceValue(routeEvidence?.price) ?? legacyPublicSharedPrice;
+  const publicCharter4Price = publicEvidenceValue(routeEvidence?.charter4Price);
+  const publicCharter7Price = publicEvidenceValue(routeEvidence?.charter7Price);
+  const hasOwnerVerifiedService = publicEvidenceValue(routeEvidence?.doorToDoor) === true;
+  const showGovernedPricePanel = Boolean(routeEvidence);
+  const showPriceHighlight = showGovernedPricePanel || publicSeoPrice != null;
+  const publicPriceRows = [
+    { label: "Xe ghép", detail: "1 khách", value: publicSeoPrice, suffix: "/người" },
+    { label: "Bao xe 4 chỗ", detail: "Đi riêng theo chuyến", value: publicCharter4Price, suffix: "/chuyến" },
+    { label: "Bao xe 7 chỗ", detail: "Đi riêng theo chuyến", value: publicCharter7Price, suffix: "/chuyến" },
+  ];
 
   const faq = [
     {
       q: `Phong Cách có xe tuyến ${route.origin} – ${route.destination} không?`,
-      a: `Có. Phong Cách tiếp nhận nhu cầu xe ghép, bao xe 4–7 chỗ và gửi hàng trên tuyến ${route.origin} – ${route.destination} cả hai chiều.`,
+      a: hasOwnerVerifiedService
+        ? `Có. Phong Cách phục vụ xe ghép và bao xe 4–7 chỗ trên tuyến ${route.origin} – ${route.destination} cả hai chiều.`
+        : `Có. Phong Cách tiếp nhận nhu cầu xe ghép, bao xe 4–7 chỗ và gửi hàng trên tuyến ${route.origin} – ${route.destination} cả hai chiều.`,
     },
     {
       q: `Muốn đi tuyến ${route.origin} – ${route.destination} thì liên hệ thế nào?`,
@@ -157,9 +178,9 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
             <b><i aria-hidden="true">⇄</i>{route.destination}</b>
           </h1>
           <div className="route-hero-tags" aria-label="Dịch vụ trên tuyến">
-            <span>Xe ghép</span><span>Bao xe 4–7 chỗ</span><span>Gửi hàng theo chuyến</span>
+            <span>Xe ghép</span><span>Bao xe 4–7 chỗ</span><span>{hasOwnerVerifiedService ? "Đón tận nhà" : "Gửi hàng theo chuyến"}</span>
           </div>
-          <p className="route-answer">Phong Cách có xe phục vụ tuyến {route.origin} ⇄ {route.destination} cả hai chiều. Nếu bạn đang cần xe ghép, bao xe 4–7 chỗ hoặc gửi hàng theo chuyến, hãy gọi để Phong Cách kiểm tra xe phù hợp.</p>
+          <p className="route-answer">Phong Cách có xe phục vụ tuyến {route.origin} ⇄ {route.destination} cả hai chiều. Nếu bạn đang cần xe ghép, bao xe 4–7 chỗ{hasOwnerVerifiedService ? "" : " hoặc gửi hàng theo chuyến"}, hãy gọi để Phong Cách kiểm tra xe phù hợp.</p>
           <div className="route-detail-actions">
             <TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_hero", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink>
             <TrackedLink className="btn btn-ghost" href={forwardBookingUrl} eventName="booking_start" eventData={{ placement: "route_hero", route_slug: route.slug }}>Gửi thông tin chuyến</TrackedLink>
@@ -167,14 +188,25 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         </div>
         <aside className="route-summary-card">
           <span>PHONG CÁCH CÓ XE CHO TUYẾN NÀY</span>
-          {publicSeoPrice ? <div className="route-price-highlight"><small>Giá xe ghép tham khảo</small><strong>Từ {Math.round(publicSeoPrice / 1000)}.000đ/người</strong></div> : null}
+          {showPriceHighlight ? <div className="route-price-highlight"><small>Giá xe ghép</small><strong>{formatVnd(publicSeoPrice, "/người")}</strong></div> : null}
           <div className="route-call-highlight"><small>Bạn muốn đi {route.origin} – {route.destination}?</small><strong>Gọi {siteConfig.phoneDisplay}</strong></div>
           <p>Không áp dụng một lộ trình, quãng đường hay thời gian cố định. Phong Cách sẽ trao đổi theo nhu cầu chuyến thực tế.</p>
           <TrackedLink className="btn btn-primary route-call-button" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_summary", route_slug: route.slug }}>Gọi Phong Cách ngay →</TrackedLink>
         </aside>
       </section>
       <section className="route-commercial" aria-labelledby="route-service-title">
-        <article className="route-seo-copy">
+        {showGovernedPricePanel ? <article className="route-price-panel">
+          <span className="section-kicker">GIÁ TUYẾN {route.origin.toUpperCase()} – {route.destination.toUpperCase()}</span>
+          <h2 id="route-service-title">Giá xe ghép và bao xe</h2>
+          <p>Mục đã có giá được hiển thị trực tiếp. Mục chưa có giá xác nhận sẽ để “Liên hệ” và tự cập nhật tại đây khi nhà xe bổ sung dữ liệu.</p>
+          <div className="route-price-table">
+            {publicPriceRows.map((item) => <div key={item.label}>
+              <span><b>{item.label}</b><small>{item.detail}</small></span>
+              <strong>{formatVnd(item.value, item.suffix)}</strong>
+            </div>)}
+          </div>
+          <p className="route-variable-note"><b>Đón tận nhà, trả tận nơi.</b> Giá và xe được xác nhận theo điểm đón/trả và chuyến thực tế.</p>
+        </article> : <article className="route-seo-copy">
           <span className="section-kicker">XE {route.origin.toUpperCase()} ĐI {route.destination.toUpperCase()}</span>
           <h2 id="route-service-title">Phong Cách có xe phục vụ tuyến {route.origin} – {route.destination}</h2>
           <p>Trang này giúp khách đang tìm xe {route.origin} đi {route.destination}, xe ghép {route.origin} – {route.destination} hoặc xe {route.destination} về {route.origin} biết rằng Phong Cách có tiếp nhận nhu cầu trên tuyến.</p>
@@ -184,11 +216,11 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
             <li>Gửi hàng theo chuyến {route.origin} – {route.destination}</li>
           </ul>
           <p className="route-variable-note"><b>Mỗi chuyến có điều kiện khác nhau.</b> Lộ trình, thời gian, điểm đón trả và chi phí được trao đổi trực tiếp khi khách gọi.</p>
-        </article>
+        </article>}
         <aside className="route-call-panel">
           <span className="section-kicker">MUỐN ĐI TUYẾN NÀY?</span>
           <h2>Gọi Phong Cách kiểm tra xe</h2>
-          <p>Cho bên mình biết bạn cần đi từ đâu, đến đâu và thời điểm mong muốn. Phong Cách sẽ kiểm tra xe và trao đổi lại.</p>
+          <p>Cho bên mình biết bạn cần đi từ đâu, đến đâu và thời điểm mong muốn. {hasOwnerVerifiedService ? "Đặt trước không mất phí, thanh toán sau chuyến." : "Phong Cách sẽ kiểm tra xe và trao đổi lại."}</p>
           <TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_commercial", route_slug: route.slug }}>☎ {siteConfig.phoneDisplay}</TrackedLink>
           <small>Gọi trực tiếp để có thông tin phù hợp với chuyến thực tế.</small>
         </aside>
@@ -200,8 +232,8 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           <p>Phong Cách không dùng một thông tin cố định cho mọi khách. Mỗi yêu cầu được kiểm tra theo nơi đón, nơi trả và nhu cầu thực tế.</p>
         </div>
         <div className="route-article-steps">
-          <article><span>01</span><h3>Cho biết nhu cầu</h3><p>Xe ghép, bao xe 4–7 chỗ hay gửi hàng theo chuyến trên tuyến {route.origin} – {route.destination}.</p></article>
-          <article><span>02</span><h3>Cung cấp thông tin chuyến</h3><p>Nơi đón, nơi trả, thời điểm mong muốn, số khách và hành lý hoặc hàng hóa đi kèm.</p></article>
+          <article><span>01</span><h3>Cho biết nhu cầu</h3><p>Xe ghép, bao xe 4–7 chỗ{hasOwnerVerifiedService ? "" : " hay gửi hàng theo chuyến"} trên tuyến {route.origin} – {route.destination}.</p></article>
+          <article><span>02</span><h3>Cung cấp thông tin chuyến</h3><p>Nơi đón, nơi trả, thời điểm mong muốn, số khách và hành lý{hasOwnerVerifiedService ? "" : " hoặc hàng hóa"} đi kèm.</p></article>
           <article><span>03</span><h3>Phong Cách kiểm tra xe</h3><p>Bên mình trao đổi xe phù hợp và xác nhận các thông tin cần thiết trước khi khách quyết định.</p></article>
         </div>
       </section>
@@ -209,9 +241,15 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         <div>
           <span className="section-kicker">DỊCH VỤ PHONG CÁCH</span><h2>Nhu cầu xe trên tuyến</h2>
           <div className="route-benefits">
-            <article><b>01</b><h3>Xe ghép</h3><p>Tiếp nhận nhu cầu ghép xe trên tuyến, tùy tình trạng xe thực tế.</p></article>
-            <article><b>02</b><h3>Bao xe 4–7 chỗ</h3><p>Dành cho khách muốn đi riêng; loại xe được trao đổi khi liên hệ.</p></article>
-            <article><b>03</b><h3>Gửi hàng</h3><p>Tiếp nhận hàng theo chuyến sau khi biết loại hàng và nhu cầu thực tế.</p></article>
+            {hasOwnerVerifiedService ? <>
+              <article><b>01</b><h3>Xe ghép</h3><p>Đón tận nhà, trả tận nơi trên tuyến phục vụ.</p></article>
+              <article><b>02</b><h3>Bao xe 4–7 chỗ</h3><p>Xe riêng hai chiều; loại xe được trao đổi khi liên hệ.</p></article>
+              <article><b>03</b><h3>Đặt xe thuận tiện</h3><p>Đặt trước không mất phí, thanh toán sau chuyến.</p></article>
+            </> : <>
+              <article><b>01</b><h3>Xe ghép</h3><p>Tiếp nhận nhu cầu ghép xe trên tuyến, tùy tình trạng xe thực tế.</p></article>
+              <article><b>02</b><h3>Bao xe 4–7 chỗ</h3><p>Dành cho khách muốn đi riêng; loại xe được trao đổi khi liên hệ.</p></article>
+              <article><b>03</b><h3>Gửi hàng</h3><p>Tiếp nhận hàng theo chuyến sau khi biết loại hàng và nhu cầu thực tế.</p></article>
+            </>}
           </div>
         </div>
         <div className="faq"><span className="section-kicker">CÂU HỎI THƯỜNG GẶP</span><h2>Thông tin cần biết</h2>{faq.map((item) => <details key={item.q}><summary>{item.q}<span>＋</span></summary><p>{item.a}</p></details>)}</div>

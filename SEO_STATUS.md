@@ -6,9 +6,9 @@ Updated by: Codex
 
 ## Current Phase
 
-Phase: Repository change attribution
+Phase: Phase 1 Route Knowledge Base
 
-Objective: Establish a forensic map of the dirty Git workspace and recommend a safe clean-baseline path without changing website code or content.
+Objective: Inventory current Phase 1 route facts, evidence, conflicts, and data gaps without changing public website output.
 
 ---
 
@@ -30,7 +30,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| OPS-001 | Repository Change Attribution | Operations | Repository | REVIEW | — | `WORKSPACE_STATE.md` classifies the 63-entry opening snapshot. No reset, clean, stash, stage, commit, or website change performed. |
+| DATA-001 | Phase 1 Route Knowledge Base | Data Architecture / Audit | CLUSTER-A/B/C | REVIEW | — | 3 parents, 13 endpoint records, 11 assets, 401 audited facts, 3 conflicts, and 8 fallback paths mapped. No public consumer enabled. |
 
 ---
 
@@ -40,6 +40,8 @@ Blocked: 0
 |---|---|---|---|---|
 | RES-001 | Audit SEO Execution Architecture | — | — | `4214f65` |
 | TECH-001 | SEO Publication Governance & Evidence Layer | 38 existing URLs preserved | — | `NOT CREATED — isolation unsafe` |
+| OPS-001 | Repository Change Attribution | — | — | Included in recovery baseline |
+| OPS-002 | Establish Recovery Baseline | — | — | `5f9834356de0f536c3528c03d2cc24f694b2e0db` |
 
 ---
 
@@ -47,19 +49,19 @@ Blocked: 0
 
 | ID | Issue | Required From | Impact |
 |---|---|---|---|
-| OPS-001-D01 | Select and explicitly authorize a clean-baseline option from `WORKSPACE_STATE.md`. | Owner | Large code tasks remain unsafe while the workspace has no recoverable baseline. OPS-001 does not execute any option. |
-| DATA-001-D01 | Provide or approve operational evidence for Phase 1 route availability, endpoint-specific fares, pickup/drop-off coverage, duration, hours, booking lead time, surcharges, airport rules, and cargo service. | Long / Owner | New facts remain neutral/unknown until verifier and verification date are attached. DATA-001 code work has not started. |
+| DATA-001-D01 | Complete `OWNER_DATA_REQUEST_PHASE1.md`: confirm/correct prices, endpoint service, directions, pickup/drop-off coverage, hours, lead time, surcharges, Cát Bi, and parcel rules. | Long / Phong | All 16 route/sub-route records remain `DATA_REQUIRED`; 393 facts remain `UNKNOWN`. |
+| DATA-001-D02 | Resolve the parcel-price, price-provenance, and service-availability conflicts in `DATA_CONFLICTS_PHASE1.md`. | Long / Phong | No new/upgraded content should use these claims until explicit evidence is recorded in DATA-002. |
 | RES-001-D04 | Confirm whether Google Search Console, Bing Webmaster Tools, GA4, and official Zalo/Facebook profiles are configured outside the repository. | Long / Owner | Production HTML exposes no Google/Bing meta verification or GA4 ID; DNS-level verification cannot be inferred from code. |
 
 ---
 
 ## Next Queue
 
-1. Owner reviews OPS-001 attribution and selects a clean-baseline option; do not execute one without explicit approval.
-2. Establish the approved recoverable Git baseline before any large code task.
-3. Collect and lock the owner-verified Route Knowledge Base for `DATA-001`; do not infer missing values.
-4. After DATA-001, run `RES-002 — SEO War Map`, then Sprint 001.
-5. Do not create a new SEO URL until the relevant data and asset brief are approved.
+1. Strategy reviews DATA-001 implementation and removes any unnecessary questions from `OWNER_DATA_REQUEST_PHASE1.md`.
+2. Long/Phong completes the approved confirmation form with verifier and date.
+3. Run `DATA-002 — Owner Verification / Data Remediation`; preserve “theo chuyến / không cố định” as valid data.
+4. Only after DATA-002 approval, run `RES-002 — SEO Battlefield / War Map`.
+5. Do not create or upgrade SEO content from `UNKNOWN` observations.
 
 ---
 
@@ -67,9 +69,10 @@ Blocked: 0
 
 - **Resolved in TECH-001:** route/guide data no longer enters static params, sitemap, route lookup, or automatic discovery without a `PUBLISHED` asset.
 - **Resolved for new assets:** `APPROVED` remains non-public, and governed routes cannot use distance-derived numeric price fallbacks.
-- **DATA_REQUIRED, existing output intentionally retained:** eight legacy public fallback paths are inventoried in `UNVERIFIED_PRICE_INVENTORY.md`. Replace them individually in DATA-001 only after operational verification; never reuse them for new assets/content.
-- **Operational blocker before large code work:** the opening OPS-001 snapshot contains 24 tracked modified files and 39 untracked files (63 expanded entries), including 10 mixed-attribution files. See `WORKSPACE_STATE.md`.
-- **High:** route facts and business claims have no per-field provenance, verifier, verified date, or expiry.
+- **DATA_REQUIRED, existing output intentionally retained:** all eight legacy public fallback paths are now mapped as traceable `ESTIMATE`; they remain forbidden for new assets and await operational replacement in DATA-002.
+- **Resolved in OPS-002:** validated recovery baseline `5f9834356de0f536c3528c03d2cc24f694b2e0db` provides a clean rollback point.
+- **Mapped in DATA-001:** 393 current route facts/claims remain `UNKNOWN`; zero facts are Owner `VERIFIED` until the confirmation form is returned.
+- **High data conflicts:** parcel pricing, stored-price provenance, and affirmative service claims require Owner resolution.
 - **High:** 18 route pages share a mostly generic presentation/content template and do not contain route-specific pickup/drop-off or journey facts.
 - **Architecture ready; UI unchanged by brief:** an explicit cluster graph now exists, while current related-link presentation still uses its legacy ordering among published assets.
 - **Governed:** 20 out-of-scope assets remain `PUBLISHED` with `legacy: true`; `OTHER` is frozen.
@@ -104,3 +107,6 @@ Blocked: 0
 - Governance tests preserve the exact 38-URL baseline and reject unregistered, `REVIEW`, and `APPROVED` assets.
 - TECH-001 was approved by Strategy on 2026-08-21. The 20 legacy assets remain live/frozen; the 11 Phase 1 assets are eligible for verified research and later upgrades.
 - OPS-001 classified the opening dirty workspace as 42 `PRE_EXISTING`, 11 `TECH_001`, 10 `MIXED`, and 0 `UNKNOWN`; it created no Git commit.
+- OPS-002 created the approved consolidated recovery baseline on `recovery/seo-baseline-20260821`; future tasks use isolated branches and commits.
+- DATA-001 maps 3 parent corridors, 13 endpoint/sub-route records, all 11 Phase 1 assets, 401 audited facts, and all 8 fallback paths without enabling a public consumer.
+- Current evidence distribution is 0 `VERIFIED`, 0 `PUBLIC_SOURCE`, 8 `ESTIMATE`, and 393 `UNKNOWN`; all 16 route/sub-route records are `DATA_REQUIRED` for new/upgraded content.

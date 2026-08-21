@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { locations } from "@/data/routes";
+import { getRequestId, logServerEvent } from "@/lib/server-logging";
 
 type PhotonProperties = {
   name?: string;
@@ -21,6 +22,8 @@ function resolveCity(properties: PhotonProperties, query: string) {
 }
 
 export async function GET(request: Request) {
+  const startedAt = Date.now();
+  const requestId = getRequestId(request);
   const query = new URL(request.url).searchParams.get("q")?.trim();
   if (!query || query.length < 3) return NextResponse.json({ results: [] });
 
@@ -33,7 +36,7 @@ export async function GET(request: Request) {
 
   try {
     const response = await fetch(endpoint, {
-      headers: { "User-Agent": "XeGhepPhongCach/1.0 (https://xe-ghep-phong-cach.vercel.app)" },
+      headers: { "User-Agent": "XeGhepPhongCach/1.0 (https://xeghepphongcach.com)" },
       next: { revalidate: 86400 },
     });
     if (!response.ok) throw new Error("GEOCODER_UNAVAILABLE");
@@ -49,8 +52,10 @@ export async function GET(request: Request) {
       if (!label) return [];
       return [{ id: `${coordinates[0]}-${coordinates[1]}-${index}`, label, primary, secondary, city: resolveCity(properties, query), lat: coordinates[1], lng: coordinates[0] }];
     });
+    logServerEvent("info", "geocode_completed", { route: "/api/geocode", requestId, resultCount: results.length, durationMs: Date.now() - startedAt });
     return NextResponse.json({ results });
-  } catch {
+  } catch (error) {
+    logServerEvent("error", "geocode_failed", { route: "/api/geocode", requestId, error: error instanceof Error ? error.message : String(error), durationMs: Date.now() - startedAt });
     return NextResponse.json({ results: [], unavailable: true });
   }
 }

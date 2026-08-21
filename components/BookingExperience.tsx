@@ -1,24 +1,35 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import type { FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { FormEvent, MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import AddressField, { type AddressSuggestion } from "@/components/AddressField";
-import RouteMap from "@/components/RouteMap";
+import { trackEvent } from "@/lib/analytics";
 import { locationCoordinates } from "@/data/location-coordinates";
 import type { RoutePrice } from "@/data/routes";
-import { findRoute, locations } from "@/data/routes";
-import { BrowserLocationProvider } from "@/lib/location";
+import { findPublishedRoute, publishedLocations as locations } from "@/data/seo/published-content";
 import { estimatePrice, type ServiceType, type VehicleType } from "@/lib/pricing";
-import { captureAttribution } from "@/lib/tracking";
-
-const hotline = "0987663883";
+import { siteConfig } from "@/lib/site";
+import { captureAttribution, initializeAttribution } from "@/lib/tracking";
 const formatPrice = (price: number | null) => price ? new Intl.NumberFormat("vi-VN").format(price) + "đ" : "Đang tính giá";
 const getTomorrow = () => { const date = new Date(); date.setDate(date.getDate() + 1); return date.toISOString().slice(0, 10); };
-const subscribeMobile = (callback: () => void) => { const query = window.matchMedia("(max-width: 700px)"); query.addEventListener("change", callback); return () => query.removeEventListener("change", callback); };
-const getMobileSnapshot = () => window.matchMedia("(max-width: 700px)").matches;
-const getMobileServerSnapshot = () => false;
+const normalizeRouteText = (value: string) => value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/đ/g, "d").toLocaleLowerCase("vi");
+const locationProvince: Record<string, string> = { "Nội Bài": "Hà Nội", "Cát Bi": "Hải Phòng", "Phủ Lý": "Hà Nam" };
+const provinceOf = (location: string) => locationProvince[location] || location;
+
+const spotlightRouteOrder = ["hd-hp", "hd-qn", "hp-qn", "hd-hn", "hd-nb", "hd-cb"];
+const spotlightRouteIds = new Set(spotlightRouteOrder);
+const spotlightRouteRank = new Map(spotlightRouteOrder.map((routeId, index) => [routeId, index]));
+const featuredProvinces = new Set(["Hải Dương", "Hải Phòng", "Quảng Ninh"]);
+const provinceShortcutOrder = ["Hải Dương", "Hải Phòng", "Quảng Ninh", "Hà Nội", "Bắc Ninh", "Bắc Giang", "Thái Nguyên", "Vĩnh Phúc", "Phú Thọ", "Thái Bình", "Nam Định", "Hưng Yên", "Hà Nam", "Ninh Bình", "Thanh Hoá"];
+const provinceShortcutRank = new Map(provinceShortcutOrder.map((province, index) => [province, index]));
+const heroSlides = [
+  { src: "/images/hero-xe-ghep-phong-cach.png", alt: "Xe Ghép Phong Cách chuyên tuyến Hải Dương, Hải Phòng và Quảng Ninh", fit: "contain" as const, position: "center" },
+  { src: "/images/hero-phong-cach-fleet.png", alt: "Đội xe 4 đến 7 chỗ phục vụ các tuyến liên tỉnh của Phong Cách", fit: "cover" as const, position: "center 62%" },
+  { src: "/images/dich-vu-xe-4-cho.png", alt: "Xe 4 chỗ Phong Cách dành cho khách lẻ và nhóm nhỏ", fit: "cover" as const, position: "center 58%" },
+  { src: "/images/dich-vu-xe-7-cho.png", alt: "Xe 7 chỗ Phong Cách dành cho gia đình và nhóm khách", fit: "cover" as const, position: "center 58%" },
+  { src: "/images/don-tan-noi.jpg", alt: "Tài xế Phong Cách hỗ trợ hành lý khi đón khách tận nơi", fit: "cover" as const, position: "55% center" },
+];
 
 type Props = { routes: RoutePrice[] };
 type BookingState = {
@@ -29,19 +40,93 @@ type BookingState = {
 };
 
 const inferCity = (value: string) => locations.find((location) => value.toLocaleLowerCase("vi").includes(location.toLocaleLowerCase("vi"))) || "";
-const nearestCity = (lat: number, lng: number) => Object.entries(locationCoordinates).sort(([, a], [, b]) => ((a[0] - lat) ** 2 + (a[1] - lng) ** 2) - ((b[0] - lat) ** 2 + (b[1] - lng) ** 2))[0]?.[0] || "";
+
+function HeroCarousel() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [manualPaused, setManualPaused] = useState(false);
+  const [interacting, setInteracting] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const active = heroSlides[activeSlide];
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (manualPaused || interacting || reducedMotion) return;
+    const timer = window.setTimeout(() => setActiveSlide((current) => (current + 1) % heroSlides.length), 6000);
+    return () => window.clearTimeout(timer);
+  }, [activeSlide, interacting, manualPaused]);
+
+  const goTo = (index: number) => setActiveSlide((index + heroSlides.length) % heroSlides.length);
+
+  return (
+    <div
+      className="hero-visual hero-photo hero-carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Hình ảnh dịch vụ xe ghép liên tỉnh Phong Cách"
+      onMouseEnter={() => setInteracting(true)}
+      onMouseLeave={() => setInteracting(false)}
+      onFocusCapture={() => setInteracting(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false);
+      }}
+      onTouchStart={(event) => { touchStartX.current = event.touches[0]?.clientX ?? null; }}
+      onTouchEnd={(event) => {
+        if (touchStartX.current === null) return;
+        const delta = (event.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current;
+        if (Math.abs(delta) > 45) goTo(activeSlide + (delta < 0 ? 1 : -1));
+        touchStartX.current = null;
+      }}
+    >
+      <div className="hero-carousel-slide" key={active.src} aria-live={manualPaused ? "polite" : "off"}>
+        <Image
+          src={active.src}
+          alt={active.alt}
+          fill
+          loading="eager"
+          fetchPriority={activeSlide === 0 ? "high" : "auto"}
+          sizes="(max-width: 700px) calc(100vw - 36px), 48vw"
+          style={{ objectFit: active.fit, objectPosition: active.position }}
+        />
+      </div>
+      <button type="button" className="hero-carousel-arrow previous" aria-label="Xem ảnh trước" onClick={() => goTo(activeSlide - 1)}>‹</button>
+      <button type="button" className="hero-carousel-arrow next" aria-label="Xem ảnh tiếp theo" onClick={() => goTo(activeSlide + 1)}>›</button>
+      <div className="hero-carousel-toolbar">
+        <div className="hero-carousel-dots" aria-label="Chọn ảnh">
+          {heroSlides.map((slide, index) => (
+            <button
+              type="button"
+              className={index === activeSlide ? "active" : ""}
+              aria-label={`Xem ảnh ${index + 1}: ${slide.alt}`}
+              aria-current={index === activeSlide ? "true" : undefined}
+              key={slide.src}
+              onClick={() => goTo(index)}
+            />
+          ))}
+        </div>
+        <button type="button" className="hero-carousel-pause" aria-label={manualPaused ? "Tiếp tục tự chuyển ảnh" : "Dừng tự chuyển ảnh"} aria-pressed={manualPaused} onClick={() => setManualPaused((paused) => !paused)}>
+          {manualPaused ? "▶" : "Ⅱ"}
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function BookingExperience({ routes }: Props) {
   const [booking, setBooking] = useState<BookingState>({ pickup: "Hải Dương", pickupCity: "Hải Dương", pickupLat: locationCoordinates["Hải Dương"][0], pickupLng: locationCoordinates["Hải Dương"][1], dropoff: "", need: "ride", service: "shared", vehicle: "4-seat", passengers: 1, date: getTomorrow(), time: "07:00", name: "", phone: "", cargoName: "", cargoLength: 30, cargoWidth: 20, cargoHeight: 15, cargoWeight: 2 });
   const [stage, setStage] = useState<"form" | "success">("form");
-  const [showMobileMap, setShowMobileMap] = useState(false);
-  const isMobile = useSyncExternalStore(subscribeMobile, getMobileSnapshot, getMobileServerSnapshot);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [locationMessage, setLocationMessage] = useState("");
   const [saving, setSaving] = useState(false);
   const [bookingId, setBookingId] = useState("");
+  const [routeQuery, setRouteQuery] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("");
   const formRef = useRef<HTMLDivElement>(null);
-  const selectedRoute = useMemo(() => findRoute(booking.pickupCity || inferCity(booking.pickup), booking.dropoffCity || inferCity(booking.dropoff)), [booking.pickup, booking.pickupCity, booking.dropoff, booking.dropoffCity]);
+  const routeProvinces = useMemo(() => Array.from(new Set(routes.flatMap((route) => [provinceOf(route.origin), provinceOf(route.destination)]))).sort((provinceA, provinceB) => {
+    const rankA = provinceShortcutRank.get(provinceA) ?? Number.MAX_SAFE_INTEGER;
+    const rankB = provinceShortcutRank.get(provinceB) ?? Number.MAX_SAFE_INTEGER;
+    return rankA - rankB || provinceA.localeCompare(provinceB, "vi");
+  }), [routes]);
+  const selectedRoute = useMemo(() => findPublishedRoute(booking.pickupCity || inferCity(booking.pickup), booking.dropoffCity || inferCity(booking.dropoff)), [booking.pickup, booking.pickupCity, booking.dropoff, booking.dropoffCity]);
   const approximateDistanceKm = useMemo(() => {
     if (!booking.pickupLat || !booking.pickupLng || !booking.dropoffLat || !booking.dropoffLng) return undefined;
     const earthRadius = 6371; const toRadians = (value: number) => value * Math.PI / 180;
@@ -52,6 +137,7 @@ export default function BookingExperience({ routes }: Props) {
   const price = useMemo(() => estimatePrice(selectedRoute, booking.need, booking.service, booking.vehicle, booking.passengers, approximateDistanceKm, { lengthCm: booking.cargoLength, widthCm: booking.cargoWidth, heightCm: booking.cargoHeight, weightKg: booking.cargoWeight }), [approximateDistanceKm, booking.cargoHeight, booking.cargoLength, booking.cargoWeight, booking.cargoWidth, booking.need, booking.passengers, booking.service, booking.vehicle, selectedRoute]);
 
   useEffect(() => {
+    initializeAttribution();
     const params = new URLSearchParams(window.location.search);
     const from = params.get("from"); const to = params.get("to");
     if (from || to) queueMicrotask(() => setBooking((old) => {
@@ -63,40 +149,12 @@ export default function BookingExperience({ routes }: Props) {
   }, []);
 
   const update = <K extends keyof BookingState>(key: K, value: BookingState[K]) => setBooking((old) => ({ ...old, [key]: value }));
-  const chooseRoute = (route: RoutePrice) => {
-    const from = locationCoordinates[route.origin]; const to = locationCoordinates[route.destination];
-    setBooking((old) => ({ ...old, pickup: route.origin, pickupCity: route.origin, pickupLat: from?.[0], pickupLng: from?.[1], dropoff: route.destination, dropoffCity: route.destination, dropoffLat: to?.[0], dropoffLng: to?.[1] }));
-    setShowMobileMap(false);
-    requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
-  };
-  const selectAddress = (side: "pickup" | "dropoff", suggestion: AddressSuggestion) => {
-    setShowMobileMap(false);
-    setBooking((old) => {
-      const typedValue = side === "pickup" ? old.pickup.trim() : old.dropoff.trim();
-      const label = /\d/.test(typedValue) ? typedValue : suggestion.label;
-      return side === "pickup"
-        ? { ...old, pickup: label, pickupCity: suggestion.city || inferCity(suggestion.label), pickupLat: suggestion.lat, pickupLng: suggestion.lng }
-        : { ...old, dropoff: label, dropoffCity: suggestion.city || inferCity(suggestion.label), dropoffLat: suggestion.lat, dropoffLng: suggestion.lng };
-    });
-  };
-  const useCurrentLocation = async () => {
-    setLocationMessage("Đang xác định vị trí…");
-    try {
-      const result = await new BrowserLocationProvider().current();
-      setBooking((old) => ({ ...old, pickup: result.label, pickupCity: result.lat && result.lng ? nearestCity(result.lat, result.lng) : old.pickupCity, pickupLat: result.lat, pickupLng: result.lng }));
-      setLocationMessage("Đã lấy vị trí. Bạn vẫn có thể sửa địa chỉ đón.");
-    } catch {
-      setLocationMessage("Không sao, bạn có thể nhập điểm đón bằng tay.");
-    }
-  };
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     const nextErrors: Record<string, string> = {};
     if (!booking.pickup.trim()) nextErrors.pickup = "Nhập điểm đón.";
     if (!booking.dropoff.trim()) nextErrors.dropoff = "Nhập điểm đến.";
-    if (!booking.pickupLat || !booking.pickupLng) nextErrors.pickup = "Chọn một địa chỉ trong danh sách gợi ý.";
-    if (!booking.dropoffLat || !booking.dropoffLng) nextErrors.dropoff = "Chọn một địa chỉ trong danh sách gợi ý.";
-    if (booking.pickupLat === booking.dropoffLat && booking.pickupLng === booking.dropoffLng) nextErrors.dropoff = "Điểm đến cần khác điểm đón.";
+    if (booking.pickup.trim().toLocaleLowerCase("vi") === booking.dropoff.trim().toLocaleLowerCase("vi")) nextErrors.dropoff = "Điểm đến cần khác điểm đón.";
     if (!booking.name.trim()) nextErrors.name = "Vui lòng nhập họ tên để Phong Cách tiện xưng hô.";
     if (!/^(0|\+84)[0-9]{9}$/.test(booking.phone.replace(/\s/g, ""))) nextErrors.phone = "Vui lòng nhập số điện thoại Việt Nam hợp lệ.";
     if (!booking.date) nextErrors.date = "Vui lòng chọn ngày đi.";
@@ -104,7 +162,15 @@ export default function BookingExperience({ routes }: Props) {
     if (booking.need === "parcel" && !booking.cargoName.trim()) nextErrors.cargoName = "Nhập tên hàng hóa.";
     if (booking.need === "parcel" && [booking.cargoLength, booking.cargoWidth, booking.cargoHeight, booking.cargoWeight].some((value) => !value || value <= 0)) nextErrors.cargoSize = "Kích thước và cân nặng cần lớn hơn 0.";
     setErrors(nextErrors);
+    if (nextErrors.cargoName || nextErrors.cargoSize) setShowAdvanced(true);
     if (Object.keys(nextErrors).length) return;
+    trackEvent("booking_form_submit", {
+      route_slug: selectedRoute?.slug || "custom-route",
+      need: booking.need,
+      service: booking.service,
+      vehicle: booking.vehicle,
+      passengers: booking.passengers,
+    });
     setSaving(true);
     const id = `PC-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
     const payload = {
@@ -118,106 +184,199 @@ export default function BookingExperience({ routes }: Props) {
       cargo_height_cm: booking.need === "parcel" ? booking.cargoHeight : null, cargo_weight_kg: booking.need === "parcel" ? booking.cargoWeight : null,
       status: "new", ...captureAttribution(),
     };
+    let delivery = "local";
     try {
       const saved = JSON.parse(localStorage.getItem("phong-cach-bookings") || "[]");
       localStorage.setItem("phong-cach-bookings", JSON.stringify([payload, ...saved].slice(0, 50)));
-      await fetch("/api/bookings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-    } catch { /* Bản demo vẫn xác nhận sau khi lưu cục bộ. */ }
+      const response = await fetch("/api/bookings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      delivery = response.ok ? "api" : "api-error";
+    } catch { delivery = "local-fallback"; }
+    trackEvent("booking_form_saved", { route_slug: selectedRoute?.slug || "custom-route", delivery });
     setBookingId(id); setStage("success"); setSaving(false);
     requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }));
+  };
+
+  const chooseQuickRoute = (route: RoutePrice) => {
+    const pickupCoordinates = locationCoordinates[route.origin];
+    const dropoffCoordinates = locationCoordinates[route.destination];
+    setStage("form");
+    setErrors({});
+    setBooking((old) => ({
+      ...old,
+      pickup: route.origin,
+      pickupCity: route.origin,
+      pickupLat: pickupCoordinates?.[0],
+      pickupLng: pickupCoordinates?.[1],
+      dropoff: route.destination,
+      dropoffCity: route.destination,
+      dropoffLat: dropoffCoordinates?.[0],
+      dropoffLng: dropoffCoordinates?.[1],
+    }));
+    trackEvent("route_view", { route_slug: route.slug, origin: route.origin, destination: route.destination, placement: "home_quick_finder" });
+    requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  };
+  const scrollToSection = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    const section = document.getElementById(id);
+    if (!section) return;
+    const target = section.querySelector<HTMLElement>(".section-heading, .booking-head, h2") || section;
+    const headerHeight = document.querySelector<HTMLElement>(".site-header")?.offsetHeight || 0;
+    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerHeight - 18);
+    window.scrollTo({ top, behavior: "smooth" });
+    window.history.replaceState(null, "", `#${id}`);
+  };
+  const selectProvinceShortcut = (province: string) => {
+    setRouteQuery(province);
+    setSelectedProvince(province);
+    trackEvent("route_filter", { province, placement: "home_province_shortcuts" });
+    requestAnimationFrame(() => {
+      const section = document.getElementById("tuyen-xe");
+      if (!section) return;
+      const headerHeight = document.querySelector<HTMLElement>(".site-header")?.offsetHeight || 0;
+      const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerHeight - 14);
+      window.scrollTo({ top, behavior: "smooth" });
+      window.history.replaceState(null, "", "#tuyen-xe");
+    });
   };
 
   return (
     <main>
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="Trang chủ Xe Ghép Phong Cách"><span className="brand-mark">PC</span><span><strong>PHONG CÁCH</strong><small>Xe ghép & bao xe liên tỉnh</small></span></a>
-        <nav className="desktop-nav" aria-label="Điều hướng chính"><a href="#dich-vu">Dịch vụ</a><a href="#tuyen-xe">Tuyến xe</a><a href="#ly-do">Cách phục vụ</a></nav>
-        <a className="header-phone" href={`tel:${hotline}`}><span>☎</span><span><small>Tư vấn chuyến đi</small><strong>0987 663 883</strong></span></a>
+        <a className="brand" href="#top" aria-label="Trang chủ Xe Ghép Phong Cách"><span className="brand-mark">PC</span><span><strong>Xe Ghép Phong Cách</strong><small>Xe ghép & bao xe liên tỉnh</small></span></a>
+        <nav className="desktop-nav" aria-label="Điều hướng chính"><a href="#tuyen-xe" onClick={(event) => scrollToSection(event, "tuyen-xe")}>Tìm chuyến</a><a href="#dich-vu" onClick={(event) => scrollToSection(event, "dich-vu")}>Dịch vụ</a><Link href="/blog">Blog</Link><a href="#dat-xe" onClick={(event) => scrollToSection(event, "dat-xe")}>Đặt xe nhanh</a><a href="#lien-he" onClick={(event) => scrollToSection(event, "lien-he")}>Liên hệ</a></nav>
+        <a className="header-phone" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "home_header" })}><span>☎</span><span><small>Tư vấn chuyến đi</small><strong>{siteConfig.phoneDisplay}</strong></span></a>
       </header>
 
       <section className="hero" id="top">
         <div className="hero-inner">
           <div className="hero-copy">
-            <div className="hero-kicker"><span /> XE GHÉP LIÊN TỈNH</div>
-            <h1><span className="hero-line hero-line-dark">Đi tỉnh êm ru,</span><span className="hero-line">Ngủ một hơi là&nbsp;đến!</span></h1>
-            <p>Nhà Xe Phong Cách chuyên xe ghép tuyến tỉnh</p>
-            <div className="hero-actions"><a className="btn btn-primary call-now-button" href={`tel:${hotline}`} onClick={(event) => { if (!window.confirm(`Gọi ngay Nhà Xe Phong Cách?\n${hotline}`)) event.preventDefault(); }}><span>☎</span> Gọi Ngay · {hotline}</a></div>
-            <div className="trust-row"><span className="brand-values">Văn Minh - An Toàn - Tử Tế</span></div>
+            <h1><span className="hero-line hero-line-dark">Xe Ghép Liên Tỉnh</span><span className="hero-line">Đón tận nhà,</span><span className="hero-line">trả khách tận nơi!</span></h1>
+            <p>Xe đúng tuyến, không lòng vòng, phục vụ nhanh chóng, văn minh.</p>
+            <div className="hero-actions"><a className="btn btn-primary call-now-button" href={siteConfig.phoneHref} onClick={(event) => { trackEvent("click_call", { placement: "home_hero" }); if (!window.confirm(`Gọi ngay Nhà Xe Phong Cách?\n${siteConfig.phoneDisplay}`)) event.preventDefault(); }}>Gọi ngay {siteConfig.phoneDisplay}</a></div>
           </div>
-          <div className="hero-visual hero-photo" aria-label="Xe 7 chỗ Phong Cách trên tuyến liên tỉnh">
-            <Image src="/images/hero-phong-cach.jpg" alt="Xe Phong Cách di chuyển trên tuyến đường liên tỉnh" fill priority sizes="(max-width: 700px) 100vw, 48vw" />
-            <div className="hero-photo-shade" />
-            <div className="hero-route-pill"><i /> Xe ghép liên tỉnh</div>
-            <div className="hero-service-pill"><span>⌖</span><div><small>Đưa đón tận nơi</small><strong>Xe 4 chỗ · 7 chỗ</strong></div></div>
-          </div>
+          <HeroCarousel />
         </div>
       </section>
 
-      <section className="section" id="tuyen-xe"><div className="section-heading"><div><span className="section-kicker">HÀNH TRÌNH QUEN THUỘC</span><h2>Chọn nhanh tuyến bạn cần</h2><p>Thời gian và mức giá được hiển thị để tham khảo trước khi tư vấn viên kiểm tra xe.</p></div><Link href="/tuyen-xe">Xem tất cả tuyến →</Link></div><div className="route-cards">{routes.map((route) => <article className="route-card" key={route.id}><div className="route-icon">{route.tag ? "✈" : "↗"}</div><span>{route.tag || "Có chuyến mỗi ngày"}</span><h3>{route.origin} <b>↔</b><br />{route.destination}</h3><div className="route-meta"><strong>{route.sharedPrice ? `Từ ${Math.round(route.sharedPrice / 1000)}k` : "Liên hệ giá"}</strong><small>~{Math.floor(route.durationMinutes / 60)}h{route.durationMinutes % 60}</small></div><button onClick={() => chooseRoute(route)}>Xem chuyến <span>→</span></button></article>)}</div></section>
+      <nav className="province-shortcuts-shell" aria-label="Chọn nhanh tỉnh thành có tuyến xe">
+        <div className="province-shortcuts">
+          <span className="province-shortcuts-label"><small>ĐI ĐÂU?</small><strong>Chọn nhanh tỉnh</strong></span>
+          <div className="province-shortcut-track">
+            {routeProvinces.map((province) => <button type="button" className={`${featuredProvinces.has(province) ? "featured" : ""}${selectedProvince === province ? " active" : ""}`} aria-pressed={selectedProvince === province} key={province} onClick={() => selectProvinceShortcut(province)}>{province}</button>)}
+          </div>
+        </div>
+      </nav>
+
+      <QuickRouteFinder routes={routes} onSelect={chooseQuickRoute} query={routeQuery} selectedProvince={selectedProvince} onQueryChange={setRouteQuery} onProvinceChange={setSelectedProvince} />
 
       <section className="section services" id="dich-vu">
-        <div className="section-heading centered"><div><span className="section-kicker">PHỤC VỤ THEO NHU CẦU</span><h2>Một đầu mối cho mọi chuyến đi tỉnh</h2><p>Từ chuyến đi cá nhân đến cả gia đình, sân bay hay gửi hàng — bên mình đều tư vấn phương án vừa đủ.</p></div></div>
+        <div className="section-heading centered services-heading"><div><span className="section-kicker">DI CHUYỂN AN TÂM</span><h2>Xe Ghép Phong Cách Liên Tỉnh</h2><p><span>Chuyên tuyến Hải Dương - Hải Phòng - Quảng Ninh</span><span>Dịch vụ chuyên nghiệp, giá cả hợp lý</span></p></div></div>
         <div className="service-showcase">
-          <div className="service-showcase-photo campaign-photo"><Image src="/images/luon-co-xe-hop-chuyen.jpg" alt="Xe ghép Phong Cách luôn có xe hợp chuyến" fill sizes="(max-width: 700px) 100vw, 54vw" /></div>
-          <div className="service-showcase-copy"><span>CHĂM TỪ ĐIỂM ĐÓN</span><h3>Không chỉ tìm xe.<br />Bên mình theo chuyến đến khi bạn tới nơi.</h3><p>Tư vấn viên kiểm tra lịch xe, thống nhất điểm đón, báo rõ chi phí và hỗ trợ khi lịch trình thay đổi.</p><div className="care-points"><b>✓ Tư vấn đúng nhu cầu</b><b>✓ Xác nhận trước khi đi</b><b>✓ Hỗ trợ trong hành trình</b></div></div>
+          <div className="service-showcase-photo campaign-photo"><Image src="/images/luon-co-xe-hop-chuyen.jpg" alt="Hình minh họa dịch vụ xe ghép liên tỉnh Phong Cách" fill sizes="(max-width: 700px) 100vw, 54vw" /></div>
+          <div className="service-showcase-copy"><span>XE GHÉP LIÊN TỈNH MIỀN BẮC</span><h3>Dịch vụ xe ghép Hải Dương, Hải Phòng, Quảng Ninh tiếp nhận yêu cầu đưa đón 2 chiều tận nơi.</h3><div className="care-points"><b>✓ Kiểm tra xe theo yêu cầu</b><b>✓ Xác nhận giờ đón trước chuyến</b><b>✓ Thống nhất điểm đón và trả</b></div></div>
         </div>
-        <div className="service-grid"><Service image="/images/hero-xe-ghep-phong-cach.jpg" position="70% center" label="01" title="Xe 4 chỗ" text="Gọn gàng, linh hoạt cho 1–3 khách và hành lý vừa phải." /><Service image="/images/hero-xe-ghep-phong-cach.jpg" position="88% center" label="02" title="Xe 7 chỗ" text="Thoải mái hơn cho gia đình hoặc nhóm từ 4–6 khách." /><Service image="/images/don-tan-noi.jpg" position="55% center" label="03" title="Bao xe riêng" text="Chủ động giờ đón, không gian riêng và lịch trình theo nhu cầu." /><Service image="/images/don-tan-noi.jpg" position="24% center" label="04" title="Gửi hàng theo chuyến" text="Nhận gửi hàng gọn nhẹ trên các tuyến liên tỉnh đang hoạt động." /></div>
+        <div className="service-grid"><Service image="/images/dich-vu-xe-4-cho.png" position="center 58%" label="01" title="Xe 4 chỗ" text="Gọn gàng, linh hoạt cho 1–3 khách và hành lý vừa phải." /><Service image="/images/dich-vu-xe-7-cho.png" position="center 58%" label="02" title="Xe 7 chỗ" text="Thoải mái hơn cho gia đình hoặc nhóm từ 4–6 khách." /><Service image="/images/don-tan-noi.jpg" position="55% center" label="03" title="Bao xe riêng" text="Chủ động giờ đón, không gian riêng và lịch trình theo nhu cầu." /><Service image="/images/gui-hang-theo-chuyen.png" position="center 54%" label="04" title="Gửi hàng theo chuyến" text="Nhận gửi hàng gọn nhẹ trên các tuyến liên tỉnh đang hoạt động." /></div>
       </section>
 
-      <section className="why" id="ly-do"><div className="why-inner"><div className="why-copy"><span className="section-kicker light">PHONG CÁCH PHỤC VỤ</span><h2>Đi đường dài,<br />mọi thứ nên rõ từ đầu.</h2><p>Xe nào đón, giờ nào đi, chi phí dự kiến ra sao — tư vấn viên trao đổi trước để bạn chủ động quyết định.</p><a className="btn btn-white" href={`tel:${hotline}`}>Trao đổi với tư vấn viên</a></div><div className="why-grid"><Reason n="01" title="Rõ xe, rõ giờ" text="Thông tin chuyến được gọi xác nhận trước khi xe đến đón." /><Reason n="02" title="Một đầu mối hỗ trợ" text="Có người tiếp nhận và theo sát yêu cầu trong suốt hành trình." /><Reason n="03" title="Chọn xe vừa nhu cầu" text="Xe ghép, bao xe, 4 chỗ hay 7 chỗ đều được tư vấn phù hợp." /><Reason n="04" title="Đi xong mới trả tiền" text="Không thu tiền khi gửi yêu cầu; thanh toán sau khi hoàn thành chuyến." /></div></div></section>
-
-      <section className="section steps"><div className="section-heading centered"><div><span className="section-kicker">CHỈ MẤT KHOẢNG 1 PHÚT</span><h2>Gửi yêu cầu xe trong 3 bước</h2><p>Không cần tài khoản, không cọc online tại bước gửi yêu cầu.</p></div></div><div className="steps-grid"><Step n="1" title="Chọn tuyến & nhu cầu" text="Cho biết nơi đón, điểm đến và loại chuyến." /><Step n="2" title="Nhận cuộc gọi xác nhận" text="Thống nhất xe, giờ đón và mức giá cuối." /><Step n="3" title="Đi xong mới thanh toán" text="Hoàn thành chuyến rồi thanh toán cho nhà xe." /></div></section>
-
-      <section className="assurance section"><div className="section-heading"><div><span className="section-kicker">CAM KẾT TRONG QUY TRÌNH</span><h2>Yên tâm từ lúc gửi yêu cầu</h2><p>Mỗi bước đều ngắn gọn, rõ trách nhiệm và không tạo áp lực thanh toán.</p></div></div><div className="assurance-grid"><Assurance n="01" title="Chưa phát sinh giao dịch" text="Gửi thông tin chỉ để Phong Cách kiểm tra và giữ liên hệ với bạn." /><Assurance n="02" title="Bạn quyết định sau cuộc gọi" text="Chỉ xác nhận khi xe, thời gian và chi phí đã phù hợp với nhu cầu." /><Assurance n="03" title="Chi phí được nói rõ" text="Giá hiển thị là tham khảo; mức cuối được trao đổi trước chuyến đi." /></div></section>
+      <section className="assurance section" id="cam-ket"><div className="section-heading assurance-heading"><div><span className="section-kicker">03 NGUYÊN TẮC</span><h2>Xe Ghép Phong Cách</h2></div></div><div className="assurance-grid"><Assurance n="01" title="Kiểm tra chuyến theo yêu cầu" text="Tiếp nhận điểm đón, điểm trả và khung giờ để kiểm tra xe phù hợp" /><Assurance n="02" title="Xác nhận trước khi đi" text="Trao đổi lại xe, giờ đón và hành trình trước chuyến" /><Assurance n="03" title="Chi phí rõ ràng" text="Mức cuối được xác nhận trước chuyến, hoàn thành chuyến mới thanh toán" /></div></section>
 
       <section className="booking-shell booking-shell-bottom" id="dat-xe">
         <div className="booking-card" ref={formRef}>
           {stage === "success" ? (
-            <div className="success-state" role="status"><div className="success-icon">✓</div><span className="success-kicker">Mã yêu cầu {bookingId}</span><h2>Yêu cầu đã được gửi</h2><p className="success-lead">Bên mình sẽ gọi lại để xác nhận xe, giờ đón và mức giá cuối.</p><div className="success-route"><strong>{booking.pickup}</strong><span>→</span><strong>{booking.dropoff}</strong></div><div className="summary-grid"><span><small>Ngày đi</small><b>{new Date(booking.date + "T00:00:00").toLocaleDateString("vi-VN")}</b></span><span><small>Giờ đón</small><b>{booking.time}</b></span><span><small>Nhu cầu</small><b>{booking.need === "parcel" ? "Gửi hàng" : `${booking.passengers} khách`}</b></span><span><small>Tham khảo</small><b>{formatPrice(price)}</b></span></div><div className="payment-confirmation"><b>Đặt trước miễn phí, đến nơi mới thanh toán</b></div><div className="success-actions"><a className="btn btn-primary" href={process.env.NEXT_PUBLIC_ZALO_URL || `tel:${hotline}`}>Nhắn Zalo</a><a className="btn btn-ghost" href={`tel:${hotline}`}>Gọi tư vấn viên</a></div><button className="text-button" onClick={() => setStage("form")}>Gửi thêm yêu cầu khác</button></div>
+            <div className="success-state" role="status"><div className="success-icon">✓</div><span className="success-kicker">Mã yêu cầu {bookingId}</span><h2>Yêu cầu đã được gửi</h2><p className="success-lead">Bên mình sẽ gọi lại để xác nhận xe, giờ đón và mức giá cuối.</p><div className="success-route"><strong>{booking.pickup}</strong><span>→</span><strong>{booking.dropoff}</strong></div><div className="summary-grid"><span><small>Ngày đi</small><b>{new Date(booking.date + "T00:00:00").toLocaleDateString("vi-VN")}</b></span><span><small>Giờ đón</small><b>{booking.time}</b></span><span><small>Nhu cầu</small><b>{booking.need === "parcel" ? "Gửi hàng" : `${booking.passengers} khách`}</b></span><span><small>Tham khảo</small><b>{formatPrice(price)}</b></span></div><div className="payment-confirmation"><b>Đặt trước miễn phí, đến nơi mới thanh toán</b></div><div className="success-actions"><a className="btn btn-primary" href={process.env.NEXT_PUBLIC_ZALO_URL || siteConfig.zaloFallbackUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_zalo", { placement: "booking_success" })}>Nhắn Zalo</a><a className="btn btn-ghost" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "booking_success" })}>Gọi tư vấn viên</a></div><button className="text-button" onClick={() => setStage("form")}>Gửi thêm yêu cầu khác</button></div>
           ) : (
             <form className="compact-booking" onSubmit={submit} noValidate>
               <div className="booking-head"><div><span className="step-label">Đặt xe nhanh</span><h2>Đón tận nơi, đưa về tận cửa</h2></div></div>
-              <div className="address-search-stack">
-                <AddressField label="Đón tại" value={booking.pickup} placeholder="Ví dụ: 30 Nguyễn Khuyến, Hà Nội" tone="pickup" error={errors.pickup} onChange={(value) => { setShowMobileMap(false); setBooking((old) => ({ ...old, pickup: value, pickupCity: inferCity(value), pickupLat: undefined, pickupLng: undefined })); }} onSelect={(suggestion) => selectAddress("pickup", suggestion)} />
-                <button type="button" className="compact-swap" onClick={() => setBooking((old) => ({ ...old, pickup: old.dropoff, pickupCity: old.dropoffCity, pickupLat: old.dropoffLat, pickupLng: old.dropoffLng, dropoff: old.pickup, dropoffCity: old.pickupCity, dropoffLat: old.pickupLat, dropoffLng: old.pickupLng }))} aria-label="Đổi điểm đón và điểm đến">⇅</button>
-                <AddressField label="Trả tại" value={booking.dropoff} placeholder="Ví dụ: 40 Hồ Sen, Hải Phòng" tone="dropoff" error={errors.dropoff} onChange={(value) => { setShowMobileMap(false); setBooking((old) => ({ ...old, dropoff: value, dropoffCity: inferCity(value), dropoffLat: undefined, dropoffLng: undefined })); }} onSelect={(suggestion) => selectAddress("dropoff", suggestion)} />
+              <div className="plain-address-stack">
+                <label className="plain-address-field"><span>Đón tại</span><input value={booking.pickup} onChange={(event) => { const value = event.target.value; setBooking((old) => ({ ...old, pickup: value, pickupCity: inferCity(value), pickupLat: undefined, pickupLng: undefined })); }} placeholder="Ví dụ: 30 Nguyễn Khuyến, Hà Nội" /><small>{errors.pickup}</small></label>
+                <button type="button" className="plain-address-swap" onClick={() => setBooking((old) => ({ ...old, pickup: old.dropoff, pickupCity: old.dropoffCity, pickupLat: old.dropoffLat, pickupLng: old.dropoffLng, dropoff: old.pickup, dropoffCity: old.pickupCity, dropoffLat: old.pickupLat, dropoffLng: old.pickupLng }))} aria-label="Đổi điểm đón và điểm đến">⇄</button>
+                <label className="plain-address-field"><span>Trả tại</span><input value={booking.dropoff} onChange={(event) => { const value = event.target.value; setBooking((old) => ({ ...old, dropoff: value, dropoffCity: inferCity(value), dropoffLat: undefined, dropoffLng: undefined })); }} placeholder="Ví dụ: 40 Hồ Sen, Hải Phòng" /><small>{errors.dropoff}</small></label>
               </div>
-              <div className="address-actions"><button type="button" onClick={useCurrentLocation}>⌖ Dùng vị trí hiện tại</button><span>{locationMessage || "Chọn địa chỉ trong gợi ý để ghim đúng bản đồ"}</span></div>
-              {booking.pickupLat && booking.pickupLng && booking.dropoffLat && booking.dropoffLng ? <>
-                {isMobile && !showMobileMap ? <button type="button" className="route-map-trigger" onClick={() => setShowMobileMap(true)}><span>⌖</span><div><strong>Xem hành trình</strong><small>{selectedRoute?.distanceKm || approximateDistanceKm} km · kiểm tra điểm đón và trả</small></div><b>→</b></button> : <div className="booking-map-open"><RouteMap compact origin={booking.pickup} destination={booking.dropoff} originCoordinates={[booking.pickupLat, booking.pickupLng]} destinationCoordinates={[booking.dropoffLat, booking.dropoffLng]} distanceKm={selectedRoute?.distanceKm || approximateDistanceKm} durationMinutes={selectedRoute?.durationMinutes} />{isMobile && <button type="button" className="map-collapse" onClick={() => setShowMobileMap(false)}>Thu gọn bản đồ</button>}</div>}
-              </> : <div className="map-awaiting"><span>⌖</span><div><strong>Chọn đủ hai địa chỉ</strong><small>Sau đó có thể xem hành trình và số km.</small></div></div>}
-              <div className="compact-config">
-                <CompactOptions label="Nhu cầu" value={booking.need} options={[{ value: "ride", label: "Đi xe" }, { value: "parcel", label: "Gửi hàng" }]} onChange={(value) => update("need", value as BookingState["need"])} />
-                {booking.need === "ride" && <CompactOptions label="Hình thức" value={booking.service} options={[{ value: "shared", label: "Xe ghép" }, { value: "private", label: "Bao xe" }]} onChange={(value) => update("service", value as ServiceType)} />}
-                {booking.need === "ride" && <CompactOptions label="Loại xe" value={booking.vehicle} options={[{ value: "4-seat", label: "4 chỗ" }, { value: "7-seat", label: "7 chỗ" }]} onChange={(value) => update("vehicle", value as VehicleType)} />}
-                {booking.need === "ride" && <div className="compact-control passenger-compact"><span>Số khách</span><div className="mini-stepper"><button type="button" onClick={() => update("passengers", Math.max(1, booking.passengers - 1))}>−</button><b>{booking.passengers}</b><button type="button" onClick={() => update("passengers", Math.min(6, booking.passengers + 1))}>+</button></div></div>}
+              <div className="booking-primary-grid">
+                <div className="compact-control passenger-primary"><span>Số khách</span><div className="mini-stepper"><button type="button" onClick={() => update("passengers", Math.max(1, booking.passengers - 1))}>−</button><b>{booking.passengers}</b><button type="button" onClick={() => update("passengers", Math.min(6, booking.passengers + 1))}>+</button></div></div>
+                <label className="primary-booking-field"><span>Ngày đi</span><input type="date" min={getTomorrow()} value={booking.date} onChange={(event) => update("date", event.target.value)} /><small>{errors.date}</small></label>
+                <label className="primary-booking-field"><span>Giờ đón</span><input type="time" value={booking.time} onChange={(event) => update("time", event.target.value)} /><small>{errors.time}</small></label>
+                <label className="primary-booking-field"><span>Số điện thoại</span><input inputMode="tel" value={booking.phone} onChange={(event) => update("phone", event.target.value)} placeholder={siteConfig.phoneDisplay} /><small>{errors.phone}</small></label>
+                <label className="primary-booking-field customer-name-field"><span>Họ tên</span><input value={booking.name} onChange={(event) => update("name", event.target.value)} placeholder="Tên người đi" /><small>{errors.name}</small></label>
               </div>
-              {booking.need === "parcel" && <div className="cargo-details"><label className="cargo-name"><span>Tên hàng hóa</span><input value={booking.cargoName} onChange={(event) => update("cargoName", event.target.value)} placeholder="Ví dụ: Thùng quần áo, hồ sơ…" /><small>{errors.cargoName}</small></label><div className="cargo-measures"><Measure label="Dài" unit="cm" value={booking.cargoLength} onChange={(value) => update("cargoLength", value)} /><Measure label="Rộng" unit="cm" value={booking.cargoWidth} onChange={(value) => update("cargoWidth", value)} /><Measure label="Cao" unit="cm" value={booking.cargoHeight} onChange={(value) => update("cargoHeight", value)} /><Measure label="Nặng" unit="kg" value={booking.cargoWeight} onChange={(value) => update("cargoWeight", value)} /></div>{errors.cargoSize && <small className="cargo-error">{errors.cargoSize}</small>}<p>Giá tính theo quãng đường và trọng lượng quy đổi Dài × Rộng × Cao / 6.000.</p></div>}
-              <div className="compact-fields">
-                <label><span>Ngày đi</span><input type="date" min={getTomorrow()} value={booking.date} onChange={(event) => update("date", event.target.value)} /><small>{errors.date}</small></label>
-                <label><span>Giờ đón</span><input type="time" value={booking.time} onChange={(event) => update("time", event.target.value)} /><small>{errors.time}</small></label>
-                <label><span>Họ tên</span><input value={booking.name} onChange={(event) => update("name", event.target.value)} placeholder="Tên người đi" /><small>{errors.name}</small></label>
-                <label><span>Số điện thoại</span><input inputMode="tel" value={booking.phone} onChange={(event) => update("phone", event.target.value)} placeholder="0987 663 883" /><small>{errors.phone}</small></label>
-              </div>
-              <div className="compact-checkout"><div><span>Giá ước tính</span><strong>{price ? formatPrice(price) : "Chọn điểm đến"}</strong><small>Giá cuối được xác nhận qua điện thoại</small></div><button className="submit-button" disabled={saving}>{saving ? "Đang gửi…" : "Gửi yêu cầu"}<span>→</span></button></div>
+              <button type="button" className="advanced-toggle" aria-expanded={showAdvanced} onClick={() => setShowAdvanced((shown) => !shown)}><span><b>{showAdvanced ? "Thu gọn lựa chọn" : "Mở rộng lựa chọn"}</b><small>Nhu cầu, hình thức, loại xe và hàng hóa</small></span><i>{showAdvanced ? "−" : "+"}</i></button>
+              {showAdvanced && <div className="advanced-booking-panel">
+                <div className="compact-config">
+                  <CompactOptions label="Nhu cầu" value={booking.need} options={[{ value: "ride", label: "Đi xe" }, { value: "parcel", label: "Gửi hàng" }]} onChange={(value) => update("need", value as BookingState["need"])} />
+                  {booking.need === "ride" && <CompactOptions label="Hình thức" value={booking.service} options={[{ value: "shared", label: "Xe ghép" }, { value: "private", label: "Bao xe" }]} onChange={(value) => update("service", value as ServiceType)} />}
+                  {booking.need === "ride" && <CompactOptions label="Loại xe" value={booking.vehicle} options={[{ value: "4-seat", label: "4 chỗ" }, { value: "7-seat", label: "7 chỗ" }]} onChange={(value) => update("vehicle", value as VehicleType)} />}
+                </div>
+                {booking.need === "parcel" && <div className="cargo-details"><label className="cargo-name"><span>Tên hàng hóa</span><input value={booking.cargoName} onChange={(event) => update("cargoName", event.target.value)} placeholder="Ví dụ: Thùng quần áo, hồ sơ…" /><small>{errors.cargoName}</small></label><div className="cargo-measures"><Measure label="Dài" unit="cm" value={booking.cargoLength} onChange={(value) => update("cargoLength", value)} /><Measure label="Rộng" unit="cm" value={booking.cargoWidth} onChange={(value) => update("cargoWidth", value)} /><Measure label="Cao" unit="cm" value={booking.cargoHeight} onChange={(value) => update("cargoHeight", value)} /><Measure label="Nặng" unit="kg" value={booking.cargoWeight} onChange={(value) => update("cargoWeight", value)} /></div>{errors.cargoSize && <small className="cargo-error">{errors.cargoSize}</small>}<p>Giá tính theo quãng đường và trọng lượng quy đổi Dài × Rộng × Cao / 6.000.</p></div>}
+              </div>}
+              <div className="compact-checkout"><button className="submit-button" disabled={saving}>{saving ? "Đang gửi…" : "Gửi yêu cầu"}<span>→</span></button></div>
               <div className="compact-payment-note">✓ Đặt trước miễn phí, đến nơi mới thanh toán</div>
             </form>
           )}
         </div>
       </section>
 
-      <section className="final-cta"><div><span>CẦN TƯ VẤN CHUYẾN?</span><h2>Chưa chắc nên đi ghép hay bao xe?</h2><p>Cứ gửi tuyến. Tư vấn viên sẽ gọi lại đề xuất phương án phù hợp — miễn phí và chưa cần thanh toán.</p></div><div><a className="btn btn-white" href="#dat-xe">Gửi yêu cầu để được gọi lại</a><a className="btn btn-outline-white" href={`tel:${hotline}`}>Gọi 0987 663 883</a></div></section>
+      <section className="final-cta" id="lien-he"><div><span>LIÊN HỆ NGAY</span><h2>Tư vấn thêm về chuyến xe sắp tới của bạn</h2></div><div><a className="btn btn-white" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "home_final_cta" })}>Gọi {siteConfig.phoneDisplay}</a></div></section>
 
-      <footer><div className="footer-brand"><span className="brand-mark">PC</span><div><strong>XE GHÉP PHONG CÁCH</strong><p>Kết nối chuyến đi tỉnh từ Hải Dương.</p></div></div><div><strong>Liên hệ</strong><a href={`tel:${hotline}`}>0987 663 883</a><a href={process.env.NEXT_PUBLIC_ZALO_URL || `tel:${hotline}`}>Zalo Phong Cách</a></div><div><strong>Khám phá</strong><Link href="/tuyen-xe">Tất cả tuyến xe</Link><a href="#dich-vu">Dịch vụ</a></div><p className="copyright">© 2026 Xe Ghép Phong Cách. Mức giá trên website là tham khảo và được xác nhận trước chuyến.</p></footer>
+      <footer><div className="footer-brand"><span className="brand-mark">PC</span><div><strong>XE GHÉP PHONG CÁCH</strong><p>Kết nối chuyến đi tỉnh từ Hải Dương.</p></div></div><div><strong>Liên hệ</strong><a href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "home_footer" })}>{siteConfig.phoneDisplay}</a><a href={process.env.NEXT_PUBLIC_ZALO_URL || siteConfig.zaloFallbackUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_zalo", { placement: "home_footer" })}>Zalo Phong Cách</a><Link href="/lien-he">Thông tin liên hệ</Link></div><div><strong>Khám phá</strong><Link href="/blog">Blog tuyến xe</Link><Link href="/tuyen-xe">Tất cả tuyến xe</Link><Link href="/gioi-thieu">Giới thiệu</Link><Link href="/chinh-sach-dat-xe">Chính sách đặt xe</Link><Link href="/an-toan-va-doi-xe">An toàn & đội xe</Link></div><p className="copyright">© 2026 Xe Ghép Phong Cách. Mức giá trên website là tham khảo và được xác nhận trước chuyến. Hình ảnh là hình minh họa được tạo bằng AI.</p></footer>
 
-      <nav className="bottom-nav" aria-label="Điều hướng trên điện thoại"><a href="#top"><span>⌂</span>Trang chủ</a><a className="active" href="#dat-xe"><span>＋</span>Đặt xe</a><a href="#tuyen-xe"><span>↗</span>Tuyến xe</a><a href={`tel:${hotline}`}><span>☎</span>Liên hệ</a></nav>
+      <aside className="floating-contacts" aria-label="Liên hệ nhanh">
+        <a className="floating-contact floating-phone" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "floating_contact" })} aria-label={`Gọi ngay ${siteConfig.phoneDisplay}`} title={`Gọi ${siteConfig.phoneDisplay}`}>
+          <span aria-hidden="true">☎</span>
+        </a>
+        <a className="floating-contact floating-zalo" href={process.env.NEXT_PUBLIC_ZALO_URL || siteConfig.zaloFallbackUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_zalo", { placement: "floating_contact" })} aria-label={`Nhắn Zalo ${siteConfig.phoneDisplay}`} title={`Nhắn Zalo ${siteConfig.phoneDisplay}`}>
+          <span aria-hidden="true">Zalo</span>
+        </a>
+      </aside>
+
+      <nav className="bottom-nav" aria-label="Điều hướng trên điện thoại"><a href="#tuyen-xe" onClick={(event) => scrollToSection(event, "tuyen-xe")}>Tìm chuyến</a><a href="#dich-vu" onClick={(event) => scrollToSection(event, "dich-vu")}>Dịch vụ</a><Link href="/blog">Blog</Link><a className="bottom-nav-booking" href="#dat-xe" onClick={(event) => scrollToSection(event, "dat-xe")}>Đặt xe nhanh</a><a href="#lien-he" onClick={(event) => scrollToSection(event, "lien-he")}>Liên hệ</a></nav>
     </main>
   );
 }
 
 function CompactOptions({ label, value, options, onChange }: { label: string; value: string; options: Array<{ value: string; label: string }>; onChange: (value: string) => void }) { return <div className="compact-control"><span>{label}</span><div>{options.map((option) => <button type="button" className={value === option.value ? "active" : ""} key={option.value} onClick={() => onChange(option.value)}>{option.label}</button>)}</div></div>; }
+function QuickRouteFinder({ routes, onSelect, query, selectedProvince, onQueryChange, onProvinceChange }: { routes: RoutePrice[]; onSelect: (route: RoutePrice) => void; query: string; selectedProvince: string; onQueryChange: (query: string) => void; onProvinceChange: (province: string) => void }) {
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const normalizedQuery = normalizeRouteText(query.trim());
+  const provinces = useMemo(() => Array.from(new Set(routes.flatMap((route) => [provinceOf(route.origin), provinceOf(route.destination)]))), [routes]);
+  const shownRoutes = useMemo(() => selectedProvince
+    ? routes.filter((route) => provinceOf(route.origin) === selectedProvince || provinceOf(route.destination) === selectedProvince)
+    : normalizedQuery ? routes.filter((route) => normalizeRouteText(`${route.origin} ${route.destination}`).includes(normalizedQuery)) : routes, [normalizedQuery, routes, selectedProvince]);
+  const orderedRoutes = useMemo(() => [...shownRoutes].sort((routeA, routeB) => {
+    const rankA = spotlightRouteRank.get(routeA.id) ?? Number.MAX_SAFE_INTEGER;
+    const rankB = spotlightRouteRank.get(routeB.id) ?? Number.MAX_SAFE_INTEGER;
+    return rankA - rankB;
+  }), [shownRoutes]);
+  const selectProvince = (province: string) => {
+    onQueryChange(province);
+    onProvinceChange(province);
+    requestAnimationFrame(() => resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }));
+  };
+  const renderRoute = (route: RoutePrice) => {
+    const isPriority = spotlightRouteIds.has(route.id);
+    return <article className={`quick-route-tile${isPriority ? " priority" : ""}`} key={route.id}>
+      <button type="button" onClick={() => onSelect(route)} aria-label={`Chọn đặt tuyến ${route.origin} đi ${route.destination}, ${route.sharedPrice ? `từ ${Math.round(route.sharedPrice / 1000)} nghìn đồng` : "liên hệ báo giá"}`}>
+        <span className="route-tile-pair"><b>{route.origin}</b><i>⇄</i><b>{route.destination}</b></span>
+        <strong className="route-tile-price">{route.sharedPrice ? `Từ ${Math.round(route.sharedPrice / 1000)}k` : "Liên hệ giá"}</strong>
+      </button>
+      <Link href={`/${route.slug}`}>Xem chi tiết tuyến →</Link>
+    </article>;
+  };
+
+  return <section className="section route-finder-section" id="tuyen-xe">
+    <div className="section-heading route-finder-heading"><div><span className="section-kicker">TÌM CHUYẾN</span><h2>Tìm tuyến xe phù hợp</h2></div></div>
+    <div className="route-search-panel">
+      <div className="route-search-box"><span>⌕</span><label><small>Bạn muốn đi đâu?</small><input value={query} onChange={(event) => { onQueryChange(event.target.value); onProvinceChange(""); }} placeholder="Nhập Hải Phòng, Nội Bài, Bắc Ninh…" aria-label="Tìm tuyến theo nơi đi hoặc nơi đến" /></label>{query && <button type="button" onClick={() => { onQueryChange(""); onProvinceChange(""); }} aria-label="Xoá nội dung tìm kiếm">×</button>}</div>
+      <div className="route-suggestions"><span>Tìm nhanh:</span>{provinces.map((province) => <button type="button" className={selectedProvince === province ? "active" : ""} key={province} onClick={() => selectProvince(province)}>{province}</button>)}</div>
+    </div>
+    <div className="route-results" ref={resultsRef}>
+      {normalizedQuery && <div className="route-result-summary" aria-live="polite"><strong>{shownRoutes.length ? `${shownRoutes.length} chuyến phù hợp` : "Chưa tìm thấy chuyến"}</strong>{selectedProvince && shownRoutes.length > 0 && <span>Liên quan đến {selectedProvince}</span>}</div>}
+      {!shownRoutes.length ? <div className="route-finder-empty"><span>⌕</span><h3>Chưa thấy tuyến bạn đang tìm</h3><p>Gọi <a href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "route_finder_empty" })}>{siteConfig.phoneDisplay}</a>, bên mình sẽ kiểm tra chuyến giúp bạn.</p><button type="button" onClick={() => { onQueryChange(""); onProvinceChange(""); }}>Xem lại toàn bộ tuyến</button></div> : <div className="route-corridor-block">
+        <div className="quick-route-grid">{orderedRoutes.map(renderRoute)}</div>
+        {!normalizedQuery && <div className="route-cargo-note"><span aria-hidden="true">◇</span><div><strong>Nhận gửi hàng hoá 2 chiều</strong><small>Nhanh chóng · Bảo mật</small></div><b>Chỉ từ 150k</b></div>}
+      </div>}
+    </div>
+  </section>;
+}
 function Measure({ label, unit, value, onChange }: { label: string; unit: string; value: number; onChange: (value: number) => void }) { return <label><span>{label}</span><div><input type="number" inputMode="decimal" min="0.1" step="0.1" value={value} onChange={(event) => onChange(Number(event.target.value))} /><small>{unit}</small></div></label>; }
-function Service({ image, position, label, title, text }: { image: string; position: string; label: string; title: string; text: string }) { return <article className="service-card"><div className="service-card-image"><Image src={image} alt="" fill sizes="(max-width: 700px) 50vw, 25vw" style={{ objectPosition: position }} /></div><div className="service-card-body"><span>{label}</span><h3>{title}</h3><p>{text}</p><a href="#dat-xe">Gửi yêu cầu →</a></div></article>; }
-function Reason({ n, title, text }: { n: string; title: string; text: string }) { return <article><span>{n}</span><h3>{title}</h3><p>{text}</p></article>; }
-function Step({ n, title, text }: { n: string; title: string; text: string }) { return <article><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>; }
+function Service({ image, position, label, title, text }: { image: string; position: string; label: string; title: string; text: string }) { return <article className="service-card"><div className="service-card-image"><Image src={image} alt={`Hình minh họa ${title.toLowerCase()} của Xe Ghép Phong Cách`} fill sizes="(max-width: 700px) 50vw, 25vw" style={{ objectPosition: position }} /></div><div className="service-card-body"><span>{label}</span><h3>{title}</h3><p>{text}</p><a href="#dat-xe">Gửi yêu cầu →</a></div></article>; }
 function Assurance({ n, title, text }: { n: string; title: string; text: string }) { return <article><span>{n}</span><h3>{title}</h3><p>{text}</p></article>; }

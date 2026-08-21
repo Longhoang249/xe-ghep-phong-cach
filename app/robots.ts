@@ -1,1 +1,10 @@
-import type { MetadataRoute } from "next"; export default function robots():MetadataRoute.Robots{const base=process.env.NEXT_PUBLIC_SITE_URL||"https://xe-ghep-phong-cach.vercel.app";return{rules:{userAgent:"*",allow:"/",disallow:"/admin/"},sitemap:`${base}/sitemap.xml`}}
+import type { MetadataRoute } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/site";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: { userAgent: "*", allow: "/", disallow: ["/admin", "/api"] },
+    sitemap: absoluteUrl("/sitemap.xml"),
+    host: siteConfig.url,
+  };
+}

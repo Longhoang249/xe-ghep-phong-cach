@@ -15,6 +15,8 @@ export const locationCoordinates: Record<string, Coordinates> = {
   "Phú Thọ": [21.2684, 105.2046],
   "Thái Bình": [20.4463, 106.3366],
   "Nam Định": [20.4388, 106.1621],
+  "Hưng Yên": [20.8526, 106.0160],
+  "Hà Nam": [20.5835, 105.9229],
   "Phủ Lý": [20.5411, 105.9139],
   "Ninh Bình": [20.2506, 105.9745],
   "Thanh Hoá": [19.8077, 105.7764],

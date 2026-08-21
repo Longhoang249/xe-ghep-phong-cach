@@ -1,209 +1,328 @@
-# PHIẾU XÁC NHẬN DỮ LIỆU TUYẾN PHASE 1
+# PHIẾU XÁC NHẬN DỮ LIỆU TUYẾN — PHASE 1
 
-Task: `DATA-001` → đầu vào cho `DATA-002`
+**Người trả lời:** Phong hoặc người trực tiếp điều xe
+**Mục tiêu:** xác nhận giá, khu vực và cách vận hành thực tế để website không đăng sai thông tin.
 
-Người cần trả lời: Long/Phong hoặc người trực tiếp nắm vận hành
+## Cách trả lời
 
-Mục tiêu: xác nhận/sửa dữ liệu website đang dùng. Không cần viết câu quảng cáo hoặc giải thích SEO.
-
-## Cách điền
-
-- Đánh dấu `☒` vào lựa chọn đúng hoặc ghi câu trả lời ngắn.
-- Nếu không có giá/rule cố định, chọn **Theo chuyến / không cố định**. Đây là câu trả lời hợp lệ.
-- Không chắc thì ghi **Chưa rõ**, không cần đoán.
-- Mức giá hiện có chỉ là dữ liệu đang nằm trong hệ thống, chưa được coi là đúng cho đến khi anh xác nhận.
+* Thấy thông tin đúng thì đánh **Đúng**.
+* Sai thì ghi giá/rule thực tế.
+* Không có giá cố định thì ghi **Theo chuyến**.
+* Không chắc thì ghi **Chưa rõ**.
+* Không cần viết câu quảng cáo.
 
 ---
 
-## 1. Xác nhận giá hiện có
+# 1. GIÁ THỰC TẾ
 
-### Hải Dương ⇄ Hải Phòng
+## Hải Dương ⇄ Hải Phòng
 
-| Nội dung | Giá hệ thống đang lưu | Xác nhận |
+| Dịch vụ | Website đang lưu | Xác nhận |
 |---|---:|---|
-| Ghép 1 khách | 250.000đ | ☐ Đúng cả 2 chiều ☐ Chỉ HD→HP ☐ Chỉ HP→HD ☐ Sai, thay bằng: ___ ☐ Không cố định |
-| Bao xe 4 chỗ | 500.000đ | ☐ Đúng cả 2 chiều ☐ Chỉ HD→HP ☐ Chỉ HP→HD ☐ Sai, thay bằng: ___ ☐ Không cố định |
-| Bao xe 7 chỗ | 650.000đ | ☐ Đúng cả 2 chiều ☐ Chỉ HD→HP ☐ Chỉ HP→HD ☐ Sai, thay bằng: ___ ☐ Không cố định |
-| Gửi hàng | 150.000đ | ☐ Giá cố định ☐ Giá từ ☐ Theo kiện/chuyến ☐ Sai, thay bằng/quy tắc: ___ |
+| Ghép 1 khách | 250.000đ | ☐ Đúng 2 chiều ☐ Sai: ___ ☐ Theo chuyến |
+| Bao xe 4 chỗ | 500.000đ | ☐ Đúng 2 chiều ☐ Sai: ___ ☐ Theo chuyến |
+| Bao xe 7 chỗ | 650.000đ | ☐ Đúng 2 chiều ☐ Sai: ___ ☐ Theo chuyến |
+| Gửi hàng | 150.000đ | ☐ Giá từ ☐ Giá cố định ☐ Theo kiện/chuyến ☐ Khác: ___ |
 
-Giá trên áp dụng cho endpoint/khu vực nào? ___
+Nếu chiều Hải Phòng → Hải Dương khác giá, ghi:
 
-### Hải Dương ⇄ sân bay Cát Bi
+**___**
 
-| Nội dung | Giá hệ thống đang lưu | Xác nhận |
-|---|---:|---|
-| Ghép 1 khách | 300.000đ | ☐ Đúng cả 2 chiều ☐ Chỉ HD→Cát Bi ☐ Chỉ Cát Bi→HD ☐ Sai: ___ ☐ Không cố định |
-| Bao xe 4 chỗ | 600.000đ | ☐ Đúng cả 2 chiều ☐ Chỉ HD→Cát Bi ☐ Chỉ Cát Bi→HD ☐ Sai: ___ ☐ Không cố định |
-| Bao xe 7 chỗ | 750.000đ | ☐ Đúng cả 2 chiều ☐ Chỉ HD→Cát Bi ☐ Chỉ Cát Bi→HD ☐ Sai: ___ ☐ Không cố định |
-| Gửi hàng | 150.000đ | ☐ Giá cố định ☐ Giá từ ☐ Theo kiện/chuyến ☐ Sai/quy tắc khác: ___ |
+Giá trên thường áp dụng cho khu vực nào ở Hải Phòng?
 
-### Hải Dương ⇄ Quảng Ninh
-
-| Nội dung | Giá hệ thống đang lưu | Xác nhận |
-|---|---:|---|
-| Ghép 1 khách | 250.000đ | ☐ Đúng cho mọi điểm ☐ Chỉ một số điểm: ___ ☐ Sai: ___ ☐ Không cố định |
-| Bao xe 4 chỗ | 900.000đ | ☐ Đúng cho mọi điểm ☐ Chỉ một số điểm: ___ ☐ Sai: ___ ☐ Không cố định |
-| Bao xe 7 chỗ | 1.100.000đ | ☐ Đúng cho mọi điểm ☐ Chỉ một số điểm: ___ ☐ Sai: ___ ☐ Không cố định |
-| Gửi hàng | 180.000đ | ☐ Giá cố định ☐ Giá từ ☐ Theo kiện/chuyến ☐ Sai/quy tắc khác: ___ |
-
-Các giá trên: ☐ giống hai chiều ☐ khác chiều; nếu khác, ghi giá chiều Quảng Ninh → Hải Dương: ___
-
-### Hải Phòng ⇄ Quảng Ninh
-
-Hệ thống hiện **không có giá cố định**.
-
-| Nội dung | Xác nhận |
-|---|---|
-| Ghép 1 khách | ☐ Không cố định ☐ Có giá: ___; áp dụng endpoint: ___ |
-| Bao xe 4 chỗ | ☐ Không cố định ☐ Có giá: ___; áp dụng endpoint: ___ |
-| Bao xe 7 chỗ | ☐ Không cố định ☐ Có giá: ___; áp dụng endpoint: ___ |
-| Gửi hàng | ☐ Không cố định ☐ Có giá/quy tắc: ___ |
-
-Các giá nếu có: ☐ giống hai chiều ☐ khác chiều: ___
+**___**
 
 ---
 
-## 2. Xác nhận endpoint thực sự phục vụ
+## Hải Dương ⇄ sân bay Cát Bi
 
-Điền mỗi ô bằng một trong bốn giá trị ngắn: **Thường xuyên / Theo chuyến / Không nhận / Chưa rõ**.
+| Dịch vụ | Website đang lưu | Xác nhận |
+|---|---:|---|
+| Ghép 1 khách | 300.000đ | ☐ Đúng 2 chiều ☐ Sai: ___ ☐ Theo chuyến |
+| Bao xe 4 chỗ | 600.000đ | ☐ Đúng 2 chiều ☐ Sai: ___ ☐ Theo chuyến |
+| Bao xe 7 chỗ | 750.000đ | ☐ Đúng 2 chiều ☐ Sai: ___ ☐ Theo chuyến |
+| Gửi hàng | 150.000đ | ☐ Giá từ ☐ Giá cố định ☐ Theo chuyến ☐ Khác: ___ |
 
-### Hải Dương ⇄ Hải Phòng
+Nếu hai chiều khác nhau:
 
-| Endpoint | Hệ thống hiện ghi nhận | Hải Dương → endpoint | Endpoint → Hải Dương |
-|---|---|---|---|
-| Hải Phòng trung tâm | Có route Hải Phòng chung; chưa có danh sách khu vực | ___ | ___ |
-| Sân bay Cát Bi | Có route/page riêng | ___ | ___ |
-| Thủy Nguyên | Chưa có trong dữ liệu public | ___ | ___ |
-| Đồ Sơn | Chưa có trong dữ liệu public | ___ | ___ |
-| Endpoint Hải Phòng khác | Không có | Tên + trạng thái: ___ | Tên + trạng thái: ___ |
+**___**
 
-Khu vực thực tế có thể đón tại Hải Dương: ___
+---
 
-Khu vực thực tế có thể đón/trả tại Hải Phòng: ___
+## Hải Dương ⇄ Quảng Ninh
 
-### Hải Dương ⇄ Quảng Ninh
+Không cần một mức giá chung nếu thực tế mỗi điểm một giá.
 
-| Endpoint | Hải Dương → endpoint | Endpoint → Hải Dương | Có giá riêng? |
-|---|---|---|---|
-| Đông Triều | ___ | ___ | ___ |
-| Uông Bí | ___ | ___ | ___ |
-| Quảng Yên | ___ | ___ | ___ |
-| Hạ Long | ___ | ___ | ___ |
-| Bãi Cháy | ___ | ___ | ___ |
-| Cẩm Phả | ___ | ___ | ___ |
-| Vân Đồn | ___ | ___ | ___ |
-| Ao Tiên | ___ | ___ | ___ |
-| Móng Cái | ___ | ___ | ___ |
-| Điểm khác | Tên + trạng thái: ___ | Tên + trạng thái: ___ | ___ |
+Điền **giá ghép 1 khách phổ biến** nếu có:
 
-Nếu Hạ Long và Bãi Cháy áp dụng cùng rule/giá, ghi: ☐ Cùng ☐ Khác: ___
-
-Nếu Vân Đồn và Ao Tiên áp dụng cùng rule/giá, ghi: ☐ Cùng ☐ Khác: ___
-
-### Hải Phòng ⇄ Quảng Ninh
-
-Website chỉ đang ghi “Quảng Ninh”, chưa ghi endpoint cụ thể. Với các điểm dưới đây, điền **Thường xuyên / Theo chuyến / Không nhận / Chưa rõ**.
-
-| Endpoint Quảng Ninh | Hải Phòng → endpoint | Endpoint → Hải Phòng |
-|---|---|---|
+| Điểm | HD → điểm | Điểm → HD |
+|---|---:|---:|
 | Đông Triều | ___ | ___ |
 | Uông Bí | ___ | ___ |
 | Quảng Yên | ___ | ___ |
-| Hạ Long/Bãi Cháy | ___ | ___ |
+| Hạ Long / Bãi Cháy | ___ | ___ |
 | Cẩm Phả | ___ | ___ |
-| Vân Đồn/Ao Tiên | ___ | ___ |
+| Vân Đồn / Ao Tiên | ___ | ___ |
 | Móng Cái | ___ | ___ |
-| Điểm khác | Tên + trạng thái: ___ | Tên + trạng thái: ___ |
 
-Khu vực thực tế có thể đón tại Hải Phòng: ___
+Nếu điểm nào **không có giá cố định**, ghi **Theo chuyến**.
+
+### Bao xe
+
+4 chỗ được tính:
+
+☐ Theo từng điểm
+☐ Có giá chung: ___
+☐ Theo chuyến
+
+7 chỗ được tính:
+
+☐ Theo từng điểm
+☐ Có giá chung: ___
+☐ Theo chuyến
+
+### Gửi hàng
+
+☐ Từ 180.000đ
+☐ Theo từng điểm
+☐ Theo kiện/chuyến
+☐ Khác: ___
 
 ---
 
-## 3. Cách vận hành từng hành lang
+## Hải Phòng ⇄ Quảng Ninh
 
-| Nội dung | HD ⇄ Hải Phòng | HD ⇄ Quảng Ninh | Hải Phòng ⇄ Quảng Ninh |
+Hiện website chưa có giá cố định.
+
+Giá ghép có bảng tương đối ổn định không?
+
+☐ Không, báo theo chuyến
+
+☐ Có, ghi các mức chính:
+
+| Điểm Quảng Ninh | HP → điểm | Điểm → HP |
+|---|---:|---:|
+| Đông Triều | ___ | ___ |
+| Uông Bí | ___ | ___ |
+| Quảng Yên | ___ | ___ |
+| Hạ Long / Bãi Cháy | ___ | ___ |
+| Cẩm Phả | ___ | ___ |
+| Vân Đồn / Ao Tiên | ___ | ___ |
+| Móng Cái | ___ | ___ |
+
+Bao xe:
+
+☐ Theo chuyến
+☐ Có bảng giá riêng: ___
+
+Gửi hàng:
+
+☐ Theo chuyến
+☐ Có rule: ___
+
+---
+
+# 2. NHỮNG ĐIỂM THỰC SỰ NHẬN
+
+Chỉ cần dùng:
+
+**Thường xuyên / Theo chuyến / Không nhận**
+
+## Hải Dương ⇄ Hải Phòng
+
+| Điểm | Trạng thái |
+|---|---|
+| Hải Phòng trung tâm | ___ |
+| Sân bay Cát Bi | ___ |
+| Thủy Nguyên | ___ |
+| Đồ Sơn | ___ |
+
+Điểm khác thường nhận:
+
+**___**
+
+Khu vực Hải Dương thường nhận khách:
+
+**___**
+
+---
+
+## Hải Dương ⇄ Quảng Ninh
+
+| Điểm | Trạng thái |
+|---|---|
+| Đông Triều | ___ |
+| Uông Bí | ___ |
+| Quảng Yên | ___ |
+| Hạ Long / Bãi Cháy | ___ |
+| Cẩm Phả | ___ |
+| Vân Đồn / Ao Tiên | ___ |
+| Móng Cái | ___ |
+
+Điểm khác:
+
+**___**
+
+Nếu chiều về có điểm nào khó nhận hơn chiều đi:
+
+**___**
+
+---
+
+## Hải Phòng ⇄ Quảng Ninh
+
+Những điểm đang thực sự nhận:
+
+**___**
+
+Điểm nào đi thường xuyên nhất:
+
+**___**
+
+Điểm nào chỉ nhận khi check được xe:
+
+**___**
+
+---
+
+# 3. CÁCH NHẬN CHUYẾN
+
+| Nội dung | HD ⇄ HP | HD ⇄ QN | HP ⇄ QN |
 |---|---|---|---|
-| Tần suất | ☐ Mỗi ngày ☐ Theo chuyến ☐ Phải check | ☐ Mỗi ngày ☐ Theo chuyến ☐ Phải check | ☐ Mỗi ngày ☐ Theo chuyến ☐ Phải check |
-| Xe ghép | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không |
-| Bao xe 4 chỗ | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không |
-| Bao xe 7 chỗ | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không |
-| Gửi hàng | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không | ☐ Có ☐ Theo chuyến ☐ Không |
-| Giờ nhận chuyến | ___ | ___ | ___ |
-| Có nhận sát giờ? | ☐ Có ☐ Tùy chuyến ☐ Không | ☐ Có ☐ Tùy chuyến ☐ Không | ☐ Có ☐ Tùy chuyến ☐ Không |
-| Nên đặt trước | ___ phút/giờ/ngày | ___ phút/giờ/ngày | ___ phút/giờ/ngày |
+| Có xe | ☐ Hàng ngày ☐ Theo chuyến ☐ Phải check | ☐ Hàng ngày ☐ Theo chuyến ☐ Phải check | ☐ Hàng ngày ☐ Theo chuyến ☐ Phải check |
+| Xe ghép | ☐ Có ☐ Theo chuyến | ☐ Có ☐ Theo chuyến | ☐ Có ☐ Theo chuyến |
+| Bao xe | ☐ Có ☐ Theo chuyến | ☐ Có ☐ Theo chuyến | ☐ Có ☐ Theo chuyến |
+| Gửi hàng | ☐ Có ☐ Theo chuyến | ☐ Có ☐ Theo chuyến | ☐ Có ☐ Theo chuyến |
+| Nên đặt trước | ___ | ___ | ___ |
 
-Chiều đi và chiều về có khác cách vận hành không? Nếu có, ghi ngắn: ___
+### Giờ nhận chuyến
 
----
+☐ 24/7 thực sự
 
-## 4. Phụ phí và chờ
+☐ Có thể nhận bất cứ giờ nào nhưng phải check xe
 
-| Trường hợp | Có rule cố định? | Rule/mức phí hoặc “theo chuyến” |
-|---|---|---|
-| Đêm/sáng sớm | ☐ Có ☐ Không ☐ Theo chuyến | ___ |
-| Xa trung tâm | ☐ Có ☐ Không ☐ Theo chuyến | ___ |
-| Chờ khách | ☐ Có ☐ Không ☐ Theo chuyến | Miễn phí ___ phút; sau đó ___ |
-| Lễ/Tết | ☐ Có ☐ Không ☐ Theo chuyến | ___ |
-| Đổi/hủy chuyến | ☐ Có ☐ Không ☐ Theo chuyến | ___ |
-| Phụ phí sân bay | ☐ Có ☐ Không ☐ Theo chuyến | ___ |
+☐ Có khung giờ chính: ___
 
 ---
 
-## 5. Cát Bi
+# 4. NHỮNG TRƯỜNG HỢP GIÁ CÓ THỂ THAY ĐỔI
 
-| Câu cần xác nhận | Trả lời |
-|---|---|
-| Có đón/trả trực tiếp tại sân bay? | ☐ Có ☐ Tùy chuyến ☐ Không |
-| Khách cần cung cấp gì? | ☐ Mã chuyến bay ☐ Giờ hạ/cất cánh ☐ Nhà ga ☐ Số vali ☐ Khác: ___ |
-| Chuyến sớm/muộn | ☐ Nhận bình thường ☐ Có phụ phí ☐ Tùy chuyến ☐ Không nhận |
-| Chờ chuyến bay trễ | ☐ Có rule: ___ ☐ Theo chuyến ☐ Không chờ |
-| Nên đặt trước | ___ |
-| Nhiều hành lý | Rule chọn xe 4/7 chỗ: ___ |
-| Giá khác Hải Phòng trung tâm? | ☐ Có: ___ ☐ Không ☐ Theo chuyến |
+Đánh dấu trường hợp thực tế có thể làm tăng giá:
 
----
+* ☐ Đón/trả quá xa trung tâm
+* ☐ Đêm hoặc sáng sớm
+* ☐ Lễ/Tết
+* ☐ Chờ khách lâu
+* ☐ Sân bay
+* ☐ Nhiều điểm đón/trả
+* ☐ Hành lý/hàng hóa đặc biệt
+* ☐ Khác: ___
 
-## 6. Gửi hàng
+Các trường hợp trên:
 
-Website hiện có ba cách mô tả: “từ 150k”, giá base theo route, và tính theo khoảng cách/trọng lượng quy đổi. Chọn cách vận hành thật:
+☐ Có bảng phụ phí rõ
 
-- ☐ Không có giá cố định, báo theo kiện/chuyến.
-- ☐ Có giá tối thiểu 150.000đ.
-- ☐ Có giá base theo từng route/endpoint: ___
-- ☐ Tính theo kg thực.
-- ☐ Tính theo trọng lượng quy đổi `Dài × Rộng × Cao / 6.000`.
-- ☐ Cách khác: ___
+☐ Chủ yếu báo theo từng chuyến
 
-Hàng thường nhận: ___
+Nếu có rule quan trọng cần khách biết trước:
 
-Hàng không nhận/cần hỏi trước: ___
-
-Có nhận hai chiều cho cả ba hành lang? ☐ Có ☐ Không; chi tiết: ___
+**___**
 
 ---
 
-## 7. Xác nhận các claim website đang dùng
+# 5. CÁT BI + GỬI HÀNG + CAM KẾT DỊCH VỤ
 
-| Claim hiện tại | Xác nhận |
-|---|---|
-| Có xe cho cả 3 hành lang Phase 1 | ☐ Đúng ☐ Sai/điều kiện: ___ |
-| Nhận cả hai chiều | ☐ Đúng tất cả ☐ Chỉ một số tuyến: ___ ☐ Sai |
-| Có xe ghép và bao xe 4–7 chỗ | ☐ Đúng tất cả ☐ Theo chuyến/tuyến: ___ ☐ Sai |
-| Có nhận gửi hàng theo chuyến | ☐ Đúng tất cả ☐ Theo tuyến: ___ ☐ Sai |
-| Đón tận nơi/đưa tận cửa | ☐ Đúng ☐ Giới hạn khu vực: ___ ☐ Không nên dùng claim này |
-| Đặt trước miễn phí | ☐ Đúng ☐ Có điều kiện: ___ ☐ Sai |
-| Đến nơi mới thanh toán | ☐ Đúng ☐ Có điều kiện: ___ ☐ Sai |
+## Sân bay Cát Bi
+
+Có đón/trả trực tiếp tại sân bay?
+
+☐ Có
+☐ Theo chuyến
+☐ Không
+
+Khách bay sớm hoặc hạ cánh muộn:
+
+☐ Vẫn nhận bình thường
+☐ Phải check xe
+☐ Có phụ phí
+☐ Khác: ___
+
+Nếu chuyến bay delay:
+
+☐ Tài xế có thể chờ theo tình hình
+☐ Có rule cụ thể: ___
+☐ Báo theo từng chuyến
+
+Nên đặt xe trước khoảng:
+
+**___**
 
 ---
 
-## 8. Người xác nhận
+## Gửi hàng
 
-| Nội dung | Điền |
-|---|---|
-| Họ tên/người xác nhận | ___ |
-| Vai trò | ___ |
-| Ngày xác nhận | ___ / ___ / 2026 |
-| Kênh xác nhận | ☐ Trực tiếp ☐ Điện thoại ☐ Zalo ☐ Văn bản khác: ___ |
-| Nội dung nào cần hỏi thêm tài xế/người khác? | ___ |
+Cách tính thực tế chủ yếu là:
 
-Sau khi nhận phiếu, Codex sẽ chỉ chuyển các câu trả lời rõ ràng sang `VERIFIED`; câu “theo chuyến / không cố định” được lưu nguyên nghĩa và không bị thay bằng số AI tự tính.
+☐ Báo theo từng kiện/chuyến
+
+☐ Có giá tối thiểu từ ___
+
+☐ Theo tuyến/điểm đến
+
+☐ Theo kích thước/trọng lượng
+
+☐ Cách khác: ___
+
+Hàng nào thường **không nhận hoặc phải hỏi trước**?
+
+**___**
+
+---
+
+## Xác nhận các cam kết hiện đang dùng
+
+### Đón tận nơi, trả tận nơi
+
+☐ Đúng
+
+☐ Đúng nhưng có giới hạn khu vực: ___
+
+☐ Không nên nói tuyệt đối như vậy
+
+### Nhận hai chiều
+
+☐ Đúng với cả 3 tuyến
+
+☐ Có ngoại lệ: ___
+
+### Có cả xe ghép và bao xe
+
+☐ Đúng
+
+☐ Tùy tuyến/chuyến: ___
+
+### Thanh toán sau chuyến
+
+☐ Đúng
+
+☐ Có ngoại lệ: ___
+
+### Đặt trước không mất phí
+
+☐ Đúng
+
+☐ Có điều kiện: ___
+
+---
+
+# NGƯỜI XÁC NHẬN
+
+**Người xác nhận:** ___
+
+**Vai trò:** ___
+
+**Ngày xác nhận:** ___ / ___ / 2026
+
+Có nội dung nào ở trên anh chưa chắc và cần hỏi thêm tài xế?
+
+**___**

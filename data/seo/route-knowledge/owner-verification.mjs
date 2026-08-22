@@ -88,8 +88,8 @@ export const phase1OwnerPricingRules = Object.freeze({
     "Every stored numeric Phase 1 service price is a minimum starting price and must be presented semantically as ‘Từ [amount]’, not as a fixed fare.",
   ),
   endpointPricingRule: ownerVerifiedFact(
-    "INHERIT_PARENT_VERIFIED_FROM_UNLESS_EXPLICITLY_VERIFIED",
-    "A named endpoint inherits the parent corridor's verified starting price unless Owner separately verifies route-specific starting prices. Cát Bi is an explicit route-level exception with its own verified starting prices. No endpoint-specific numeric price may be generated or inferred without Owner evidence.",
+    "INHERIT_PARENT_VERIFIED_FROM",
+    "Named endpoints inherit the parent corridor's verified starting price unless Owner separately verifies route-specific starting prices. Cát Bi is an explicit route-level exception with its own verified starting prices. No endpoint-specific numeric price may be generated or inferred without Owner evidence.",
   ),
   variationFactors: ownerVerifiedFact(
     Object.freeze(["TRAVEL_DATE", "EXACT_PICKUP_ADDRESS", "EXACT_DROPOFF_ADDRESS", "TRAVEL_TIME", "ACTUAL_TRIP_CONDITIONS"]),

@@ -89,4 +89,13 @@ test("CP-002 names endpoints without inventing endpoint-specific prices", () => 
   }
   assert.doesNotMatch(cp002, /Hải Dương (?:→|[-–]) Móng Cái từ 250\.000đ/i);
   assert.match(cp002, /không phải bảng giá riêng cho từng endpoint/i);
+  assert.match(cp002, /chỉ mô tả địa lý và nhu cầu tìm kiếm; không xác nhận Phong Cách phục vụ từng điểm hoặc áp dụng cùng một mức giá/i);
+});
+
+test("public copy uses natural punctuation and no aggregator aggregates", () => {
+  for (const assetId of Object.keys(sprintAssets)) {
+    const copy = JSON.stringify(guideFor(assetId));
+    assert.doesNotMatch(copy, /–/, `${assetId} still contains a user-facing en dash`);
+    assert.doesNotMatch(copy, /\d+\s*(?:hãng xe|nhà xe|chuyến\s*(?:\/|mỗi)\s*ngày)/i, `${assetId} contains an unsupported aggregator aggregate`);
+  }
 });

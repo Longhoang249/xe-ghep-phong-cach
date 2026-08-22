@@ -6,9 +6,9 @@ Updated by: Codex
 
 ## Current Phase
 
-Phase: Sprint 001A Content Production
+Phase: Sprint 001A Approved
 
-Objective: Upgrade and publish the two approved supporting comparison articles, while preparing non-deployed MP-003/MP-005 upgrade packages and leaving all money pages/UI unchanged.
+Objective: Completed. CP-002/CP-003 and the non-deployed MP-003/MP-005 packages passed Strategy Review; SPRINT-001B has not started.
 
 ---
 
@@ -18,7 +18,9 @@ Backlog: 0
 
 In Progress: 0
 
-Review: 1
+Review: 0
+
+Approved: 1
 
 Published: 38 existing public URLs; CP-002 and CP-003 content updated in place with no new URL
 
@@ -30,7 +32,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| SPRINT-001A | Phase 1 SEO Content Production | Comparison + Upgrade Packages | CLUSTER-A/B | REVIEW | Existing CP-002/CP-003 URLs | Two source-backed comparison articles updated; MP-003/MP-005 packages are `DRAFT_NOT_DEPLOYED`; no money-page/UI change. |
+| SPRINT-001A | Phase 1 SEO Content Production | Comparison + Upgrade Packages | CLUSTER-A/B | APPROVED | Existing CP-002/CP-003 URLs | Minor review fixes completed: natural hyphen punctuation, no aggregator aggregate statistics, and an explicit geography-versus-service/pricing boundary for Quảng Ninh endpoints. |
 
 ---
 
@@ -64,8 +66,8 @@ Blocked: 0
 
 ## Next Queue
 
-1. Strategy reviews CP-002, CP-003 and the two non-deployed upgrade packages from SPRINT-001A.
-2. Do not start SPRINT-001B before Strategy Review and the two Cát Bi operational answers.
+1. Keep SPRINT-001A closed as `APPROVED`; do not expand it with additional comparison articles.
+2. Do not start SPRINT-001B before a new approved brief and the two Cát Bi operational answers.
 3. Deploy MP-003/MP-005 upgrades only after explicit permission to edit money pages/shared route UI.
 4. Keep MP-019 as Wave 2 until its endpoint-service blockers are resolved; keep MP-020 deferred.
 5. Schedule the shared price/schema remediation with regression coverage when money-page editing is opened.
@@ -90,6 +92,8 @@ Blocked: 0
 - **No endpoint price inference:** CP-002 names the approved Quảng Ninh endpoint set for orientation but explicitly keeps pricing at parent-corridor scope.
 - **Packages only:** `SEO_UPGRADE_MP003.md` and `SEO_UPGRADE_MP005.md` document the future H1, copy, pricing, schema, internal links, evidence, weaknesses and blockers; neither package changes a public money page.
 - **Source freshness:** SPRINT-001A public research was checked on 2026-08-22; dynamic operator/platform schedules and fares are not copied as fixed facts.
+- **SPRINT-001A minor review resolved:** CP-002/CP-003 public copy uses natural hyphen punctuation; aggregator sources establish available route/endpoint inventory only, with no copied aggregate operator/trip counts.
+- **Geography is not service evidence:** CP-002 now states directly that the named Quảng Ninh endpoint list describes geography/search demand and does not confirm Phong Cách availability or one shared fare at every endpoint.
 - **Wave 2 / deferred:** MP-019 is Owner-blocked; MP-006 and CP-004 are deferred for competition/differentiation; MP-020 is deferred with three business blockers.
 - **RES-002 research only:** Hạ Long is the strongest independent endpoint theme; Hải Dương ⇄ Hạ Long is the stronger whitespace candidate, while Hải Phòng ⇄ Hạ Long is a high-competition strategic battle. Both remain service-unconfirmed.
 - **RES-002 cannibalization decision:** reverse-direction queries remain on bidirectional parent pages; Quảng Yên and Ao Tiên receive no standalone recommendation; Uông Bí stays merged with the parent pending stronger evidence.

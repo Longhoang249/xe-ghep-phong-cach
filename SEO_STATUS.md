@@ -6,9 +6,9 @@ Updated by: Codex
 
 ## Current Phase
 
-Phase: Phase 1 Owner Verification Addendum
+Phase: Sprint 001 Planning
 
-Objective: Record Owner-confirmed starting-price and parcel-service rules, preserve unresolved operations as `UNKNOWN`, and queue—without executing—public price-semantic remediation.
+Objective: Join RES-002 market evidence with DATA-002 business truth to select a small, evidence-backed Sprint 001 without producing content or changing public URLs.
 
 ---
 
@@ -18,7 +18,7 @@ Backlog: 0
 
 In Progress: 0
 
-Review: 2
+Review: 1
 
 Published: 38 existing public URLs observed in the production sitemap (pre-brief inventory; not equivalent to Strategy approval)
 
@@ -30,8 +30,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| DATA-002-OV2 | Owner Pricing & Service Clarification | Data Architecture / Evidence | CLUSTER-A/B/C | REVIEW | Existing URLs unchanged | 12 prices are `VERIFIED_FROM`; parcel service verified; 344 facts remain UNKNOWN; public remediation deferred. |
-| RES-002 | SEO Battlefield / War Map | Market Research / SERP Intelligence | CLUSTER-A/B/C | REVIEW | — | 64 query snapshots, 41 source pages, 32 domains; search volume UNKNOWN; 10 conditional first-sprint recommendations; no public change. |
+| PLAN-001 | Join SEO War Map × Route Knowledge Base | Production Planning | CLUSTER-A/B/C | REVIEW | — | 10 candidates classified; proposed Sprint 001 has 6 assets: 4 DO FIRST and 2 conditional Cát Bi assets; no content or URL change. |
 
 ---
 
@@ -45,6 +44,8 @@ Blocked: 0
 | OPS-002 | Establish Recovery Baseline | — | — | `5f9834356de0f536c3528c03d2cc24f694b2e0db` |
 | DATA-001 | Phase 1 Route Knowledge Base | — | — | `c2fa0f091f6fd1adb12332b48060008b2b5ee920` |
 | DATA-002 | Owner Verification & Phase 1 Data Remediation | Existing Phase 1 route URLs only | — | `eddc5d80f59be47b19e7ad130eba43fe4311e7e4` |
+| RES-002 | SEO Battlefield / War Map | — | — | `765d9c1bd67a312496d40cb1c77ef5c2f246ceed` |
+| DATA-002-OV2 | Owner Pricing & Service Clarification | Existing URLs unchanged | — | `d9ed3d08e8ffe39e3c1e67b76c9be3533426dc88` |
 
 ---
 
@@ -52,7 +53,8 @@ Blocked: 0
 
 | ID | Issue | Required From | Impact |
 |---|---|---|---|
-| RES-002-D01 | Confirm Hải Dương/Hải Phòng ⇄ Hạ Long/Bãi Cháy service and Cát Bi operating rules requested in `OWNER_DATA_REQUEST_RES002.md`. | Long / Phong | Gates MP-019/MP-020 candidates and MP-004/CP-007 upgrades; no endpoint page is approved yet. |
+| PLAN-001-D01 | Confirm Cát Bi pickup/meeting procedure and flight-delay/waiting handling. | Long / Phong | One two-question answer packet gates final brief approval for MP-004 and CP-007; their route and starting prices are already verified. |
+| PLAN-001-D02 | Confirm whether Hải Dương ⇄ Hạ Long is actually accepted and whether Bãi Cháy is included. | Long / Phong | Business blockers for MP-019 Wave 2; no URL or brief is approved. |
 | DATA-002-D01 | Confirm remaining endpoint coverage, operating mode/frequency, hours, lead time, surcharges, and Cát Bi exceptions. | Long / Phong | Four existing route records are `PARTIAL`; 12 endpoint records remain `DATA_REQUIRED` and non-publishable. |
 | DATA-002-D02 | Approve a separate public remediation task for “Từ” semantics and removal of unverified booking/cargo formulas. | Strategy | Knowledge Base is resolved; current affected surfaces remain listed in `PUBLIC_DATA_REMEDIATION_QUEUE.md`. |
 | RES-001-D04 | Confirm whether Google Search Console, Bing Webmaster Tools, GA4, and official Zalo/Facebook profiles are configured outside the repository. | Long / Owner | Production HTML exposes no Google/Bing meta verification or GA4 ID; DNS-level verification cannot be inferred from code. |
@@ -61,11 +63,11 @@ Blocked: 0
 
 ## Next Queue
 
-1. Strategy reviews DATA-002-OV2 evidence interpretation and the updated public remediation queue.
-2. If approved, schedule “Từ” display/schema/booking remediation as a separate public task; do not bundle it into this data commit.
-3. Long/Phong supplies named-endpoint service, hours, lead time, waiting/surcharge and Cát Bi rules only where needed.
-4. RES-002 remains in its prior `REVIEW` state; this DATA-002 update does not begin another research or content task.
-5. Do not start Sprint 001 or create/upgrade content from `UNKNOWN` observations before approval.
+1. Strategy reviews `SPRINT_001_PLAN.md` and approves/removes candidates individually.
+2. Long/Phong answers only the two Cát Bi questions if Strategy wants MP-004/CP-007 in Sprint 001.
+3. Keep MP-019 as Wave 2 until its two endpoint-service blockers are resolved; keep MP-020 deferred.
+4. Schedule “Từ” display/schema/booking remediation separately; do not bundle it into content production.
+5. Do not start Sprint 001, write content, create URLs or publish until PLAN-001 is approved.
 
 ---
 
@@ -81,6 +83,9 @@ Blocked: 0
 - **Public remediation open:** MP-003/004/005 price UI and Offer schema show bare/reference amounts; booking/cargo output uses semantics or formulas not approved by the Owner. No public change is made in this task.
 - **Readiness recalculated:** four existing route records are `PARTIAL`; 12 data-only endpoints remain `DATA_REQUIRED`; none is `READY_FOR_CONTENT`.
 - **Still unknown:** 344 facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and named-endpoint service are not upgraded.
+- **PLAN-001 join result:** 344 `UNKNOWN` facts are not treated as blockers. Only material gaps for each candidate are classified as `OWNER_REQUIRED`, `PUBLIC_RESEARCH_OK`, `OPTIONAL`, or `BLOCKING`.
+- **Sprint 001 proposal:** MP-005, MP-003, CP-003 and CP-002 can proceed to briefing after approval; MP-004 and CP-007 are conditional on two shared Cát Bi answers.
+- **Wave 2 / deferred:** MP-019 is Owner-blocked; MP-006 and CP-004 are deferred for competition/differentiation; MP-020 is deferred with three business blockers.
 - **RES-002 research only:** Hạ Long is the strongest independent endpoint theme; Hải Dương ⇄ Hạ Long is the stronger whitespace candidate, while Hải Phòng ⇄ Hạ Long is a high-competition strategic battle. Both remain service-unconfirmed.
 - **RES-002 cannibalization decision:** reverse-direction queries remain on bidirectional parent pages; Quảng Yên and Ao Tiên receive no standalone recommendation; Uông Bí stays merged with the parent pending stronger evidence.
 - **High:** 18 route pages share a mostly generic presentation/content template and do not contain route-specific pickup/drop-off or journey facts.
@@ -128,3 +133,6 @@ Blocked: 0
 - No reliable keyword-volume source was available, so every RES-002 record explicitly stores `SEARCH_VOLUME = UNKNOWN`; opportunity scores are internal evidence-weighted prioritization only.
 - In the structured sample, `ghephaiduong.com`, `motortrip.vn`, `vexere.com`, `xeghephaiduongdicactinh24h.com`, and `taxihaiduong24h.net` were the five most recurring domains. Frequency is not traffic or market share.
 - The recommended first-sprint candidate set reuses eight existing URLs and contains two conditional endpoint candidates; it creates no registry record or public URL during RES-002.
+- PLAN-001 narrows the ten-candidate pool to six proposed Sprint assets: four immediately briefable existing assets and two conditional existing Cát Bi assets.
+- Material fact classification prevents public-source geography/distance/airport research from being mislabeled as Owner blockers; only business truth remains Owner-gated.
+- MP-019 and MP-020 remain uncreated URL candidates. Endpoint price inheritance does not substitute for endpoint service confirmation.

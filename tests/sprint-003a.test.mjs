@@ -10,7 +10,7 @@ import { productionAssetPaths, publicPricePresentation } from "../lib/seo/public
 
 const sprintRouteIds = Object.freeze(["hd-cb", "hd-ha-long"]);
 const expectedAmounts = Object.freeze({
-  "hd-cb": [250000, 500000, 650000, 150000],
+  "hd-cb": [300000, 600000, 750000, 150000],
   "hd-ha-long": [250000, 900000, 1100000, 180000],
 });
 
@@ -76,6 +76,10 @@ test("Wave 2 copy covers required commercial intent and omits unsupported operat
   const catBi = JSON.stringify(moneyPageUpgrades["hd-cb"]);
   assert.doesNotMatch(catBi, /cổng\s*\d+|cửa\s*\d+|delay[^.]{0,80}\d+/i);
   assert.match(catBi, /giờ bay hoặc giờ cần có mặt/i);
+  assert.match(catBi, /300\.000đ\/người/);
+  assert.match(catBi, /600\.000đ\/chuyến/);
+  assert.match(catBi, /750\.000đ\/chuyến/);
+  assert.doesNotMatch(catBi, /kế thừa hành lang Hải Dương - Hải Phòng/i);
 
   const haLong = moneyPageUpgrades["hd-ha-long"];
   assert.equal(haLong.support.href, "/xe-ghep-hai-duong-quang-ninh");

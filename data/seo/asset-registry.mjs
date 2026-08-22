@@ -9,7 +9,7 @@ export const seoAssets = Object.freeze([
   { assetId: "MP-001", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-duong-ha-noi", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "hd-hn", canonical: "/xe-ghep-hai-duong-ha-noi", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "MP-002", assetType: "MONEY_PAGE", slug: "xe-hai-duong-noi-bai", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "hd-nb", canonical: "/xe-hai-duong-noi-bai", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "MP-003", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-duong-hai-phong", cluster: "CLUSTER-A", status: "PUBLISHED", legacy: false, dataKey: "hd-hp", canonical: "/xe-ghep-hai-duong-hai-phong", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
-  { assetId: "MP-004", assetType: "MONEY_PAGE", slug: "xe-hai-duong-cat-bi", cluster: "CLUSTER-A", status: "PUBLISHED", legacy: false, dataKey: "hd-cb", canonical: "/xe-hai-duong-cat-bi", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
+  { assetId: "MP-004", assetType: "MONEY_PAGE", slug: "xe-hai-duong-cat-bi", cluster: "CLUSTER-A", status: "PUBLISHED", legacy: false, dataKey: "hd-cb", canonical: "/xe-hai-duong-cat-bi", publishedAt: null, lastReviewedAt: "2026-08-22", backfilledExisting: true },
   { assetId: "MP-005", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-duong-quang-ninh", cluster: "CLUSTER-B", status: "PUBLISHED", legacy: false, dataKey: "hd-qn", canonical: "/xe-ghep-hai-duong-quang-ninh", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "MP-006", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-phong-quang-ninh", cluster: "CLUSTER-C", status: "PUBLISHED", legacy: false, dataKey: "hp-qn", canonical: "/xe-ghep-hai-phong-quang-ninh", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "MP-007", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-duong-bac-ninh", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "hd-bn", canonical: "/xe-ghep-hai-duong-bac-ninh", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
@@ -24,6 +24,25 @@ export const seoAssets = Object.freeze([
   { assetId: "MP-016", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-duong-phu-ly", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "hd-pl", canonical: "/xe-ghep-hai-duong-phu-ly", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "MP-017", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-duong-ninh-binh", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "hd-nb2", canonical: "/xe-ghep-hai-duong-ninh-binh", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "MP-018", assetType: "MONEY_PAGE", slug: "xe-ghep-hai-duong-thanh-hoa", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "hd-th", canonical: "/xe-ghep-hai-duong-thanh-hoa", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
+  {
+    assetId: "MP-019",
+    assetType: "MONEY_PAGE",
+    slug: "xe-ghep-hai-duong-ha-long",
+    cluster: "CLUSTER-B",
+    status: "PUBLISHED",
+    legacy: false,
+    dataKey: "hd-ha-long",
+    canonical: "/xe-ghep-hai-duong-ha-long",
+    publishedAt: "2026-08-22",
+    lastReviewedAt: "2026-08-22",
+    backfilledExisting: false,
+    publicationHistory: Object.freeze([
+      Object.freeze({ status: "REGISTERED", at: "2026-08-22", decision: "SPRINT-003A" }),
+      Object.freeze({ status: "REVIEW", at: "2026-08-22", decision: "SPRINT-003A" }),
+      Object.freeze({ status: "APPROVED", at: "2026-08-22", decision: "Owner Wave 2 approval" }),
+      Object.freeze({ status: "PUBLISHED", at: "2026-08-22", decision: "SPRINT-003A controlled publication" }),
+    ]),
+  },
 
   { assetId: "CP-001", assetType: "COMPARISON", slug: "di-hai-duong-ha-noi-bang-phuong-tien-gi", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "di-hai-duong-ha-noi-bang-phuong-tien-gi", canonical: "/blog/di-hai-duong-ha-noi-bang-phuong-tien-gi", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "CP-002", assetType: "COMPARISON", slug: "nhung-chuyen-xe-tu-hai-duong-di-quang-ninh", cluster: "CLUSTER-B", status: "PUBLISHED", legacy: false, dataKey: "nhung-chuyen-xe-tu-hai-duong-di-quang-ninh", canonical: "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
@@ -39,4 +58,3 @@ export const seoAssets = Object.freeze([
   { assetId: "SC-005", assetType: "SUPPORTING", slug: "dat-xe-hai-duong-ha-noi-can-thong-tin-gi", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "dat-xe-hai-duong-ha-noi-can-thong-tin-gi", canonical: "/blog/dat-xe-hai-duong-ha-noi-can-thong-tin-gi", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
   { assetId: "SC-006", assetType: "SUPPORTING", slug: "gui-hang-hai-duong-ha-noi-theo-chuyen", cluster: "OTHER", status: "PUBLISHED", legacy: true, dataKey: "gui-hang-hai-duong-ha-noi-theo-chuyen", canonical: "/blog/gui-hang-hai-duong-ha-noi-theo-chuyen", publishedAt: null, lastReviewedAt: "2026-08-21", backfilledExisting: true },
 ]);
-

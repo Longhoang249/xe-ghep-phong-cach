@@ -1,6 +1,7 @@
 const VERIFIED_AT = "2026-08-22";
 const VERIFIED_BY = "Owner";
 const SOURCE_REF = "OWNER_VERIFICATION_RECORD_PHASE1.md";
+const SPRINT_003A_SOURCE_REF = "SPRINT-003A Owner brief (2026-08-22)";
 
 export const phase1OwnerVerificationMeta = Object.freeze({
   taskId: "DATA-002",
@@ -10,12 +11,12 @@ export const phase1OwnerVerificationMeta = Object.freeze({
   sourceRef: SOURCE_REF,
 });
 
-export function ownerVerifiedFact(value, notes) {
+export function ownerVerifiedFact(value, notes, sourceRef = SOURCE_REF) {
   return Object.freeze({
     value,
     status: "VERIFIED",
     sourceType: phase1OwnerVerificationMeta.sourceType,
-    sourceRef: SOURCE_REF,
+    sourceRef,
     verifiedAt: VERIFIED_AT,
     verifiedBy: VERIFIED_BY,
     notes,
@@ -34,14 +35,15 @@ export function ownerUnknownFact(value = null, notes = null) {
   });
 }
 
-export function ownerVerifiedPriceFact(value, priceModel, notes) {
-  return Object.freeze({ ...ownerVerifiedFact(value, notes), priceModel });
+export function ownerVerifiedPriceFact(value, priceModel, notes, sourceRef = SOURCE_REF) {
+  return Object.freeze({ ...ownerVerifiedFact(value, notes, sourceRef), priceModel });
 }
 
-const verifiedStartingPrice = (value, service) => ownerVerifiedPriceFact(
+const verifiedStartingPrice = (value, service, sourceRef = SOURCE_REF, scopeNote = "") => ownerVerifiedPriceFact(
   value,
   "VERIFIED_FROM",
-  `Owner confirmed the stored ${service} value is a minimum starting price, never a fixed fare. The final trip price can vary by travel date, exact pickup, exact drop-off, travel time, and actual trip conditions. Named endpoints inherit the parent-corridor starting price; no endpoint-specific price may be inferred.`,
+  `Owner confirmed the stored ${service} value is a minimum starting price, never a fixed fare. The final trip price can vary by travel date, exact pickup, exact drop-off, travel time, and actual trip conditions. Named endpoints inherit the parent-corridor starting price; no endpoint-specific price may be inferred.${scopeNote ? ` ${scopeNote}` : ""}`,
+  sourceRef,
 );
 
 const unknownPrice = (value, service) => Object.freeze({
@@ -62,10 +64,10 @@ export const phase1OwnerPriceFactsByDataKey = Object.freeze({
     parcelPrice: verifiedStartingPrice(150000, "parcel"),
   }),
   "hd-cb": Object.freeze({
-    sharedRidePrice: verifiedStartingPrice(300000, "shared-ride"),
-    charter4SeatPrice: verifiedStartingPrice(600000, "4-seat charter"),
-    charter7SeatPrice: verifiedStartingPrice(750000, "7-seat charter"),
-    parcelPrice: verifiedStartingPrice(150000, "parcel"),
+    sharedRidePrice: verifiedStartingPrice(250000, "shared-ride", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
+    charter4SeatPrice: verifiedStartingPrice(500000, "4-seat charter", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
+    charter7SeatPrice: verifiedStartingPrice(650000, "7-seat charter", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
+    parcelPrice: verifiedStartingPrice(150000, "parcel", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
   }),
   "hd-qn": Object.freeze({
     sharedRidePrice: verifiedStartingPrice(250000, "shared-ride"),

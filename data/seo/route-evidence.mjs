@@ -15,8 +15,8 @@ export function unknownFact(value = null, notes = null) {
   });
 }
 
-function verifiedPhase1RouteEvidence(dataKey) {
-  const prices = phase1OwnerPriceFactsByDataKey[dataKey];
+function verifiedPhase1RouteEvidence(priceSourceKey) {
+  const prices = phase1OwnerPriceFactsByDataKey[priceSourceKey];
   return Object.freeze({
     price: prices.sharedRidePrice,
     distance: unknownFact(null, "Distance remains outside the current Owner confirmation."),
@@ -38,8 +38,13 @@ function verifiedPhase1RouteEvidence(dataKey) {
 }
 
 /** Evidence records for new or re-verified route facts. */
+const phase1EvidencePriceSourceByDataKey = Object.freeze({
+  ...Object.fromEntries(Object.keys(phase1OwnerPriceFactsByDataKey).map((dataKey) => [dataKey, dataKey])),
+  "hd-ha-long": "hd-qn",
+});
+
 export const routeEvidenceByDataKey = Object.freeze(Object.fromEntries(
-  Object.keys(phase1OwnerPriceFactsByDataKey).map((dataKey) => [dataKey, verifiedPhase1RouteEvidence(dataKey)]),
+  Object.entries(phase1EvidencePriceSourceByDataKey).map(([dataKey, priceSourceKey]) => [dataKey, verifiedPhase1RouteEvidence(priceSourceKey)]),
 ));
 
 /**

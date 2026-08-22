@@ -108,6 +108,13 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
     },
   ];
   const faq = (upgrade?.faq ?? legacyFaq) as ReadonlyArray<{ q: string; a: string }>;
+  const defaultBookingSteps = [
+    { title: "Chọn nhu cầu", copy: "Cho biết bạn cần xe ghép, bao xe 4 hoặc 7 chỗ, hay gửi hàng theo chuyến." },
+    { title: "Gửi thông tin chuyến", copy: "Ngày, thời gian mong muốn, địa chỉ đón/trả, số khách, hành lý hoặc thông tin hàng hóa." },
+    { title: "Xác nhận trước khi đi", copy: "Phong Cách kiểm tra xe và giá chuyến. Đặt trước không mất phí; thanh toán sau chuyến." },
+  ];
+  const bookingGuide = upgrade?.bookingGuide;
+  const bookingSteps = bookingGuide?.steps ?? defaultBookingSteps;
   const pageUrl = absoluteUrl(`/${route.slug}`);
   const serviceName = upgrade?.h1 ?? `Xe ghép ${route.origin} – ${route.destination} 2 chiều`;
   const breadcrumbItems = isCommercialUpgrade
@@ -227,7 +234,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
             <TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_hero", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink>
             {isCommercialUpgrade ? <TrackedLink className="btn btn-ghost" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_hero", route_slug: route.slug }}>Nhắn Zalo</TrackedLink> : <TrackedLink className="btn btn-ghost" href={forwardBookingUrl} eventName="booking_start" eventData={{ placement: "route_hero", route_slug: route.slug }}>Gửi thông tin chuyến</TrackedLink>}
           </div>
-          {isCommercialUpgrade ? <TrackedLink className="route-booking-link" href={forwardBookingUrl} eventName="booking_start" eventData={{ placement: "route_hero", route_slug: route.slug }}>Hoặc gửi điểm đón, điểm trả và thời gian chuyến →</TrackedLink> : null}
+          {isCommercialUpgrade ? <TrackedLink className="route-booking-link" href={forwardBookingUrl} eventName="booking_start" eventData={{ placement: "route_hero", route_slug: route.slug }}>{upgrade.heroBookingPrompt ? `${upgrade.heroBookingPrompt} →` : "Hoặc gửi điểm đón, điểm trả và thời gian chuyến →"}</TrackedLink> : null}
         </div>
         <aside className="route-summary-card">
           {isCommercialUpgrade ? <>
@@ -283,10 +290,10 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           <p className="route-variable-note"><b>Mỗi chuyến có điều kiện khác nhau.</b> Lộ trình, thời gian, điểm đón trả và chi phí được trao đổi trực tiếp khi khách gọi.</p>
         </article>}
         {isCommercialUpgrade ? <aside className="route-call-panel route-decision-panel">
-          <span className="section-kicker">XE GHÉP HAY BAO XE?</span>
-          <h2>Chọn theo số người và nhu cầu</h2>
+          <span className="section-kicker">{upgrade.decisionKicker ?? "XE GHÉP HAY BAO XE?"}</span>
+          <h2>{upgrade.decisionTitle ?? "Chọn theo số người và nhu cầu"}</h2>
           <div className="route-decision-list">{upgrade.decisionRows.map((item: { need: string; guidance: string }) => <div key={item.need}><b>{item.need}</b><p>{item.guidance}</p></div>)}</div>
-          <small>Đây là gợi ý lựa chọn, không phải công thức giá. Hãy cung cấp số người, hành lý và địa chỉ để kiểm tra phương án thực tế.</small>
+          <small>{upgrade.decisionNote ?? "Đây là gợi ý lựa chọn, không phải công thức giá. Hãy cung cấp số người, hành lý và địa chỉ để kiểm tra phương án thực tế."}</small>
         </aside> : <aside className="route-call-panel">
             <span className="section-kicker">MUỐN ĐI TUYẾN NÀY?</span>
             <h2>Gọi Phong Cách kiểm tra xe</h2>
@@ -304,11 +311,11 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           </article>)}
         </section>
         {upgrade.endpointNames.length ? <section className="route-endpoints" aria-labelledby="route-endpoints-title">
-          <span className="section-kicker">CHỌN ĐÚNG KHU VỰC TẠI QUẢNG NINH</span>
-          <h2 id="route-endpoints-title">Điểm đến dùng để xác định nhu cầu</h2>
-          <p>Các tên dưới đây chỉ mô tả địa lý và nhu cầu tìm kiếm. Danh sách không xác nhận Phong Cách luôn phục vụ từng endpoint và không tạo một mức giá riêng cho endpoint.</p>
+          <span className="section-kicker">{upgrade.endpointKicker ?? "CHỌN ĐÚNG KHU VỰC TẠI QUẢNG NINH"}</span>
+          <h2 id="route-endpoints-title">{upgrade.endpointTitle ?? "Điểm đến dùng để xác định nhu cầu"}</h2>
+          <p>{upgrade.endpointIntro ?? "Các tên dưới đây chỉ mô tả địa lý và nhu cầu tìm kiếm. Danh sách không xác nhận Phong Cách luôn phục vụ từng endpoint và không tạo một mức giá riêng cho endpoint."}</p>
           <div>{upgrade.endpointNames.map((endpoint: string) => <span key={endpoint}>{endpoint}</span>)}</div>
-          <p className="route-endpoint-boundary"><b>Khi đi các khu vực khác nhau tại Quảng Ninh, giá chuyến cụ thể cần được xác nhận theo điểm đón/trả.</b></p>
+          <p className="route-endpoint-boundary"><b>{upgrade.endpointBoundary ?? "Khi đi các khu vực khác nhau tại Quảng Ninh, giá chuyến cụ thể cần được xác nhận theo điểm đón/trả."}</b></p>
         </section> : <section className="route-support-card" aria-labelledby="route-support-title">
           <span className="section-kicker">ĐẶT XE KHÔNG MẤT PHÍ</span>
           <h2 id="route-support-title">Xác nhận chuyến trước, thanh toán sau</h2>
@@ -318,16 +325,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       </section> : null}
       <section className="route-article-guide" aria-labelledby="route-guide-title">
         <div className="route-article-heading">
-          <span className="section-kicker">{isCommercialUpgrade ? "GỬI ĐỦ THÔNG TIN CHUYẾN" : "BÀI VIẾT VỀ TUYẾN XE"}</span>
-          <h2 id="route-guide-title">{isCommercialUpgrade ? "Ba bước để kiểm tra xe và giá" : <>Muốn đi {route.origin} – {route.destination}, bạn chỉ cần gọi</>}</h2>
-          <p>{isCommercialUpgrade ? "Phong Cách kiểm tra theo chuyến thực tế; không cần đặt cọc trước và khách thanh toán sau chuyến." : "Phong Cách không dùng một thông tin cố định cho mọi khách. Mỗi yêu cầu được kiểm tra theo nơi đón, nơi trả và nhu cầu thực tế."}</p>
+          <span className="section-kicker">{isCommercialUpgrade ? bookingGuide?.kicker ?? "GỬI ĐỦ THÔNG TIN CHUYẾN" : "BÀI VIẾT VỀ TUYẾN XE"}</span>
+          <h2 id="route-guide-title">{isCommercialUpgrade ? bookingGuide?.title ?? "Ba bước để kiểm tra xe và giá" : <>Muốn đi {route.origin} – {route.destination}, bạn chỉ cần gọi</>}</h2>
+          <p>{isCommercialUpgrade ? bookingGuide?.intro ?? "Phong Cách kiểm tra theo chuyến thực tế; không cần đặt cọc trước và khách thanh toán sau chuyến." : "Phong Cách không dùng một thông tin cố định cho mọi khách. Mỗi yêu cầu được kiểm tra theo nơi đón, nơi trả và nhu cầu thực tế."}</p>
         </div>
         <div className="route-article-steps">
-          {isCommercialUpgrade ? <>
-            <article><span>01</span><h3>Chọn nhu cầu</h3><p>Cho biết bạn cần xe ghép, bao xe 4 hoặc 7 chỗ, hay gửi hàng theo chuyến.</p></article>
-            <article><span>02</span><h3>Gửi thông tin chuyến</h3><p>Ngày, thời gian mong muốn, địa chỉ đón/trả, số khách, hành lý hoặc thông tin hàng hóa.</p></article>
-            <article><span>03</span><h3>Xác nhận trước khi đi</h3><p>Phong Cách kiểm tra xe và giá chuyến. Đặt trước không mất phí; thanh toán sau chuyến.</p></article>
-          </> : <>
+          {isCommercialUpgrade ? bookingSteps.map((step: { title: string; copy: string }, index: number) => <article key={step.title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{step.title}</h3><p>{step.copy}</p></article>) : <>
             <article><span>01</span><h3>Cho biết nhu cầu</h3><p>Xe ghép, bao xe 4–7 chỗ{hasOwnerVerifiedService ? "" : " hay gửi hàng theo chuyến"} trên tuyến {route.origin} – {route.destination}.</p></article>
             <article><span>02</span><h3>Cung cấp thông tin chuyến</h3><p>Nơi đón, nơi trả, thời điểm mong muốn, số khách và hành lý{hasOwnerVerifiedService ? "" : " hoặc hàng hóa"} đi kèm.</p></article>
             <article><span>03</span><h3>Phong Cách kiểm tra xe</h3><p>Bên mình trao đổi xe phù hợp và xác nhận các thông tin cần thiết trước khi khách quyết định.</p></article>
@@ -357,8 +360,8 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         <div className="faq"><span className="section-kicker">CÂU HỎI THƯỜNG GẶP</span><h2>Thông tin cần biết</h2>{faq.map((item) => <details key={item.q}><summary>{item.q}<span>＋</span></summary><p>{item.a}</p></details>)}</div>
       </section>
       {isCommercialUpgrade ? <section className="route-supporting-content">
-        <div><span className="section-kicker">BÀI SO SÁNH LIÊN QUAN</span><h2>{upgrade.support.label}</h2><p>{upgrade.support.copy}</p></div>
-        <Link href={upgrade.support.href}>Đọc bài so sánh →</Link>
+        <div><span className="section-kicker">{upgrade.support.kicker ?? "BÀI SO SÁNH LIÊN QUAN"}</span><h2>{upgrade.support.label}</h2><p>{upgrade.support.copy}</p></div>
+        <Link href={upgrade.support.href}>{upgrade.support.cta ?? "Đọc bài so sánh →"}</Link>
       </section> : relatedPosts.length > 0 && <section className="related-routes"><div className="related-routes-heading"><div><span className="section-kicker">BÀI VIẾT LIÊN QUAN</span><h2>Xem thêm các tuyến Phong Cách có xe</h2></div><Link href="/blog">Vào Blog →</Link></div><div>{relatedPosts.map((item) => <Link href={`/${item.route.slug}`} key={item.route.id}><small>{item.category}</small><b>{item.route.origin} ⇄ {item.route.destination}</b><span>Đọc bài viết →</span></Link>)}</div></section>}
       {isCommercialUpgrade ? <section className="final-cta"><div><span>{upgrade.summaryTitle}</span><h2>Gọi hoặc nhắn Zalo để kiểm tra chuyến</h2><p>Gửi ngày đi, thời gian, điểm đón, điểm trả và số khách để Phong Cách xác nhận xe và giá.</p></div><div className="final-cta-actions"><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_footer", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink><TrackedLink className="btn btn-outline-white" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_footer", route_slug: route.slug }}>Nhắn Zalo</TrackedLink></div></section> : <section className="final-cta"><div><span>TUYẾN {route.origin.toUpperCase()} – {route.destination.toUpperCase()}</span><h2>Phong Cách có xe cho tuyến này</h2><p>Muốn đi, hãy gọi để bên mình kiểm tra xe phù hợp.</p></div><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_footer", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink></section>}
     </main>

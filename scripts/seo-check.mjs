@@ -5,7 +5,9 @@ const canonicalOrigin = "https://xeghepphongcach.com";
 const baseUrl = (process.env.SEO_CHECK_BASE_URL || canonicalOrigin).replace(/\/$/, "");
 const sampledRoutePages = [
   { path: "/xe-ghep-hai-duong-hai-phong", origin: "Hải Dương", destination: "Hải Phòng", offer: "STARTING_FROM_DESCRIPTION" },
+  { path: "/xe-hai-duong-cat-bi", origin: "Hải Dương", destination: "Cát Bi", offer: "STARTING_FROM_DESCRIPTION" },
   { path: "/xe-ghep-hai-duong-quang-ninh", origin: "Hải Dương", destination: "Quảng Ninh", offer: "STARTING_FROM_DESCRIPTION" },
+  { path: "/xe-ghep-hai-duong-ha-long", origin: "Hải Dương", destination: "Hạ Long", offer: "STARTING_FROM_DESCRIPTION" },
   { path: "/xe-ghep-hai-phong-quang-ninh", origin: "Hải Phòng", destination: "Quảng Ninh", offer: false },
 ];
 const upgradedMoneyPagePaths = new Set(sampledRoutePages.filter((page) => page.offer === "STARTING_FROM_DESCRIPTION").map((page) => page.path));
@@ -13,6 +15,12 @@ const sampledGuidePages = [
   "/blog/di-hai-duong-ha-noi-bang-phuong-tien-gi",
   "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh",
 ];
+const expectedSupportPath = Object.freeze({
+  "/xe-ghep-hai-duong-hai-phong": "/blog/di-hai-duong-hai-phong-bang-phuong-tien-gi",
+  "/xe-hai-duong-cat-bi": "/xe-ghep-hai-duong-hai-phong",
+  "/xe-ghep-hai-duong-quang-ninh": "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh",
+  "/xe-ghep-hai-duong-ha-long": "/xe-ghep-hai-duong-quang-ninh",
+});
 const failures = [];
 const passes = [];
 
@@ -132,12 +140,22 @@ for (const page of pageDefinitions) {
       check((html.match(/<strong>Từ\s+[\d.]+đ(?:\/người|\/chuyến)?<\/strong>/g) || []).length >= 8, `${page.path} render bốn giá từ ở hero và bảng giá`);
       check(!/<strong>(?!Từ\s)(?:250\.000|500\.000|650\.000|900\.000|1\.100\.000|150\.000|180\.000)đ/i.test(html), `${page.path} không render bare governed amount`);
       check(html.includes("Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến"), `${page.path} đặt variability note cạnh giá`);
-      check(html.includes(page.path.endsWith("hai-phong") ? "/blog/di-hai-duong-hai-phong-bang-phuong-tien-gi" : "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh"), `${page.path} link đúng supporting article`);
+      check(html.includes(expectedSupportPath[page.path]), `${page.path} link đúng asset hỗ trợ`);
       check(!containsType(jsonLd, "Article"), `${page.path} dùng Service/WebPage thay vì Article schema dư thừa`);
       if (page.path.endsWith("quang-ninh")) {
         check(["Đông Triều", "Uông Bí", "Quảng Yên", "Hạ Long / Bãi Cháy", "Cẩm Phả", "Vân Đồn / Ao Tiên", "Móng Cái"].every((endpoint) => html.includes(endpoint)), `${page.path} có endpoint orientation`);
         check(!/Móng Cái[^<]{0,100}(?:250\.000|900\.000|1\.100\.000)đ/i.test(html), `${page.path} không bịa giá endpoint`);
         check(html.includes("Danh sách không xác nhận Phong Cách luôn phục vụ từng endpoint"), `${page.path} không biến geography thành availability`);
+      }
+      if (page.path.endsWith("ha-long")) {
+        const endpointSection = html.match(/<section class="route-endpoints"[\s\S]*?<\/section>/i)?.[0] || "";
+        check(html.includes("không xác nhận mọi địa chỉ luôn có xe"), `${page.path} không biến Hạ Long/Bãi Cháy thành availability toàn địa bàn`);
+        check(html.includes("không tạo giá riêng cho Bãi Cháy"), `${page.path} không tạo giá riêng cho Bãi Cháy`);
+        check(!/(?:250\.000|900\.000|1\.100\.000|180\.000)đ/i.test(endpointSection), `${page.path} không gắn numeric price vào Bãi Cháy`);
+      }
+      if (page.path.endsWith("cat-bi")) {
+        check(html.includes("giờ bay hoặc giờ cần có mặt"), `${page.path} yêu cầu đủ thông tin chuyến sân bay`);
+        check(!/cổng\s*\d+|cửa\s*\d+|chờ\s*(?:miễn phí\s*)?\d+\s*(?:phút|giờ)|phụ phí\s*\d+/i.test(html), `${page.path} không bịa quy trình hoặc phụ phí sân bay`);
       }
     } else {
       check(hasOffer === page.offer, `${page.path} chỉ có Offer khi có giá công khai`);
@@ -162,12 +180,15 @@ const sitemap = await fetchPage("/sitemap.xml");
 check(sitemap.response.status === 200, "sitemap.xml trả HTTP 200");
 const sitemapUrls = [...sitemap.html.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
 check(sitemapUrls.length > 0, "sitemap có URL");
+check(sitemapUrls.length === 39, "sitemap có đúng 39 URL sau khi thêm MP-019", `${sitemapUrls.length} URL`);
 check(new Set(sitemapUrls).size === sitemapUrls.length, "sitemap không có URL trùng");
 check(sitemapUrls.every((url) => url.startsWith(`${canonicalOrigin}/`) || url === `${canonicalOrigin}/`), "sitemap chỉ dùng domain chính");
 check(sitemapUrls.every((url) => !/vercel\.app|www\.|[?#]/.test(url)), "sitemap không chứa preview/www/query/hash");
 check(sitemapUrls.every((url) => !/\/admin|\/api/.test(url)), "sitemap không chứa trang riêng tư");
 check(sitemap.html.includes(`${canonicalOrigin}/images/hero-xe-ghep-phong-cach.png`), "image sitemap dùng ảnh hero hiện tại");
 check(sitemapUrls.includes(`${canonicalOrigin}/blog`), "/blog có trong sitemap");
+check(sitemapUrls.includes(`${canonicalOrigin}/xe-ghep-hai-duong-ha-long`), "MP-019 có trong sitemap");
+check(!sitemapUrls.some((url) => /\/xe-ghep-hai-duong-(?:bai-chay|dong-trieu|uong-bi|quang-yen|cam-pha|van-don|ao-tien|mong-cai)\/?$/.test(url)), "sitemap không tự sinh URL endpoint Quảng Ninh khác");
 for (const page of sampledRoutePages) check(sitemapUrls.includes(expectedCanonical(page.path)), `${page.path} có trong sitemap`);
 
 const blog = await fetchPage("/blog");

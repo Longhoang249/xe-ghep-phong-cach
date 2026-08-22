@@ -349,7 +349,8 @@ export const phase1SubRoutes = Object.freeze([
     existingAssetIds: Object.freeze(["MP-004", "CP-007"]),
     publicationState: "EXISTING_PUBLISHED",
     canonical: "/xe-hai-duong-cat-bi",
-    commercial: commercialFacts({ sharedRidePrice: 300000, charter4SeatPrice: 600000, charter7SeatPrice: 750000, parcelPrice: 150000 }, "data/routes.ts:13", "Stored route values", "hd-cb"),
+    priceSourceRouteId: "hd-hp",
+    commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000 }, "SPRINT-003A Owner brief", "Starting prices inherited from the Hải Dương - Hải Phòng corridor", "hd-cb"),
     journey: journeyFacts(58, 75, "data/routes.ts:13", "Current guide asks customers to provide flight, terminal (if known), passenger, and luggage details; no waiting or early/late-flight rule is stored.", "data/guide-posts.ts:306-329", true),
     operations: operationalFacts({
       serviceClaim: "Current asset claims shared and charter demand are accepted in both directions, subject to trip checks.",
@@ -369,7 +370,34 @@ export const phase1SubRoutes = Object.freeze([
     ["hd-dong-trieu", "Đông Triều"],
     ["hd-uong-bi", "Uông Bí"],
     ["hd-quang-yen", "Quảng Yên"],
-    ["hd-ha-long", "Hạ Long"],
+  ].map(([subRouteId, endpoint]) => candidateSubRoute({ subRouteId, parentRouteId: "hd-qn", parentCluster: "CLUSTER-B", endpoint, endpointProvince: "Quảng Ninh" })),
+  assessRecord({
+    subRouteId: "hd-ha-long",
+    parentRouteId: "hd-qn",
+    parentCluster: "CLUSTER-B",
+    endpoint: "Hạ Long",
+    endpointProvince: "Quảng Ninh",
+    endpointLifecycle: "PUBLISHED_ASSET",
+    serviceStatus: "CONFIRMED",
+    existingAssetIds: Object.freeze(["MP-019"]),
+    publicationState: "PUBLISHED",
+    canonical: "/xe-ghep-hai-duong-ha-long",
+    priceSourceRouteId: "hd-qn",
+    commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000 }, "SPRINT-003A Owner brief", "Starting prices inherited from the Hải Dương - Quảng Ninh corridor", "hd-qn"),
+    journey: journeyFacts(null, null, "SPRINT-003A Owner brief", null, null, true),
+    operations: operationalFacts({
+      serviceClaim: "Owner unlocked a Hải Dương - Hạ Long money page using verified Phase 1 service claims and corridor pricing.",
+      serviceRef: "SPRINT-003A Owner brief",
+      vehicleClaim: "Shared ride and 4-7-seat charter are available; actual vehicle is checked per trip.",
+      vehicleRef: "SPRINT-003A Owner brief",
+      luggageClaim: "Passenger and luggage details are requested before trip confirmation.",
+      luggageRef: "SPRINT-003A Owner brief",
+      parcelClaim: "Parcel service is available with a corridor starting price; item details remain trip-specific.",
+      parcelRef: "SPRINT-003A Owner brief",
+      ownerConfirmed: true,
+    }),
+  }),
+  ...[
     ["hd-bai-chay", "Bãi Cháy"],
     ["hd-cam-pha", "Cẩm Phả"],
     ["hd-van-don", "Vân Đồn"],
@@ -410,15 +438,15 @@ export function resolvePhase1PriceFacts(recordId) {
 
   return Object.freeze({
     recordId,
-    sourceRecordId: priceSource.routeId ?? priceSource.subRouteId,
-    scope: hasOwnVerifiedPrice ? "ENDPOINT_EXISTING_ASSET" : "INHERITED_PARENT_CORRIDOR",
+    sourceRecordId: subRoute.priceSourceRouteId ?? priceSource.routeId ?? priceSource.subRouteId,
+    scope: subRoute.priceSourceRouteId ? "INHERITED_PARENT_CORRIDOR" : hasOwnVerifiedPrice ? "ENDPOINT_EXISTING_ASSET" : "INHERITED_PARENT_CORRIDOR",
     publicationEligible: subRoute.serviceStatus === "CONFIRMED" && subRoute.publicationState !== "DATA_ONLY",
     prices: priceSource.commercial,
   });
 }
 
 function claim(assetId, routeId, fact, currentValue, sourceRef, conflictId = null) {
-  const routeDataKey = routeId === "hd-cat-bi" ? "hd-cb" : routeId;
+  const routeDataKey = routeId === "hd-cat-bi" ? "hd-cb" : routeId === "hd-ha-long" ? "hd-qn" : routeId;
   const priceFactKey = Object.freeze({
     sharedRidePrice: "sharedRidePrice",
     charter4SeatPrice: "charter4SeatPrice",
@@ -449,8 +477,9 @@ function claim(assetId, routeId, fact, currentValue, sourceRef, conflictId = nul
 
 const moneyAssetClaims = [
   ["MP-003", "hd-hp", "data/routes.ts:12", { sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000, distanceKm: 48, durationMinutes: 65 }],
-  ["MP-004", "hd-cat-bi", "data/routes.ts:13", { sharedRidePrice: 300000, charter4SeatPrice: 600000, charter7SeatPrice: 750000, parcelPrice: 150000, distanceKm: 58, durationMinutes: 75 }],
+  ["MP-004", "hd-cat-bi", "SPRINT-003A Owner brief", { sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000, distanceKm: 58, durationMinutes: 75 }],
   ["MP-005", "hd-qn", "data/routes.ts:14", { sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000, distanceKm: 105, durationMinutes: 120 }],
+  ["MP-019", "hd-ha-long", "SPRINT-003A Owner brief", { sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000, distanceKm: null, durationMinutes: null }],
   ["MP-006", "hp-qn", "data/routes.ts:15", { sharedRidePrice: null, charter4SeatPrice: null, charter7SeatPrice: null, parcelPrice: null, distanceKm: null, durationMinutes: null }],
 ].flatMap(([assetId, routeId, sourceRef, values]) => [
   ...Object.entries(values).map(([factName, value]) => claim(assetId, routeId, factName, value, sourceRef, factName.includes("Price") ? "DATA_CONFLICT-002" : null)),

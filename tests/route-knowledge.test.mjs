@@ -41,7 +41,7 @@ test("A: UNKNOWN numeric facts cannot reach evidence-aware consumers", () => {
 test("B: every Knowledge Base price fact has a valid evidence status", () => {
   const validation = validatePhase1KnowledgeBase();
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  assert.equal(validation.factCount, 436);
+  assert.equal(validation.factCount, 444);
 });
 
 test("C: every parent route and sub-route belongs to a Phase 1 cluster", () => {
@@ -59,22 +59,23 @@ test("D: candidate endpoints remain data-only and cannot create public assets", 
     assert.deepEqual(route.existingAssetIds, []);
     assert.equal(publicAssetKeys.has(route.subRouteId), false);
   }
-  assert.equal(seoAssets.length, 31);
+  assert.equal(seoAssets.length, 32);
 });
 
-test("E: current sitemap production paths remain the exact 38-URL baseline", () => {
+test("E: SPRINT-003A preserves the 38-URL baseline and adds only MP-019", () => {
   const staticPaths = ["/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe"];
   const currentPaths = [...staticPaths, ...productionAssetPaths(seoAssets)].sort();
-  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline].sort());
+  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"].sort());
   assert.equal(existingPublicUrlBaseline.length, 38);
+  assert.equal(currentPaths.length, 39);
 });
 
-test("Phase 1 maps all 11 approved assets without changing publication state", () => {
+test("Phase 1 maps the original assets plus explicitly published MP-019", () => {
   const assetIds = new Set([
     ...phase1ParentRoutes.flatMap((route) => route.assetIds),
     ...phase1SubRoutes.flatMap((route) => route.existingAssetIds),
   ]);
-  assert.equal(assetIds.size, 11);
+  assert.equal(assetIds.size, 12);
   for (const assetId of assetIds) assert.equal(seoAssets.find((asset) => asset.assetId === assetId)?.status, "PUBLISHED");
 });
 
@@ -98,7 +99,7 @@ test("DATA-002 owner facts are VERIFIED with verifier and date", () => {
     assert.equal(fact.verifiedBy, "Owner");
     assert.equal(fact.verifiedAt, "2026-08-22");
     assert.equal(fact.sourceType, "OWNER");
-    assert.match(fact.sourceRef, /OWNER_VERIFICATION_RECORD_PHASE1/);
+    assert.match(fact.sourceRef, /OWNER_VERIFICATION_RECORD_PHASE1|SPRINT-003A Owner brief/);
   }
   const priceFacts = Object.values(phase1OwnerPriceFactsByDataKey).flatMap((prices) => Object.values(prices));
   assert.equal(priceFacts.filter((fact) => fact.priceModel === "VERIFIED_FROM").length, 12);
@@ -122,24 +123,24 @@ test("missing prices stay contact-only while later verified values are data-driv
   assert.equal(startingFrom.amount, 250000);
 });
 
-test("endpoint prices inherit parent VERIFIED_FROM facts without enabling publication", () => {
+test("endpoint prices inherit parent VERIFIED_FROM facts without bypassing publication state", () => {
   const hạLong = resolvePhase1PriceFacts("hd-ha-long");
   assert.equal(hạLong.scope, "INHERITED_PARENT_CORRIDOR");
   assert.equal(hạLong.sourceRecordId, "hd-qn");
   assert.equal(hạLong.prices.sharedRidePrice.priceModel, "VERIFIED_FROM");
   assert.equal(hạLong.prices.sharedRidePrice.value, 250000);
-  assert.equal(hạLong.publicationEligible, false);
+  assert.equal(hạLong.publicationEligible, true);
 
   const catBi = resolvePhase1PriceFacts("hd-cat-bi");
-  assert.equal(catBi.scope, "ENDPOINT_EXISTING_ASSET");
-  assert.equal(catBi.sourceRecordId, "hd-cat-bi");
-  assert.equal(catBi.prices.sharedRidePrice.value, 300000);
+  assert.equal(catBi.scope, "INHERITED_PARENT_CORRIDOR");
+  assert.equal(catBi.sourceRecordId, "hd-hp");
+  assert.equal(catBi.prices.sharedRidePrice.value, 250000);
   assert.equal(catBi.publicationEligible, true);
 });
 
 test("explicit service and price claims are upgraded while operational rules stay UNKNOWN", () => {
   const verifiedClaims = phase1AssetClaims.filter((claim) => claim.status === "VERIFIED");
-  assert.equal(verifiedClaims.length, 31);
+  assert.equal(verifiedClaims.length, 36);
   for (const claim of verifiedClaims) {
     assert.equal(claim.evidence.verifiedAt, "2026-08-22");
     assert.equal(claim.evidence.verifiedBy, "Owner");
@@ -175,15 +176,15 @@ test("audit summary is deterministic", () => {
   assert.deepEqual(summarizePhase1KnowledgeBase(), {
     parentRoutes: 3,
     subRoutes: 13,
-    mappedAssets: 11,
+    mappedAssets: 12,
     canonicalRouteFacts: 366,
-    assetClaimObservations: 59,
+    assetClaimObservations: 67,
     fallbackFacts: 8,
     pricingRuleFacts: 3,
-    totalFacts: 436,
-    evidence: { VERIFIED: 84, PUBLIC_SOURCE: 0, ESTIMATE: 8, UNKNOWN: 344 },
+    totalFacts: 444,
+    evidence: { VERIFIED: 101, PUBLIC_SOURCE: 0, ESTIMATE: 8, UNKNOWN: 335 },
     conflicts: 3,
     fallbackPaths: 8,
-    readiness: { READY_FOR_CONTENT: 0, PARTIAL: 4, DATA_REQUIRED: 12, DO_NOT_PUBLISH: 0 },
+    readiness: { READY_FOR_CONTENT: 0, PARTIAL: 5, DATA_REQUIRED: 11, DO_NOT_PUBLISH: 0 },
   });
 });

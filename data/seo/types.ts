@@ -27,6 +27,12 @@ export type SeoAsset = {
   lastReviewedAt: string | null;
   /** Preserves public behavior for the 31 pages that predate TECH-001. */
   backfilledExisting: boolean;
+  /** Optional audit trail for controlled post-TECH-001 publication decisions. */
+  publicationHistory?: ReadonlyArray<{
+    status: "REGISTERED" | "REVIEW" | "APPROVED" | "PUBLISHED";
+    at: string;
+    decision: string;
+  }>;
 };
 
 export type EvidenceStatus = "VERIFIED" | "PUBLIC_SOURCE" | "ESTIMATE" | "UNKNOWN";

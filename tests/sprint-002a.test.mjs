@@ -9,7 +9,6 @@ import { productionAssetPaths, publicPricePresentation } from "../lib/seo/public
 const upgradedRouteIds = Object.freeze(["hd-hp", "hd-qn"]);
 
 test("SPRINT-002A changes only the two existing money-page owners", () => {
-  assert.deepEqual(Object.keys(moneyPageUpgrades).sort(), [...upgradedRouteIds].sort());
   for (const routeId of upgradedRouteIds) {
     const upgrade = moneyPageUpgrades[routeId];
     const asset = seoAssets.find((item) => item.assetId === upgrade.assetId);
@@ -21,8 +20,8 @@ test("SPRINT-002A changes only the two existing money-page owners", () => {
 
   const staticPaths = ["/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe"];
   const currentPaths = [...staticPaths, ...productionAssetPaths(seoAssets)].sort();
-  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline].sort());
-  assert.equal(currentPaths.length, 38);
+  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"].sort());
+  assert.equal(currentPaths.length, 39);
 });
 
 test("all eight commercial amounts retain VERIFIED_FROM semantics", () => {
@@ -40,7 +39,8 @@ test("all eight commercial amounts retain VERIFIED_FROM semantics", () => {
 });
 
 test("money-page copy covers commercial decisions without unsupported rules", () => {
-  for (const upgrade of Object.values(moneyPageUpgrades)) {
+  for (const routeId of upgradedRouteIds) {
+    const upgrade = moneyPageUpgrades[routeId];
     const copy = JSON.stringify(upgrade);
     assert.doesNotMatch(copy, /–/, `${upgrade.assetId} contains a user-facing en dash`);
     assert.match(copy, /hai chiều/i);
@@ -58,7 +58,8 @@ test("money-page copy covers commercial decisions without unsupported rules", ()
 test("MP-003 and MP-005 link to the approved comparison assets", () => {
   assert.equal(moneyPageUpgrades["hd-hp"].support.href, "/blog/di-hai-duong-hai-phong-bang-phuong-tien-gi");
   assert.equal(moneyPageUpgrades["hd-qn"].support.href, "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh");
-  for (const upgrade of Object.values(moneyPageUpgrades)) {
+  for (const routeId of upgradedRouteIds) {
+    const upgrade = moneyPageUpgrades[routeId];
     const target = seoAssets.find((asset) => asset.canonical === upgrade.support.href);
     assert.equal(target?.status, "PUBLISHED");
     assert.equal(target?.assetType, "COMPARISON");

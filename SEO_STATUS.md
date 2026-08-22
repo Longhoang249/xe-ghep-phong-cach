@@ -1,14 +1,14 @@
 # SEO Project Status
 
-Last updated: 2026-08-22 21:35 +07:00 (Asia/Ho_Chi_Minh)
+Last updated: 2026-08-22 22:07 +07:00 (Asia/Ho_Chi_Minh)
 
 Updated by: Codex
 
 ## Current Phase
 
-Phase: MON-001A Search Console Indexing & Monitoring Setup — REVIEW
+Phase: SPRINT-003A Wave 2 Money Pages — REVIEW
 
-Objective: Establish the Search Console indexation, sitemap and query-monitoring baseline for MP-003, MP-005, CP-003 and CP-002 without changing content or creating URLs.
+Objective: Upgrade MP-004 at its existing Cát Bi URL and prepare the explicitly governed MP-019 Hạ Long URL, without deploying to production or changing the original Search Console experiment assets.
 
 ---
 
@@ -22,7 +22,7 @@ Review: 1
 
 Approved: 0
 
-Published: 38 existing public URLs; MP-003 and MP-005 commercial upgrades live in place with no new URL
+Published: production remains at 38 URLs; the reviewed branch contains 39 governed URLs after adding only MP-019
 
 Monitoring: 2
 
@@ -34,6 +34,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
+| SPRINT-003A | MP-004 + MP-019 Wave 2 Money Pages | Money Pages | CLUSTER-A/B | REVIEW | `/xe-hai-duong-cat-bi`; `/xe-ghep-hai-duong-ha-long` | MP-004 is upgraded in place. MP-019 passes the explicit registry lifecycle and adds exactly one candidate-build URL. Both use inherited `VERIFIED_FROM` prices, descriptive non-numeric Offer schema and parent money-page links. Production deployment has not started. |
 | SPRINT-002A | MP-003 + MP-005 Commercial Upgrade | Money Pages | CLUSTER-A/B | PUBLISHED / MONITORING | Existing MP-003/MP-005 URLs | Production alias `https://xeghepphongcach.com`; deployed 2026-08-22 and live-QA verified at 18:39 +07:00. Four starting prices, two-way scope, decision support, endpoint boundary, CTAs, FAQs, metadata and Service schema are live; no URL added. |
 | MON-001A | Search Console Indexing & Monitoring Setup | Monitoring | CLUSTER-A/B | MONITORING | MP-003, MP-005, CP-003, CP-002 | Domain property verified; sitemap accepted with 38 discovered pages; both money pages indexed; one indexing request accepted for each supporting page; performance remains `PENDING_GSC_DATA`. Handoff status: `REVIEW`. |
 
@@ -62,20 +63,18 @@ Blocked: 0
 
 | ID | Issue | Required From | Impact |
 |---|---|---|---|
-| SPRINT-001B-D01 | Confirm Cát Bi pickup/meeting procedure and flight-delay/waiting handling. | Long / Phong | One two-question answer packet gates MP-004 and CP-007; not part of SPRINT-001A. |
-| PLAN-001-D02 | Confirm whether Hải Dương ⇄ Hạ Long is actually accepted and whether Bãi Cháy is included. | Long / Phong | Business blockers for MP-019 Wave 2; no URL or brief is approved. |
-| DATA-002-D01 | Confirm remaining endpoint coverage, operating mode/frequency, hours, lead time, surcharges, and Cát Bi exceptions. | Long / Phong | Four existing route records are `PARTIAL`; 12 endpoint records remain `DATA_REQUIRED` and non-publishable. |
-| DATA-002-D02 | Open separate tasks for MP-004 and unverified booking/cargo formulas. | Strategy | MP-003/MP-005 price UI/schema are resolved in SPRINT-002A; remaining surfaces stay listed in `PUBLIC_DATA_REMEDIATION_QUEUE.md`. |
+| DATA-002-D01 | Confirm remaining endpoint coverage, operating mode/frequency, hours, lead time, surcharges, and Cát Bi exceptions. | Long / Phong | These details remain optional for MP-004/MP-019 publication because unknown claims are omitted; they are still required before making the corresponding operating claims. |
+| DATA-002-D02 | Resolve unverified booking/cargo formulas in a separate task. | Strategy | Money-page price UI/schema are scoped separately; booking/cargo output remains listed in `PUBLIC_DATA_REMEDIATION_QUEUE.md`. |
 
 ---
 
 ## Next Queue
 
-1. T+1 on 2026-08-23: recheck indexation for MP-003, MP-005, CP-003 and CP-002 and confirm sitemap status remains successful.
-2. T+7 on 2026-08-29: review the page/query footprint when Search Console performance data becomes available.
-3. T+14 on 2026-09-05: review ranking, opportunity and cannibalization evidence before proposing Wave 3.
-4. Preserve MP-003/MP-005 as the sole owners of corridor price, charter, door-to-door, group-choice and reverse intent; keep SC-001 on `HOLD`.
-5. Do not treat `PENDING_GSC_DATA` as zero impressions or page failure.
+1. Strategy Review decides whether to deploy SPRINT-003A; do not deploy from this task.
+2. T+1 on 2026-08-23: recheck indexation for MP-003, MP-005, CP-003 and CP-002 and confirm the original 38-URL sitemap submission status remains successful.
+3. T+7 on 2026-08-29: review the original four-asset page/query footprint when Search Console performance data becomes available.
+4. T+14 on 2026-09-05: review ranking, opportunity and cannibalization evidence before proposing another wave.
+5. Keep MP-004/MP-019 outside the original four-asset GSC experiment and do not treat `PENDING_GSC_DATA` as zero.
 
 ---
 
@@ -88,10 +87,13 @@ Blocked: 0
 - **Resolved in DATA-002-OV2 Knowledge Base:** all 12 stored numeric Phase 1 service values are `VERIFIED_FROM`; four missing HP-QN values remain contact-only.
 - **Verified in DATA-002-OV2:** parcel service joins both directions, door-to-door, shared ride, charter, payment after trip, and free advance booking as Owner-provenanced commitments.
 - **Endpoint price governance:** data-only endpoints resolve to the parent-corridor starting-price facts without receiving an invented endpoint number or becoming publishable.
-- **SPRINT-002A price remediation:** MP-003/MP-005 render all eight governed values as `Từ`; the required variability note is adjacent to the price table. MP-004 and booking/cargo remain unchanged.
+- **SPRINT-003A MP-004 remediation:** the candidate build replaces the old Cát Bi values with inherited Hải Dương - Hải Phòng starting prices (`250k/500k/650k/150k`), renders every amount as `Từ`, and removes numeric `price`/`priceCurrency` from its commercial Offer.
+- **SPRINT-003A MP-019 publication:** one new governed URL is registered through `REGISTERED → REVIEW → APPROVED → PUBLISHED`; its Hạ Long prices inherit the Hải Dương - Quảng Ninh corridor and Bãi Cháy receives no separate price or automatic availability claim.
+- **SPRINT-003A operational boundary:** no fixed airport gate, waiting/flight-delay rule, airport surcharge, schedule, trips/day, fixed duration or endpoint surcharge is published. Unknown facts remain omitted instead of blocking the two useful pages.
+- **SPRINT-003A schema and sitemap:** MP-004/MP-019 use WebPage, Service, BreadcrumbList, FAQPage and a descriptive `Offer` with category `Giá bắt đầu`; the candidate sitemap delta is exactly `38 → 39`, adding only MP-019.
 - **SPRINT-002A schema remediation:** MP-003/MP-005 keep descriptive Offer nodes but remove numeric `price`/`priceCurrency`, preventing a starting price from being machine-read as a fixed guaranteed price.
-- **Readiness recalculated:** four existing route records are `PARTIAL`; 12 data-only endpoints remain `DATA_REQUIRED`; none is `READY_FOR_CONTENT`.
-- **Still unknown:** 344 facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and named-endpoint service are not upgraded.
+- **Readiness recalculated after SPRINT-003A:** five existing/published route records are `PARTIAL`; 11 endpoint records remain `DATA_REQUIRED`; none is mislabeled `READY_FOR_CONTENT`.
+- **Still unknown after SPRINT-003A:** 335 facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and unapproved named-endpoint service are not upgraded.
 - **PLAN-001 join result:** 344 `UNKNOWN` facts are not treated as blockers. Only material gaps for each candidate are classified as `OWNER_REQUIRED`, `PUBLIC_RESEARCH_OK`, `OPTIONAL`, or `BLOCKING`.
 - **Sprint 001 proposal:** MP-005, MP-003, CP-003 and CP-002 can proceed to briefing after approval; MP-004 and CP-007 are conditional on two shared Cát Bi answers.
 - **SPRINT-001A published in place:** CP-002 and CP-003 now provide answer-first comparison tables, decision support, `VERIFIED_FROM` Phong pricing, FAQs, route-page links, and dated public-source ledgers.
@@ -114,7 +116,7 @@ Blocked: 0
 - **MON-001A index baseline:** MP-003 and MP-005 are indexed with crawl/index permission and matching user/Google canonicals. No indexing request was sent for either money page.
 - **MON-001A supporting pages:** CP-003 is crawled but currently not indexed; CP-002 is discovered but not yet crawled. Google accepted exactly one indexing request for each on 2026-08-22; do not repeat them today.
 - **MON-001A performance:** Search Console is still processing the property. Impressions, clicks, CTR, position and query data remain `PENDING_GSC_DATA`, not zero.
-- **Wave 2 / deferred:** MP-019 is Owner-blocked; MP-006 and CP-004 are deferred for competition/differentiation; MP-020 is deferred with three business blockers.
+- **Wave 2 / review:** MP-004 and MP-019 are implemented on the SPRINT-003A branch and await Strategy Review/deployment. MP-006 and CP-004 remain deferred; MP-020 remains blocked.
 - **RES-002 research only:** Hạ Long is the strongest independent endpoint theme; Hải Dương ⇄ Hạ Long is the stronger whitespace candidate, while Hải Phòng ⇄ Hạ Long is a high-competition strategic battle. Both remain service-unconfirmed.
 - **RES-002 cannibalization decision:** reverse-direction queries remain on bidirectional parent pages; Quảng Yên and Ao Tiên receive no standalone recommendation; Uông Bí stays merged with the parent pending stronger evidence.
 - **High:** 18 route pages share a mostly generic presentation/content template and do not contain route-specific pickup/drop-off or journey facts.

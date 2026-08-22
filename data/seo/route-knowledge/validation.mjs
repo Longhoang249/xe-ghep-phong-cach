@@ -118,7 +118,7 @@ export function validatePhase1KnowledgeBase() {
     ...phase1ParentRoutes.flatMap((route) => route.assetIds),
     ...phase1SubRoutes.flatMap((route) => route.existingAssetIds),
   ]);
-  if (mappedAssetIds.size !== 11) errors.push(`Expected 11 mapped Phase 1 assets, found ${mappedAssetIds.size}.`);
+  if (mappedAssetIds.size !== 12) errors.push(`Expected 12 mapped Phase 1 assets after SPRINT-003A, found ${mappedAssetIds.size}.`);
 
   if (legacyPriceFallbackMappings.length !== 8) errors.push("All eight legacy price fallback paths must be mapped.");
   for (const mapping of legacyPriceFallbackMappings) {

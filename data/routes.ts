@@ -18,6 +18,7 @@ function ownerPriceFields(dataKey: string): RoutePriceFields {
 const hdHpPrices = ownerPriceFields("hd-hp");
 const hdCbPrices = ownerPriceFields("hd-cb");
 const hdQnPrices = ownerPriceFields("hd-qn");
+const hdHaLongPrices = ownerPriceFields("hd-qn");
 const hpQnPrices = ownerPriceFields("hp-qn");
 
 // Phase 1 passenger prices are sourced from the Owner evidence record above.
@@ -27,6 +28,7 @@ export const routes: RoutePrice[] = [
   { id:"hd-hp",origin:"Hải Dương",destination:"Hải Phòng",slug:"xe-ghep-hai-duong-hai-phong",distanceKm:48,durationMinutes:65,...hdHpPrices,region:"mien-bac",featured:true },
   { id:"hd-cb",origin:"Hải Dương",destination:"Cát Bi",slug:"xe-hai-duong-cat-bi",distanceKm:58,durationMinutes:75,...hdCbPrices,tag:"Đưa đón sân bay",region:"san-bay" },
   { id:"hd-qn",origin:"Hải Dương",destination:"Quảng Ninh",slug:"xe-ghep-hai-duong-quang-ninh",distanceKm:105,durationMinutes:120,...hdQnPrices,region:"mien-bac",featured:true },
+  { id:"hd-ha-long",origin:"Hải Dương",destination:"Hạ Long",slug:"xe-ghep-hai-duong-ha-long",distanceKm:null,durationMinutes:null,...hdHaLongPrices,region:"mien-bac",priceFallbackPolicy:"GOVERNED" },
   { id:"hp-qn",origin:"Hải Phòng",destination:"Quảng Ninh",slug:"xe-ghep-hai-phong-quang-ninh",distanceKm:null,durationMinutes:null,...hpQnPrices,region:"mien-bac",featured:true },
   { id:"hd-bn",origin:"Hải Dương",destination:"Bắc Ninh",slug:"xe-ghep-hai-duong-bac-ninh",distanceKm:48,durationMinutes:65,sharedPrice:250000,private4Price:500000,private7Price:650000,parcelPrice:150000,region:"mien-bac" },
   { id:"hd-bg",origin:"Hải Dương",destination:"Bắc Giang",slug:"xe-ghep-hai-duong-bac-giang",distanceKm:66,durationMinutes:85,sharedPrice:300000,private4Price:650000,private7Price:800000,parcelPrice:150000,region:"mien-bac" },

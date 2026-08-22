@@ -4,10 +4,11 @@ import { extname, join } from "node:path";
 const canonicalOrigin = "https://xeghepphongcach.com";
 const baseUrl = (process.env.SEO_CHECK_BASE_URL || canonicalOrigin).replace(/\/$/, "");
 const sampledRoutePages = [
-  { path: "/xe-ghep-hai-duong-hai-phong", origin: "Hải Dương", destination: "Hải Phòng", offer: "LEGACY_STARTING_PRICE_REMEDIATION" },
-  { path: "/xe-ghep-hai-duong-quang-ninh", origin: "Hải Dương", destination: "Quảng Ninh", offer: "LEGACY_STARTING_PRICE_REMEDIATION" },
+  { path: "/xe-ghep-hai-duong-hai-phong", origin: "Hải Dương", destination: "Hải Phòng", offer: "STARTING_FROM_DESCRIPTION" },
+  { path: "/xe-ghep-hai-duong-quang-ninh", origin: "Hải Dương", destination: "Quảng Ninh", offer: "STARTING_FROM_DESCRIPTION" },
   { path: "/xe-ghep-hai-phong-quang-ninh", origin: "Hải Phòng", destination: "Quảng Ninh", offer: false },
 ];
+const upgradedMoneyPagePaths = new Set(sampledRoutePages.filter((page) => page.offer === "STARTING_FROM_DESCRIPTION").map((page) => page.path));
 const sampledGuidePages = [
   "/blog/di-hai-duong-ha-noi-bang-phuong-tien-gi",
   "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh",
@@ -54,6 +55,22 @@ function containsType(value, type) {
   return Object.values(value).some((item) => containsType(item, type));
 }
 
+function objectsWithType(value, type, matches = []) {
+  if (!value || typeof value !== "object") return matches;
+  if (Array.isArray(value)) {
+    for (const item of value) objectsWithType(item, type, matches);
+    return matches;
+  }
+  if (value["@type"] === type || (Array.isArray(value["@type"]) && value["@type"].includes(type))) matches.push(value);
+  for (const item of Object.values(value)) objectsWithType(item, type, matches);
+  return matches;
+}
+
+function textInside(html, tagName) {
+  const raw = html.match(new RegExp(`<${tagName}\\b[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "i"))?.[1] || "";
+  return raw.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
 async function fetchPage(path, options = {}) {
   const response = await fetch(`${baseUrl}${path}`, options);
   return { response, html: await response.text() };
@@ -98,14 +115,30 @@ for (const page of pageDefinitions) {
     check(!seenTitles.has(meta.title), `${page.path} có title duy nhất`, meta.title);
     seenTitles.add(meta.title);
     check(html.includes(page.origin) && html.includes(page.destination) && html.includes("cả hai chiều"), `${page.path} có nội dung hai chiều`);
-    check(html.includes("Phong Cách có xe") && html.includes("Muốn đi"), `${page.path} tập trung từ khóa và kêu gọi liên hệ`);
-    check(!/Quãng đường<|Thời gian di chuyển|Khoảng\s+\d+(?:[.,]\d+)?\s*(?:km|giờ|phút)/i.test(html), `${page.path} không công bố quãng đường hoặc thời gian cố định`);
+    check(upgradedMoneyPagePaths.has(page.path) ? html.includes("Giá xe ghép") && html.includes("Gọi") && html.includes("Zalo") : html.includes("Phong Cách có xe") && html.includes("Muốn đi"), `${page.path} tập trung từ khóa và kêu gọi liên hệ`);
+    check(!/Quãng đường<|Thời gian di chuyển(?:<\/[^>]+>|:)\s*\d+|Khoảng\s+\d+(?:[.,]\d+)?\s*(?:km|giờ|phút)/i.test(html), `${page.path} không công bố quãng đường hoặc thời gian cố định`);
     check(containsType(jsonLd, "Service"), `${page.path} có Service schema`);
     check(containsType(jsonLd, "BreadcrumbList"), `${page.path} có Breadcrumb schema`);
     check(containsType(jsonLd, "FAQPage"), `${page.path} có FAQ schema`);
     const hasOffer = containsType(jsonLd, "Offer");
-    if (page.offer === "LEGACY_STARTING_PRICE_REMEDIATION") {
-      check(hasOffer, `${page.path} giữ nguyên Offer legacy đang chờ remediation`);
+    if (page.offer === "STARTING_FROM_DESCRIPTION") {
+      const service = jsonLd.flatMap((item) => objectsWithType(item, "Service"))[0];
+      const offer = service?.offers;
+      const h1 = textInside(html, "h1");
+      check(hasOffer, `${page.path} có Offer mô tả giá bắt đầu`);
+      check(offer && !("price" in offer) && !("priceCurrency" in offer), `${page.path} không phát numeric fixed Offer`);
+      check(/Giá .*từ/i.test(offer?.description || ""), `${page.path} Offer mô tả rõ giá từ`);
+      check(!meta.title.includes("–") && !h1.includes("–"), `${page.path} title/H1 dùng punctuation tự nhiên`);
+      check((html.match(/<strong>Từ\s+[\d.]+đ(?:\/người|\/chuyến)?<\/strong>/g) || []).length >= 8, `${page.path} render bốn giá từ ở hero và bảng giá`);
+      check(!/<strong>(?!Từ\s)(?:250\.000|500\.000|650\.000|900\.000|1\.100\.000|150\.000|180\.000)đ/i.test(html), `${page.path} không render bare governed amount`);
+      check(html.includes("Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến"), `${page.path} đặt variability note cạnh giá`);
+      check(html.includes(page.path.endsWith("hai-phong") ? "/blog/di-hai-duong-hai-phong-bang-phuong-tien-gi" : "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh"), `${page.path} link đúng supporting article`);
+      check(!containsType(jsonLd, "Article"), `${page.path} dùng Service/WebPage thay vì Article schema dư thừa`);
+      if (page.path.endsWith("quang-ninh")) {
+        check(["Đông Triều", "Uông Bí", "Quảng Yên", "Hạ Long / Bãi Cháy", "Cẩm Phả", "Vân Đồn / Ao Tiên", "Móng Cái"].every((endpoint) => html.includes(endpoint)), `${page.path} có endpoint orientation`);
+        check(!/Móng Cái[^<]{0,100}(?:250\.000|900\.000|1\.100\.000)đ/i.test(html), `${page.path} không bịa giá endpoint`);
+        check(html.includes("Danh sách không xác nhận Phong Cách luôn phục vụ từng endpoint"), `${page.path} không biến geography thành availability`);
+      }
     } else {
       check(hasOffer === page.offer, `${page.path} chỉ có Offer khi có giá công khai`);
     }
@@ -169,9 +202,9 @@ for (const sitemapUrl of sitemapUrls) {
   check(sameUrl(canonical, sitemapUrl), `${url.pathname} canonical tự tham chiếu`, canonical);
   if (/^\/xe-/.test(url.pathname)) {
     const articleJsonLd = jsonLdObjects(result.html);
-    check(result.html.includes("Phong Cách có xe") && result.html.includes("Muốn đi"), `${url.pathname} có thông điệp gọi kiểm tra xe`);
-    check(!/Quãng đường<|Thời gian di chuyển|Khoảng\s+\d+(?:[.,]\d+)?\s*(?:km|giờ|phút)/i.test(result.html), `${url.pathname} không công bố quãng đường hoặc thời gian cố định`);
-    check(containsType(articleJsonLd, "Article"), `${url.pathname} có Article schema`);
+    check(upgradedMoneyPagePaths.has(url.pathname) ? result.html.includes("Giá xe ghép") && result.html.includes("Gọi") : result.html.includes("Phong Cách có xe") && result.html.includes("Muốn đi"), `${url.pathname} có thông điệp gọi kiểm tra xe`);
+    check(!/Quãng đường<|Thời gian di chuyển(?:<\/[^>]+>|:)\s*\d+|Khoảng\s+\d+(?:[.,]\d+)?\s*(?:km|giờ|phút)/i.test(result.html), `${url.pathname} không công bố quãng đường hoặc thời gian cố định`);
+    check(upgradedMoneyPagePaths.has(url.pathname) ? !containsType(articleJsonLd, "Article") && containsType(articleJsonLd, "Service") : containsType(articleJsonLd, "Article"), `${url.pathname} dùng schema đúng loại trang`);
   }
   if (/^\/blog\//.test(url.pathname)) {
     const guideJsonLd = jsonLdObjects(result.html);

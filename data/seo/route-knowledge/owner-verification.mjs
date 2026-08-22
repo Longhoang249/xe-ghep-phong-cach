@@ -1,7 +1,6 @@
 const VERIFIED_AT = "2026-08-22";
 const VERIFIED_BY = "Owner";
 const SOURCE_REF = "OWNER_VERIFICATION_RECORD_PHASE1.md";
-const SPRINT_003A_SOURCE_REF = "SPRINT-003A Owner brief (2026-08-22)";
 
 export const phase1OwnerVerificationMeta = Object.freeze({
   taskId: "DATA-002",
@@ -42,7 +41,7 @@ export function ownerVerifiedPriceFact(value, priceModel, notes, sourceRef = SOU
 const verifiedStartingPrice = (value, service, sourceRef = SOURCE_REF, scopeNote = "") => ownerVerifiedPriceFact(
   value,
   "VERIFIED_FROM",
-  `Owner confirmed the stored ${service} value is a minimum starting price, never a fixed fare. The final trip price can vary by travel date, exact pickup, exact drop-off, travel time, and actual trip conditions. Named endpoints inherit the parent-corridor starting price; no endpoint-specific price may be inferred.${scopeNote ? ` ${scopeNote}` : ""}`,
+  `Owner confirmed the stored ${service} value is a minimum starting price, never a fixed fare. The final trip price can vary by travel date, exact pickup, exact drop-off, travel time, and actual trip conditions. Named endpoints inherit the parent-corridor starting price unless Owner separately verifies route-specific starting prices; no endpoint-specific price may be inferred.${scopeNote ? ` ${scopeNote}` : ""}`,
   sourceRef,
 );
 
@@ -64,10 +63,10 @@ export const phase1OwnerPriceFactsByDataKey = Object.freeze({
     parcelPrice: verifiedStartingPrice(150000, "parcel"),
   }),
   "hd-cb": Object.freeze({
-    sharedRidePrice: verifiedStartingPrice(250000, "shared-ride", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
-    charter4SeatPrice: verifiedStartingPrice(500000, "4-seat charter", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
-    charter7SeatPrice: verifiedStartingPrice(650000, "7-seat charter", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
-    parcelPrice: verifiedStartingPrice(150000, "parcel", SPRINT_003A_SOURCE_REF, "MP-004 inherits the Hải Dương - Hải Phòng corridor starting price."),
+    sharedRidePrice: verifiedStartingPrice(300000, "shared-ride", SOURCE_REF, "Cát Bi has its own Owner-verified route-level starting price and does not inherit the Hải Dương - Hải Phòng passenger starting price."),
+    charter4SeatPrice: verifiedStartingPrice(600000, "4-seat charter", SOURCE_REF, "Cát Bi has its own Owner-verified route-level starting price and does not inherit the Hải Dương - Hải Phòng charter starting price."),
+    charter7SeatPrice: verifiedStartingPrice(750000, "7-seat charter", SOURCE_REF, "Cát Bi has its own Owner-verified route-level starting price and does not inherit the Hải Dương - Hải Phòng charter starting price."),
+    parcelPrice: verifiedStartingPrice(150000, "parcel", SOURCE_REF, "Cát Bi has its own Owner-verified route-level starting price."),
   }),
   "hd-qn": Object.freeze({
     sharedRidePrice: verifiedStartingPrice(250000, "shared-ride"),
@@ -89,8 +88,8 @@ export const phase1OwnerPricingRules = Object.freeze({
     "Every stored numeric Phase 1 service price is a minimum starting price and must be presented semantically as ‘Từ [amount]’, not as a fixed fare.",
   ),
   endpointPricingRule: ownerVerifiedFact(
-    "INHERIT_PARENT_VERIFIED_FROM",
-    "A named endpoint uses the parent corridor's verified starting price. No endpoint-specific numeric price may be generated or inferred.",
+    "INHERIT_PARENT_VERIFIED_FROM_UNLESS_EXPLICITLY_VERIFIED",
+    "A named endpoint inherits the parent corridor's verified starting price unless Owner separately verifies route-specific starting prices. Cát Bi is an explicit route-level exception with its own verified starting prices. No endpoint-specific numeric price may be generated or inferred without Owner evidence.",
   ),
   variationFactors: ownerVerifiedFact(
     Object.freeze(["TRAVEL_DATE", "EXACT_PICKUP_ADDRESS", "EXACT_DROPOFF_ADDRESS", "TRAVEL_TIME", "ACTUAL_TRIP_CONDITIONS"]),

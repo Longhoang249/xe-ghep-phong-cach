@@ -349,8 +349,7 @@ export const phase1SubRoutes = Object.freeze([
     existingAssetIds: Object.freeze(["MP-004", "CP-007"]),
     publicationState: "EXISTING_PUBLISHED",
     canonical: "/xe-hai-duong-cat-bi",
-    priceSourceRouteId: "hd-hp",
-    commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000 }, "SPRINT-003A Owner brief", "Starting prices inherited from the Hải Dương - Hải Phòng corridor", "hd-cb"),
+    commercial: commercialFacts({ sharedRidePrice: 300000, charter4SeatPrice: 600000, charter7SeatPrice: 750000, parcelPrice: 150000 }, "OWNER_VERIFICATION_RECORD_PHASE1.md", "Owner-verified Cát Bi route-level starting prices", "hd-cb"),
     journey: journeyFacts(58, 75, "data/routes.ts:13", "Current guide asks customers to provide flight, terminal (if known), passenger, and luggage details; no waiting or early/late-flight rule is stored.", "data/guide-posts.ts:306-329", true),
     operations: operationalFacts({
       serviceClaim: "Current asset claims shared and charter demand are accepted in both directions, subject to trip checks.",
@@ -386,8 +385,8 @@ export const phase1SubRoutes = Object.freeze([
     commercial: commercialFacts({ sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000 }, "SPRINT-003A Owner brief", "Starting prices inherited from the Hải Dương - Quảng Ninh corridor", "hd-qn"),
     journey: journeyFacts(null, null, "SPRINT-003A Owner brief", null, null, true),
     operations: operationalFacts({
-      serviceClaim: "Owner unlocked a Hải Dương - Hạ Long money page using verified Phase 1 service claims and corridor pricing.",
-      serviceRef: "SPRINT-003A Owner brief",
+      serviceClaim: "Owner confirmed Hải Dương - Hạ Long/Bãi Cháy service for the Wave 2 money page.",
+      serviceRef: "Owner confirmation 2026-08-22",
       vehicleClaim: "Shared ride and 4-7-seat charter are available; actual vehicle is checked per trip.",
       vehicleRef: "SPRINT-003A Owner brief",
       luggageClaim: "Passenger and luggage details are requested before trip confirmation.",
@@ -477,9 +476,9 @@ function claim(assetId, routeId, fact, currentValue, sourceRef, conflictId = nul
 
 const moneyAssetClaims = [
   ["MP-003", "hd-hp", "data/routes.ts:12", { sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000, distanceKm: 48, durationMinutes: 65 }],
-  ["MP-004", "hd-cat-bi", "SPRINT-003A Owner brief", { sharedRidePrice: 250000, charter4SeatPrice: 500000, charter7SeatPrice: 650000, parcelPrice: 150000, distanceKm: 58, durationMinutes: 75 }],
+  ["MP-004", "hd-cat-bi", "OWNER_VERIFICATION_RECORD_PHASE1.md", { sharedRidePrice: 300000, charter4SeatPrice: 600000, charter7SeatPrice: 750000, parcelPrice: 150000, distanceKm: 58, durationMinutes: 75 }],
   ["MP-005", "hd-qn", "data/routes.ts:14", { sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000, distanceKm: 105, durationMinutes: 120 }],
-  ["MP-019", "hd-ha-long", "SPRINT-003A Owner brief", { sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000, distanceKm: null, durationMinutes: null }],
+  ["MP-019", "hd-ha-long", "Owner confirmation 2026-08-22", { sharedRidePrice: 250000, charter4SeatPrice: 900000, charter7SeatPrice: 1100000, parcelPrice: 180000, distanceKm: null, durationMinutes: null }],
   ["MP-006", "hp-qn", "data/routes.ts:15", { sharedRidePrice: null, charter4SeatPrice: null, charter7SeatPrice: null, parcelPrice: null, distanceKm: null, durationMinutes: null }],
 ].flatMap(([assetId, routeId, sourceRef, values]) => [
   ...Object.entries(values).map(([factName, value]) => claim(assetId, routeId, factName, value, sourceRef, factName.includes("Price") ? "DATA_CONFLICT-002" : null)),
@@ -571,7 +570,7 @@ export const phase1DataConflicts = Object.freeze([
       "TECH-001 therefore backfills these values as UNKNOWN rather than VERIFIED.",
     ]),
     sourceRefs: Object.freeze(["data/routes.ts:7-15", "data/seo/route-evidence.mjs:1-36"]),
-    resolution: "All 12 stored numeric Phase 1 values are VERIFIED_FROM. HP-QN remains contact-only. Endpoints inherit parent starting prices without receiving an inferred endpoint-specific value or publication eligibility.",
+    resolution: "All 12 stored numeric Phase 1 values are VERIFIED_FROM. HP-QN remains contact-only. Cát Bi has its own verified route-level starting prices; other endpoints inherit parent starting prices unless separately verified, without receiving an inferred endpoint-specific value or publication eligibility.",
   }),
   Object.freeze({
     conflictId: "DATA_CONFLICT-003",
@@ -584,7 +583,7 @@ export const phase1DataConflicts = Object.freeze([
       "No direction-specific availability, hours, endpoint coverage, or operations verifier exists.",
     ]),
     sourceRefs: Object.freeze(["app/[slug]/page.tsx:53-68,159-184", "data/guide-posts.ts:58-140,171-221,279-329", "data/seo/route-evidence.mjs:1-36"]),
-    resolution: "Owner confirmed both directions, door-to-door pickup/drop-off, shared ride, charter, parcel delivery, payment after trip, and free advance booking. Named-endpoint service, frequency, hours, lead time, waiting, and surcharges remain unresolved.",
+    resolution: "Owner confirmed both directions, door-to-door pickup/drop-off, shared ride, charter, parcel delivery, payment after trip, and free advance booking. Hạ Long/Bãi Cháy service was separately confirmed for MP-019. Frequency, hours, lead time, waiting, and surcharges remain unresolved.",
   }),
 ]);
 

@@ -6,9 +6,9 @@ Updated by: Codex
 
 ## Current Phase
 
-Phase: Sprint 001A Approved
+Phase: PLAN-002 Near-Money SEO Queue
 
-Objective: Completed. CP-002/CP-003 and the non-deployed MP-003/MP-005 packages passed Strategy Review; SPRINT-001B has not started.
+Objective: Join live near-money SERP evidence, current asset ownership and verified business data to select the next commercial wave without producing or publishing content.
 
 ---
 
@@ -18,7 +18,7 @@ Backlog: 0
 
 In Progress: 0
 
-Review: 0
+Review: 1
 
 Approved: 1
 
@@ -32,7 +32,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| SPRINT-001A | Phase 1 SEO Content Production | Comparison + Upgrade Packages | CLUSTER-A/B | APPROVED | Existing CP-002/CP-003 URLs | Minor review fixes completed: natural hyphen punctuation, no aggregator aggregate statistics, and an explicit geography-versus-service/pricing boundary for Quảng Ninh endpoints. |
+| PLAN-002 | Near-Money SEO Queue | Research / Planning | CLUSTER-A/B | REVIEW | No new URL | Recommends MP-003 and MP-005 as canonical owners of price/service intent, followed by SC-001; production has not started. |
 
 ---
 
@@ -49,6 +49,7 @@ Blocked: 0
 | RES-002 | SEO Battlefield / War Map | — | — | `765d9c1bd67a312496d40cb1c77ef5c2f246ceed` |
 | DATA-002-OV2 | Owner Pricing & Service Clarification | Existing URLs unchanged | — | `d9ed3d08e8ffe39e3c1e67b76c9be3533426dc88` |
 | PLAN-001 | Join SEO War Map × Route Knowledge Base | — | — | `8341af0644b1d24213a6f789d43cf72e9ac8705a` |
+| SPRINT-001A | CP-002/CP-003 content + MP-003/MP-005 upgrade packages | Existing article URLs only | — | `c2b510f5b4b45f6ae9d125a07b899dc7395d303d` |
 
 ---
 
@@ -66,11 +67,11 @@ Blocked: 0
 
 ## Next Queue
 
-1. Keep SPRINT-001A closed as `APPROVED`; do not expand it with additional comparison articles.
-2. Do not start SPRINT-001B before a new approved brief and the two Cát Bi operational answers.
-3. Deploy MP-003/MP-005 upgrades only after explicit permission to edit money pages/shared route UI.
-4. Keep MP-019 as Wave 2 until its endpoint-service blockers are resolved; keep MP-020 deferred.
-5. Schedule the shared price/schema remediation with regression coverage when money-page editing is opened.
+1. Review and approve/revise `PLAN_002_NEAR_MONEY_QUEUE.md`; do not start production from a `REVIEW` plan.
+2. If approved, open explicit permission for MP-003/MP-005 money-page and shared price/schema implementation; these pages are now the near-money critical path.
+3. Do not create separate price, charter, group-size, door-to-door or reverse-direction URLs; keep those intents on the bidirectional parent money pages.
+4. Consider SC-001 only after MP-005 owns corridor commercial intent; review SC-004 with GSC before any consolidation or repositioning.
+5. Keep SPRINT-001B and Cát Bi out of execution until the two operational answers are available.
 
 ---
 
@@ -94,6 +95,11 @@ Blocked: 0
 - **Source freshness:** SPRINT-001A public research was checked on 2026-08-22; dynamic operator/platform schedules and fares are not copied as fixed facts.
 - **SPRINT-001A minor review resolved:** CP-002/CP-003 public copy uses natural hyphen punctuation; aggregator sources establish available route/endpoint inventory only, with no copied aggregate operator/trip counts.
 - **Geography is not service evidence:** CP-002 now states directly that the named Quảng Ninh endpoint list describes geography/search demand and does not confirm Phong Cách availability or one shared fare at every endpoint.
+- **PLAN-002 ownership decision:** MP-003 owns HD-HP price, xe ghép, charter, door-to-door, reverse and group-choice commercial intent; MP-005 owns the equivalent parent-corridor HD-QN intent.
+- **PLAN-002 URL restraint:** no separate price, charter, group-size, door-to-door or reverse-direction page is recommended. Current SERPs largely resolve these needs through money pages, price sections and booking forms.
+- **Near-money critical path:** the next commercial wave requires MP-003/MP-005 deployment permission. More supporting articles would route around the pages that should convert the demand.
+- **Next supporting candidate:** SC-001 may retain a distinct booking-process role only after MP-005 is established as the commercial owner; SC-004 remains an ownership experiment pending GSC evidence.
+- **PLAN-002 evidence limit:** live snapshots were checked on 2026-08-22; search volume remains `UNKNOWN`, and competitor/aggregator prices or counts are not treated as Phong business facts.
 - **Wave 2 / deferred:** MP-019 is Owner-blocked; MP-006 and CP-004 are deferred for competition/differentiation; MP-020 is deferred with three business blockers.
 - **RES-002 research only:** Hạ Long is the strongest independent endpoint theme; Hải Dương ⇄ Hạ Long is the stronger whitespace candidate, while Hải Phòng ⇄ Hạ Long is a high-competition strategic battle. Both remain service-unconfirmed.
 - **RES-002 cannibalization decision:** reverse-direction queries remain on bidirectional parent pages; Quảng Yên and Ao Tiên receive no standalone recommendation; Uông Bí stays merged with the parent pending stronger evidence.

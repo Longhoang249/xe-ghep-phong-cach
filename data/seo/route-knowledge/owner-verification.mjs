@@ -1,4 +1,4 @@
-const VERIFIED_AT = "2026-08-21";
+const VERIFIED_AT = "2026-08-22";
 const VERIFIED_BY = "Owner";
 const SOURCE_REF = "OWNER_VERIFICATION_RECORD_PHASE1.md";
 
@@ -38,10 +38,10 @@ export function ownerVerifiedPriceFact(value, priceModel, notes) {
   return Object.freeze({ ...ownerVerifiedFact(value, notes), priceModel });
 }
 
-const verifiedStoredPrice = (value, service) => ownerVerifiedPriceFact(
+const verifiedStartingPrice = (value, service) => ownerVerifiedPriceFact(
   value,
-  "FIXED",
-  `Owner instructed that the existing ${service} price may be shown publicly. Price applies to the Phase 1 corridor record; endpoint-specific rules remain unverified.`,
+  "VERIFIED_FROM",
+  `Owner confirmed the stored ${service} value is a minimum starting price, never a fixed fare. The final trip price can vary by travel date, exact pickup, exact drop-off, travel time, and actual trip conditions. Named endpoints inherit the parent-corridor starting price; no endpoint-specific price may be inferred.`,
 );
 
 const unknownPrice = (value, service) => Object.freeze({
@@ -56,22 +56,22 @@ const unknownPrice = (value, service) => Object.freeze({
 
 export const phase1OwnerPriceFactsByDataKey = Object.freeze({
   "hd-hp": Object.freeze({
-    sharedRidePrice: verifiedStoredPrice(250000, "shared-ride"),
-    charter4SeatPrice: verifiedStoredPrice(500000, "4-seat charter"),
-    charter7SeatPrice: verifiedStoredPrice(650000, "7-seat charter"),
-    parcelPrice: unknownPrice(150000, "parcel"),
+    sharedRidePrice: verifiedStartingPrice(250000, "shared-ride"),
+    charter4SeatPrice: verifiedStartingPrice(500000, "4-seat charter"),
+    charter7SeatPrice: verifiedStartingPrice(650000, "7-seat charter"),
+    parcelPrice: verifiedStartingPrice(150000, "parcel"),
   }),
   "hd-cb": Object.freeze({
-    sharedRidePrice: verifiedStoredPrice(300000, "shared-ride"),
-    charter4SeatPrice: verifiedStoredPrice(600000, "4-seat charter"),
-    charter7SeatPrice: verifiedStoredPrice(750000, "7-seat charter"),
-    parcelPrice: unknownPrice(150000, "parcel"),
+    sharedRidePrice: verifiedStartingPrice(300000, "shared-ride"),
+    charter4SeatPrice: verifiedStartingPrice(600000, "4-seat charter"),
+    charter7SeatPrice: verifiedStartingPrice(750000, "7-seat charter"),
+    parcelPrice: verifiedStartingPrice(150000, "parcel"),
   }),
   "hd-qn": Object.freeze({
-    sharedRidePrice: verifiedStoredPrice(250000, "shared-ride"),
-    charter4SeatPrice: verifiedStoredPrice(900000, "4-seat charter"),
-    charter7SeatPrice: verifiedStoredPrice(1100000, "7-seat charter"),
-    parcelPrice: unknownPrice(180000, "parcel"),
+    sharedRidePrice: verifiedStartingPrice(250000, "shared-ride"),
+    charter4SeatPrice: verifiedStartingPrice(900000, "4-seat charter"),
+    charter7SeatPrice: verifiedStartingPrice(1100000, "7-seat charter"),
+    parcelPrice: verifiedStartingPrice(180000, "parcel"),
   }),
   "hp-qn": Object.freeze({
     sharedRidePrice: unknownPrice(null, "shared-ride"),
@@ -81,11 +81,27 @@ export const phase1OwnerPriceFactsByDataKey = Object.freeze({
   }),
 });
 
+export const phase1OwnerPricingRules = Object.freeze({
+  startingPriceRule: ownerVerifiedFact(
+    "VERIFIED_FROM",
+    "Every stored numeric Phase 1 service price is a minimum starting price and must be presented semantically as ‘Từ [amount]’, not as a fixed fare.",
+  ),
+  endpointPricingRule: ownerVerifiedFact(
+    "INHERIT_PARENT_VERIFIED_FROM",
+    "A named endpoint uses the parent corridor's verified starting price. No endpoint-specific numeric price may be generated or inferred.",
+  ),
+  variationFactors: ownerVerifiedFact(
+    Object.freeze(["TRAVEL_DATE", "EXACT_PICKUP_ADDRESS", "EXACT_DROPOFF_ADDRESS", "TRAVEL_TIME", "ACTUAL_TRIP_CONDITIONS"]),
+    "Owner supplied the allowed reasons that a final trip price can differ from the starting price. No surcharge formula was supplied.",
+  ),
+});
+
 export const phase1OwnerServiceFacts = Object.freeze({
   doorToDoor: ownerVerifiedFact(true, "Owner confirmed home pickup and destination drop-off for the services in scope."),
   bidirectional: ownerVerifiedFact(true, "Owner confirmed service in both directions across the full corridor."),
   sharedRideAvailable: ownerVerifiedFact(true, "Owner confirmed shared-ride service."),
   charterAvailable: ownerVerifiedFact(true, "Owner confirmed private charter service."),
+  parcelAvailable: ownerVerifiedFact(true, "Owner confirmed parcel-delivery service for Phase 1."),
   paymentAfterTrip: ownerVerifiedFact(true, "Owner confirmed payment after the trip."),
   advanceBookingFree: ownerVerifiedFact(true, "Owner confirmed advance booking has no fee."),
   pickupAreas: ownerVerifiedFact(Object.freeze(["Đón tận nhà"]), "No endpoint-level coverage list was supplied."),

@@ -1,4 +1,5 @@
 export type KnowledgeEvidenceStatus = "VERIFIED" | "PUBLIC_SOURCE" | "ESTIMATE" | "UNKNOWN";
+export type KnowledgePriceModel = "VERIFIED_FROM" | "UNKNOWN";
 
 export type KnowledgeSourceType =
   | "OWNER_CONFIRMATION"
@@ -18,6 +19,10 @@ export type KnowledgeFact<T = unknown> = {
   notes: string | null;
 };
 
+export type KnowledgePriceFact = KnowledgeFact<number> & {
+  priceModel: KnowledgePriceModel;
+};
+
 export type Phase1Cluster = "CLUSTER-A" | "CLUSTER-B" | "CLUSTER-C";
 export type Directionality = "BIDIRECTIONAL_CLAIM_UNVERIFIED";
 export type EndpointLifecycle = "EXISTING_ASSET" | "CANDIDATE";
@@ -25,10 +30,10 @@ export type ServiceStatus = "CONFIRMED" | "UNCONFIRMED" | "NOT_SERVICED";
 export type PublicationReadiness = "READY_FOR_CONTENT" | "PARTIAL" | "DATA_REQUIRED" | "DO_NOT_PUBLISH";
 
 export type CommercialFacts = {
-  sharedRidePrice: KnowledgeFact<number>;
-  charter4SeatPrice: KnowledgeFact<number>;
-  charter7SeatPrice: KnowledgeFact<number>;
-  parcelPrice: KnowledgeFact<number>;
+  sharedRidePrice: KnowledgePriceFact;
+  charter4SeatPrice: KnowledgePriceFact;
+  charter7SeatPrice: KnowledgePriceFact;
+  parcelPrice: KnowledgePriceFact;
   pricingNotes: KnowledgeFact<string>;
   surcharges: KnowledgeFact<string[]>;
 };

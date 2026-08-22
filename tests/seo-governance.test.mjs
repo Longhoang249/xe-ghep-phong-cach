@@ -96,6 +96,7 @@ test("E: new assets cannot expose UNKNOWN numeric prices or distance fallbacks",
   assert.equal(allowsFormulaPriceFallback(governed), false);
   assert.equal(presentation.kind, "CONTACT");
   assert.equal(presentation.amount, null);
+  assert.equal(presentation.prefix, null);
   assert.match(presentation.text, /Liên hệ xác nhận giá/);
 });
 

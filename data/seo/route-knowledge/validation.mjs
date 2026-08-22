@@ -38,7 +38,8 @@ export function summarizePhase1KnowledgeBase() {
   const canonicalRouteFacts = collectKnowledgeFacts({ parentRoutes: phase1ParentRoutes, subRoutes: phase1SubRoutes });
   const claimFacts = phase1AssetClaims.map((claim) => claim.evidence);
   const fallbackFacts = legacyPriceFallbackMappings.map((mapping) => mapping.evidence);
-  const allFacts = [...canonicalRouteFacts, ...claimFacts, ...fallbackFacts];
+  const pricingRuleFacts = collectKnowledgeFacts(phase1KnowledgeBase.pricingRules);
+  const allFacts = [...canonicalRouteFacts, ...claimFacts, ...fallbackFacts, ...pricingRuleFacts];
   const evidence = Object.fromEntries(knowledgeEvidenceStatuses.map((status) => [status, allFacts.filter((fact) => fact.status === status).length]));
   const readinessRecords = [...phase1ParentRoutes, ...phase1SubRoutes];
   const readiness = Object.fromEntries(
@@ -57,6 +58,7 @@ export function summarizePhase1KnowledgeBase() {
     canonicalRouteFacts: canonicalRouteFacts.length,
     assetClaimObservations: claimFacts.length,
     fallbackFacts: fallbackFacts.length,
+    pricingRuleFacts: pricingRuleFacts.length,
     totalFacts: allFacts.length,
     evidence: Object.freeze(evidence),
     conflicts: phase1KnowledgeBase.conflicts.length,
@@ -91,6 +93,14 @@ export function validatePhase1KnowledgeBase() {
     }
     if (fact.status === "UNKNOWN" && typeof fact.value === "number" && factValueForEvidenceAwareConsumer(fact) !== null) {
       errors.push(`${path} exposes an UNKNOWN numeric value.`);
+    }
+    if (/(sharedRidePrice|charter4SeatPrice|charter7SeatPrice|parcelPrice)$/.test(path)) {
+      if (fact.status === "VERIFIED" && typeof fact.value === "number" && fact.priceModel !== "VERIFIED_FROM") {
+        errors.push(`${path} is a verified numeric price without VERIFIED_FROM semantics.`);
+      }
+      if (fact.status === "UNKNOWN" && fact.priceModel !== "UNKNOWN") {
+        errors.push(`${path} is an UNKNOWN price without UNKNOWN priceModel.`);
+      }
     }
   }
 

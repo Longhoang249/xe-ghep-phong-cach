@@ -1,19 +1,20 @@
 import {
   ownerVerifiedFact,
   phase1OwnerPriceFactsByDataKey,
+  phase1OwnerPricingRules,
   phase1OwnerServiceFacts,
 } from "./owner-verification.mjs";
 
-const AUDIT_DATE = "2026-08-21";
+const AUDIT_DATE = "2026-08-22";
 const AUDITOR = "Codex repository audit";
 
 export const phase1KnowledgeMeta = Object.freeze({
   taskId: "DATA-002",
-  version: "v1.1",
+  version: "v1.2",
   auditedAt: AUDIT_DATE,
   scope: Object.freeze(["CLUSTER-A", "CLUSTER-B", "CLUSTER-C"]),
   publicConsumerEnabled: true,
-  notes: "Owner-verified Phase 1 passenger prices and service commitments can feed existing published assets; no record creates a URL or changes publication state.",
+  notes: "Owner-verified Phase 1 stored prices are minimum starting prices. Service commitments include shared ride, charter, and parcel; no record creates a URL or changes publication state.",
 });
 
 export function knowledgeFact({
@@ -62,15 +63,22 @@ function estimateFact(value, sourceRef, notes) {
   });
 }
 
+function unknownCommercialPriceFact(value, sourceRef = null, notes = "Owner confirmation required.") {
+  const fact = value == null
+    ? gapFact(notes)
+    : repoFact(value, sourceRef, notes);
+  return Object.freeze({ ...fact, priceModel: "UNKNOWN" });
+}
+
 function commercialFacts(values, sourceRef, notes = "Stored route values", dataKey = null) {
   const ownerPrices = dataKey ? phase1OwnerPriceFactsByDataKey[dataKey] : null;
   return Object.freeze({
-    sharedRidePrice: ownerPrices?.sharedRidePrice ?? (values.sharedRidePrice == null ? gapFact("No fixed shared-ride value is stored.") : repoFact(values.sharedRidePrice, sourceRef, notes)),
-    charter4SeatPrice: ownerPrices?.charter4SeatPrice ?? (values.charter4SeatPrice == null ? gapFact("No fixed 4-seat charter value is stored.") : repoFact(values.charter4SeatPrice, sourceRef, notes)),
-    charter7SeatPrice: ownerPrices?.charter7SeatPrice ?? (values.charter7SeatPrice == null ? gapFact("No fixed 7-seat charter value is stored.") : repoFact(values.charter7SeatPrice, sourceRef, notes)),
-    parcelPrice: ownerPrices?.parcelPrice ?? (values.parcelPrice == null ? gapFact("No fixed parcel value is stored.") : repoFact(values.parcelPrice, sourceRef, notes)),
+    sharedRidePrice: ownerPrices?.sharedRidePrice ?? unknownCommercialPriceFact(values.sharedRidePrice, sourceRef, `${notes}; no verified shared-ride starting price is stored.`),
+    charter4SeatPrice: ownerPrices?.charter4SeatPrice ?? unknownCommercialPriceFact(values.charter4SeatPrice, sourceRef, `${notes}; no verified 4-seat charter starting price is stored.`),
+    charter7SeatPrice: ownerPrices?.charter7SeatPrice ?? unknownCommercialPriceFact(values.charter7SeatPrice, sourceRef, `${notes}; no verified 7-seat charter starting price is stored.`),
+    parcelPrice: ownerPrices?.parcelPrice ?? unknownCommercialPriceFact(values.parcelPrice, sourceRef, `${notes}; no verified parcel starting price is stored.`),
     pricingNotes: ownerPrices
-      ? ownerVerifiedFact("Show confirmed numeric prices; use ‘Liên hệ’ where no confirmed price exists.", "Owner-approved public price presentation rule.")
+      ? phase1OwnerPricingRules.startingPriceRule
       : repoFact("Website values are reference values; final price is confirmed per trip.", "app/[slug]/page.tsx:67-68; app/chinh-sach-dat-xe/page.tsx:20", "Current public pricing qualification"),
     surcharges: gapFact("Night, remote-area, airport, waiting, and holiday surcharge rules are not recorded."),
   });
@@ -78,10 +86,10 @@ function commercialFacts(values, sourceRef, notes = "Stored route values", dataK
 
 function emptyCommercialFacts() {
   return Object.freeze({
-    sharedRidePrice: gapFact("Owner confirmation required."),
-    charter4SeatPrice: gapFact("Owner confirmation required."),
-    charter7SeatPrice: gapFact("Owner confirmation required."),
-    parcelPrice: gapFact("Owner confirmation required."),
+    sharedRidePrice: unknownCommercialPriceFact(null),
+    charter4SeatPrice: unknownCommercialPriceFact(null),
+    charter7SeatPrice: unknownCommercialPriceFact(null),
+    parcelPrice: unknownCommercialPriceFact(null),
     pricingNotes: gapFact("Fixed price versus per-trip quote is unknown."),
     surcharges: gapFact("Surcharge rules are unknown."),
   });
@@ -122,7 +130,9 @@ function operationalFacts({ serviceClaim, serviceRef, vehicleClaim, vehicleRef, 
       ? ownerVerifiedFact("Shared ride and private charter are available.", "Owner did not supply vehicle inventory or capacity details beyond the confirmed service types.")
       : repoFact(vehicleClaim, vehicleRef, "Current content vehicle claim"),
     luggageNotes: repoFact(luggageClaim, luggageRef, "Current content luggage instruction"),
-    parcelNotes: repoFact(parcelClaim, parcelRef, "Current content parcel-service claim"),
+    parcelNotes: ownerConfirmed
+      ? ownerVerifiedFact("Parcel delivery is available for Phase 1; item acceptance, handling, timing, and final price remain trip-specific.", "Owner confirmed the service, but did not supply parcel restrictions or a calculation formula.")
+      : repoFact(parcelClaim, parcelRef, "Current content parcel-service claim"),
     waitingPolicy: gapFact("No waiting-time or waiting-fee policy exists in repository evidence."),
     paymentAfterTrip: ownerConfirmed ? phase1OwnerServiceFacts.paymentAfterTrip : gapFact("Payment timing is not owner-confirmed."),
     advanceBookingFree: ownerConfirmed ? phase1OwnerServiceFacts.advanceBookingFree : gapFact("Advance-booking fee rule is not owner-confirmed."),
@@ -181,6 +191,14 @@ function scoreSection(section) {
 function assessRecord(record) {
   const decisionFacts = [...factsIn(record.commercial), ...factsIn(record.journey), ...factsIn(record.operations)];
   const evidenced = decisionFacts.filter((fact) => fact.status !== "UNKNOWN").length;
+  const hasVerifiedCoreService = record.operations.serviceAvailability.status === "VERIFIED";
+  const readiness = record.serviceStatus === "NOT_SERVICED"
+    ? "DO_NOT_PUBLISH"
+    : record.publicationState === "DATA_ONLY" || !hasVerifiedCoreService
+      ? "DATA_REQUIRED"
+      : evidenced === decisionFacts.length
+        ? "READY_FOR_CONTENT"
+        : "PARTIAL";
   return Object.freeze({
     ...record,
     completeness: Object.freeze({
@@ -189,7 +207,7 @@ function assessRecord(record) {
       operations: scoreSection(record.operations),
       evidence: decisionFacts.length ? Math.round((evidenced / decisionFacts.length) * 100) : 0,
     }),
-    readiness: "DATA_REQUIRED",
+    readiness,
   });
 }
 
@@ -360,14 +378,71 @@ export const phase1SubRoutes = Object.freeze([
   ].map(([subRouteId, endpoint]) => candidateSubRoute({ subRouteId, parentRouteId: "hd-qn", parentCluster: "CLUSTER-B", endpoint, endpointProvince: "Quảng Ninh" })),
 ]);
 
+/**
+ * Resolves the governed price source for a parent corridor or endpoint record.
+ * Data-only endpoints inherit parent starting-price facts but remain ineligible
+ * for publication until their service status and asset state are approved.
+ */
+export function resolvePhase1PriceFacts(recordId) {
+  const parent = phase1ParentRoutes.find((record) => record.routeId === recordId);
+  if (parent) {
+    return Object.freeze({
+      recordId,
+      sourceRecordId: parent.routeId,
+      scope: "PARENT_CORRIDOR",
+      publicationEligible: true,
+      prices: parent.commercial,
+    });
+  }
+
+  const subRoute = phase1SubRoutes.find((record) => record.subRouteId === recordId);
+  if (!subRoute) return null;
+  const hasOwnVerifiedPrice = [
+    subRoute.commercial.sharedRidePrice,
+    subRoute.commercial.charter4SeatPrice,
+    subRoute.commercial.charter7SeatPrice,
+    subRoute.commercial.parcelPrice,
+  ].some((fact) => fact.priceModel === "VERIFIED_FROM");
+  const priceSource = hasOwnVerifiedPrice
+    ? subRoute
+    : phase1ParentRoutes.find((record) => record.routeId === subRoute.parentRouteId);
+  if (!priceSource) return null;
+
+  return Object.freeze({
+    recordId,
+    sourceRecordId: priceSource.routeId ?? priceSource.subRouteId,
+    scope: hasOwnVerifiedPrice ? "ENDPOINT_EXISTING_ASSET" : "INHERITED_PARENT_CORRIDOR",
+    publicationEligible: subRoute.serviceStatus === "CONFIRMED" && subRoute.publicationState !== "DATA_ONLY",
+    prices: priceSource.commercial,
+  });
+}
+
 function claim(assetId, routeId, fact, currentValue, sourceRef, conflictId = null) {
+  const routeDataKey = routeId === "hd-cat-bi" ? "hd-cb" : routeId;
+  const priceFactKey = Object.freeze({
+    sharedRidePrice: "sharedRidePrice",
+    charter4SeatPrice: "charter4SeatPrice",
+    charter7SeatPrice: "charter7SeatPrice",
+    parcelPrice: "parcelPrice",
+  })[fact];
+  const ownerPriceFact = priceFactKey ? phase1OwnerPriceFactsByDataKey[routeDataKey]?.[priceFactKey] : null;
+  const verifiedClaimFacts = Object.freeze({
+    serviceAvailability: () => ownerVerifiedFact(currentValue, "Owner confirmed shared ride, charter, parcel delivery, both directions, home pickup, and destination drop-off for Phase 1."),
+    directionality: () => ownerVerifiedFact(currentValue, "Owner confirmed both directions across the Phase 1 corridors."),
+    vehicleAvailability: () => ownerVerifiedFact(currentValue, "Owner confirmed shared-ride and private-charter service; this does not establish a fixed vehicle schedule."),
+    parcelAvailability: () => ownerVerifiedFact(currentValue, "Owner confirmed parcel-delivery service; item restrictions and handling rules remain unverified."),
+    parcelPricing: () => ownerVerifiedFact(currentValue, "Owner confirmed stored prices are starting prices, not one fixed final price for every trip or parcel request."),
+  });
+  const evidence = ownerPriceFact?.status === "VERIFIED" && ownerPriceFact.value === currentValue
+    ? ownerPriceFact
+    : verifiedClaimFacts[fact]?.() ?? repoFact(currentValue, sourceRef, "Business-impacting claim observed in a Phase 1 asset");
   return Object.freeze({
     assetId,
     routeId,
     fact,
     currentValue,
-    evidence: repoFact(currentValue, sourceRef, "Business-impacting claim observed in a Phase 1 asset"),
-    status: "UNKNOWN",
+    evidence,
+    status: evidence.status,
     conflictId,
   });
 }
@@ -442,7 +517,7 @@ export const phase1AssetClaims = Object.freeze([
 export const phase1DataConflicts = Object.freeze([
   Object.freeze({
     conflictId: "DATA_CONFLICT-001",
-    status: "OPEN",
+    status: "RESOLVED_IN_KB_PUBLIC_REMEDIATION_OPEN",
     severity: "HIGH",
     routes: Object.freeze(["hd-hp", "hd-qn", "hp-qn"]),
     fact: "parcelPricing",
@@ -453,11 +528,11 @@ export const phase1DataConflicts = Object.freeze([
       "Booking logic applies stored/formula base plus volumetric-weight surcharge.",
     ]),
     sourceRefs: Object.freeze(["components/BookingExperience.tsx:309,375", "data/routes.ts:12-15", "data/guide-posts.ts:198-221", "lib/pricing.ts:8-13"]),
-    resolution: "Owner must define whether 150k is a valid minimum, route-specific base, marketing claim, or should later be removed.",
+    resolution: "Owner confirmed parcel service and that stored 150k/180k values are minimum starting prices. HP-QN remains contact-only; unverified booking/cargo formulas require separate public remediation.",
   }),
   Object.freeze({
     conflictId: "DATA_CONFLICT-002",
-    status: "PARTIALLY_RESOLVED",
+    status: "RESOLVED_IN_KB_PUBLIC_REMEDIATION_OPEN",
     severity: "HIGH",
     routes: Object.freeze(["hd-hp", "hd-cat-bi", "hd-qn", "hp-qn"]),
     fact: "priceEvidence",
@@ -467,7 +542,7 @@ export const phase1DataConflicts = Object.freeze([
       "TECH-001 therefore backfills these values as UNKNOWN rather than VERIFIED.",
     ]),
     sourceRefs: Object.freeze(["data/routes.ts:7-15", "data/seo/route-evidence.mjs:1-36"]),
-    resolution: "Owner authorized the stored shared-ride and charter prices for hd-hp, hd-cat-bi, and hd-qn. HP-QN remains contact-only; parcel prices remain UNKNOWN; endpoint-specific applicability is still unresolved.",
+    resolution: "All 12 stored numeric Phase 1 values are VERIFIED_FROM. HP-QN remains contact-only. Endpoints inherit parent starting prices without receiving an inferred endpoint-specific value or publication eligibility.",
   }),
   Object.freeze({
     conflictId: "DATA_CONFLICT-003",
@@ -480,7 +555,7 @@ export const phase1DataConflicts = Object.freeze([
       "No direction-specific availability, hours, endpoint coverage, or operations verifier exists.",
     ]),
     sourceRefs: Object.freeze(["app/[slug]/page.tsx:53-68,159-184", "data/guide-posts.ts:58-140,171-221,279-329", "data/seo/route-evidence.mjs:1-36"]),
-    resolution: "Owner confirmed both directions, door-to-door pickup/drop-off, shared ride, charter, payment after trip, and free advance booking. Endpoint coverage, frequency, hours, and parcel availability remain unresolved.",
+    resolution: "Owner confirmed both directions, door-to-door pickup/drop-off, shared ride, charter, parcel delivery, payment after trip, and free advance booking. Named-endpoint service, frequency, hours, lead time, waiting, and surcharges remain unresolved.",
   }),
 ]);
 
@@ -511,6 +586,7 @@ export const legacyPriceFallbackMappings = Object.freeze([
 
 export const phase1KnowledgeBase = Object.freeze({
   meta: phase1KnowledgeMeta,
+  pricingRules: phase1OwnerPricingRules,
   parentRoutes: phase1ParentRoutes,
   subRoutes: phase1SubRoutes,
   assetClaims: phase1AssetClaims,

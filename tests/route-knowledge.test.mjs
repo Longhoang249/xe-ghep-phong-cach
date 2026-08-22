@@ -5,7 +5,9 @@ import { existingPublicUrlBaseline } from "../data/seo/existing-public-url-basel
 import {
   knowledgeFact,
   legacyPriceFallbackMappings,
+  phase1AssetClaims,
   phase1ParentRoutes,
+  resolvePhase1PriceFacts,
   phase1SubRoutes,
 } from "../data/seo/route-knowledge/phase1.mjs";
 import {
@@ -17,6 +19,7 @@ import {
 import {
   ownerVerifiedFact,
   phase1OwnerPriceFactsByDataKey,
+  phase1OwnerPricingRules,
   phase1OwnerServiceFacts,
 } from "../data/seo/route-knowledge/owner-verification.mjs";
 import { publicPricePresentation } from "../lib/seo/publication.mjs";
@@ -38,7 +41,7 @@ test("A: UNKNOWN numeric facts cannot reach evidence-aware consumers", () => {
 test("B: every Knowledge Base price fact has a valid evidence status", () => {
   const validation = validatePhase1KnowledgeBase();
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  assert.equal(validation.factCount, 433);
+  assert.equal(validation.factCount, 436);
 });
 
 test("C: every parent route and sub-route belongs to a Phase 1 cluster", () => {
@@ -90,25 +93,75 @@ test("DATA-002 owner facts are VERIFIED with verifier and date", () => {
     ...Object.values(phase1OwnerPriceFactsByDataKey).flatMap((prices) => Object.values(prices)),
     ...Object.values(phase1OwnerServiceFacts),
   ].filter((fact) => fact.status === "VERIFIED");
-  assert.equal(verifiedFacts.length, 17);
+  assert.equal(verifiedFacts.length, 21);
   for (const fact of verifiedFacts) {
     assert.equal(fact.verifiedBy, "Owner");
-    assert.equal(fact.verifiedAt, "2026-08-21");
+    assert.equal(fact.verifiedAt, "2026-08-22");
     assert.equal(fact.sourceType, "OWNER");
     assert.match(fact.sourceRef, /OWNER_VERIFICATION_RECORD_PHASE1/);
   }
   const priceFacts = Object.values(phase1OwnerPriceFactsByDataKey).flatMap((prices) => Object.values(prices));
-  assert.equal(priceFacts.filter((fact) => fact.priceModel === "FIXED").length, 9);
-  assert.equal(priceFacts.filter((fact) => fact.priceModel === "UNKNOWN").length, 7);
+  assert.equal(priceFacts.filter((fact) => fact.priceModel === "VERIFIED_FROM").length, 12);
+  assert.equal(priceFacts.filter((fact) => fact.priceModel === "UNKNOWN").length, 4);
+  for (const fact of Object.values(phase1OwnerPricingRules)) {
+    assert.equal(fact.status, "VERIFIED");
+    assert.equal(fact.verifiedAt, "2026-08-22");
+  }
 });
 
 test("missing prices stay contact-only while later verified values are data-driven", () => {
   const missing = publicPricePresentation(phase1OwnerPriceFactsByDataKey["hp-qn"].sharedRidePrice);
   const laterFilled = publicPricePresentation(ownerVerifiedFact(320000, "Future owner-confirmed fare fixture."));
+  const startingFrom = publicPricePresentation(phase1OwnerPriceFactsByDataKey["hd-hp"].sharedRidePrice);
   assert.equal(missing.kind, "CONTACT");
   assert.equal(missing.amount, null);
   assert.equal(laterFilled.kind, "VERIFIED");
   assert.equal(laterFilled.amount, 320000);
+  assert.equal(startingFrom.kind, "VERIFIED_FROM");
+  assert.equal(startingFrom.prefix, "Từ");
+  assert.equal(startingFrom.amount, 250000);
+});
+
+test("endpoint prices inherit parent VERIFIED_FROM facts without enabling publication", () => {
+  const hạLong = resolvePhase1PriceFacts("hd-ha-long");
+  assert.equal(hạLong.scope, "INHERITED_PARENT_CORRIDOR");
+  assert.equal(hạLong.sourceRecordId, "hd-qn");
+  assert.equal(hạLong.prices.sharedRidePrice.priceModel, "VERIFIED_FROM");
+  assert.equal(hạLong.prices.sharedRidePrice.value, 250000);
+  assert.equal(hạLong.publicationEligible, false);
+
+  const catBi = resolvePhase1PriceFacts("hd-cat-bi");
+  assert.equal(catBi.scope, "ENDPOINT_EXISTING_ASSET");
+  assert.equal(catBi.sourceRecordId, "hd-cat-bi");
+  assert.equal(catBi.prices.sharedRidePrice.value, 300000);
+  assert.equal(catBi.publicationEligible, true);
+});
+
+test("explicit service and price claims are upgraded while operational rules stay UNKNOWN", () => {
+  const verifiedClaims = phase1AssetClaims.filter((claim) => claim.status === "VERIFIED");
+  assert.equal(verifiedClaims.length, 31);
+  for (const claim of verifiedClaims) {
+    assert.equal(claim.evidence.verifiedAt, "2026-08-22");
+    assert.equal(claim.evidence.verifiedBy, "Owner");
+  }
+
+  const preservedUnknownClaims = phase1AssetClaims.filter((claim) => [
+    "schedule",
+    "bookingProcess",
+    "parcelInputs",
+    "parcelRestrictions",
+    "directionAvailability",
+    "airportRequirements",
+    "luggage",
+  ].includes(claim.fact));
+  assert.equal(preservedUnknownClaims.every((claim) => claim.status === "UNKNOWN"), true);
+
+  for (const record of [...phase1ParentRoutes, ...phase1SubRoutes]) {
+    assert.equal(record.operations.operatingHours.status, "UNKNOWN");
+    assert.equal(record.operations.bookingLeadTime.status, "UNKNOWN");
+    assert.equal(record.operations.waitingPolicy.status, "UNKNOWN");
+    assert.equal(record.commercial.surcharges.status, "UNKNOWN");
+  }
 });
 
 test("NOT_SERVICED endpoints are not eligible for publication", () => {
@@ -126,10 +179,11 @@ test("audit summary is deterministic", () => {
     canonicalRouteFacts: 366,
     assetClaimObservations: 59,
     fallbackFacts: 8,
-    totalFacts: 433,
-    evidence: { VERIFIED: 43, PUBLIC_SOURCE: 0, ESTIMATE: 8, UNKNOWN: 382 },
+    pricingRuleFacts: 3,
+    totalFacts: 436,
+    evidence: { VERIFIED: 84, PUBLIC_SOURCE: 0, ESTIMATE: 8, UNKNOWN: 344 },
     conflicts: 3,
     fallbackPaths: 8,
-    readiness: { READY_FOR_CONTENT: 0, PARTIAL: 0, DATA_REQUIRED: 16, DO_NOT_PUBLISH: 0 },
+    readiness: { READY_FOR_CONTENT: 0, PARTIAL: 4, DATA_REQUIRED: 12, DO_NOT_PUBLISH: 0 },
   });
 });

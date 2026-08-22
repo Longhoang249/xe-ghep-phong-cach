@@ -29,7 +29,7 @@ function verifiedPhase1RouteEvidence(dataKey) {
     charter7Price: prices.charter7SeatPrice,
     sharedRideAvailable: phase1OwnerServiceFacts.sharedRideAvailable,
     charterAvailable: phase1OwnerServiceFacts.charterAvailable,
-    parcelAvailable: unknownFact(null, "Parcel service was not included in this Owner confirmation."),
+    parcelAvailable: phase1OwnerServiceFacts.parcelAvailable,
     bidirectional: phase1OwnerServiceFacts.bidirectional,
     doorToDoor: phase1OwnerServiceFacts.doorToDoor,
     paymentAfterTrip: phase1OwnerServiceFacts.paymentAfterTrip,

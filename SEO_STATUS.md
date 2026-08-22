@@ -1,14 +1,14 @@
 # SEO Project Status
 
-Last updated: 2026-08-22 18:39 +07:00 (Asia/Ho_Chi_Minh)
+Last updated: 2026-08-22 21:35 +07:00 (Asia/Ho_Chi_Minh)
 
 Updated by: Codex
 
 ## Current Phase
 
-Phase: DEPLOY-002A Production Monitoring
+Phase: MON-001A Search Console Indexing & Monitoring Setup — REVIEW
 
-Objective: Monitor the production MP-003 and MP-005 upgrades after deployment; do not start SC-001 or another wave without Strategy approval.
+Objective: Establish the Search Console indexation, sitemap and query-monitoring baseline for MP-003, MP-005, CP-003 and CP-002 without changing content or creating URLs.
 
 ---
 
@@ -18,13 +18,13 @@ Backlog: 0
 
 In Progress: 0
 
-Review: 0
+Review: 1
 
 Approved: 0
 
 Published: 38 existing public URLs; MP-003 and MP-005 commercial upgrades live in place with no new URL
 
-Monitoring: 1
+Monitoring: 2
 
 Blocked: 0
 
@@ -35,6 +35,7 @@ Blocked: 0
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
 | SPRINT-002A | MP-003 + MP-005 Commercial Upgrade | Money Pages | CLUSTER-A/B | PUBLISHED / MONITORING | Existing MP-003/MP-005 URLs | Production alias `https://xeghepphongcach.com`; deployed 2026-08-22 and live-QA verified at 18:39 +07:00. Four starting prices, two-way scope, decision support, endpoint boundary, CTAs, FAQs, metadata and Service schema are live; no URL added. |
+| MON-001A | Search Console Indexing & Monitoring Setup | Monitoring | CLUSTER-A/B | MONITORING | MP-003, MP-005, CP-003, CP-002 | Domain property verified; sitemap accepted with 38 discovered pages; both money pages indexed; one indexing request accepted for each supporting page; performance remains `PENDING_GSC_DATA`. Handoff status: `REVIEW`. |
 
 ---
 
@@ -65,17 +66,16 @@ Blocked: 0
 | PLAN-001-D02 | Confirm whether Hải Dương ⇄ Hạ Long is actually accepted and whether Bãi Cháy is included. | Long / Phong | Business blockers for MP-019 Wave 2; no URL or brief is approved. |
 | DATA-002-D01 | Confirm remaining endpoint coverage, operating mode/frequency, hours, lead time, surcharges, and Cát Bi exceptions. | Long / Phong | Four existing route records are `PARTIAL`; 12 endpoint records remain `DATA_REQUIRED` and non-publishable. |
 | DATA-002-D02 | Open separate tasks for MP-004 and unverified booking/cargo formulas. | Strategy | MP-003/MP-005 price UI/schema are resolved in SPRINT-002A; remaining surfaces stay listed in `PUBLIC_DATA_REMEDIATION_QUEUE.md`. |
-| RES-001-D04 | Confirm whether Google Search Console, Bing Webmaster Tools, GA4, and official Zalo/Facebook profiles are configured outside the repository. | Long / Owner | Production HTML exposes no Google/Bing meta verification or GA4 ID; DNS-level verification cannot be inferred from code. |
 
 ---
 
 ## Next Queue
 
-1. Monitor live MP-003/MP-005 query ownership and call/Zalo behavior; do not start SC-001 or another wave without Strategy approval.
-2. Preserve MP-003/MP-005 as the sole owners of corridor price, charter, door-to-door, group-choice and reverse intent.
-3. Decide whether SC-001 still has a distinct role only after production evidence is available.
-4. Review SC-004 with GSC before any consolidation or repositioning.
-5. Keep SPRINT-001B and Cát Bi out of execution until the two operational answers are available.
+1. T+1 on 2026-08-23: recheck indexation for MP-003, MP-005, CP-003 and CP-002 and confirm sitemap status remains successful.
+2. T+7 on 2026-08-29: review the page/query footprint when Search Console performance data becomes available.
+3. T+14 on 2026-09-05: review ranking, opportunity and cannibalization evidence before proposing Wave 3.
+4. Preserve MP-003/MP-005 as the sole owners of corridor price, charter, door-to-door, group-choice and reverse intent; keep SC-001 on `HOLD`.
+5. Do not treat `PENDING_GSC_DATA` as zero impressions or page failure.
 
 ---
 
@@ -109,6 +109,11 @@ Blocked: 0
 - **SPRINT-002A endpoint boundary:** MP-005 lists seven Quảng Ninh endpoint labels only for geography/search orientation; Service schema remains scoped to Hải Dương and Quảng Ninh, with no endpoint Offer or availability entity.
 - **SPRINT-002A URL regression:** registry and sitemap remain at the exact 38-URL baseline; reverse aliases still redirect to the bidirectional parent pages.
 - **DEPLOY-002A live QA:** production MP-003/MP-005 expose all eight `Từ` values with no bare governed amount, valid call/Zalo/booking links, correct self-canonicals, reverse intent, reciprocal CP-002/CP-003 links and descriptive non-numeric Offer schema. Both pages have zero horizontal overflow at 390×844. The sitemap endpoint returns HTTP 200 and the validated 38-URL baseline is unchanged; homepage and sampled out-of-scope MP-006 retain their prior presentation.
+- **MON-001A Search Console:** `sc-domain:xeghepphongcach.com` is verified by DNS TXT through Vercel. The verification record must not be removed.
+- **MON-001A sitemap:** `https://xeghepphongcach.com/sitemap.xml` was submitted once on 2026-08-22, read successfully the same day and reported 38 discovered pages and 0 videos.
+- **MON-001A index baseline:** MP-003 and MP-005 are indexed with crawl/index permission and matching user/Google canonicals. No indexing request was sent for either money page.
+- **MON-001A supporting pages:** CP-003 is crawled but currently not indexed; CP-002 is discovered but not yet crawled. Google accepted exactly one indexing request for each on 2026-08-22; do not repeat them today.
+- **MON-001A performance:** Search Console is still processing the property. Impressions, clicks, CTR, position and query data remain `PENDING_GSC_DATA`, not zero.
 - **Wave 2 / deferred:** MP-019 is Owner-blocked; MP-006 and CP-004 are deferred for competition/differentiation; MP-020 is deferred with three business blockers.
 - **RES-002 research only:** Hạ Long is the strongest independent endpoint theme; Hải Dương ⇄ Hạ Long is the stronger whitespace candidate, while Hải Phòng ⇄ Hạ Long is a high-competition strategic battle. Both remain service-unconfirmed.
 - **RES-002 cannibalization decision:** reverse-direction queries remain on bidirectional parent pages; Quảng Yên and Ao Tiên receive no standalone recommendation; Uông Bí stays merged with the parent pending stronger evidence.

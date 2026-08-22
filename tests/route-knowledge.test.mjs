@@ -123,7 +123,7 @@ test("missing prices stay contact-only while later verified values are data-driv
   assert.equal(startingFrom.amount, 250000);
 });
 
-test("endpoint prices inherit parent VERIFIED_FROM facts without bypassing publication state", () => {
+test("endpoint prices inherit parent unless a route-specific starting price is explicitly verified", () => {
   const hạLong = resolvePhase1PriceFacts("hd-ha-long");
   assert.equal(hạLong.scope, "INHERITED_PARENT_CORRIDOR");
   assert.equal(hạLong.sourceRecordId, "hd-qn");
@@ -132,9 +132,12 @@ test("endpoint prices inherit parent VERIFIED_FROM facts without bypassing publi
   assert.equal(hạLong.publicationEligible, true);
 
   const catBi = resolvePhase1PriceFacts("hd-cat-bi");
-  assert.equal(catBi.scope, "INHERITED_PARENT_CORRIDOR");
-  assert.equal(catBi.sourceRecordId, "hd-hp");
-  assert.equal(catBi.prices.sharedRidePrice.value, 250000);
+  assert.equal(catBi.scope, "ENDPOINT_EXISTING_ASSET");
+  assert.equal(catBi.sourceRecordId, "hd-cat-bi");
+  assert.equal(catBi.prices.sharedRidePrice.value, 300000);
+  assert.equal(catBi.prices.charter4SeatPrice.value, 600000);
+  assert.equal(catBi.prices.charter7SeatPrice.value, 750000);
+  assert.equal(catBi.prices.parcelPrice.value, 150000);
   assert.equal(catBi.publicationEligible, true);
 });
 

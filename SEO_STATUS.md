@@ -1,6 +1,6 @@
 # SEO Project Status
 
-Last updated: 2026-08-22 22:07 +07:00 (Asia/Ho_Chi_Minh)
+Last updated: 2026-08-22 23:08 +07:00 (Asia/Ho_Chi_Minh)
 
 Updated by: Codex
 
@@ -34,7 +34,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| SPRINT-003A | MP-004 + MP-019 Wave 2 Money Pages | Money Pages | CLUSTER-A/B | REVIEW | `/xe-hai-duong-cat-bi`; `/xe-ghep-hai-duong-ha-long` | MP-004 is upgraded in place. MP-019 passes the explicit registry lifecycle and adds exactly one candidate-build URL. Both use inherited `VERIFIED_FROM` prices, descriptive non-numeric Offer schema and parent money-page links. Production deployment has not started. |
+| SPRINT-003A | MP-004 + MP-019 Wave 2 Money Pages | Money Pages | CLUSTER-A/B | REVIEW | `/xe-hai-duong-cat-bi`; `/xe-ghep-hai-duong-ha-long` | MP-004 is upgraded in place with its own route-level `VERIFIED_FROM` prices. MP-019 passes the explicit registry lifecycle, adds exactly one candidate-build URL and inherits the verified Hải Dương - Quảng Ninh starting prices. Both use descriptive non-numeric Offer schema and parent money-page links. Production deployment has not started. |
 | SPRINT-002A | MP-003 + MP-005 Commercial Upgrade | Money Pages | CLUSTER-A/B | PUBLISHED / MONITORING | Existing MP-003/MP-005 URLs | Production alias `https://xeghepphongcach.com`; deployed 2026-08-22 and live-QA verified at 18:39 +07:00. Four starting prices, two-way scope, decision support, endpoint boundary, CTAs, FAQs, metadata and Service schema are live; no URL added. |
 | MON-001A | Search Console Indexing & Monitoring Setup | Monitoring | CLUSTER-A/B | MONITORING | MP-003, MP-005, CP-003, CP-002 | Domain property verified; sitemap accepted with 38 discovered pages; both money pages indexed; one indexing request accepted for each supporting page; performance remains `PENDING_GSC_DATA`. Handoff status: `REVIEW`. |
 
@@ -87,7 +87,7 @@ Blocked: 0
 - **Resolved in DATA-002-OV2 Knowledge Base:** all 12 stored numeric Phase 1 service values are `VERIFIED_FROM`; four missing HP-QN values remain contact-only.
 - **Verified in DATA-002-OV2:** parcel service joins both directions, door-to-door, shared ride, charter, payment after trip, and free advance booking as Owner-provenanced commitments.
 - **Endpoint price governance:** data-only endpoints resolve to the parent-corridor starting-price facts without receiving an invented endpoint number or becoming publishable.
-- **SPRINT-003A MP-004 remediation:** the candidate build replaces the old Cát Bi values with inherited Hải Dương - Hải Phòng starting prices (`250k/500k/650k/150k`), renders every amount as `Từ`, and removes numeric `price`/`priceCurrency` from its commercial Offer.
+- **SPRINT-003A MP-004 canonical pricing:** Cát Bi is a route-level verified price exception with its own starting prices (`300k/600k/750k/150k`); it does not inherit the Hải Dương - Hải Phòng passenger/charter prices. Every amount renders as `Từ`, and its commercial Offer contains no numeric `price`/`priceCurrency`.
 - **SPRINT-003A MP-019 publication:** one new governed URL is registered through `REGISTERED → REVIEW → APPROVED → PUBLISHED`; its Hạ Long prices inherit the Hải Dương - Quảng Ninh corridor and Bãi Cháy receives no separate price or automatic availability claim.
 - **SPRINT-003A operational boundary:** no fixed airport gate, waiting/flight-delay rule, airport surcharge, schedule, trips/day, fixed duration or endpoint surcharge is published. Unknown facts remain omitted instead of blocking the two useful pages.
 - **SPRINT-003A schema and sitemap:** MP-004/MP-019 use WebPage, Service, BreadcrumbList, FAQPage and a descriptive `Offer` with category `Giá bắt đầu`; the candidate sitemap delta is exactly `38 → 39`, adding only MP-019.
@@ -95,7 +95,7 @@ Blocked: 0
 - **Readiness recalculated after SPRINT-003A:** five existing/published route records are `PARTIAL`; 11 endpoint records remain `DATA_REQUIRED`; none is mislabeled `READY_FOR_CONTENT`.
 - **Still unknown after SPRINT-003A:** 335 facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and unapproved named-endpoint service are not upgraded.
 - **PLAN-001 join result:** 344 `UNKNOWN` facts are not treated as blockers. Only material gaps for each candidate are classified as `OWNER_REQUIRED`, `PUBLIC_RESEARCH_OK`, `OPTIONAL`, or `BLOCKING`.
-- **Sprint 001 proposal:** MP-005, MP-003, CP-003 and CP-002 can proceed to briefing after approval; MP-004 and CP-007 are conditional on two shared Cát Bi answers.
+- **Historical Sprint 001 proposal:** MP-004/CP-007 were initially conditional on additional Cát Bi operating answers. SPRINT-003A later unlocked MP-004 by publishing only verified route-level pricing/service facts and omitting unknown airport procedures.
 - **SPRINT-001A published in place:** CP-002 and CP-003 now provide answer-first comparison tables, decision support, `VERIFIED_FROM` Phong pricing, FAQs, route-page links, and dated public-source ledgers.
 - **No endpoint price inference:** CP-002 names the approved Quảng Ninh endpoint set for orientation but explicitly keeps pricing at parent-corridor scope.
 - **Packages published:** `SEO_UPGRADE_MP003.md` and `SEO_UPGRADE_MP005.md` drive the scoped live MP-003/MP-005 implementation; shared legacy route output remains unchanged for other money pages.
@@ -138,7 +138,7 @@ Blocked: 0
 - Vehicle inventory/capacity or airport-specific service rules beyond the verified shared/charter/parcel commitments.
 - Waiting, cancellation, lead-time, frequency, hours and explicit surcharge rules.
 - Official social profile URLs and owner confirmation of webmaster/analytics configuration.
-- For Quảng Ninh, confirm actual service by endpoint where a page is considered: Đông Triều, Uông Bí, Quảng Yên, Hạ Long/Bãi Cháy, Cẩm Phả, Vân Đồn/Ao Tiên, and Móng Cái. Pricing inherits the parent `VERIFIED_FROM` value unless Owner later supplies a distinct rule.
+- For future Quảng Ninh endpoint pages, confirm actual service separately for Đông Triều, Uông Bí, Quảng Yên, Cẩm Phả, Vân Đồn/Ao Tiên, and Móng Cái. Hải Dương - Hạ Long/Bãi Cháy is already Owner-confirmed for MP-019 and inherits the parent `VERIFIED_FROM` price; exact-address availability remains trip-specific.
 
 ---
 
@@ -158,12 +158,12 @@ Blocked: 0
 - DATA-002-OV2 audits 436 total facts: 84 `VERIFIED`, 0 `PUBLIC_SOURCE`, 8 `ESTIMATE`, and 344 `UNKNOWN`. Thirty-eight existing facts moved from `UNKNOWN` to `VERIFIED`; three traceable pricing-policy facts were added.
 - Twelve stored numeric prices use `VERIFIED_FROM`: nine former passenger/charter values and three parcel values. Four missing HP-QN prices remain `UNKNOWN`.
 - The price resolver supports `INHERIT_PARENT_VERIFIED_FROM` for endpoint research records while preserving the separate service/publication gate.
-- Owner confirmation did not identify any named Quảng Ninh endpoint. Twelve candidate endpoint records remain `UNCONFIRMED`; Cát Bi is confirmed only at the existing route-asset level.
+- SPRINT-003A Owner confirmation establishes Hải Dương - Hạ Long/Bãi Cháy service for MP-019. Other standalone endpoint candidates remain data-only until separately confirmed; Cát Bi remains a confirmed existing route asset with its own verified price exception.
 - DATA-002-OV2 recalculates readiness from evidence: 4 existing route records are `PARTIAL`, 12 endpoint candidates are `DATA_REQUIRED`, and none is `READY_FOR_CONTENT`.
 - RES-002 sampled 64 purposeful queries across 41 source pages and 32 domains: 18 commercial, 11 price, 1 service-modifier, 22 endpoint/airport, and 12 informational queries.
 - No reliable keyword-volume source was available, so every RES-002 record explicitly stores `SEARCH_VOLUME = UNKNOWN`; opportunity scores are internal evidence-weighted prioritization only.
 - In the structured sample, `ghephaiduong.com`, `motortrip.vn`, `vexere.com`, `xeghephaiduongdicactinh24h.com`, and `taxihaiduong24h.net` were the five most recurring domains. Frequency is not traffic or market share.
 - The recommended first-sprint candidate set reuses eight existing URLs and contains two conditional endpoint candidates; it creates no registry record or public URL during RES-002.
-- PLAN-001 narrows the ten-candidate pool to six proposed Sprint assets: four immediately briefable existing assets and two conditional existing Cát Bi assets.
+- PLAN-001 originally narrowed the pool to six proposed assets; the later SPRINT-003A Owner decision resolved MP-004 pricing and MP-019 Hạ Long/Bãi Cháy service without inferring the still-unknown operating details.
 - Material fact classification prevents public-source geography/distance/airport research from being mislabeled as Owner blockers; only business truth remains Owner-gated.
-- MP-019 and MP-020 remain uncreated URL candidates. Endpoint price inheritance does not substitute for endpoint service confirmation.
+- MP-019 is now a governed candidate-build URL with explicit service confirmation. MP-020 remains uncreated; endpoint price inheritance still does not substitute for endpoint service confirmation elsewhere.

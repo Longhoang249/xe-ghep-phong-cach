@@ -1,14 +1,14 @@
 # SEO Project Status
 
-Last updated: 2026-08-22 (Asia/Ho_Chi_Minh)
+Last updated: 2026-08-22 18:39 +07:00 (Asia/Ho_Chi_Minh)
 
 Updated by: Codex
 
 ## Current Phase
 
-Phase: SPRINT-002A Money Page Commercial Upgrade
+Phase: DEPLOY-002A Production Monitoring
 
-Objective: Upgrade only MP-003 and MP-005 to own price, xe ghép, bao xe, door-to-door, reverse and booking intent with correct `VERIFIED_FROM` semantics.
+Objective: Monitor the production MP-003 and MP-005 upgrades after deployment; do not start SC-001 or another wave without Strategy approval.
 
 ---
 
@@ -18,11 +18,13 @@ Backlog: 0
 
 In Progress: 0
 
-Review: 1
+Review: 0
 
-Approved: 1
+Approved: 0
 
-Published: 38 existing public URLs; CP-002 and CP-003 content updated in place with no new URL
+Published: 38 existing public URLs; MP-003 and MP-005 commercial upgrades live in place with no new URL
+
+Monitoring: 1
 
 Blocked: 0
 
@@ -32,7 +34,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| SPRINT-002A | MP-003 + MP-005 Commercial Upgrade | Money Pages | CLUSTER-A/B | REVIEW | Existing MP-003/MP-005 URLs | Four starting prices, two-way scope, decision support, endpoint boundary, CTAs, FAQs, metadata and Service schema upgraded in place; no URL added. |
+| SPRINT-002A | MP-003 + MP-005 Commercial Upgrade | Money Pages | CLUSTER-A/B | PUBLISHED / MONITORING | Existing MP-003/MP-005 URLs | Production alias `https://xeghepphongcach.com`; deployed 2026-08-22 and live-QA verified at 18:39 +07:00. Four starting prices, two-way scope, decision support, endpoint boundary, CTAs, FAQs, metadata and Service schema are live; no URL added. |
 
 ---
 
@@ -51,6 +53,7 @@ Blocked: 0
 | PLAN-001 | Join SEO War Map × Route Knowledge Base | — | — | `8341af0644b1d24213a6f789d43cf72e9ac8705a` |
 | SPRINT-001A | CP-002/CP-003 content + MP-003/MP-005 upgrade packages | Existing article URLs only | — | `c2b510f5b4b45f6ae9d125a07b899dc7395d303d` |
 | PLAN-002 | Near-Money SEO Queue | — | — | `5288c3b1ecbeac0cab95757ee83df3e1cc0c5f08` |
+| SPRINT-002A | MP-003/MP-005 Commercial Upgrade | 2 existing money pages upgraded in place on 2026-08-22 | `https://xeghepphongcach.com` | `6f0c8c6638bdf7e8015d0927fe7dcda836cd3584` |
 
 ---
 
@@ -68,9 +71,9 @@ Blocked: 0
 
 ## Next Queue
 
-1. Strategy Review SPRINT-002A; do not start SC-001 or another sprint while this implementation is `REVIEW`.
+1. Monitor live MP-003/MP-005 query ownership and call/Zalo behavior; do not start SC-001 or another wave without Strategy approval.
 2. Preserve MP-003/MP-005 as the sole owners of corridor price, charter, door-to-door, group-choice and reverse intent.
-3. If approved and deployed, observe query ownership and call/Zalo behavior before deciding whether SC-001 needs an upgrade.
+3. Decide whether SC-001 still has a distinct role only after production evidence is available.
 4. Review SC-004 with GSC before any consolidation or repositioning.
 5. Keep SPRINT-001B and Cát Bi out of execution until the two operational answers are available.
 
@@ -93,18 +96,19 @@ Blocked: 0
 - **Sprint 001 proposal:** MP-005, MP-003, CP-003 and CP-002 can proceed to briefing after approval; MP-004 and CP-007 are conditional on two shared Cát Bi answers.
 - **SPRINT-001A published in place:** CP-002 and CP-003 now provide answer-first comparison tables, decision support, `VERIFIED_FROM` Phong pricing, FAQs, route-page links, and dated public-source ledgers.
 - **No endpoint price inference:** CP-002 names the approved Quảng Ninh endpoint set for orientation but explicitly keeps pricing at parent-corridor scope.
-- **Packages implemented for review:** `SEO_UPGRADE_MP003.md` and `SEO_UPGRADE_MP005.md` now drive the scoped MP-003/MP-005 implementation; shared legacy route output remains unchanged for other money pages.
+- **Packages published:** `SEO_UPGRADE_MP003.md` and `SEO_UPGRADE_MP005.md` drive the scoped live MP-003/MP-005 implementation; shared legacy route output remains unchanged for other money pages.
 - **Source freshness:** SPRINT-001A public research was checked on 2026-08-22; dynamic operator/platform schedules and fares are not copied as fixed facts.
 - **SPRINT-001A minor review resolved:** CP-002/CP-003 public copy uses natural hyphen punctuation; aggregator sources establish available route/endpoint inventory only, with no copied aggregate operator/trip counts.
 - **Geography is not service evidence:** CP-002 now states directly that the named Quảng Ninh endpoint list describes geography/search demand and does not confirm Phong Cách availability or one shared fare at every endpoint.
 - **PLAN-002 ownership decision:** MP-003 owns HD-HP price, xe ghép, charter, door-to-door, reverse and group-choice commercial intent; MP-005 owns the equivalent parent-corridor HD-QN intent.
 - **PLAN-002 URL restraint:** no separate price, charter, group-size, door-to-door or reverse-direction page is recommended. Current SERPs largely resolve these needs through money pages, price sections and booking forms.
-- **Near-money critical path:** the next commercial wave requires MP-003/MP-005 deployment permission. More supporting articles would route around the pages that should convert the demand.
+- **Near-money critical path resolved:** MP-003/MP-005 are deployed as the commercial owners. Production monitoring now precedes any decision about another supporting asset.
 - **Next supporting candidate:** SC-001 may retain a distinct booking-process role only after MP-005 is established as the commercial owner; SC-004 remains an ownership experiment pending GSC evidence.
 - **PLAN-002 evidence limit:** live snapshots were checked on 2026-08-22; search volume remains `UNKNOWN`, and competitor/aggregator prices or counts are not treated as Phong business facts.
 - **SPRINT-002A answerability:** both heroes expose route, four starting prices, service set, two-way/door-to-door facts and call/Zalo actions without requiring the reader to reach long-form copy.
 - **SPRINT-002A endpoint boundary:** MP-005 lists seven Quảng Ninh endpoint labels only for geography/search orientation; Service schema remains scoped to Hải Dương and Quảng Ninh, with no endpoint Offer or availability entity.
 - **SPRINT-002A URL regression:** registry and sitemap remain at the exact 38-URL baseline; reverse aliases still redirect to the bidirectional parent pages.
+- **DEPLOY-002A live QA:** production MP-003/MP-005 expose all eight `Từ` values with no bare governed amount, valid call/Zalo/booking links, correct self-canonicals, reverse intent, reciprocal CP-002/CP-003 links and descriptive non-numeric Offer schema. Both pages have zero horizontal overflow at 390×844. The sitemap endpoint returns HTTP 200 and the validated 38-URL baseline is unchanged; homepage and sampled out-of-scope MP-006 retain their prior presentation.
 - **Wave 2 / deferred:** MP-019 is Owner-blocked; MP-006 and CP-004 are deferred for competition/differentiation; MP-020 is deferred with three business blockers.
 - **RES-002 research only:** Hạ Long is the strongest independent endpoint theme; Hải Dương ⇄ Hạ Long is the stronger whitespace candidate, while Hải Phòng ⇄ Hạ Long is a high-competition strategic battle. Both remain service-unconfirmed.
 - **RES-002 cannibalization decision:** reverse-direction queries remain on bidirectional parent pages; Quảng Yên and Ao Tiên receive no standalone recommendation; Uông Bí stays merged with the parent pending stronger evidence.

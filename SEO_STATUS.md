@@ -6,9 +6,9 @@ Updated by: Codex
 
 ## Current Phase
 
-Phase: Sprint 001 Planning
+Phase: Sprint 001A Content Production
 
-Objective: Join RES-002 market evidence with DATA-002 business truth to select a small, evidence-backed Sprint 001 without producing content or changing public URLs.
+Objective: Upgrade and publish the two approved supporting comparison articles, while preparing non-deployed MP-003/MP-005 upgrade packages and leaving all money pages/UI unchanged.
 
 ---
 
@@ -20,7 +20,7 @@ In Progress: 0
 
 Review: 1
 
-Published: 38 existing public URLs observed in the production sitemap (pre-brief inventory; not equivalent to Strategy approval)
+Published: 38 existing public URLs; CP-002 and CP-003 content updated in place with no new URL
 
 Blocked: 0
 
@@ -30,7 +30,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| PLAN-001 | Join SEO War Map × Route Knowledge Base | Production Planning | CLUSTER-A/B/C | REVIEW | — | 10 candidates classified; proposed Sprint 001 has 6 assets: 4 DO FIRST and 2 conditional Cát Bi assets; no content or URL change. |
+| SPRINT-001A | Phase 1 SEO Content Production | Comparison + Upgrade Packages | CLUSTER-A/B | REVIEW | Existing CP-002/CP-003 URLs | Two source-backed comparison articles updated; MP-003/MP-005 packages are `DRAFT_NOT_DEPLOYED`; no money-page/UI change. |
 
 ---
 
@@ -46,6 +46,7 @@ Blocked: 0
 | DATA-002 | Owner Verification & Phase 1 Data Remediation | Existing Phase 1 route URLs only | — | `eddc5d80f59be47b19e7ad130eba43fe4311e7e4` |
 | RES-002 | SEO Battlefield / War Map | — | — | `765d9c1bd67a312496d40cb1c77ef5c2f246ceed` |
 | DATA-002-OV2 | Owner Pricing & Service Clarification | Existing URLs unchanged | — | `d9ed3d08e8ffe39e3c1e67b76c9be3533426dc88` |
+| PLAN-001 | Join SEO War Map × Route Knowledge Base | — | — | `8341af0644b1d24213a6f789d43cf72e9ac8705a` |
 
 ---
 
@@ -53,7 +54,7 @@ Blocked: 0
 
 | ID | Issue | Required From | Impact |
 |---|---|---|---|
-| PLAN-001-D01 | Confirm Cát Bi pickup/meeting procedure and flight-delay/waiting handling. | Long / Phong | One two-question answer packet gates final brief approval for MP-004 and CP-007; their route and starting prices are already verified. |
+| SPRINT-001B-D01 | Confirm Cát Bi pickup/meeting procedure and flight-delay/waiting handling. | Long / Phong | One two-question answer packet gates MP-004 and CP-007; not part of SPRINT-001A. |
 | PLAN-001-D02 | Confirm whether Hải Dương ⇄ Hạ Long is actually accepted and whether Bãi Cháy is included. | Long / Phong | Business blockers for MP-019 Wave 2; no URL or brief is approved. |
 | DATA-002-D01 | Confirm remaining endpoint coverage, operating mode/frequency, hours, lead time, surcharges, and Cát Bi exceptions. | Long / Phong | Four existing route records are `PARTIAL`; 12 endpoint records remain `DATA_REQUIRED` and non-publishable. |
 | DATA-002-D02 | Approve a separate public remediation task for “Từ” semantics and removal of unverified booking/cargo formulas. | Strategy | Knowledge Base is resolved; current affected surfaces remain listed in `PUBLIC_DATA_REMEDIATION_QUEUE.md`. |
@@ -63,11 +64,11 @@ Blocked: 0
 
 ## Next Queue
 
-1. Strategy reviews `SPRINT_001_PLAN.md` and approves/removes candidates individually.
-2. Long/Phong answers only the two Cát Bi questions if Strategy wants MP-004/CP-007 in Sprint 001.
-3. Keep MP-019 as Wave 2 until its two endpoint-service blockers are resolved; keep MP-020 deferred.
-4. Schedule “Từ” display/schema/booking remediation separately; do not bundle it into content production.
-5. Do not start Sprint 001, write content, create URLs or publish until PLAN-001 is approved.
+1. Strategy reviews CP-002, CP-003 and the two non-deployed upgrade packages from SPRINT-001A.
+2. Do not start SPRINT-001B before Strategy Review and the two Cát Bi operational answers.
+3. Deploy MP-003/MP-005 upgrades only after explicit permission to edit money pages/shared route UI.
+4. Keep MP-019 as Wave 2 until its endpoint-service blockers are resolved; keep MP-020 deferred.
+5. Schedule the shared price/schema remediation with regression coverage when money-page editing is opened.
 
 ---
 
@@ -85,6 +86,10 @@ Blocked: 0
 - **Still unknown:** 344 facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and named-endpoint service are not upgraded.
 - **PLAN-001 join result:** 344 `UNKNOWN` facts are not treated as blockers. Only material gaps for each candidate are classified as `OWNER_REQUIRED`, `PUBLIC_RESEARCH_OK`, `OPTIONAL`, or `BLOCKING`.
 - **Sprint 001 proposal:** MP-005, MP-003, CP-003 and CP-002 can proceed to briefing after approval; MP-004 and CP-007 are conditional on two shared Cát Bi answers.
+- **SPRINT-001A published in place:** CP-002 and CP-003 now provide answer-first comparison tables, decision support, `VERIFIED_FROM` Phong pricing, FAQs, route-page links, and dated public-source ledgers.
+- **No endpoint price inference:** CP-002 names the approved Quảng Ninh endpoint set for orientation but explicitly keeps pricing at parent-corridor scope.
+- **Packages only:** `SEO_UPGRADE_MP003.md` and `SEO_UPGRADE_MP005.md` document the future H1, copy, pricing, schema, internal links, evidence, weaknesses and blockers; neither package changes a public money page.
+- **Source freshness:** SPRINT-001A public research was checked on 2026-08-22; dynamic operator/platform schedules and fares are not copied as fixed facts.
 - **Wave 2 / deferred:** MP-019 is Owner-blocked; MP-006 and CP-004 are deferred for competition/differentiation; MP-020 is deferred with three business blockers.
 - **RES-002 research only:** Hạ Long is the strongest independent endpoint theme; Hải Dương ⇄ Hạ Long is the stronger whitespace candidate, while Hải Phòng ⇄ Hạ Long is a high-competition strategic battle. Both remain service-unconfirmed.
 - **RES-002 cannibalization decision:** reverse-direction queries remain on bidirectional parent pages; Quảng Yên and Ao Tiên receive no standalone recommendation; Uông Bí stays merged with the parent pending stronger evidence.

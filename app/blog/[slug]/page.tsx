@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const canonical = `/blog/${post.slug}`;
   return {
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: post.description,
     keywords: [post.primaryKeyword, ...post.secondaryKeywords],
     alternates: { canonical },
@@ -55,11 +55,12 @@ export default async function GuidePostPage({ params }: { params: Promise<{ slug
         url: pageUrl,
         inLanguage: siteConfig.language,
         datePublished: siteConfig.contentUpdatedAt,
-        dateModified: siteConfig.contentUpdatedAt,
+        dateModified: post.updatedAt ?? siteConfig.contentUpdatedAt,
         author: { "@id": `${absoluteUrl()}#organization` },
         publisher: { "@id": `${absoluteUrl()}#organization` },
         mainEntityOfPage: { "@id": `${pageUrl}#webpage` },
         keywords: [post.primaryKeyword, ...post.secondaryKeywords].join(", "),
+        citation: post.sources?.map((source) => source.url),
       },
       {
         "@type": "WebPage",
@@ -129,6 +130,20 @@ export default async function GuidePostPage({ params }: { params: Promise<{ slug
               </div>
             </section>
 
+            {post.comparison ? (
+              <section className="guide-comparison" aria-labelledby="guide-comparison-title">
+                <span className="section-kicker">SO SÁNH NHANH</span>
+                <h2 id="guide-comparison-title">{post.comparison.title}</h2>
+                <div className="guide-table-scroll">
+                  <table>
+                    <thead><tr><th>Phương án</th><th>Giá / chi phí</th><th>Thời gian</th><th>Tiện lợi</th><th>Đón trả</th><th>Phù hợp</th></tr></thead>
+                    <tbody>{post.comparison.rows.map((row) => <tr key={row.option}><th scope="row">{row.option}</th><td>{row.cost}</td><td>{row.time}</td><td>{row.convenience}</td><td>{row.pickupDropoff}</td><td>{row.bestFor}</td></tr>)}</tbody>
+                  </table>
+                </div>
+                <p>{post.comparison.note}</p>
+              </section>
+            ) : null}
+
             {post.sections.map((section) => (
               <section className="guide-text-section" key={section.heading}>
                 <h2>{section.heading}</h2>
@@ -148,6 +163,15 @@ export default async function GuidePostPage({ params }: { params: Promise<{ slug
               <h2 id="guide-faq-title">Thông tin cần xác nhận</h2>
               {post.faq.map((item) => <details key={item.q}><summary>{item.q}<span>＋</span></summary><p>{item.a}</p></details>)}
             </section>
+
+            {post.sources?.length ? (
+              <section className="guide-sources" aria-labelledby="guide-sources-title">
+                <span className="section-kicker">NGUỒN ĐỐI CHIẾU</span>
+                <h2 id="guide-sources-title">Nguồn công khai đã kiểm tra</h2>
+                <p>Các nguồn dưới đây dùng cho bối cảnh địa lý, hạ tầng và lựa chọn vận tải; không thay thế xác nhận chuyến với đơn vị vận hành.</p>
+                <ol>{post.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.title}</a><span>{source.publisher} · Đối chiếu {source.checkedAt.split("-").reverse().join("/")}</span><small>{source.supports}</small></li>)}</ol>
+              </section>
+            ) : null}
           </div>
 
           <aside className="guide-sidebar">

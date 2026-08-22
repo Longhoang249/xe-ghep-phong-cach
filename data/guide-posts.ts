@@ -10,18 +10,43 @@ export type GuideSection = {
   bullets?: string[];
 };
 
+export type GuideComparisonRow = {
+  option: string;
+  cost: string;
+  time: string;
+  convenience: string;
+  pickupDropoff: string;
+  bestFor: string;
+};
+
+export type GuideSource = {
+  title: string;
+  publisher: string;
+  url: string;
+  checkedAt: string;
+  supports: string;
+};
+
 export type GuidePost = {
   slug: string;
   title: string;
+  seoTitle?: string;
   description: string;
   category: string;
   primaryKeyword: string;
   secondaryKeywords: string[];
   directAnswer: string;
   choices: GuideChoice[];
+  comparison?: {
+    title: string;
+    note: string;
+    rows: GuideComparisonRow[];
+  };
   sections: GuideSection[];
   checklist: string[];
   faq: Array<{ q: string; a: string }>;
+  sources?: GuideSource[];
+  updatedAt?: string;
   routeSlug: string;
   routeLabel: string;
 };
@@ -57,57 +82,101 @@ export const guidePosts: GuidePost[] = [
   },
   {
     slug: "nhung-chuyen-xe-tu-hai-duong-di-quang-ninh",
-    title: "Những chuyến xe từ Hải Dương đi Quảng Ninh",
-    description: "Các lựa chọn xe từ Hải Dương đi Quảng Ninh gồm xe khách, limousine, xe ghép và bao xe; cách chọn theo điểm đến và nhu cầu thực tế.",
-    category: "Tổng hợp lựa chọn",
-    primaryKeyword: "những chuyến xe từ Hải Dương đi Quảng Ninh",
-    secondaryKeywords: ["xe Hải Dương đi Quảng Ninh", "xe từ Hải Dương đi Quảng Ninh", "xe ghép Hải Dương Quảng Ninh"],
-    directAnswer: "Người đi Hải Dương – Quảng Ninh có thể tìm xe khách, limousine, xe ghép hoặc bao xe. Vì Quảng Ninh có nhiều điểm đến khác nhau, bạn nên cung cấp địa chỉ đón trả cụ thể; Phong Cách có xe cho tuyến và sẽ kiểm tra theo nhu cầu thực tế.",
+    title: "Đi Hải Dương – Quảng Ninh bằng gì? Cách chọn theo điểm đến",
+    seoTitle: "Đi Hải Dương – Quảng Ninh bằng gì?",
+    description: "So sánh xe khách, xe ghép, bao xe và tự lái từ Hải Dương đi Quảng Ninh; cách chọn theo Đông Triều, Hạ Long, Vân Đồn, Móng Cái và nhu cầu đón trả.",
+    category: "So sánh phương tiện",
+    primaryKeyword: "đi Hải Dương Quảng Ninh bằng gì",
+    secondaryKeywords: ["xe Hải Dương đi Quảng Ninh", "nhà xe Hải Dương Quảng Ninh", "xe ghép Hải Dương Quảng Ninh"],
+    directAnswer: "Nếu dùng được bến hoặc điểm hẹn của nhà xe, hãy kiểm tra xe khách theo đúng điểm đến. Nếu ưu tiên đón tận nơi, trả tận nơi, xe ghép phù hợp với khách lẻ; nhóm muốn đi riêng nên cân nhắc bao xe. Quảng Ninh có nhiều điểm đến cách xa nhau, vì vậy phải so sánh theo đúng endpoint thay vì xem cả tỉnh là một điểm.",
     choices: [
-      { title: "Xe khách tuyến cố định", bestFor: "Khách phù hợp với điểm đón của nhà xe", description: "Cần tự kiểm tra lịch, điểm dừng và thông tin đang áp dụng của từng đơn vị." },
-      { title: "Limousine", bestFor: "Khách muốn đặt ghế theo chuyến", description: "Nên hỏi rõ khu vực phục vụ tại Quảng Ninh trước khi đặt." },
-      { title: "Xe ghép Phong Cách", bestFor: "Khách lẻ hoặc nhóm nhỏ", description: "Gọi để trao đổi điểm đến và kiểm tra khả năng ghép xe 4–7 chỗ." },
-      { title: "Bao xe Phong Cách", bestFor: "Nhóm muốn đi riêng", description: "Phù hợp khi cần trao đổi chuyến riêng theo nơi đón trả thực tế." },
+      { title: "Xe khách / limousine", bestFor: "Ưu tiên chuyến công bố", description: "Tìm theo đúng điểm đến, sau đó kiểm tra lại lịch, giá và điểm đón trả với đơn vị khai thác." },
+      { title: "Xe ghép", bestFor: "Khách lẻ, nhóm nhỏ", description: "Đáng cân nhắc khi muốn trao đổi điểm đón trả và chấp nhận nhà xe kiểm tra khả năng ghép theo chuyến." },
+      { title: "Bao xe / taxi", bestFor: "Gia đình, nhóm đi riêng", description: "Chủ động hơn về không gian và nhu cầu chuyến; cần hỏi giá theo địa chỉ cụ thể." },
+      { title: "Tự lái", bestFor: "Người muốn tự chủ hành trình", description: "Phù hợp khi có phương tiện, tự sắp xếp được lộ trình, nhiên liệu, phí đường và chỗ đỗ." },
     ],
+    comparison: {
+      title: "So sánh nhanh các cách đi Hải Dương – Quảng Ninh",
+      note: "Lịch, giá và tổng thời gian của đơn vị khác có thể thay đổi; hãy kiểm tra theo đúng ngày đi và endpoint.",
+      rows: [
+        { option: "Xe khách / limousine", cost: "Theo nhà xe khi đặt", time: "Theo lịch và điểm dừng", convenience: "Tốt nếu khớp chuyến", pickupDropoff: "Bến hoặc điểm hẹn", bestFor: "Người linh hoạt điểm đón" },
+        { option: "Xe ghép Phong Cách", cost: "Từ 250.000đ/người", time: "Phụ thuộc chuyến thực tế", convenience: "Đón/trả tận nơi", pickupDropoff: "Trao đổi địa chỉ cụ thể", bestFor: "Khách lẻ, nhóm nhỏ" },
+        { option: "Bao xe Phong Cách", cost: "4 chỗ từ 900.000đ; 7 chỗ từ 1.100.000đ", time: "Phụ thuộc điểm đón/trả", convenience: "Riêng xe, dễ trao đổi nhu cầu", pickupDropoff: "Đón/trả tận nơi", bestFor: "Gia đình, nhóm riêng" },
+        { option: "Tự lái", cost: "Tự tính nhiên liệu, phí đường, đỗ xe", time: "Tự chủ, phụ thuộc giao thông", convenience: "Chủ động nhất", pickupDropoff: "Tự chọn", bestFor: "Người có xe và quen đường" },
+      ],
+    },
     sections: [
-      { heading: "Vì sao phải nói rõ điểm đến tại Quảng Ninh?", paragraphs: ["Cụm từ “đi Quảng Ninh” có thể chỉ nhiều khu vực khác nhau. Điểm trả thực tế ảnh hưởng trực tiếp đến khả năng bố trí xe, hình thức ghép chuyến và thông tin mà nhà xe cần xác nhận.", "Thay vì chỉ hỏi chung “có xe đi Quảng Ninh không”, bạn nên nói rõ nơi muốn đến. Phong Cách sẽ dựa trên thông tin đó để kiểm tra xe, không áp dụng một lộ trình hoặc thời gian cố định cho mọi khách."], bullets: ["Tên khu vực hoặc địa chỉ cần đến", "Số khách và lượng hành lý", "Thời điểm muốn đi", "Có cần xe chiều về hay không"] },
-      { heading: "Xe ghép phù hợp với nhu cầu nào?", paragraphs: ["Xe ghép phù hợp khi khách muốn đi bằng xe 4–7 chỗ và chấp nhận nhà xe kiểm tra khả năng kết hợp chuyến. Hình thức này thường được tìm kiếm bởi khách lẻ, nhóm nhỏ, người đi công tác hoặc về thăm gia đình.", "Tình trạng xe ghép có thể khác nhau theo từng ngày và từng điểm đón trả. Vì vậy, bài viết này không đưa lịch chạy cố định; cách nhanh nhất là gọi Phong Cách để kiểm tra." ] },
-      { heading: "Bao xe khi nào đáng cân nhắc?", paragraphs: ["Nếu đi theo gia đình, nhóm riêng, có nhiều hành lý hoặc muốn hạn chế ghép thêm khách, bạn có thể hỏi phương án bao xe. Khi liên hệ, hãy cho biết rõ số người và loại hành lý để Phong Cách kiểm tra xe 4 chỗ hoặc 7 chỗ.", "Chi phí và thông tin chuyến được trao đổi trước khi khách quyết định. Website không sử dụng bảng giá của đơn vị khác để báo cho chuyến của Phong Cách." ] },
+      { heading: "Quảng Ninh không phải một điểm đến duy nhất", paragraphs: ["Cổng thông tin Quảng Ninh mô tả chuỗi đô thị từ phía Tây sang phía Đông gồm Đông Triều, Uông Bí, Hạ Long, Cẩm Phả, Vân Đồn và Móng Cái; Quảng Yên cũng là một đô thị quan trọng trong hệ thống của tỉnh. Vì thế, truy vấn “đi Quảng Ninh” chưa đủ để so sánh chuyến.", "Hãy xác định đúng Đông Triều, Uông Bí, Quảng Yên, Hạ Long/Bãi Cháy, Cẩm Phả, Vân Đồn/Ao Tiên hay Móng Cái. Riêng Ao Tiên là đầu mối cảng khách tại Vân Đồn, nên người nối chuyến ra đảo cần tính thêm thời gian làm thủ tục tàu."], bullets: ["Điểm đến cụ thể, không chỉ tên tỉnh", "Địa chỉ đón và địa chỉ trả", "Có nối chuyến tàu, máy bay hay lịch hẹn không", "Số khách, hành lý và nhu cầu chiều về"] },
+      { heading: "Xe khách hoặc limousine: tìm theo endpoint, không tìm chung cả tỉnh", paragraphs: ["Các nền tảng đặt vé hiện tách kết quả theo điểm như Đông Triều hoặc Bãi Cháy. Số chuyến có thể khác nhau theo endpoint và ngày tìm kiếm, nên không nên lấy một lịch cũ làm cam kết cho chuyến sắp tới.", "Phương án này hợp lý nếu bạn dùng được bến hoặc điểm hẹn. Trước khi đặt, hãy kiểm tra đúng đơn vị vận hành, ngày đi, điểm đón, điểm trả, hành lý và chính sách đổi/hủy." ] },
+      { heading: "Khi nào nên chọn xe ghép?", paragraphs: ["Xe ghép phù hợp với khách lẻ hoặc nhóm nhỏ muốn trao đổi đón tận nơi, trả tận nơi mà không cần bao riêng cả xe. Đổi lại, khả năng ghép và thời điểm phù hợp phụ thuộc nhu cầu chuyến thực tế.", "Phong Cách xác nhận có nhận hai chiều trên corridor Hải Dương – Quảng Ninh, có xe ghép, bao xe, gửi hàng, thanh toán sau chuyến và đặt trước không mất phí. Thông tin này không đồng nghĩa có lịch cố định hoặc sẵn xe 24/7." ] },
+      { heading: "Chi phí Xe Ghép Phong Cách: chỉ hiểu là giá từ", paragraphs: ["Mức đã được Owner xác nhận cho corridor Hải Dương – Quảng Ninh là: xe ghép từ 250.000đ/người; bao xe 4 chỗ từ 900.000đ/chuyến; bao xe 7 chỗ từ 1.100.000đ/chuyến; gửi hàng từ 180.000đ.", "Đây không phải giá cố định và không phải bảng giá riêng cho từng endpoint. Giá chuyến cụ thể phụ thuộc ngày đi, địa chỉ đón, địa chỉ trả, giờ di chuyển và điều kiện thực tế. Không được suy mức từ 250.000đ thành giá cho Hải Dương → Móng Cái hay bất kỳ endpoint cụ thể nào." ] },
+      { heading: "Chọn nhanh theo tình huống", paragraphs: ["Nếu đi một mình và gần điểm đón công bố, hãy so xe khách với xe ghép theo tổng chi phí và số lần đổi xe. Nếu đi gia đình, nhiều hành lý hoặc có lịch nối chuyến, bao xe có thể giảm phần bất tiện dù chi phí cao hơn.", "Nếu tự lái, hãy tính cả nhiên liệu, phí đường, đỗ xe và khả năng lái về. Dù chọn cách nào, điểm đến cụ thể vẫn là dữ liệu quan trọng nhất." ] },
     ],
-    checklist: ["Điểm đón tại Hải Dương", "Điểm trả cụ thể tại Quảng Ninh", "Ngày và thời điểm mong muốn", "Số khách", "Hành lý hoặc hàng hóa", "Nhu cầu chiều về"],
+    checklist: ["Điểm đón cụ thể", "Endpoint và địa chỉ trả", "Ngày, thời điểm mong muốn", "Số khách", "Hành lý hoặc hàng hóa", "Nhu cầu chiều về"],
     faq: [
-      { q: "Phong Cách có xe từ Hải Dương đi Quảng Ninh không?", a: "Có. Phong Cách tiếp nhận nhu cầu xe ghép, bao xe và gửi hàng trên tuyến Hải Dương – Quảng Ninh. Hãy gọi để xác nhận điểm đến và kiểm tra xe." },
-      { q: "Có nên dùng lịch xe trên bài tổng hợp của website khác không?", a: "Bạn chỉ nên xem để tham khảo và cần xác nhận lại với đúng đơn vị vận tải, vì lịch, điểm đón và dịch vụ có thể thay đổi." },
-      { q: "Có xe Quảng Ninh về Hải Dương không?", a: "Phong Cách tiếp nhận nhu cầu cả hai chiều. Khách nên cung cấp rõ nơi đón tại Quảng Ninh để bên mình kiểm tra." },
+      { q: "Nên chọn xe khách hay xe ghép Hải Dương – Quảng Ninh?", a: "Xe khách phù hợp khi lịch và điểm hẹn khớp nhu cầu. Xe ghép đáng cân nhắc khi bạn muốn trao đổi đón trả tận nơi và chấp nhận nhà xe kiểm tra chuyến." },
+      { q: "Giá xe ghép Hải Dương – Quảng Ninh là bao nhiêu?", a: "Giá Phong Cách hiện từ 250.000đ/người. Đây là giá bắt đầu của corridor, không phải giá cố định hoặc giá riêng cho từng endpoint." },
+      { q: "Đi Hạ Long, Vân Đồn hay Móng Cái có cùng giá không?", a: "Không nên hiểu như vậy. Hiện chỉ có giá từ của tuyến cha Hải Dương – Quảng Ninh; giá chuyến cụ thể phụ thuộc địa chỉ và điều kiện chuyến." },
+      { q: "Phong Cách có nhận chiều Quảng Ninh về Hải Dương không?", a: "Có nhận hai chiều trên corridor. Bạn cần cung cấp điểm đón cụ thể tại Quảng Ninh để kiểm tra chuyến." },
+      { q: "Có thể gửi hàng Hải Dương – Quảng Ninh không?", a: "Có tiếp nhận nhu cầu gửi hàng, giá từ 180.000đ. Loại hàng, kích thước, đóng gói, điểm giao nhận và giá cuối cùng phải được kiểm tra theo chuyến." },
     ],
+    sources: [
+      { title: "Từ nền tảng đô thị đã định hình", publisher: "Cổng thông tin điện tử tỉnh Quảng Ninh", url: "https://doanhnghiep.quangninh.gov.vn/Trang/ChiTietTinTuc.aspx?nid=8850", checkedAt: "2026-08-22", supports: "Chuỗi đô thị Đông Triều – Uông Bí – Hạ Long – Cẩm Phả – Vân Đồn – Móng Cái." },
+      { title: "Chương trình phát triển đô thị tỉnh Quảng Ninh", publisher: "UBND tỉnh Quảng Ninh", url: "https://www.quangninh.gov.vn/So/soxaydung/Lists/TinTuc/Attachments/4362/1.%20942-Q%C4%90%20ph%C3%AA%20duy%E1%BB%87t%20ch%C6%B0%C6%A1ng%20tr%C3%ACnh%20PT%C4%90T%20T%E1%BB%89nh.pdf", checkedAt: "2026-08-22", supports: "Hệ thống đô thị gồm Quảng Yên và các endpoint chính khác." },
+      { title: "UBND đặc khu Vân Đồn gặp mặt các doanh nghiệp vận tải khách đường thủy", publisher: "Cổng thông tin điện tử tỉnh Quảng Ninh", url: "https://quangninh.gov.vn/donvi/vandon/Trang/ChiTietTinTuc.aspx?nid=2906", checkedAt: "2026-08-22", supports: "Ao Tiên là đầu mối vận tải khách đường thủy tại Vân Đồn." },
+      { title: "Vé xe Hải Dương đi Đông Triều", publisher: "Vexere", url: "https://vexere.com/vi-VN/ve-xe-khach-tu-hai-duong-di-dong-trieu-quang-ninh-126t26111.html", checkedAt: "2026-08-22", supports: "Ví dụ về inventory vận tải được tách theo endpoint và cần kiểm tra theo ngày." },
+      { title: "Vé xe Hải Dương đi Bãi Cháy", publisher: "Vexere", url: "https://vexere.com/vi-VN/ve-xe-khach-tu-hai-duong-di-bai-chay-126t21362261.html", checkedAt: "2026-08-22", supports: "Ví dụ cho thấy kết quả endpoint có thể khác nhau và thay đổi theo thời điểm tra cứu." },
+    ],
+    updatedAt: "2026-08-22",
     routeSlug: "xe-ghep-hai-duong-quang-ninh",
     routeLabel: "Xe ghép Hải Dương – Quảng Ninh",
   },
   {
     slug: "di-hai-duong-hai-phong-bang-phuong-tien-gi",
-    title: "Đi Hải Dương – Hải Phòng bằng phương tiện gì?",
-    description: "Gợi ý chọn xe khách, limousine, xe ghép hoặc bao xe Hải Dương – Hải Phòng theo điểm đón trả, số khách và nhu cầu hành lý.",
-    category: "Tư vấn phương tiện",
-    primaryKeyword: "đi Hải Dương Hải Phòng bằng phương tiện gì",
+    title: "Đi Hải Dương – Hải Phòng bằng gì? So sánh 4 lựa chọn",
+    seoTitle: "Đi Hải Dương – Hải Phòng bằng gì?",
+    description: "So sánh xe khách, xe ghép, bao xe và tự lái Hải Dương – Hải Phòng theo chi phí, thời gian, điểm đón trả, số khách và hành lý.",
+    category: "So sánh phương tiện",
+    primaryKeyword: "đi Hải Dương Hải Phòng bằng gì",
     secondaryKeywords: ["xe Hải Dương đi Hải Phòng", "phương tiện Hải Dương Hải Phòng", "xe ghép Hải Dương Hải Phòng"],
-    directAnswer: "Xe khách và limousine phù hợp khi bạn dùng được điểm đón của nhà xe; xe ghép hoặc bao xe phù hợp khi muốn trao đổi nhu cầu đón trả bằng xe 4–7 chỗ. Phong Cách có xe tuyến Hải Dương – Hải Phòng cả hai chiều.",
+    directAnswer: "Xe khách phù hợp khi bạn dùng được bến hoặc điểm hẹn; xe ghép hợp với khách lẻ muốn trao đổi đón trả tận nơi. Nhóm gia đình hoặc người muốn đi riêng nên so sánh bao xe với tự lái. Đừng chọn chỉ theo giá vé: hãy tính cả chặng ra điểm đón, số lần đổi xe và hành lý.",
     choices: [
-      { title: "Xe khách", bestFor: "Khách quen điểm đón cố định", description: "Nên xác nhận trực tiếp với đơn vị khai thác về điểm đón và cách đặt chỗ." },
-      { title: "Limousine", bestFor: "Khách muốn đặt ghế", description: "Hãy kiểm tra khu vực đón trả thực tế trước khi chọn." },
-      { title: "Xe ghép", bestFor: "Khách lẻ, nhóm nhỏ", description: "Phong Cách kiểm tra khả năng ghép theo nơi đón, nơi trả và thời điểm." },
-      { title: "Bao xe", bestFor: "Gia đình hoặc nhóm đi riêng", description: "Có thể trao đổi xe 4–7 chỗ theo số khách và hành lý." },
+      { title: "Xe khách / limousine", bestFor: "Ưu tiên chuyến công bố", description: "Kiểm tra lịch, giá, điểm đón trả và đơn vị vận hành tại thời điểm đặt." },
+      { title: "Xe ghép", bestFor: "Khách lẻ, nhóm nhỏ", description: "Phù hợp khi ưu tiên trao đổi đón trả tận nơi và có thể ghép theo chuyến thực tế." },
+      { title: "Bao xe / taxi", bestFor: "Gia đình, nhóm đi riêng", description: "Chủ động hơn về không gian và điểm đón trả; giá cần được báo theo chuyến." },
+      { title: "Tự lái", bestFor: "Người có xe và muốn tự chủ", description: "Cần tính nhiên liệu, phí đường, đỗ xe và việc lái chiều về." },
     ],
+    comparison: {
+      title: "Bảng so sánh nhanh",
+      note: "Lịch và giá của đơn vị khác có thể thay đổi. Bảng không suy diễn giá đối thủ; các số của Phong Cách là giá từ đã được Owner xác nhận.",
+      rows: [
+        { option: "Xe khách / limousine", cost: "Theo nhà xe khi đặt", time: "Theo lịch và điểm dừng", convenience: "Tốt nếu khớp chuyến", pickupDropoff: "Bến hoặc điểm hẹn", bestFor: "Người đi ít hành lý" },
+        { option: "Xe ghép Phong Cách", cost: "Từ 250.000đ/người", time: "Phụ thuộc chuyến thực tế", convenience: "Đón/trả tận nơi", pickupDropoff: "Trao đổi địa chỉ cụ thể", bestFor: "Khách lẻ, nhóm nhỏ" },
+        { option: "Bao xe Phong Cách", cost: "4 chỗ từ 500.000đ; 7 chỗ từ 650.000đ", time: "Phụ thuộc điểm đón/trả", convenience: "Riêng xe, dễ trao đổi nhu cầu", pickupDropoff: "Đón/trả tận nơi", bestFor: "Gia đình, nhóm riêng" },
+        { option: "Tự lái", cost: "Tự tính nhiên liệu, phí đường, đỗ xe", time: "Tự chủ, phụ thuộc giao thông", convenience: "Chủ động nhất", pickupDropoff: "Tự chọn", bestFor: "Người có xe và quen đường" },
+      ],
+    },
     sections: [
-      { heading: "Chọn xe theo điểm đón và điểm trả", paragraphs: ["Điểm đón trả là tiêu chí quan trọng hơn việc chỉ so sánh tên loại xe. Một chuyến có giá ghế hấp dẫn nhưng điểm đón không thuận tiện vẫn có thể khiến khách phải đổi thêm phương tiện.", "Nếu bạn muốn trao đổi nơi đón và nơi trả cụ thể, hãy gọi Phong Cách. Bên mình có xe tuyến Hải Dương – Hải Phòng và sẽ kiểm tra theo chuyến thực tế."], bullets: ["Đón tại khu vực nào ở Hải Dương?", "Trả tại khu vực nào ở Hải Phòng?", "Đi một chiều hay cần chiều về?", "Có hành lý hoặc hàng hóa đi kèm không?"] },
-      { heading: "Xe ghép và bao xe khác nhau ở điểm nào?", paragraphs: ["Xe ghép là phương án nhà xe kiểm tra khả năng kết hợp khách có nhu cầu phù hợp. Bao xe dành cho người muốn sử dụng riêng xe theo chuyến đã trao đổi.", "Nếu ưu tiên chi phí và có thể ghép chuyến, bạn có thể hỏi xe ghép. Nếu đi cùng gia đình, nhóm riêng hoặc cần không gian riêng tư, hãy hỏi phương án bao xe." ] },
-      { heading: "Đặt xe thế nào để dễ được kiểm tra?", paragraphs: ["Thông tin càng rõ thì việc kiểm tra xe càng nhanh. Khách nên gửi đầy đủ nơi đón, nơi trả, thời điểm, số người và hành lý ngay từ lần liên hệ đầu tiên.", "Phong Cách không công bố lịch chạy cố định trong bài này vì tình trạng xe và nhu cầu ghép thay đổi theo chuyến." ] },
+      { heading: "Xe khách / limousine: hợp khi lịch và điểm hẹn thuận tiện", paragraphs: ["Nền tảng đặt vé có inventory cho tuyến Hải Dương – Hải Phòng, cho thấy xe khách là một lựa chọn thực tế. Tuy nhiên, lịch, giá, điểm đón và đơn vị khai thác là dữ liệu động; bạn cần kiểm tra lại cho ngày đi cụ thể.", "Hãy cộng thêm thời gian và chi phí từ nhà ra điểm đón, rồi từ điểm trả đến đích cuối. Một giá vé thấp hơn chưa chắc là tổng chi phí thấp hơn nếu phải đổi thêm xe." ] },
+      { heading: "Tự lái: chủ động nhưng phải tính đủ chi phí", paragraphs: ["Cổng thông tin Hải Phòng ghi nhận Quốc lộ 5 là một trong các tuyến quốc lộ kết nối thành phố với khu vực bên ngoài. Người tự lái có thể chủ động thời điểm và điểm dừng, nhưng lộ trình thực tế vẫn phụ thuộc địa chỉ hai đầu và tình hình giao thông.", "Khi so sánh, hãy tính nhiên liệu, phí đường nếu có, đỗ xe, rủi ro mệt khi lái chiều về và khả năng mang hành lý. Không cần ép một con số thời gian chung cho mọi địa chỉ." ] },
+      { heading: "Khi nào nên chọn xe ghép?", paragraphs: ["Xe ghép đáng cân nhắc khi bạn đi một mình hoặc nhóm nhỏ, không thuận tiện ra điểm đón cố định và muốn trao đổi đón tận nơi, trả tận nơi. Hình thức này giảm việc đổi phương tiện nhưng cần nhà xe kiểm tra khả năng ghép.", "Phong Cách xác nhận có nhận hai chiều Hải Dương – Hải Phòng, xe ghép, bao xe, gửi hàng, thanh toán sau chuyến và đặt trước không mất phí. Không có evidence cho lịch chạy cố định, số chuyến mỗi ngày hay 24/7, nên bạn vẫn cần gọi kiểm tra." ] },
+      { heading: "Chi phí Xe Ghép Phong Cách: các mức đều là giá từ", paragraphs: ["Mức Owner đã xác nhận cho tuyến Hải Dương – Hải Phòng là: xe ghép từ 250.000đ/người; bao xe 4 chỗ từ 500.000đ/chuyến; bao xe 7 chỗ từ 650.000đ/chuyến; gửi hàng từ 150.000đ.", "Giá thực tế có thể thay đổi theo ngày di chuyển, địa chỉ đón, địa chỉ trả, giờ di chuyển và điều kiện chuyến. Hiện không có công thức phụ phí công khai; hãy cung cấp đủ thông tin để nhận báo giá chuyến cụ thể." ] },
+      { heading: "Chọn nhanh theo nhu cầu thực tế", paragraphs: ["Khách lẻ, ít hành lý và gần điểm đón nên kiểm tra xe khách trước, rồi so với xe ghép bằng tổng chi phí door-to-door. Khách lẻ cần đón trả linh hoạt có thể ưu tiên xe ghép.", "Gia đình, người cao tuổi, nhóm nhiều hành lý hoặc người cần đi riêng nên so bao xe với tự lái. Quyết định tốt nhất là phương án phù hợp với địa chỉ và người đi, không chỉ là lựa chọn có con số nhỏ nhất." ] },
     ],
-    checklist: ["Nơi đón ở Hải Dương", "Nơi trả ở Hải Phòng", "Thời điểm muốn đi", "Số người", "Lượng hành lý", "Xe ghép hay bao xe"],
+    checklist: ["Địa chỉ đón cụ thể", "Địa chỉ trả cụ thể", "Ngày và thời điểm", "Số người", "Hành lý hoặc hàng hóa", "Xe ghép hay bao xe"],
     faq: [
-      { q: "Phong Cách có xe Hải Dương – Hải Phòng không?", a: "Có. Đây là một trong các tuyến Phong Cách tiếp nhận cả hai chiều." },
-      { q: "Có thể gửi hàng theo chuyến không?", a: "Phong Cách có tiếp nhận nhu cầu gửi hàng. Hãy cung cấp loại hàng, kích thước và nơi giao nhận để kiểm tra." },
-      { q: "Muốn đi riêng thì chọn gì?", a: "Bạn có thể hỏi phương án bao xe 4–7 chỗ và cung cấp số khách, hành lý để bên mình kiểm tra." },
+      { q: "Đi Hải Dương – Hải Phòng nên chọn xe khách hay xe ghép?", a: "Chọn xe khách khi lịch và điểm hẹn thuận tiện. Chọn xe ghép khi bạn ưu tiên trao đổi đón trả tận nơi và chấp nhận việc kiểm tra ghép chuyến." },
+      { q: "Giá xe ghép Hải Dương – Hải Phòng là bao nhiêu?", a: "Giá Phong Cách hiện từ 250.000đ/người. Đây là giá bắt đầu, không phải mức cố định cho mọi ngày, địa chỉ và giờ đi." },
+      { q: "Đi nhóm thì bao xe 4 chỗ hay 7 chỗ?", a: "Hãy chọn theo số người và hành lý. Mức khởi điểm là 4 chỗ từ 500.000đ/chuyến và 7 chỗ từ 650.000đ/chuyến; loại xe, tình trạng xe và giá cuối cùng cần xác nhận." },
+      { q: "Phong Cách có nhận chiều Hải Phòng về Hải Dương không?", a: "Có nhận hai chiều. Bạn cần cung cấp địa chỉ đón, địa chỉ trả và thời điểm để kiểm tra chuyến." },
+      { q: "Có thể gửi hàng theo chuyến không?", a: "Có tiếp nhận nhu cầu gửi hàng, giá từ 150.000đ. Hãy cung cấp loại hàng, kích thước, đóng gói và nơi giao nhận để kiểm tra." },
     ],
+    sources: [
+      { title: "Cơ sở hạ tầng kỹ thuật thành phố Hải Phòng", publisher: "Cổng thông tin điện tử thành phố Hải Phòng", url: "https://haiphong.gov.vn/co-so-ha-tang/co-so-ha-tang-ky-thuat-thanh-pho-hai-phong-743051", checkedAt: "2026-08-22", supports: "Quốc lộ 5 là một tuyến kết nối Hải Phòng với các khu vực bên ngoài." },
+      { title: "Hải Phòng quyết tâm xây dựng tuyến Quốc lộ 5 và Quốc lộ 10 an toàn về giao thông", publisher: "Cổng thông tin điện tử phường Hải Dương, Hải Phòng", url: "https://haiduong.haiphong.gov.vn/tin-tuc-su-kien/hai-phong-quyet-tam-xay-dung-tuyen-quoc-lo-5-va-quoc-lo-10-an-toan-ve-giao-thong-889529", checkedAt: "2026-08-22", supports: "Bối cảnh hiện hành của Quốc lộ 5 và yêu cầu an toàn khi tự di chuyển." },
+      { title: "Vé xe khách Hải Dương đi Hải Phòng", publisher: "redBus", url: "https://www.redbus.vn/ve-xe-khach/tuyen-duong/hai-duong-di-hai-phong", checkedAt: "2026-08-22", supports: "Inventory xe khách cho tuyến và yêu cầu kiểm tra lại lịch/giá theo thời điểm đặt." },
+    ],
+    updatedAt: "2026-08-22",
     routeSlug: "xe-ghep-hai-duong-hai-phong",
     routeLabel: "Xe ghép Hải Dương – Hải Phòng",
   },

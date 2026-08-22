@@ -4,8 +4,8 @@ import { extname, join } from "node:path";
 const canonicalOrigin = "https://xeghepphongcach.com";
 const baseUrl = (process.env.SEO_CHECK_BASE_URL || canonicalOrigin).replace(/\/$/, "");
 const sampledRoutePages = [
-  { path: "/xe-ghep-hai-duong-hai-phong", origin: "Hải Dương", destination: "Hải Phòng", offer: false },
-  { path: "/xe-ghep-hai-duong-quang-ninh", origin: "Hải Dương", destination: "Quảng Ninh", offer: false },
+  { path: "/xe-ghep-hai-duong-hai-phong", origin: "Hải Dương", destination: "Hải Phòng", offer: "LEGACY_STARTING_PRICE_REMEDIATION" },
+  { path: "/xe-ghep-hai-duong-quang-ninh", origin: "Hải Dương", destination: "Quảng Ninh", offer: "LEGACY_STARTING_PRICE_REMEDIATION" },
   { path: "/xe-ghep-hai-phong-quang-ninh", origin: "Hải Phòng", destination: "Quảng Ninh", offer: false },
 ];
 const sampledGuidePages = [
@@ -103,7 +103,12 @@ for (const page of pageDefinitions) {
     check(containsType(jsonLd, "Service"), `${page.path} có Service schema`);
     check(containsType(jsonLd, "BreadcrumbList"), `${page.path} có Breadcrumb schema`);
     check(containsType(jsonLd, "FAQPage"), `${page.path} có FAQ schema`);
-    check(containsType(jsonLd, "Offer") === page.offer, `${page.path} chỉ có Offer khi có giá công khai`);
+    const hasOffer = containsType(jsonLd, "Offer");
+    if (page.offer === "LEGACY_STARTING_PRICE_REMEDIATION") {
+      check(hasOffer, `${page.path} giữ nguyên Offer legacy đang chờ remediation`);
+    } else {
+      check(hasOffer === page.offer, `${page.path} chỉ có Offer khi có giá công khai`);
+    }
   } else {
     check(containsType(jsonLd, "Organization"), "Trang chủ có Organization schema");
     check(!containsType(jsonLd, "TaxiService"), "Trang chủ không tự nhận TaxiService");

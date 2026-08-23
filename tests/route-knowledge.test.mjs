@@ -185,7 +185,7 @@ test("audit summary is deterministic", () => {
     fallbackFacts: 8,
     pricingRuleFacts: 3,
     totalFacts: 444,
-    evidence: { VERIFIED: 101, PUBLIC_SOURCE: 0, ESTIMATE: 8, UNKNOWN: 335 },
+    evidence: { VERIFIED: 113, PUBLIC_SOURCE: 0, ESTIMATE: 8, UNKNOWN: 323 },
     conflicts: 3,
     fallbackPaths: 8,
     readiness: { READY_FOR_CONTENT: 0, PARTIAL: 5, DATA_REQUIRED: 11, DO_NOT_PUBLISH: 0 },

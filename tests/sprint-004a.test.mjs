@@ -26,7 +26,7 @@ test("SPRINT-004A keeps MP-003 identity, metadata and verified starting prices",
   }
 });
 
-test("scan-first renderer is opt-in for hd-hp and does not hard-code governed prices", async () => {
+test("scan-first renderer keeps hd-hp opted in and does not hard-code governed prices", async () => {
   const [layoutSource, componentSource, pageSource, styleSource] = await Promise.all([
     readFile(new URL("../data/seo/money-page-layouts.ts", import.meta.url), "utf8"),
     readFile(new URL("../components/MoneyLandingPage.tsx", import.meta.url), "utf8"),
@@ -35,7 +35,7 @@ test("scan-first renderer is opt-in for hd-hp and does not hard-code governed pr
   ]);
 
   assert.match(layoutSource, /"hd-hp": Object\.freeze/);
-  assert.doesNotMatch(layoutSource, /"(?:hd-cb|hd-qn|hd-ha-long)": Object\.freeze/);
+  assert.doesNotMatch(layoutSource, /"(?:hd-cb|hd-ha-long)": Object\.freeze/);
   assert.match(pageSource, /moneyPageLayoutForRoute\(route\.id\)/);
   assert.match(pageSource, /prices=\{commercialPriceRows\}/);
   assert.doesNotMatch(componentSource, /(?:250\.000|500\.000|650\.000|150\.000)đ/);

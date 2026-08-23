@@ -120,7 +120,7 @@ export default function MoneyLandingPage({
         </div>
         <div className={styles.heroVisual}>
           <Image src={layout.heroImage} alt={layout.heroImageAlt} width={1448} height={1086} priority sizes="(max-width: 760px) 100vw, 48vw" />
-          <div className={styles.heroVisualRoute}><span>Hải Dương</span><b>⇄</b><span>Hải Phòng</span></div>
+          <div className={styles.heroVisualRoute}><span>{route.origin}</span><b>⇄</b><span>{route.destination}</span></div>
           <div className={styles.heroVisualNote}><FeatureIcon name="pin" /><span><small>Đón và trả</small><strong>Theo địa chỉ thực tế</strong></span></div>
         </div>
       </section>
@@ -137,7 +137,7 @@ export default function MoneyLandingPage({
         <p className={styles.priceBoundary}>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</p>
       </section>
 
-      <section className={styles.routeStrip} aria-label="Tuyến Hải Dương - Hải Phòng hai chiều">
+      <section className={styles.routeStrip} aria-label={`Tuyến ${route.origin} - ${route.destination} hai chiều`}>
         <div className={styles.routePlace}><small>ĐIỂM ĐẦU</small><strong>{route.origin}</strong><span>Đón theo địa chỉ</span></div>
         <div className={styles.routeJourney}><i /><div><RouteCarIcon /></div><i /></div>
         <div className={styles.routePlace}><small>ĐIỂM ĐẾN</small><strong>{route.destination}</strong><span>Trả theo địa chỉ</span></div>

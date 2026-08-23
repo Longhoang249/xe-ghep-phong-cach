@@ -420,68 +420,92 @@
 }
 
 @media (max-width: 700px) {
+  :global(.route-page):has(.page) :global(.inner-header .brand small),
+  :global(.route-page):has(.page) :global(.inner-header .btn) { font-size: 11px; }
   .page { background: linear-gradient(180deg, #f8fdfd 0, #f5fafa 35rem, #fff 68rem); }
   .hero { display: flex; flex-direction: column; align-items: stretch; gap: 28px; padding: 34px 18px 44px; }
-  .breadcrumb { margin-bottom: 24px; font-size: 9px; }
-  .eyebrow { padding: 7px 10px; font-size: 8px; }
+  .breadcrumb { margin-bottom: 24px; font-size: 11px; }
+  .eyebrow { padding: 7px 10px; font-size: 11px; letter-spacing: .09em; }
   .hero h1 { margin: 16px 0 12px; font-size: clamp(33px, 10.2vw, 41px); line-height: 1.09; }
-  .subline { font-size: 14px; line-height: 1.65; }
+  .subline { font-size: 15px; line-height: 1.65; }
   .heroPrice { margin-top: 20px; }
   .heroPrice strong { width: 100%; font-size: 31px; }
+  .heroPrice span { font-size: 11px; }
   .heroActions { display: grid; grid-template-columns: 1fr; width: 100%; margin-top: 21px; }
   .heroActions :global(.btn) { width: 100%; min-height: 51px; }
   .trustBadges { gap: 7px 12px; margin-top: 16px; }
-  .trustBadges span { font-size: 9px; }
+  .trustBadges span { font-size: 11px; }
   .heroVisual { min-height: 0; aspect-ratio: 1.28; border-width: 5px; border-radius: 22px 48px 22px 22px; }
-  .heroVisualRoute { top: 10px; left: 10px; padding: 8px 10px; font-size: 8px; }
+  .heroVisualRoute { top: 10px; left: 10px; padding: 8px 10px; font-size: 11px; }
   .heroVisualNote { right: 10px; bottom: 10px; padding: 9px 10px; }
   .heroVisualNote > svg { width: 29px; height: 29px; }
-  .heroVisualNote strong { font-size: 9px; }
+  .heroVisualNote small { font-size: 11px; }
+  .heroVisualNote strong { font-size: 12px; }
   .quickFacts, .services, .needs, .faqSection, .related { padding: 53px 14px; }
   .quickFacts { padding-top: 31px; }
   .sectionHeading { margin-bottom: 21px; }
+  .sectionHeading > span, .bookingHeading > span { font-size: 11px; }
   .sectionHeading h2, .bookingHeading h2 { font-size: 27px; }
+  .sectionHeading p, .bookingHeading p { font-size: 13px; }
   .quickGrid { gap: 8px; }
   .quickGrid article { display: block; padding: 14px; }
   .iconBox { width: 36px; height: 36px; margin-bottom: 13px; }
-  .quickGrid strong { font-size: 12px; }
-  .priceBoundary { font-size: 10px; }
+  .quickGrid small { font-size: 12px; }
+  .quickGrid strong { font-size: 15px; letter-spacing: -.02em; }
+  .priceBoundary { font-size: 12px; }
   .routeStrip { grid-template-columns: 1fr 0.75fr 1fr; gap: 8px; margin: 0 14px; padding: 25px 15px; border-radius: 22px; }
   .routePlace:first-child { text-align: left; }
-  .routePlace strong { font-size: 15px; }
-  .routePlace span { font-size: 8px; }
+  .routePlace small { font-size: 11px; }
+  .routePlace strong { font-size: 18px; }
+  .routePlace span { font-size: 11px; }
   .routeJourney div { width: 45px; height: 45px; flex-basis: 45px; }
   .routeJourney svg { width: 31px; height: 31px; }
-  .routeStrip > p { margin-top: 9px; font-size: 10px; line-height: 1.6; }
+  .routeStrip > p { margin-top: 9px; font-size: 12px; line-height: 1.6; }
   .services { padding-top: 59px; }
   .serviceGrid { grid-template-columns: 1fr; gap: 12px; }
   .serviceGrid article { display: grid; grid-template-columns: 0.85fr 1.15fr; border-radius: 19px; }
   .serviceImage { height: auto; min-height: 205px; }
   .serviceBody { padding: 17px; }
-  .serviceBody h3 { font-size: 17px; }
-  .serviceBody p { min-height: 0; margin: 11px 0 13px; font-size: 10px; }
+  .serviceBody > div:first-child span { font-size: 11px; }
+  .serviceBody h3 { font-size: 19px; }
+  .serviceBody p { min-height: 0; margin: 11px 0 13px; font-size: 13px; }
   .servicePrices > span { padding: 7px 8px; }
-  .servicePrices strong { font-size: 9px; }
+  .servicePrices small { font-size: 11px; }
+  .servicePrices strong { font-size: 16px; }
   .needs { padding-top: 45px; }
   .needGrid { grid-template-columns: 1fr; gap: 8px; }
   .needGrid a { padding: 15px; }
+  .needGrid strong { font-size: 14px; }
+  .needGrid small { font-size: 12px; }
   .booking { display: block; margin: 10px 12px 22px; padding: 29px 22px; border-radius: 23px; }
   .stepGrid { margin-top: 24px; }
   .stepGrid article { padding: 12px; }
+  .stepGrid article > span { font-size: 11px; }
+  .stepGrid h3 { font-size: 14px; }
+  .stepGrid p { font-size: 12px; }
   .booking > :global(.btn) { width: 100%; min-height: 48px; margin: 16px 0 0; }
   .faqSection { display: block; padding-top: 56px; }
   .faqList { margin-top: 27px; }
-  .faqList summary { padding: 16px 1px; font-size: 12px; }
-  .faqList p { margin-right: 31px; font-size: 11px; }
+  .faqList summary { padding: 16px 1px; font-size: 14px; }
+  .faqList p { margin-right: 31px; font-size: 13px; }
   .related { padding-top: 50px; }
   .relatedGrid { grid-template-columns: 1fr; gap: 8px; }
   .relatedGrid a { padding: 17px; }
+  .relatedGrid small { font-size: 11px; }
+  .relatedGrid strong { font-size: 15px; }
+  .relatedGrid span { font-size: 11px; }
   .supportLink { align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px; }
+  .supportLink small { font-size: 11px; }
+  .supportLink strong { font-size: 15px; }
+  .supportLink p { font-size: 12px; }
+  .supportLink > a { font-size: 12px; }
   .finalCta { display: block; margin: 2px 12px 34px; padding: 30px 22px; border-radius: 23px; }
+  .finalCta > div:first-child > span { font-size: 11px; }
   .finalCta h2 { font-size: 27px; }
+  .finalCta p { font-size: 13px; }
   .finalActions { grid-template-columns: 1fr; margin-top: 22px; }
   .finalActions :global(.btn) { width: 100%; }
-  .zaloLink { grid-column: auto; margin-top: 5px; }
+  .zaloLink { grid-column: auto; margin-top: 5px; font-size: 12px; }
 }
 
 @media (max-width: 390px) {

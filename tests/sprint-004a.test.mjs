@@ -27,10 +27,11 @@ test("SPRINT-004A keeps MP-003 identity, metadata and verified starting prices",
 });
 
 test("scan-first renderer is opt-in for hd-hp and does not hard-code governed prices", async () => {
-  const [layoutSource, componentSource, pageSource] = await Promise.all([
+  const [layoutSource, componentSource, pageSource, styleSource] = await Promise.all([
     readFile(new URL("../data/seo/money-page-layouts.ts", import.meta.url), "utf8"),
     readFile(new URL("../components/MoneyLandingPage.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/[slug]/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../components/MoneyLandingPage.module.css", import.meta.url), "utf8"),
   ]);
 
   assert.match(layoutSource, /"hd-hp": Object\.freeze/);
@@ -39,6 +40,19 @@ test("scan-first renderer is opt-in for hd-hp and does not hard-code governed pr
   assert.match(pageSource, /prices=\{commercialPriceRows\}/);
   assert.doesNotMatch(componentSource, /(?:250\.000|500\.000|650\.000|150\.000)đ/);
   assert.match(componentSource, /Giá thực tế phụ thuộc địa chỉ đón\/trả/);
+
+  const mobileStyles = styleSource.slice(
+    styleSource.indexOf("@media (max-width: 700px)"),
+    styleSource.indexOf("@media (max-width: 390px)"),
+  );
+  const mobilePixelFontSizes = [...mobileStyles.matchAll(/font-size:\s*(\d+)px/g)].map((match) => Number(match[1]));
+  assert.ok(mobilePixelFontSizes.length > 20);
+  assert.ok(mobilePixelFontSizes.every((size) => size >= 11), "mobile text must not declare a font size below 11px");
+  assert.match(mobileStyles, /\.quickGrid strong \{ font-size: 15px;/);
+  assert.match(mobileStyles, /\.servicePrices strong \{ font-size: 16px; \}/);
+  assert.match(mobileStyles, /\.serviceBody h3 \{ font-size: 19px; \}/);
+  assert.match(mobileStyles, /\.faqList p \{[^}]*font-size: 13px; \}/);
+  assert.match(mobileStyles, /\.routePlace strong \{ font-size: 18px; \}/);
 });
 
 test("money landing uses the approved visuals and valid related routes", async () => {

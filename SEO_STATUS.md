@@ -1,14 +1,14 @@
 # SEO Project Status
 
-Last updated: 2026-08-23 14:25 +07:00 (Asia/Ho_Chi_Minh)
+Last updated: 2026-08-23 19:56 +07:00 (Asia/Ho_Chi_Minh)
 
 Updated by: Codex
 
 ## Current Phase
 
-Phase: SPRINT-004A MP-003 Money Page Redesign — READY_FOR_REVIEW
+Phase: SPRINT-004A.1 MP-003 Mobile Readability Revision — READY_FOR_REVIEW
 
-Objective: Redesign MP-003 at its existing Hải Dương - Hải Phòng URL as a mobile-first, scan-first commercial landing page while preserving its verified data, metadata, canonical, schema, FAQ, internal links and URL ownership.
+Objective: Finalize the MP-003 scan-first redesign on the latest SPRINT-003A release baseline by raising mobile typography to a readable floor while preserving content, verified prices, layout architecture, metadata, canonical, schema, FAQ, internal links and URL ownership.
 
 ---
 
@@ -34,7 +34,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
-| SPRINT-004A | MP-003 Money Page Redesign | Money Page | CLUSTER-A | READY_FOR_REVIEW | `/xe-ghep-hai-duong-hai-phong` | New reusable `scan-first` renderer is opted in only for `hd-hp`. Hero, four quick-price cards, bidirectional route visual, three illustrated service cards, need selector, three booking steps, FAQ, related routes and repeated CTA all render from governed price/evidence inputs. Metadata, canonical, Service/Offer/FAQ schema and existing comparison link are preserved; no URL or production deployment was added. |
+| SPRINT-004A.1 | MP-003 Mobile Readability Revision | Money Page | CLUSTER-A | READY_FOR_REVIEW | `/xe-ghep-hai-duong-hai-phong` | Rebased onto release head `d404b69`. Mobile content now has an explicit 11px floor; quick-price amounts render at 15px, service prices at 16px, service names at 19px, route names at 18px, descriptions/FAQ answers at 13px. The reusable `scan-first` renderer remains opted in only for `hd-hp`; content, prices, metadata, canonical, schema, links, architecture and URL are unchanged. No production deployment was performed. |
 | SPRINT-003A | MP-004 + MP-019 Wave 2 Money Pages | Money Pages | CLUSTER-A/B | REVIEW | `/xe-hai-duong-cat-bi`; `/xe-ghep-hai-duong-ha-long` | MP-004 is upgraded in place with its own route-level `VERIFIED_FROM` prices. MP-019 passes the explicit registry lifecycle, adds exactly one candidate-build URL and inherits the verified Hải Dương - Quảng Ninh starting prices. Both use descriptive non-numeric Offer schema and parent money-page links. Production deployment has not started. |
 | SPRINT-002A | MP-003 + MP-005 Commercial Upgrade | Money Pages | CLUSTER-A/B | PUBLISHED / MONITORING | Existing MP-003/MP-005 URLs | Production alias `https://xeghepphongcach.com`; deployed 2026-08-22 and live-QA verified at 18:39 +07:00. Four starting prices, two-way scope, decision support, endpoint boundary, CTAs, FAQs, metadata and Service schema are live; no URL added. |
 | MON-001A | Search Console Indexing & Monitoring Setup | Monitoring | CLUSTER-A/B | MONITORING | MP-003, MP-005, CP-003, CP-002 | Domain property verified; sitemap accepted with 38 discovered pages; both money pages indexed; one indexing request accepted for each supporting page; performance remains `PENDING_GSC_DATA`. Handoff status: `REVIEW`. |
@@ -97,6 +97,7 @@ Blocked: 0
 - **SPRINT-004A evidence boundary:** all four visible prices are still supplied by the existing governed `commercialPriceRows`; the renderer contains no numeric route-price literals and every amount keeps `VERIFIED_FROM` presentation with the `Từ` prefix.
 - **SPRINT-004A SEO preservation:** the existing MP-003 metadata, self-canonical, WebPage/Service/Breadcrumb/FAQ graphs, descriptive non-numeric Offer and CP-003 comparison link remain intact. The sitemap remains at 39 URLs on this candidate branch.
 - **SPRINT-004A visual QA:** the production build has one H1 and zero horizontal overflow at both 1440px desktop and 390px mobile widths. The four reused project images provide the hero and three service visuals without adding image assets.
+- **SPRINT-004A.1 release sync and readability:** the redesign branch is rebased on `codex/release-ops-003-sprint-003a` head `d404b69` with zero conflicts and zero commits behind. Production-mode QA at 390px confirms the mobile typography floor, 15–16px commercial prices, readable service descriptions/FAQ answers, and no horizontal overflow.
 - **SPRINT-002A schema remediation:** MP-003/MP-005 keep descriptive Offer nodes but remove numeric `price`/`priceCurrency`, preventing a starting price from being machine-read as a fixed guaranteed price.
 - **Readiness recalculated after SPRINT-003A:** five existing/published route records are `PARTIAL`; 11 endpoint records remain `DATA_REQUIRED`; none is mislabeled `READY_FOR_CONTENT`.
 - **Still unknown after SPRINT-003A:** 335 facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and unapproved named-endpoint service are not upgraded.

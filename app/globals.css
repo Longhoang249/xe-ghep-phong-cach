@@ -1209,3 +1209,589 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   .hero-carousel-slide { animation:none; }
   .hero-carousel-arrow,.hero-carousel-dots button { transition:none; }
 }
+
+/* ==========================================================================
+   2026 MOBILE-FIRST DESIGN REFRESH & USER EXPERIENCE REDESIGN
+   ========================================================================== */
+
+/* Universal visual refinements */
+.phone-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Mobile-specific enhancements */
+@media (max-width: 700px) {
+  /* Sticky header & Phone contact prominence */
+  .site-header {
+    padding: 0 16px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 183, 179, 0.08);
+  }
+
+  .brand strong {
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .header-phone {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #00b7b3, #008f90);
+    color: #fff !important;
+    padding: 6px 12px;
+    border-radius: 999px;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(0, 183, 179, 0.2);
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .header-phone:active {
+    transform: scale(0.95);
+  }
+
+  .header-phone>span:first-child {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2) !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 50%;
+    color: #fff !important;
+  }
+
+  .header-phone>span:first-child svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .header-phone>span:last-child {
+    display: block !important;
+  }
+
+  .header-phone>span:last-child small {
+    display: none;
+  }
+
+  .header-phone>span:last-child strong {
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  /* Hero Section Redesign & Northern Vietnam Branding */
+  .hero {
+    padding: 32px 16px 80px;
+    background: linear-gradient(180deg, #fff 0%, #edf9f9 100%);
+  }
+
+  .hero h1 {
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .hero h1 span.hero-line {
+    display: inline;
+    white-space: normal;
+  }
+
+  .hero-copy>p {
+    font-size: 15px;
+    color: #4a5d62;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+
+  /* Geo-targeting highlights badge under Hero copy */
+  .hero-copy::after {
+    content: "📍 Tuyến Xe Ghép: Hải Dương • Hải Phòng • Quảng Ninh • Hà Nội";
+    display: block;
+    margin-top: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #008f90;
+    background: #e0f6f5;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px dashed rgba(0, 183, 179, 0.3);
+    width: max-content;
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    margin-top: 20px;
+  }
+
+  .call-now-button {
+    width: 100% !important;
+    min-height: 52px !important;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #00b7b3, #008f90) !important;
+    box-shadow: 0 10px 20px rgba(0, 183, 179, 0.25) !important;
+    font-size: 15px !important;
+  }
+
+  .call-now-button .btn-icon {
+    margin-right: 6px;
+    color: #fff;
+  }
+
+  /* Province shortcuts shell */
+  .province-shortcuts-shell {
+    margin-top: -30px;
+    padding: 0 16px;
+  }
+
+  .province-shortcuts {
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 183, 179, 0.15);
+    background: #fff;
+    box-shadow: 0 8px 25px rgba(22, 67, 71, 0.08);
+  }
+
+  .province-shortcut-track button {
+    min-height: 34px;
+    padding: 0 14px;
+    font-size: 11px;
+    border-radius: 999px;
+    border: 1px solid #d3e4e4;
+    background: #fbfdfd;
+    color: #3b565c;
+    font-weight: 700;
+  }
+
+  .province-shortcut-track button.featured {
+    background: linear-gradient(135deg, #00b7b3, #008f90);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 10px rgba(0, 183, 179, 0.15);
+  }
+
+  .province-shortcut-track button.active {
+    background: #005f60;
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 10px rgba(0, 95, 96, 0.2);
+  }
+
+  /* Grab/Be-Style Booking Form */
+  .booking-card {
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(22, 67, 71, 0.1);
+    border: 1px solid rgba(0, 183, 179, 0.1);
+  }
+
+  .compact-booking {
+    padding: 20px 16px !important;
+  }
+
+  .plain-address-stack {
+    position: relative;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Vertical ride path line */
+  .plain-address-stack::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    border-left: 2px dashed #00b7b3;
+    z-index: 1;
+  }
+
+  /* Green dot (pickup node) */
+  .plain-address-stack .plain-address-field:first-child::before {
+    content: "";
+    position: absolute;
+    left: -19px;
+    top: 24px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00b7b3;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #00b7b3;
+    z-index: 2;
+  }
+
+  /* Orange/Yellow dot (dropoff node) */
+  .plain-address-stack .plain-address-field:last-of-type::before {
+    content: "";
+    position: absolute;
+    left: -19px;
+    top: 24px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffc247;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #ffc247;
+    z-index: 2;
+  }
+
+  .plain-address-field {
+    border-radius: 12px;
+    border: 1.5px solid #d3e7e9;
+    background: #fff;
+    padding: 8px 44px 8px 12px;
+    box-shadow: 0 2px 6px rgba(0, 183, 179, 0.02);
+  }
+
+  .plain-address-field>span {
+    font-size: 10px;
+    font-weight: 800;
+    color: #63777c;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .plain-address-field input {
+    font-size: 15px !important;
+    font-weight: 700;
+    color: #1f2a30;
+    margin-top: 2px;
+  }
+
+  .plain-address-swap {
+    position: absolute;
+    right: 12px;
+    top: calc(50% - 18px);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #d3e7e9;
+    background: #fff;
+    color: #008f90;
+    box-shadow: 0 4px 10px rgba(0, 183, 179, 0.1);
+    transform: rotate(90deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .plain-address-swap svg {
+    display: block;
+    margin: auto;
+    color: #008f90;
+  }
+
+  .booking-primary-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .passenger-primary, .primary-booking-field {
+    min-height: 54px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    border: 1.5px solid #d3e7e9;
+    background: #fbfdfd;
+  }
+
+  .passenger-primary>span, .primary-booking-field>span {
+    font-size: 10px;
+    font-weight: 800;
+    color: #63777c;
+  }
+
+  .customer-name-field {
+    grid-column: 1 / -1;
+  }
+
+  .primary-booking-field input {
+    font-size: 14px !important;
+    font-weight: 700;
+    color: #1f2a30;
+  }
+
+  .mini-stepper button {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid #d3e7e9;
+    background: #fff;
+    color: #00b7b3;
+    font-weight: 800;
+  }
+
+  .advanced-toggle {
+    border-radius: 12px;
+    border: 1px solid #d3e7e9;
+    background: #f0faf9;
+    padding: 10px 12px;
+  }
+
+  .advanced-toggle b {
+    font-size: 12px;
+    color: #005f60;
+  }
+
+  .advanced-toggle small {
+    font-size: 9px;
+    color: #557277;
+  }
+
+  .compact-checkout .submit-button {
+    min-height: 52px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00b7b3, #008f90);
+    box-shadow: 0 8px 20px rgba(0, 183, 179, 0.2);
+  }
+
+  .compact-payment-note {
+    background: #e8f9f6;
+    color: #008366;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* Redesigned Route Cards */
+  .quick-route-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .quick-route-tile {
+    border-radius: 16px;
+    border: 1px solid #dbeae9;
+    background: #fff;
+    padding: 14px 16px;
+    box-shadow: 0 4px 15px rgba(22, 67, 71, 0.04);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: auto;
+  }
+
+  .quick-route-tile.priority {
+    border: 1.5px solid rgba(0, 183, 179, 0.3);
+    background: linear-gradient(180deg, #fff 0%, #f0faf9 100%);
+  }
+
+  .quick-route-tile>button {
+    width: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .route-tile-pair {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .route-tile-pair b {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1f2a30;
+  }
+
+  .route-arrow-icon {
+    color: #00b7b3;
+    display: flex;
+    align-items: center;
+  }
+
+  .route-arrow-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 3px;
+  }
+
+  .route-tile-price {
+    font-size: 14px;
+    font-weight: 800;
+    color: #008f90;
+    background: #e0f6f5;
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  .quick-route-tile>a {
+    display: none;
+  }
+
+  /* Service Cards Redesign */
+  .service-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid #d3e7e9;
+    background: #fff;
+    gap: 14px;
+  }
+
+  .service-card-image {
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+    border-radius: 10px;
+  }
+
+  .service-card-body {
+    padding: 0;
+    flex: 1;
+  }
+
+  .service-card-body>span {
+    font-size: 9px;
+    font-weight: 800;
+    color: #00b7b3;
+    letter-spacing: 0.1em;
+  }
+
+  .service-card h3 {
+    font-size: 15px;
+    font-weight: 800;
+    margin: 4px 0 2px;
+    color: #1f2a30;
+  }
+
+  .service-card p {
+    font-size: 12px;
+    color: #63777c;
+    line-height: 1.4;
+    min-height: auto;
+  }
+
+  .service-card a {
+    display: none;
+  }
+
+  /* Premium Bottom Tab Bar Navigation */
+  .bottom-nav {
+    height: 64px;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 143, 144, 0.15);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 8px 6px;
+    z-index: 100;
+  }
+
+  .bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #63777c;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+
+  .bottom-nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #63777c;
+    transition: color 0.2s;
+  }
+
+  .bottom-nav-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .bottom-nav-text {
+    display: block;
+  }
+
+  .bottom-nav a:active {
+    color: #00b7b3;
+  }
+
+  .bottom-nav a.bottom-nav-booking {
+    background: linear-gradient(135deg, #00b7b3, #008f90);
+    color: #fff !important;
+    border-radius: 12px;
+    padding: 4px;
+    box-shadow: 0 4px 10px rgba(0, 183, 179, 0.2);
+  }
+
+  .bottom-nav a.bottom-nav-booking .bottom-nav-icon {
+    color: #fff;
+  }
+
+  /* Floating contacts adjust to not cover bottom nav */
+  .floating-contacts {
+    right: 16px;
+    bottom: 86px;
+    gap: 8px;
+  }
+
+  .floating-contact {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(22, 67, 71, 0.15);
+  }
+
+  .floating-phone {
+    animation: phone-pulse 2s infinite;
+  }
+}
+
+@keyframes phone-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 183, 179, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 183, 179, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 183, 179, 0);
+  }
+}

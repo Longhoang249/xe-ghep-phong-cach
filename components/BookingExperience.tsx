@@ -244,7 +244,14 @@ export default function BookingExperience({ routes }: Props) {
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Trang chủ Xe Ghép Phong Cách"><span className="brand-mark">PC</span><span><strong>Xe Ghép Phong Cách</strong><small>Xe ghép & bao xe liên tỉnh</small></span></a>
         <nav className="desktop-nav" aria-label="Điều hướng chính"><a href="#tuyen-xe" onClick={(event) => scrollToSection(event, "tuyen-xe")}>Tìm chuyến</a><a href="#dich-vu" onClick={(event) => scrollToSection(event, "dich-vu")}>Dịch vụ</a><Link href="/blog">Blog</Link><a href="#dat-xe" onClick={(event) => scrollToSection(event, "dat-xe")}>Đặt xe nhanh</a><a href="#lien-he" onClick={(event) => scrollToSection(event, "lien-he")}>Liên hệ</a></nav>
-        <a className="header-phone" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "home_header" })}><span>☎</span><span><small>Tư vấn chuyến đi</small><strong>{siteConfig.phoneDisplay}</strong></span></a>
+        <a className="header-phone" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "home_header" })}>
+          <span className="phone-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
+          <span><small>Tư vấn chuyến đi</small><strong>{siteConfig.phoneDisplay}</strong></span>
+        </a>
       </header>
 
       <section className="hero" id="top">
@@ -252,7 +259,14 @@ export default function BookingExperience({ routes }: Props) {
           <div className="hero-copy">
             <h1><span className="hero-line hero-line-dark">Xe Ghép Liên Tỉnh</span><span className="hero-line">Đón tận nhà,</span><span className="hero-line">trả khách tận nơi!</span></h1>
             <p>Xe đúng tuyến, không lòng vòng, phục vụ nhanh chóng, văn minh.</p>
-            <div className="hero-actions"><a className="btn btn-primary call-now-button" href={siteConfig.phoneHref} onClick={(event) => { trackEvent("click_call", { placement: "home_hero" }); if (!window.confirm(`Gọi ngay Nhà Xe Phong Cách?\n${siteConfig.phoneDisplay}`)) event.preventDefault(); }}>Gọi ngay {siteConfig.phoneDisplay}</a></div>
+            <div className="hero-actions">
+              <a className="btn btn-primary call-now-button" href={siteConfig.phoneHref} onClick={(event) => { trackEvent("click_call", { placement: "home_hero" }); if (!window.confirm(`Gọi ngay Nhà Xe Phong Cách?\n${siteConfig.phoneDisplay}`)) event.preventDefault(); }}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18" className="btn-icon">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                <span>Gọi ngay {siteConfig.phoneDisplay}</span>
+              </a>
+            </div>
           </div>
           <HeroCarousel />
         </div>
@@ -289,7 +303,14 @@ export default function BookingExperience({ routes }: Props) {
               <div className="booking-head"><div><span className="step-label">Đặt xe nhanh</span><h2>Đón tận nơi, đưa về tận cửa</h2></div></div>
               <div className="plain-address-stack">
                 <label className="plain-address-field"><span>Đón tại</span><input value={booking.pickup} onChange={(event) => { const value = event.target.value; setBooking((old) => ({ ...old, pickup: value, pickupCity: inferCity(value), pickupLat: undefined, pickupLng: undefined })); }} placeholder="Ví dụ: 30 Nguyễn Khuyến, Hà Nội" /><small>{errors.pickup}</small></label>
-                <button type="button" className="plain-address-swap" onClick={() => setBooking((old) => ({ ...old, pickup: old.dropoff, pickupCity: old.dropoffCity, pickupLat: old.dropoffLat, pickupLng: old.dropoffLng, dropoff: old.pickup, dropoffCity: old.pickupCity, dropoffLat: old.pickupLat, dropoffLng: old.pickupLng }))} aria-label="Đổi điểm đón và điểm đến">⇄</button>
+                <button type="button" className="plain-address-swap" onClick={() => setBooking((old) => ({ ...old, pickup: old.dropoff, pickupCity: old.dropoffCity, pickupLat: old.dropoffLat, pickupLng: old.dropoffLng, dropoff: old.pickup, dropoffCity: old.pickupCity, dropoffLat: old.pickupLat, dropoffLng: old.pickupLng }))} aria-label="Đổi điểm đón và điểm đến">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="16" height="16" className="swap-icon">
+                    <polyline points="17 1 21 5 17 9"/>
+                    <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                    <polyline points="7 23 3 19 7 15"/>
+                    <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                  </svg>
+                </button>
                 <label className="plain-address-field"><span>Trả tại</span><input value={booking.dropoff} onChange={(event) => { const value = event.target.value; setBooking((old) => ({ ...old, dropoff: value, dropoffCity: inferCity(value), dropoffLat: undefined, dropoffLng: undefined })); }} placeholder="Ví dụ: 40 Hồ Sen, Hải Phòng" /><small>{errors.dropoff}</small></label>
               </div>
               <div className="booking-primary-grid">
@@ -321,14 +342,49 @@ export default function BookingExperience({ routes }: Props) {
 
       <aside className="floating-contacts" aria-label="Liên hệ nhanh">
         <a className="floating-contact floating-phone" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "floating_contact" })} aria-label={`Gọi ngay ${siteConfig.phoneDisplay}`} title={`Gọi ${siteConfig.phoneDisplay}`}>
-          <span aria-hidden="true">☎</span>
+          <span aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
         </a>
         <a className="floating-contact floating-zalo" href={process.env.NEXT_PUBLIC_ZALO_URL || siteConfig.zaloFallbackUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_zalo", { placement: "floating_contact" })} aria-label={`Nhắn Zalo ${siteConfig.phoneDisplay}`} title={`Nhắn Zalo ${siteConfig.phoneDisplay}`}>
           <span aria-hidden="true">Zalo</span>
         </a>
       </aside>
 
-      <nav className="bottom-nav" aria-label="Điều hướng trên điện thoại"><a href="#tuyen-xe" onClick={(event) => scrollToSection(event, "tuyen-xe")}>Tìm chuyến</a><a href="#dich-vu" onClick={(event) => scrollToSection(event, "dich-vu")}>Dịch vụ</a><Link href="/blog">Blog</Link><a className="bottom-nav-booking" href="#dat-xe" onClick={(event) => scrollToSection(event, "dat-xe")}>Đặt xe nhanh</a><a href="#lien-he" onClick={(event) => scrollToSection(event, "lien-he")}>Liên hệ</a></nav>
+      <nav className="bottom-nav" aria-label="Điều hướng trên điện thoại">
+        <a href="#tuyen-xe" onClick={(event) => scrollToSection(event, "tuyen-xe")}>
+          <span className="bottom-nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          </span>
+          <span className="bottom-nav-text">Tìm chuyến</span>
+        </a>
+        <a href="#dich-vu" onClick={(event) => scrollToSection(event, "dich-vu")}>
+          <span className="bottom-nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><line x1="16" y1="8" x2="20" y2="8"/><line x1="16" y1="13" x2="23" y2="13"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </span>
+          <span className="bottom-nav-text">Dịch vụ</span>
+        </a>
+        <Link href="/blog">
+          <span className="bottom-nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <span className="bottom-nav-text">Blog</span>
+        </Link>
+        <a className="bottom-nav-booking" href="#dat-xe" onClick={(event) => scrollToSection(event, "dat-xe")}>
+          <span className="bottom-nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </span>
+          <span className="bottom-nav-text">Đặt nhanh</span>
+        </a>
+        <a href="#lien-he" onClick={(event) => scrollToSection(event, "lien-he")}>
+          <span className="bottom-nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <span className="bottom-nav-text">Liên hệ</span>
+        </a>
+      </nav>
     </main>
   );
 }
@@ -355,7 +411,15 @@ function QuickRouteFinder({ routes, onSelect, query, selectedProvince, onQueryCh
     const isPriority = spotlightRouteIds.has(route.id);
     return <article className={`quick-route-tile${isPriority ? " priority" : ""}`} key={route.id}>
       <button type="button" onClick={() => onSelect(route)} aria-label={`Chọn đặt tuyến ${route.origin} đi ${route.destination}, ${route.sharedPrice ? `từ ${Math.round(route.sharedPrice / 1000)} nghìn đồng` : "liên hệ báo giá"}`}>
-        <span className="route-tile-pair"><b>{route.origin}</b><i>⇄</i><b>{route.destination}</b></span>
+        <span className="route-tile-pair">
+          <b>{route.origin}</b>
+          <i className="route-arrow-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 4px' }}>
+              <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8v12M17 20l-4-4M17 20l4-4"/>
+            </svg>
+          </i>
+          <b>{route.destination}</b>
+        </span>
         <strong className="route-tile-price">{route.sharedPrice ? `Từ ${Math.round(route.sharedPrice / 1000)}k` : "Liên hệ giá"}</strong>
       </button>
       <Link href={`/${route.slug}`}>Xem chi tiết tuyến →</Link>
@@ -365,15 +429,38 @@ function QuickRouteFinder({ routes, onSelect, query, selectedProvince, onQueryCh
   return <section className="section route-finder-section" id="tuyen-xe">
     <div className="section-heading route-finder-heading"><div><span className="section-kicker">TÌM CHUYẾN</span><h2>Tìm tuyến xe phù hợp</h2></div></div>
     <div className="route-search-panel">
-      <div className="route-search-box"><span>⌕</span><label><small>Bạn muốn đi đâu?</small><input value={query} onChange={(event) => { onQueryChange(event.target.value); onProvinceChange(""); }} placeholder="Nhập Hải Phòng, Nội Bài, Bắc Ninh…" aria-label="Tìm tuyến theo nơi đi hoặc nơi đến" /></label>{query && <button type="button" onClick={() => { onQueryChange(""); onProvinceChange(""); }} aria-label="Xoá nội dung tìm kiếm">×</button>}</div>
+      <div className="route-search-box">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20" className="search-icon">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <label><small>Bạn muốn đi đâu?</small><input value={query} onChange={(event) => { onQueryChange(event.target.value); onProvinceChange(""); }} placeholder="Nhập Hải Phòng, Nội Bài, Bắc Ninh…" aria-label="Tìm tuyến theo nơi đi hoặc nơi đến" /></label>
+        {query && <button type="button" onClick={() => { onQueryChange(""); onProvinceChange(""); }} aria-label="Xoá nội dung tìm kiếm">×</button>}
+      </div>
       <div className="route-suggestions"><span>Tìm nhanh:</span>{provinces.map((province) => <button type="button" className={selectedProvince === province ? "active" : ""} key={province} onClick={() => selectProvince(province)}>{province}</button>)}</div>
     </div>
     <div className="route-results" ref={resultsRef}>
       {normalizedQuery && <div className="route-result-summary" aria-live="polite"><strong>{shownRoutes.length ? `${shownRoutes.length} chuyến phù hợp` : "Chưa tìm thấy chuyến"}</strong>{selectedProvince && shownRoutes.length > 0 && <span>Liên quan đến {selectedProvince}</span>}</div>}
-      {!shownRoutes.length ? <div className="route-finder-empty"><span>⌕</span><h3>Chưa thấy tuyến bạn đang tìm</h3><p>Gọi <a href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "route_finder_empty" })}>{siteConfig.phoneDisplay}</a>, bên mình sẽ kiểm tra chuyến giúp bạn.</p><button type="button" onClick={() => { onQueryChange(""); onProvinceChange(""); }}>Xem lại toàn bộ tuyến</button></div> : <div className="route-corridor-block">
-        <div className="quick-route-grid">{orderedRoutes.map(renderRoute)}</div>
-        {!normalizedQuery && <div className="route-cargo-note"><span aria-hidden="true">◇</span><div><strong>Nhận gửi hàng hoá 2 chiều</strong><small>Nhanh chóng · Bảo mật</small></div><b>Chỉ từ 150k</b></div>}
-      </div>}
+      {!shownRoutes.length ? (
+        <div className="route-finder-empty">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="28" height="28" className="empty-search-icon">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
+          <h3>Chưa thấy tuyến bạn đang tìm</h3>
+          <p>Gọi <a href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "route_finder_empty" })}>{siteConfig.phoneDisplay}</a>, bên mình sẽ kiểm tra chuyến giúp bạn.</p>
+          <button type="button" onClick={() => { onQueryChange(""); onProvinceChange(""); }}>Xem lại toàn bộ tuyến</button>
+        </div>
+      ) : (
+        <div className="route-corridor-block">
+          <div className="quick-route-grid">{orderedRoutes.map(renderRoute)}</div>
+          {!normalizedQuery && <div className="route-cargo-note"><span aria-hidden="true">◇</span><div><strong>Nhận gửi hàng hoá 2 chiều</strong><small>Nhanh chóng · Bảo mật</small></div><b>Chỉ từ 150k</b></div>}
+        </div>
+      )}
     </div>
   </section>;
 }

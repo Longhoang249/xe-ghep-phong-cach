@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BookingExperience from "@/components/BookingExperience";
 import JsonLd from "@/components/JsonLd";
+import RouteClickthroughEnhancer from "@/components/RouteClickthroughEnhancer";
 import { publishedRoutes as routes } from "@/data/seo/published-content";
 import { absoluteUrl, officialProfiles, siteConfig } from "@/lib/site";
 
@@ -81,5 +82,5 @@ export default function Home() {
       },
     ],
   };
-  return <><JsonLd data={jsonLd} /><BookingExperience routes={routes} /></>;
+  return <><JsonLd data={jsonLd} /><RouteClickthroughEnhancer /><BookingExperience routes={routes} /></>;
 }

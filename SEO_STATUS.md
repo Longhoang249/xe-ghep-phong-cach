@@ -1,14 +1,14 @@
 # SEO Project Status
 
-Last updated: 2026-08-22 23:08 +07:00 (Asia/Ho_Chi_Minh)
+Last updated: 2026-08-23 14:25 +07:00 (Asia/Ho_Chi_Minh)
 
 Updated by: Codex
 
 ## Current Phase
 
-Phase: SPRINT-003A Wave 2 Money Pages — REVIEW
+Phase: SPRINT-004A MP-003 Money Page Redesign — READY_FOR_REVIEW
 
-Objective: Upgrade MP-004 at its existing Cát Bi URL and prepare the explicitly governed MP-019 Hạ Long URL, without deploying to production or changing the original Search Console experiment assets.
+Objective: Redesign MP-003 at its existing Hải Dương - Hải Phòng URL as a mobile-first, scan-first commercial landing page while preserving its verified data, metadata, canonical, schema, FAQ, internal links and URL ownership.
 
 ---
 
@@ -18,7 +18,7 @@ Backlog: 0
 
 In Progress: 0
 
-Review: 1
+Review: 2
 
 Approved: 0
 
@@ -34,6 +34,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
+| SPRINT-004A | MP-003 Money Page Redesign | Money Page | CLUSTER-A | READY_FOR_REVIEW | `/xe-ghep-hai-duong-hai-phong` | New reusable `scan-first` renderer is opted in only for `hd-hp`. Hero, four quick-price cards, bidirectional route visual, three illustrated service cards, need selector, three booking steps, FAQ, related routes and repeated CTA all render from governed price/evidence inputs. Metadata, canonical, Service/Offer/FAQ schema and existing comparison link are preserved; no URL or production deployment was added. |
 | SPRINT-003A | MP-004 + MP-019 Wave 2 Money Pages | Money Pages | CLUSTER-A/B | REVIEW | `/xe-hai-duong-cat-bi`; `/xe-ghep-hai-duong-ha-long` | MP-004 is upgraded in place with its own route-level `VERIFIED_FROM` prices. MP-019 passes the explicit registry lifecycle, adds exactly one candidate-build URL and inherits the verified Hải Dương - Quảng Ninh starting prices. Both use descriptive non-numeric Offer schema and parent money-page links. Production deployment has not started. |
 | SPRINT-002A | MP-003 + MP-005 Commercial Upgrade | Money Pages | CLUSTER-A/B | PUBLISHED / MONITORING | Existing MP-003/MP-005 URLs | Production alias `https://xeghepphongcach.com`; deployed 2026-08-22 and live-QA verified at 18:39 +07:00. Four starting prices, two-way scope, decision support, endpoint boundary, CTAs, FAQs, metadata and Service schema are live; no URL added. |
 | MON-001A | Search Console Indexing & Monitoring Setup | Monitoring | CLUSTER-A/B | MONITORING | MP-003, MP-005, CP-003, CP-002 | Domain property verified; sitemap accepted with 38 discovered pages; both money pages indexed; one indexing request accepted for each supporting page; performance remains `PENDING_GSC_DATA`. Handoff status: `REVIEW`. |
@@ -70,11 +71,12 @@ Blocked: 0
 
 ## Next Queue
 
-1. Strategy Review decides whether to deploy SPRINT-003A; do not deploy from this task.
-2. T+1 on 2026-08-23: recheck indexation for MP-003, MP-005, CP-003 and CP-002 and confirm the original 38-URL sitemap submission status remains successful.
-3. T+7 on 2026-08-29: review the original four-asset page/query footprint when Search Console performance data becomes available.
-4. T+14 on 2026-09-05: review ranking, opportunity and cannibalization evidence before proposing another wave.
-5. Keep MP-004/MP-019 outside the original four-asset GSC experiment and do not treat `PENDING_GSC_DATA` as zero.
+1. Strategy Review evaluates the SPRINT-004A desktop/mobile preview; do not deploy production from this task.
+2. Strategy Review separately decides whether to deploy SPRINT-003A; its production state is unchanged by SPRINT-004A.
+3. T+1 on 2026-08-23: recheck indexation for MP-003, MP-005, CP-003 and CP-002 and confirm the original 38-URL sitemap submission status remains successful.
+4. T+7 on 2026-08-29: review the original four-asset page/query footprint when Search Console performance data becomes available.
+5. T+14 on 2026-09-05: review ranking, opportunity and cannibalization evidence before proposing another wave.
+6. Keep MP-004/MP-019 outside the original four-asset GSC experiment and do not treat `PENDING_GSC_DATA` as zero.
 
 ---
 
@@ -91,6 +93,10 @@ Blocked: 0
 - **SPRINT-003A MP-019 publication:** one new governed URL is registered through `REGISTERED → REVIEW → APPROVED → PUBLISHED`; its Hạ Long prices inherit the Hải Dương - Quảng Ninh corridor and Bãi Cháy receives no separate price or automatic availability claim.
 - **SPRINT-003A operational boundary:** no fixed airport gate, waiting/flight-delay rule, airport surcharge, schedule, trips/day, fixed duration or endpoint surcharge is published. Unknown facts remain omitted instead of blocking the two useful pages.
 - **SPRINT-003A schema and sitemap:** MP-004/MP-019 use WebPage, Service, BreadcrumbList, FAQPage and a descriptive `Offer` with category `Giá bắt đầu`; the candidate sitemap delta is exactly `38 → 39`, adding only MP-019.
+- **SPRINT-004A scoped redesign:** MP-003 alone opts into the reusable `scan-first` renderer. Other commercial and legacy route pages continue through the existing renderer, so the visual redesign does not alter MP-004, MP-005, MP-019 or generic route output.
+- **SPRINT-004A evidence boundary:** all four visible prices are still supplied by the existing governed `commercialPriceRows`; the renderer contains no numeric route-price literals and every amount keeps `VERIFIED_FROM` presentation with the `Từ` prefix.
+- **SPRINT-004A SEO preservation:** the existing MP-003 metadata, self-canonical, WebPage/Service/Breadcrumb/FAQ graphs, descriptive non-numeric Offer and CP-003 comparison link remain intact. The sitemap remains at 39 URLs on this candidate branch.
+- **SPRINT-004A visual QA:** the production build has one H1 and zero horizontal overflow at both 1440px desktop and 390px mobile widths. The four reused project images provide the hero and three service visuals without adding image assets.
 - **SPRINT-002A schema remediation:** MP-003/MP-005 keep descriptive Offer nodes but remove numeric `price`/`priceCurrency`, preventing a starting price from being machine-read as a fixed guaranteed price.
 - **Readiness recalculated after SPRINT-003A:** five existing/published route records are `PARTIAL`; 11 endpoint records remain `DATA_REQUIRED`; none is mislabeled `READY_FOR_CONTENT`.
 - **Still unknown after SPRINT-003A:** 335 facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and unapproved named-endpoint service are not upgraded.

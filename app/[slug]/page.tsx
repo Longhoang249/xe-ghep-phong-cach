@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import MoneyLandingPage from "@/components/MoneyLandingPage";
 import RouteViewTracker from "@/components/RouteViewTracker";
 import TrackedLink from "@/components/TrackedLink";
 import { blogPostForSlug, blogPosts } from "@/data/blog-posts";
+import { moneyPageLayoutForRoute } from "@/data/seo/money-page-layouts";
 import { moneyPageUpgradeForRoute } from "@/data/seo/money-page-upgrades.mjs";
 import { routeEvidenceByDataKey } from "@/data/seo/route-evidence.mjs";
 import { publicEvidenceValue, publicPricePresentation } from "@/lib/seo/publication.mjs";
@@ -60,6 +62,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
   if (!post) notFound();
   const route = post.route;
   const upgrade = moneyPageUpgradeForRoute(route.id);
+  const landingLayout = moneyPageLayoutForRoute(route.id);
   const isCommercialUpgrade = Boolean(upgrade);
 
   const forwardBookingUrl = `/?from=${encodeURIComponent(route.origin)}&to=${encodeURIComponent(route.destination)}#dat-xe`;
@@ -202,6 +205,30 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       },
     ],
   };
+  if (landingLayout && upgrade) {
+    return (
+      <main className="route-page">
+        <JsonLd data={jsonLd} />
+        <RouteViewTracker slug={route.slug} origin={route.origin} destination={route.destination} />
+        <header className="inner-header">
+          <Link className="brand" href="/"><span className="brand-mark">PC</span><span><strong>PHONG CÁCH</strong><small>Xe ghép & bao xe liên tỉnh</small></span></Link>
+          <div className="inner-header-actions"><Link className="inner-blog-link" href="/blog">Blog tuyến xe</Link><TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_header", route_slug: route.slug }}>☎ Gọi tư vấn</TrackedLink></div>
+        </header>
+        <MoneyLandingPage
+          route={route}
+          h1={upgrade.h1}
+          layout={landingLayout}
+          prices={commercialPriceRows}
+          faq={faq}
+          support={upgrade.support}
+          bookingUrl={forwardBookingUrl}
+          phoneHref={siteConfig.phoneHref}
+          phoneDisplay={siteConfig.phoneDisplay}
+          zaloUrl={zaloUrl}
+        />
+      </main>
+    );
+  }
   return (
     <main className="route-page">
       <JsonLd data={jsonLd} />

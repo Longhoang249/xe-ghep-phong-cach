@@ -8,10 +8,10 @@ import { trackEvent } from "@/lib/analytics";
 import { locationCoordinates } from "@/data/location-coordinates";
 import type { RoutePrice } from "@/data/routes";
 import { findPublishedRoute, publishedLocations as locations } from "@/data/seo/published-content";
-import { estimatePrice, type ServiceType, type VehicleType } from "@/lib/pricing";
+import { bookingPricePayloadFields, formatBookingPriceQuote } from "@/lib/booking-pricing.mjs";
+import { quotePrice, type ServiceType, type VehicleType } from "@/lib/pricing";
 import { siteConfig } from "@/lib/site";
 import { captureAttribution, initializeAttribution } from "@/lib/tracking";
-const formatPrice = (price: number | null) => price ? new Intl.NumberFormat("vi-VN").format(price) + "đ" : "Đang tính giá";
 const getTomorrow = () => { const date = new Date(); date.setDate(date.getDate() + 1); return date.toISOString().slice(0, 10); };
 const normalizeRouteText = (value: string) => value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/đ/g, "d").toLocaleLowerCase("vi");
 const locationProvince: Record<string, string> = { "Nội Bài": "Hà Nội", "Cát Bi": "Hải Phòng", "Phủ Lý": "Hà Nam" };
@@ -134,7 +134,8 @@ export default function BookingExperience({ routes }: Props) {
     const a = Math.sin(latitudeDelta / 2) ** 2 + Math.cos(toRadians(booking.pickupLat)) * Math.cos(toRadians(booking.dropoffLat)) * Math.sin(longitudeDelta / 2) ** 2;
     return Math.max(1, Math.round(earthRadius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 1.2));
   }, [booking.dropoffLat, booking.dropoffLng, booking.pickupLat, booking.pickupLng]);
-  const price = useMemo(() => estimatePrice(selectedRoute, booking.need, booking.service, booking.vehicle, booking.passengers, approximateDistanceKm, { lengthCm: booking.cargoLength, widthCm: booking.cargoWidth, heightCm: booking.cargoHeight, weightKg: booking.cargoWeight }), [approximateDistanceKm, booking.cargoHeight, booking.cargoLength, booking.cargoWeight, booking.cargoWidth, booking.need, booking.passengers, booking.service, booking.vehicle, selectedRoute]);
+  const priceQuote = useMemo(() => quotePrice(selectedRoute, booking.need, booking.service, booking.vehicle), [booking.need, booking.service, booking.vehicle, selectedRoute]);
+  const priceSummaryLabel = priceQuote.kind === "STARTING_FROM" ? "Giá bắt đầu" : priceQuote.kind === "ESTIMATE" ? "Ước tính chưa xác nhận" : "Giá chuyến";
 
   useEffect(() => {
     initializeAttribution();
@@ -179,7 +180,7 @@ export default function BookingExperience({ routes }: Props) {
       dropoff_address: booking.dropoff, dropoff_lat: booking.dropoffLat || null, dropoff_lng: booking.dropoffLng || null, departure_date: booking.date, departure_time: booking.time,
       service_type: booking.need === "parcel" ? "parcel" : booking.service, passenger_count: booking.need === "ride" ? booking.passengers : 0,
       vehicle_type: booking.vehicle, estimated_distance: selectedRoute?.distanceKm || approximateDistanceKm || null, estimated_duration: selectedRoute?.durationMinutes || null,
-      estimated_price: price, cargo_name: booking.need === "parcel" ? booking.cargoName.trim() : null,
+      ...bookingPricePayloadFields(priceQuote), cargo_name: booking.need === "parcel" ? booking.cargoName.trim() : null,
       cargo_length_cm: booking.need === "parcel" ? booking.cargoLength : null, cargo_width_cm: booking.need === "parcel" ? booking.cargoWidth : null,
       cargo_height_cm: booking.need === "parcel" ? booking.cargoHeight : null, cargo_weight_kg: booking.need === "parcel" ? booking.cargoWeight : null,
       status: "new", ...captureAttribution(),
@@ -297,7 +298,7 @@ export default function BookingExperience({ routes }: Props) {
       <section className="booking-shell booking-shell-bottom" id="dat-xe">
         <div className="booking-card" ref={formRef}>
           {stage === "success" ? (
-            <div className="success-state" role="status"><div className="success-icon">✓</div><span className="success-kicker">Mã yêu cầu {bookingId}</span><h2>Yêu cầu đã được gửi</h2><p className="success-lead">Bên mình sẽ gọi lại để xác nhận xe, giờ đón và mức giá cuối.</p><div className="success-route"><strong>{booking.pickup}</strong><span>→</span><strong>{booking.dropoff}</strong></div><div className="summary-grid"><span><small>Ngày đi</small><b>{new Date(booking.date + "T00:00:00").toLocaleDateString("vi-VN")}</b></span><span><small>Giờ đón</small><b>{booking.time}</b></span><span><small>Nhu cầu</small><b>{booking.need === "parcel" ? "Gửi hàng" : `${booking.passengers} khách`}</b></span><span><small>Tham khảo</small><b>{formatPrice(price)}</b></span></div><div className="payment-confirmation"><b>Đặt trước miễn phí, đến nơi mới thanh toán</b></div><div className="success-actions"><a className="btn btn-primary" href={process.env.NEXT_PUBLIC_ZALO_URL || siteConfig.zaloFallbackUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_zalo", { placement: "booking_success" })}>Nhắn Zalo</a><a className="btn btn-ghost" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "booking_success" })}>Gọi tư vấn viên</a></div><button className="text-button" onClick={() => setStage("form")}>Gửi thêm yêu cầu khác</button></div>
+            <div className="success-state" role="status"><div className="success-icon">✓</div><span className="success-kicker">Mã yêu cầu {bookingId}</span><h2>Yêu cầu đã được gửi</h2><p className="success-lead">Bên mình sẽ gọi lại để xác nhận xe, giờ đón và mức giá cuối theo chuyến.</p><div className="success-route"><strong>{booking.pickup}</strong><span>→</span><strong>{booking.dropoff}</strong></div><div className="summary-grid"><span><small>Ngày đi</small><b>{new Date(booking.date + "T00:00:00").toLocaleDateString("vi-VN")}</b></span><span><small>Giờ đón</small><b>{booking.time}</b></span><span><small>Nhu cầu</small><b>{booking.need === "parcel" ? "Gửi hàng" : `${booking.passengers} khách`}</b></span><span><small>{priceSummaryLabel}</small><b>{formatBookingPriceQuote(priceQuote)}</b></span></div><div className="payment-confirmation"><b>Giá cuối được xác nhận theo thông tin và chuyến thực tế. Đặt trước miễn phí, thanh toán sau chuyến.</b></div><div className="success-actions"><a className="btn btn-primary" href={process.env.NEXT_PUBLIC_ZALO_URL || siteConfig.zaloFallbackUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_zalo", { placement: "booking_success" })}>Nhắn Zalo</a><a className="btn btn-ghost" href={siteConfig.phoneHref} onClick={() => trackEvent("click_call", { placement: "booking_success" })}>Gọi tư vấn viên</a></div><button className="text-button" onClick={() => setStage("form")}>Gửi thêm yêu cầu khác</button></div>
           ) : (
             <form className="compact-booking" onSubmit={submit} noValidate>
               <div className="booking-head"><div><span className="step-label">Đặt xe nhanh</span><h2>Đón tận nơi, đưa về tận cửa</h2></div></div>
@@ -327,7 +328,7 @@ export default function BookingExperience({ routes }: Props) {
                   {booking.need === "ride" && <CompactOptions label="Hình thức" value={booking.service} options={[{ value: "shared", label: "Xe ghép" }, { value: "private", label: "Bao xe" }]} onChange={(value) => update("service", value as ServiceType)} />}
                   {booking.need === "ride" && <CompactOptions label="Loại xe" value={booking.vehicle} options={[{ value: "4-seat", label: "4 chỗ" }, { value: "7-seat", label: "7 chỗ" }]} onChange={(value) => update("vehicle", value as VehicleType)} />}
                 </div>
-                {booking.need === "parcel" && <div className="cargo-details"><label className="cargo-name"><span>Tên hàng hóa</span><input value={booking.cargoName} onChange={(event) => update("cargoName", event.target.value)} placeholder="Ví dụ: Thùng quần áo, hồ sơ…" /><small>{errors.cargoName}</small></label><div className="cargo-measures"><Measure label="Dài" unit="cm" value={booking.cargoLength} onChange={(value) => update("cargoLength", value)} /><Measure label="Rộng" unit="cm" value={booking.cargoWidth} onChange={(value) => update("cargoWidth", value)} /><Measure label="Cao" unit="cm" value={booking.cargoHeight} onChange={(value) => update("cargoHeight", value)} /><Measure label="Nặng" unit="kg" value={booking.cargoWeight} onChange={(value) => update("cargoWeight", value)} /></div>{errors.cargoSize && <small className="cargo-error">{errors.cargoSize}</small>}<p>Giá tính theo quãng đường và trọng lượng quy đổi Dài × Rộng × Cao / 6.000.</p></div>}
+                {booking.need === "parcel" && <div className="cargo-details"><label className="cargo-name"><span>Tên hàng hóa</span><input value={booking.cargoName} onChange={(event) => update("cargoName", event.target.value)} placeholder="Ví dụ: Thùng quần áo, hồ sơ…" /><small>{errors.cargoName}</small></label><div className="cargo-measures"><Measure label="Dài" unit="cm" value={booking.cargoLength} onChange={(value) => update("cargoLength", value)} /><Measure label="Rộng" unit="cm" value={booking.cargoWidth} onChange={(value) => update("cargoWidth", value)} /><Measure label="Cao" unit="cm" value={booking.cargoHeight} onChange={(value) => update("cargoHeight", value)} /><Measure label="Nặng" unit="kg" value={booking.cargoWeight} onChange={(value) => update("cargoWeight", value)} /></div>{errors.cargoSize && <small className="cargo-error">{errors.cargoSize}</small>}<p>Giá gửi hàng được kiểm tra theo thông tin hàng hóa và chuyến thực tế.</p></div>}
               </div>}
               <div className="compact-checkout"><button className="submit-button" disabled={saving}>{saving ? "Đang gửi…" : "Gửi yêu cầu"}<span>→</span></button></div>
               <div className="compact-payment-note">✓ Đặt trước miễn phí, đến nơi mới thanh toán</div>

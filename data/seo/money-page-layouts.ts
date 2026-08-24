@@ -19,6 +19,7 @@ export type ScanFirstMoneyPageLayout = {
   heroImageAlt: string;
   services: ReadonlyArray<MoneyPageVisualService>;
   relatedRoutes: ReadonlyArray<MoneyPageRelatedRoute>;
+  endpointLinks?: Readonly<Record<string, string>>;
 };
 
 const moneyPageLayouts: Readonly<Record<string, ScanFirstMoneyPageLayout>> = Object.freeze({
@@ -89,6 +90,9 @@ const moneyPageLayouts: Readonly<Record<string, ScanFirstMoneyPageLayout>> = Obj
       Object.freeze({ href: "/xe-ghep-hai-duong-hai-phong", label: "Xe Hải Dương - Hải Phòng", eyebrow: "TUYẾN HAI CHIỀU" }),
       Object.freeze({ href: "/xe-ghep-hai-phong-quang-ninh", label: "Xe Hải Phòng - Quảng Ninh", eyebrow: "TUYẾN LIÊN QUAN" }),
     ]),
+    endpointLinks: Object.freeze({
+      "Hạ Long / Bãi Cháy": "/xe-ghep-hai-duong-ha-long",
+    }),
   }),
 });
 

@@ -23,6 +23,14 @@ type SupportLink = {
   cta?: string;
 };
 
+type EndpointOrientation = {
+  names: ReadonlyArray<string>;
+  kicker?: string;
+  title?: string;
+  intro?: string;
+  boundary?: string;
+};
+
 type MoneyLandingPageProps = {
   route: {
     slug: string;
@@ -34,6 +42,7 @@ type MoneyLandingPageProps = {
   prices: ReadonlyArray<PriceRow>;
   faq: ReadonlyArray<FaqItem>;
   support: SupportLink;
+  endpointOrientation?: EndpointOrientation;
   bookingUrl: string;
   phoneHref: string;
   phoneDisplay: string;
@@ -67,6 +76,7 @@ export default function MoneyLandingPage({
   prices,
   faq,
   support,
+  endpointOrientation,
   bookingUrl,
   phoneHref,
   phoneDisplay,
@@ -143,6 +153,23 @@ export default function MoneyLandingPage({
         <div className={styles.routePlace}><small>ĐIỂM ĐẾN</small><strong>{route.destination}</strong><span>Trả theo địa chỉ</span></div>
         <p>Nhận khách cả hai chiều. Gửi địa chỉ đón/trả để kiểm tra chuyến thực tế.</p>
       </section>
+
+      {endpointOrientation?.names.length ? <section className={styles.endpointOrientation} aria-labelledby="endpoint-orientation-title">
+        <div className={styles.endpointHeading}>
+          <span>{endpointOrientation.kicker ?? "ĐỊNH HƯỚNG KHU VỰC"}</span>
+          <h2 id="endpoint-orientation-title">{endpointOrientation.title ?? "Bạn đi khu vực nào?"}</h2>
+          <p>{endpointOrientation.intro}</p>
+        </div>
+        <div className={styles.endpointList} aria-label="Khu vực và điểm đến tại Quảng Ninh">
+          {endpointOrientation.names.map((endpoint) => {
+            const href = layout.endpointLinks?.[endpoint];
+            return href
+              ? <Link href={href} key={endpoint}>{endpoint}<span>→</span></Link>
+              : <span key={endpoint}>{endpoint}</span>;
+          })}
+        </div>
+        <p className={styles.endpointBoundary}><FeatureIcon name="pin" /><span>{endpointOrientation.boundary}</span></p>
+      </section> : null}
 
       <section className={styles.services} aria-labelledby="service-title">
         <div className={styles.sectionHeading}>

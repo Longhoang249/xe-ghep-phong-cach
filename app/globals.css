@@ -1305,7 +1305,7 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   }
 
   .hero h1 span.hero-line {
-    display: inline;
+    display: block; /* Custom 3-line requirement */
     white-space: normal;
   }
 
@@ -1318,7 +1318,7 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 
   /* Geo-targeting highlights badge under Hero copy */
   .hero-copy::after {
-    content: "📍 Tuyến Xe Ghép: Hải Dương • Hải Phòng • Quảng Ninh • Hà Nội";
+    content: "📍 Chuyên tuyến xe ghép: Hải Dương • Hải Phòng • Quảng Ninh";
     display: block;
     margin-top: 15px;
     font-size: 12px;
@@ -1352,41 +1352,7 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 
   /* Province shortcuts shell */
   .province-shortcuts-shell {
-    margin-top: -30px;
-    padding: 0 16px;
-  }
-
-  .province-shortcuts {
-    padding: 12px;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 183, 179, 0.15);
-    background: #fff;
-    box-shadow: 0 8px 25px rgba(22, 67, 71, 0.08);
-  }
-
-  .province-shortcut-track button {
-    min-height: 34px;
-    padding: 0 14px;
-    font-size: 11px;
-    border-radius: 999px;
-    border: 1px solid #d3e4e4;
-    background: #fbfdfd;
-    color: #3b565c;
-    font-weight: 700;
-  }
-
-  .province-shortcut-track button.featured {
-    background: linear-gradient(135deg, #00b7b3, #008f90);
-    color: #fff;
-    border-color: transparent;
-    box-shadow: 0 4px 10px rgba(0, 183, 179, 0.15);
-  }
-
-  .province-shortcut-track button.active {
-    background: #005f60;
-    color: #fff;
-    border-color: transparent;
-    box-shadow: 0 4px 10px rgba(0, 95, 96, 0.2);
+    display: none !important;
   }
 
   /* Grab/Be-Style Booking Form */
@@ -1402,19 +1368,20 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 
   .plain-address-stack {
     position: relative;
-    padding-left: 20px;
+    padding-left: 36px; /* Space for node markers and dashed line */
     display: flex;
     flex-direction: column;
     gap: 12px;
+    align-items: stretch; /* Stretch fields to full width, fixing the gap */
   }
 
   /* Vertical ride path line */
   .plain-address-stack::before {
     content: "";
     position: absolute;
-    left: 8px;
-    top: 24px;
-    bottom: 24px;
+    left: 17px; /* Center-aligned with dots */
+    top: 26px;
+    bottom: 26px;
     width: 2px;
     border-left: 2px dashed #00b7b3;
     z-index: 1;
@@ -1424,10 +1391,10 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   .plain-address-stack .plain-address-field:first-child::before {
     content: "";
     position: absolute;
-    left: -19px;
-    top: 24px;
-    width: 10px;
-    height: 10px;
+    left: -24px; /* Center-aligned with dotted line */
+    top: 22px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #00b7b3;
     border: 2px solid #fff;
@@ -1439,10 +1406,10 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   .plain-address-stack .plain-address-field:last-of-type::before {
     content: "";
     position: absolute;
-    left: -19px;
-    top: 24px;
-    width: 10px;
-    height: 10px;
+    left: -24px; /* Center-aligned with dotted line */
+    top: 22px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #ffc247;
     border: 2px solid #fff;
@@ -1454,8 +1421,14 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
     border-radius: 12px;
     border: 1.5px solid #d3e7e9;
     background: #fff;
-    padding: 8px 44px 8px 12px;
+    padding: 8px 48px 8px 12px;
     box-shadow: 0 2px 6px rgba(0, 183, 179, 0.02);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .plain-address-field:focus-within {
+    border-color: #00b7b3;
+    box-shadow: 0 0 0 3px rgba(0, 183, 179, 0.1);
   }
 
   .plain-address-field>span {
@@ -1480,7 +1453,7 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 1px solid #d3e7e9;
+    border: 1.5px solid #d3e7e9;
     background: #fff;
     color: #008f90;
     box-shadow: 0 4px 10px rgba(0, 183, 179, 0.1);
@@ -1489,6 +1462,12 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
     align-items: center;
     justify-content: center;
     z-index: 3;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .plain-address-swap:active {
+    transform: scale(0.9) rotate(90deg);
   }
 
   .plain-address-swap svg {
@@ -1503,17 +1482,29 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   }
 
   .passenger-primary, .primary-booking-field {
-    min-height: 54px;
-    padding: 6px 10px;
+    min-height: 58px;
+    padding: 8px 12px;
     border-radius: 12px;
     border: 1.5px solid #d3e7e9;
-    background: #fbfdfd;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 183, 179, 0.02);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .passenger-primary:focus-within, .primary-booking-field:focus-within {
+    border-color: #00b7b3;
+    box-shadow: 0 0 0 3px rgba(0, 183, 179, 0.1);
   }
 
   .passenger-primary>span, .primary-booking-field>span {
     font-size: 10px;
     font-weight: 800;
     color: #63777c;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .customer-name-field {
@@ -1521,55 +1512,117 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   }
 
   .primary-booking-field input {
-    font-size: 14px !important;
+    font-size: 15px !important;
     font-weight: 700;
     color: #1f2a30;
+    margin-top: 2px;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+  }
+
+  .passenger-primary div {
+    margin-top: 4px;
+  }
+
+  .mini-stepper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   .mini-stepper button {
     width: 28px;
     height: 28px;
-    border-radius: 8px;
-    border: 1px solid #d3e7e9;
+    border-radius: 50%;
+    border: 1.5px solid #00b7b3;
     background: #fff;
     color: #00b7b3;
+    font-size: 15px;
     font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .mini-stepper button:active {
+    background: #00b7b3;
+    color: #fff;
+  }
+
+  .mini-stepper b {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1f2a30;
+    min-width: 16px;
+    text-align: center;
   }
 
   .advanced-toggle {
     border-radius: 12px;
-    border: 1px solid #d3e7e9;
-    background: #f0faf9;
-    padding: 10px 12px;
+    border: 1.5px solid #bfe5e3;
+    background: #f4fcfc;
+    padding: 10px 16px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .advanced-toggle:hover {
+    background: #e0f6f5;
+    border-color: #00b7b3;
   }
 
   .advanced-toggle b {
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 700;
     color: #005f60;
   }
 
   .advanced-toggle small {
-    font-size: 9px;
+    font-size: 10px;
     color: #557277;
+    margin-top: 2px;
   }
 
   .compact-checkout .submit-button {
-    min-height: 52px;
+    width: 100%;
+    min-height: 54px;
+    border: 0;
     border-radius: 14px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
     background: linear-gradient(135deg, #00b7b3, #008f90);
-    box-shadow: 0 8px 20px rgba(0, 183, 179, 0.2);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 183, 179, 0.25);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .compact-checkout .submit-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(0, 183, 179, 0.2);
   }
 
   .compact-payment-note {
-    background: #e8f9f6;
-    color: #008366;
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 10px;
+    background: #e6f7f4;
+    color: #008a6c;
+    border-radius: 10px;
+    font-size: 11px;
     font-weight: 700;
     text-align: center;
+    border: 1px solid rgba(0, 170, 167, 0.08);
   }
 
   /* Redesigned Route Cards */

@@ -19,13 +19,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...trustPages.map((path) => ({ url: absoluteUrl(path), lastModified, changeFrequency: "monthly" as const, priority: 0.7 })),
     ...publishedGuideAssets.map((asset) => ({
       url: absoluteUrl(asset.canonical),
-      lastModified,
+      lastModified: asset.lastReviewedAt ? new Date(asset.lastReviewedAt) : lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.82,
     })),
     ...publishedRouteAssets.map((asset) => ({
       url: absoluteUrl(asset.canonical),
-      lastModified,
+      lastModified: asset.lastReviewedAt ? new Date(asset.lastReviewedAt) : lastModified,
       changeFrequency: "weekly" as const,
       priority: priorityRouteIds.has(asset.dataKey) ? 0.95 : ["hd-hn", "hd-nb", "hd-nb2"].includes(asset.dataKey) ? 0.9 : 0.8,
     })),

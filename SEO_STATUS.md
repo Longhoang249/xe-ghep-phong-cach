@@ -1,14 +1,14 @@
 # SEO Project Status
 
-Last updated: 2026-08-23 23:38 +07:00 (Asia/Ho_Chi_Minh)
+Last updated: 2026-09-03 10:00 +07:00 (Asia/Ho_Chi_Minh)
 
-Updated by: Codex
+Updated by: Antigravity
 
 ## Current Phase
 
-Phase: DATA-003 — READY_FOR_REVIEW
+Phase: OPS-004 Sitemap Freshness & Mobile Polish — COMPLETED
 
-Objective: Decide which Quảng Ninh endpoint, if any, has enough evidence and distinct intent for a future money page without changing production publication state.
+Objective: Implement per-asset `lastReviewedAt` freshness in sitemap, enhance mobile booking experience styles, and establish multi-AI handoff documentation.
 
 ---
 
@@ -22,7 +22,7 @@ Review: 1
 
 Approved: 0
 
-Published: production contains 39 governed URLs after adding only MP-019; MP-004 and MP-003 were upgraded in place
+Published: production contains 39 governed URLs after adding only MP-019; MP-004, MP-003, and MP-005 were upgraded in place
 
 Monitoring: 2
 
@@ -34,6 +34,7 @@ Blocked: 0
 
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
+| OPS-004 | Sitemap Freshness & Mobile Booking Polish | Technical SEO | Sitewide | COMPLETED | `/sitemap.xml` | `app/sitemap.ts` emits per-asset `lastReviewedAt` timestamp for each route and guide asset; mobile booking form styles polished; `SEO_HANDOFF.md` established. |
 | DATA-003 | Quảng Ninh Endpoint Verification | Data / Decision | CLUSTER-B | READY_FOR_REVIEW | None | Audits nine KB endpoints and 90 decision facts. Existing Owner evidence resolves stale `hd-bai-chay` service status, but the record remains `DATA_ONLY`, has no canonical/asset and is publication-ineligible. Hạ Long is already published; Bãi Cháy is `NEAR_READY` but overlaps MP-019; all seven other endpoints are `BLOCKED`. Recommendation for SPRINT-006: `NONE`. |
 | SPRINT-005 | MP-005 Scan-first Money Page | Money Page | CLUSTER-B | PUBLISHED / MONITORING | `/xe-ghep-hai-duong-quang-ninh` | Fast-forwarded to `main` at `1689924` and deployed by Vercel Git integration on 2026-08-23 at 23:22 +07:00 (`dpl_8SQRwqE75FmYo6roD4fnMZwznMBc`). Live QA confirms all four `VERIFIED_FROM` prices render with `Từ`, canonical/schema/FAQ remain correct, all visuals and related links load, mobile has no overflow, and sitemap remains 39 URLs. |
 | SPRINT-004A.1 | MP-003 Mobile Readability Revision | Money Page | CLUSTER-A | PUBLISHED / MONITORING | `/xe-ghep-hai-duong-hai-phong` | Merged into release head `912a0b3` and deployed 2026-08-23 at 20:42 +07:00. Mobile content has an explicit 11px floor; quick-price amounts render at 15px, service prices at 16px, service names at 19px, route names at 18px, descriptions/FAQ answers at 13px. Live QA confirms canonical, CTAs, images and zero horizontal overflow. Content, prices, metadata and schema remain governed. |

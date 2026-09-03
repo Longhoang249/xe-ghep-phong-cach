@@ -27,6 +27,12 @@ export type GuideSource = {
   supports: string;
 };
 
+export type GuideImage = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
 export type GuidePost = {
   slug: string;
   title: string;
@@ -36,6 +42,7 @@ export type GuidePost = {
   primaryKeyword: string;
   secondaryKeywords: string[];
   directAnswer: string;
+  image?: GuideImage;
   choices: GuideChoice[];
   comparison?: {
     title: string;
@@ -61,6 +68,11 @@ export const guidePosts: GuidePost[] = [
     primaryKeyword: "đi Hải Dương Hà Nội bằng phương tiện gì",
     secondaryKeywords: ["xe Hải Dương đi Hà Nội", "phương tiện Hải Dương Hà Nội", "xe ghép Hải Dương Hà Nội", "tàu hỏa Hải Dương Hà Nội"],
     directAnswer: "Từ Hải Dương đi Hà Nội khoảng 55 - 75km tùy điểm đón, thời gian di chuyển 50 - 90 phút. Nếu ưu tiên giá rẻ và gần ga/bến, xe khách hoặc tàu hỏa là lựa chọn tiết kiệm nhất. Nếu bạn đi khám bệnh tại các bệnh viện lớn (Bạch Mai, Việt Đức, K Tân Triều...), đi sân bay Nội Bài hoặc muốn được đón tận cửa tại Hải Dương trả tận nơi tại Hà Nội, xe ghép hoặc bao xe riêng 4-7 chỗ giúp tiết kiệm 1-2 lần tiền bắt taxi trung chuyển.",
+    image: {
+      src: "/images/cao-toc-ha-noi-hai-phong.jpg",
+      alt: "Tuyến cao tốc Hà Nội Hải Phòng kết nối Hải Dương giúp xe ghép di chuyển êm ái và nhanh chóng",
+      caption: "Nút giao cao tốc Hà Nội - Hải Phòng (5B), trục giao thông huyết mạch giúp xe ghép Phong Cách kết nối Hải Dương và Hà Nội chỉ mất 50 - 60 phút.",
+    },
     choices: [
       { title: "Xe khách bến liên tỉnh", bestFor: "Ưu tiên giá vé rẻ, ít hành lý", description: "Bắt xe tại bến xe Hải Dương đi các bến Gia Lâm, Giáp Bát, Nước Ngầm; cần tự ra bến." },
       { title: "Tàu hỏa Hà Nội - Hải Phòng", bestFor: "Tránh kẹt xe giờ cao điểm", description: "Chạy đúng giờ từ ga Hải Dương về ga Hà Nội hoặc Long Biên, an toàn và ngắm cảnh." },
@@ -111,6 +123,11 @@ export const guidePosts: GuidePost[] = [
     primaryKeyword: "đi Hải Dương Quảng Ninh bằng gì",
     secondaryKeywords: ["xe Hải Dương đi Quảng Ninh", "nhà xe Hải Dương Quảng Ninh", "xe ghép Hải Dương Quảng Ninh"],
     directAnswer: "Nếu dùng được bến hoặc điểm hẹn của nhà xe, hãy kiểm tra xe khách theo đúng điểm đến. Nếu ưu tiên đón tận nơi, trả tận nơi, xe ghép phù hợp với khách lẻ; nhóm muốn đi riêng nên cân nhắc bao xe. Quảng Ninh có nhiều điểm đến cách xa nhau, vì vậy phải so sánh theo đúng endpoint thay vì xem cả tỉnh là một điểm.",
+    image: {
+      src: "/images/dich-vu-xe-7-cho.png",
+      alt: "Dịch vụ xe 7 chỗ đón trả tận nơi tuyến Hải Dương đi các điểm Quảng Ninh như Hạ Long Cẩm Phả Vân Đồn",
+      caption: "Dòng xe 7 chỗ tiện nghi của Phong Cách chuyên phục vụ các tuyến liên tỉnh Hải Dương ⇄ Quảng Ninh.",
+    },
     choices: [
       { title: "Xe khách / limousine", bestFor: "Ưu tiên chuyến công bố", description: "Tìm theo đúng điểm đến, sau đó kiểm tra lại lịch, giá và điểm đón trả với đơn vị khai thác." },
       { title: "Xe ghép", bestFor: "Khách lẻ, nhóm nhỏ", description: "Đáng cân nhắc khi muốn trao đổi điểm đón trả và chấp nhận nhà xe kiểm tra khả năng ghép theo chuyến." },
@@ -162,6 +179,11 @@ export const guidePosts: GuidePost[] = [
     primaryKeyword: "đi Hải Dương Hải Phòng bằng gì",
     secondaryKeywords: ["xe Hải Dương đi Hải Phòng", "phương tiện Hải Dương Hải Phòng", "xe ghép Hải Dương Hải Phòng"],
     directAnswer: "Xe khách phù hợp khi bạn dùng được bến hoặc điểm hẹn; xe ghép hợp với khách lẻ muốn trao đổi đón trả tận nơi. Nhóm gia đình hoặc người muốn đi riêng nên so sánh bao xe với tự lái. Đừng chọn chỉ theo giá vé: hãy tính cả chặng ra điểm đón, số lần đổi xe và hành lý.",
+    image: {
+      src: "/images/dich-vu-xe-4-cho.png",
+      alt: "Dịch vụ xe 4 chỗ và 7 chỗ đón trả tận nhà tuyến Hải Dương Hải Phòng của Phong Cách",
+      caption: "Dịch vụ xe 4 chỗ và 7 chỗ của Xe Ghép Phong Cách phục vụ liên tục hàng ngày tuyến Hải Dương ⇄ Hải Phòng.",
+    },
     choices: [
       { title: "Xe khách / limousine", bestFor: "Ưu tiên chuyến công bố", description: "Kiểm tra lịch, giá, điểm đón trả và đơn vị vận hành tại thời điểm đặt." },
       { title: "Xe ghép", bestFor: "Khách lẻ, nhóm nhỏ", description: "Phù hợp khi ưu tiên trao đổi đón trả tận nơi và có thể ghép theo chuyến thực tế." },
@@ -211,6 +233,11 @@ export const guidePosts: GuidePost[] = [
     primaryKeyword: "đi Hải Phòng Quảng Ninh bằng gì",
     secondaryKeywords: ["xe Hải Phòng đi Quảng Ninh", "xe ghép Hải Phòng Quảng Ninh", "phương tiện Hải Phòng đi Hạ Long"],
     directAnswer: "Đi từ Hải Phòng sang Quảng Ninh hiện rất nhanh qua cao tốc Hải Phòng - Hạ Long (cầu Bạch Đằng). Nếu gần bến hoặc điểm đón cố định, xe khách hoặc limousine là lựa chọn quen thuộc. Nếu bạn đi cá nhân hoặc nhóm muốn đón tận nhà, trả tận nơi tại Hạ Long, Uông Bí hay Cẩm Phả, xe ghép hoặc bao xe riêng 4-7 chỗ giúp tiết kiệm thời gian chuyển tuyến.",
+    image: {
+      src: "/images/cau-bach-dang-hai-phong-quang-ninh.jpg",
+      alt: "Cầu Bạch Đằng kết nối Hải Phòng và Quảng Ninh trên tuyến cao tốc giúp xe ghép di chuyển chỉ mất 35 phút",
+      caption: "Cầu Bạch Đằng nối liền Hải Phòng và Quảng Ninh, giúp rút ngắn thời gian di chuyển giữa hai đô thị lớn chỉ còn 35 - 45 phút.",
+    },
     choices: [
       { title: "Xe khách tuyến", bestFor: "Ưu tiên chi phí bến bãi cố định", description: "Bắt xe tại bến xe Vĩnh Niệm hoặc các điểm đón trên đường; cần tự di chuyển ra bến." },
       { title: "Limousine chạy tuyến", bestFor: "Khách đặt ghế cố định", description: "Chạy theo lộ trình quy định, đón trả tại các trục đường chính hoặc văn phòng nhà xe." },
@@ -422,6 +449,11 @@ export const guidePosts: GuidePost[] = [
     primaryKeyword: "xe Hải Dương đi Cát Bi",
     secondaryKeywords: ["xe ghép Hải Dương Cát Bi", "xe Hải Dương sân bay Cát Bi", "xe Cát Bi về Hải Dương"],
     directAnswer: "Từ Hải Dương đến sân bay Cát Bi khoảng 45 - 60km, thời gian chạy xe trung bình 50 - 75 phút qua QL5 hoặc cao tốc 5B. Khách lẻ đi 1-2 người có thể chọn xe ghép (từ 300.000đ/người) để tối ưu chi phí. Gia đình có người già, trẻ nhỏ hoặc mang nhiều vali ký gửi nên chọn bao xe 4 chỗ (từ 600.000đ) hoặc 7 chỗ (từ 750.000đ) đón tận nhà đi thẳng sân bay, chủ động giờ giấc và đảm bảo không trễ chuyến bay.",
+    image: {
+      src: "/images/san-bay-cat-bi-terminal.jpg",
+      alt: "Cảng hàng không quốc tế Cát Bi Hải Phòng nơi xe ghép Phong Cách đón trả khách tận sảnh 2 chiều",
+      caption: "Nhà ga Cảng hàng không quốc tế Cát Bi (Hải Phòng), điểm đón trả khách tận sảnh của các chuyến xe ghép và bao xe Hải Dương.",
+    },
     choices: [
       { title: "Xe ghép Phong Cách", bestFor: "Khách lẻ 1-2 người, ít hành lý", description: "Đón tận nhà tại Hải Dương, trả thẳng sảnh ga Cát Bi; tiết kiệm chi phí cho người đi một mình." },
       { title: "Bao xe riêng 4 chỗ", bestFor: "Gia đình nhỏ 2-3 người, đi công tác", description: "Chủ động 100% thời gian xuất phát theo giờ bay, không gian riêng tư, cốp vừa 2-3 vali." },

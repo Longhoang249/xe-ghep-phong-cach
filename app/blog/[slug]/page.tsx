@@ -30,9 +30,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.description,
       siteName: siteConfig.name,
       locale: siteConfig.locale,
-      images: [],
+      images: [absoluteUrl(post.image?.src ?? "/og.png")],
     },
-    twitter: { card: "summary", title: post.title, description: post.description, images: [] },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [absoluteUrl(post.image?.src ?? "/og.png")],
+    },
   };
 }
 
@@ -58,6 +63,7 @@ export default async function GuidePostPage({ params }: { params: Promise<{ slug
         dateModified: post.updatedAt ?? siteConfig.contentUpdatedAt,
         author: { "@id": `${absoluteUrl()}#organization` },
         publisher: { "@id": `${absoluteUrl()}#organization` },
+        image: absoluteUrl(post.image?.src ?? "/og.png"),
         mainEntityOfPage: { "@id": `${pageUrl}#webpage` },
         keywords: [post.primaryKeyword, ...post.secondaryKeywords].join(", "),
         citation: post.sources?.map((source) => source.url),
@@ -122,6 +128,21 @@ export default async function GuidePostPage({ params }: { params: Promise<{ slug
 
         <section className="guide-content">
           <div className="guide-main-column">
+            {post.image ? (
+              <figure className="guide-featured-figure">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={post.image.src}
+                  alt={post.image.alt}
+                  width={1200}
+                  height={675}
+                  loading="eager"
+                  className="guide-featured-img"
+                />
+                <figcaption>{post.image.caption}</figcaption>
+              </figure>
+            ) : null}
+
             <section className="guide-choice-section" aria-labelledby="guide-options-title">
               <span className="section-kicker">CÁC LỰA CHỌN CẦN CÂN NHẮC</span>
               <h2 id="guide-options-title">Chọn theo nhu cầu thực tế</h2>

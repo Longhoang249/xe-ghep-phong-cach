@@ -1086,6 +1086,9 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 .guide-answer-card a { color:#75ebe5; font-size:12px; font-weight:850; }
 .guide-content { max-width:1152px; display:grid; grid-template-columns:minmax(0,1fr) 300px; align-items:start; gap:52px; margin:0 auto; padding:72px 24px 88px; border-top:1px solid rgba(43,91,94,.08); }
 .guide-main-column { min-width:0; }
+.guide-featured-figure { margin:0 0 42px; padding:0; overflow:hidden; border:1px solid #d4e5e4; border-radius:20px; background:#fff; box-shadow:0 12px 36px rgba(19,62,73,.07); }
+.guide-featured-img { width:100%; height:auto; display:block; aspect-ratio:16/9; object-fit:cover; border-radius:19px 19px 0 0; }
+.guide-featured-figure figcaption { padding:14px 20px; color:#5b7379; font-size:12px; line-height:1.6; font-style:italic; background:#f6fbfa; border-top:1px solid #e5f0ef; }
 .guide-choice-section>h2,.guide-comparison h2,.guide-text-section h2,.guide-checklist h2,.guide-faq h2,.guide-sources h2 { margin:10px 0 20px; color:#20343a; font-size:31px; line-height:1.28; letter-spacing:-.03em; }
 .guide-choice-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
 .guide-choice-grid article { min-height:220px; padding:22px; border:1px solid #dce9e9; border-radius:18px; background:rgba(255,255,255,.86); }

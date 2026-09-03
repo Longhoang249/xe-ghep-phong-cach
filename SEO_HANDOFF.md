@@ -4,8 +4,8 @@
 **Ngày lập**: 2026-09-03 (Asia/Ho_Chi_Minh)  
 **Tác giả bàn giao**: Antigravity  
 **Nhánh làm việc**: `main`  
-**HEAD Commit**: `cde3366` (`chore: merge SPRINT-005.1 and REM-001 into main`)  
-**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`, IndexNow đã ping 39 URLs thành công (HTTP 200).
+**HEAD Commit**: `5956752` (`feat: enrich llms.txt with verified corridor prices, airport route, and AI citation guidelines`)  
+**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`, IndexNow đã ping 39 URLs thành công (HTTP 200), GEO AI Search đã tối ưu.
 
 ---
 

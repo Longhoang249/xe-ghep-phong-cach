@@ -4,7 +4,7 @@
 **Ngày lập**: 2026-09-03 (Asia/Ho_Chi_Minh)  
 **Tác giả bàn giao**: Antigravity  
 **Nhánh làm việc**: `codex/release-ops-003-sprint-003a`  
-**HEAD Commit**: `838ca23` (`feat: checkpoint mobile experience for Sprint 003A review`)  
+**HEAD Commit**: `e58c4f8` (`feat: implement per-asset sitemap freshness, polish mobile booking styles, and establish SEO handoff`)  
 **Tình trạng**: `APPROVED` — Đã sẵn sàng deploy Production.
 
 ---

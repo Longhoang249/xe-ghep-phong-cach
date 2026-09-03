@@ -95,7 +95,7 @@ Khi tiếp quản dự án này để làm tiếp, AI thực hiện các bước
 2. Nâng cấp MP-006 (`/xe-ghep-hai-phong-quang-ninh`) và CP-004 (`/blog/di-hai-phong-quang-ninh-bang-phuong-tien-gi`) theo chuẩn scan-first.
 3. Chạy `node --test tests/*.test.mjs` để xác nhận 0 regression.
 
-### Nhiệm vụ 3: Local Business Entity & GEO (AI Search)
-1. Thêm địa chỉ thực tế tại Hải Dương vào Schema `Organization` / `LocalBusiness`.
-2. Cấu hình biến môi trường `NEXT_PUBLIC_FACEBOOK_URL` và `NEXT_PUBLIC_ZALO_URL`.
-3. Tối ưu [app/llms.txt/route.ts](app/llms.txt/route.ts) với định dạng Answer First phục vụ AI Search (Perplexity, ChatGPT, Gemini).
+### Nhiệm vụ 3: Local Business Entity & GEO (AI Search) — ĐANG TIẾN TRIỂN TỐT
+1. **Google Business Profile**: Đã tạo thành công hồ sơ `Xe Ghép Phong Cách` (Dịch vụ taxi, Hotline: `0987 663 883`, Web: `https://xeghepphongcach.com/`, Khu vực phục vụ: Hải Dương, Hải Phòng, Quảng Ninh, Hà Nội), đang chờ Google duyệt xác minh.
+2. Khi Google duyệt xong, lấy link Google Maps gán vào biến `NEXT_PUBLIC_GOOGLE_MAPS_URL` (hệ thống đã code sẵn hỗ trợ trong `lib/site.ts` để tự động đưa vào Schema `sameAs`).
+3. Cấu hình biến môi trường `NEXT_PUBLIC_FACEBOOK_URL` và `NEXT_PUBLIC_ZALO_URL` khi có Fanpage chính thức.

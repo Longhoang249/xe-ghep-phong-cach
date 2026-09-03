@@ -180,6 +180,10 @@ export const moneyPageUpgrades = Object.freeze({
       "Vân Đồn / Ao Tiên",
       "Móng Cái",
     ]),
+    endpointKicker: "ĐỊNH HƯỚNG KHU VỰC TẠI QUẢNG NINH",
+    endpointTitle: "Bạn đi khu vực nào tại Quảng Ninh?",
+    endpointIntro: "Quảng Ninh có nhiều khu vực và điểm đến. Danh sách này giúp khách mô tả đúng điểm đến khi hỏi chuyến.",
+    endpointBoundary: "Việc nêu tên khu vực không xác nhận mọi địa chỉ luôn có xe hoặc cùng một mức giá. Hãy gửi điểm đón/trả cụ thể để Phong Cách kiểm tra chuyến.",
     schemaOfferDescription: "Giá xe ghép cấp tuyến Hải Dương - Quảng Ninh từ 250.000đ/người. Đây không phải giá cố định hoặc giá riêng cho một endpoint; giá thực tế được xác nhận theo ngày, giờ và địa chỉ đón trả.",
     faq: Object.freeze([
       Object.freeze({ q: "Giá xe ghép Hải Dương - Quảng Ninh bao nhiêu?", a: "Giá xe ghép từ 250.000đ/người ở cấp tuyến Hải Dương - Quảng Ninh. Đây là giá bắt đầu, không phải giá cố định hoặc giá riêng cho một endpoint." }),

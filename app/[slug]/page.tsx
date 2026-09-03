@@ -221,6 +221,13 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           prices={commercialPriceRows}
           faq={faq}
           support={upgrade.support}
+          endpointOrientation={{
+            names: upgrade.endpointNames,
+            kicker: upgrade.endpointKicker,
+            title: upgrade.endpointTitle,
+            intro: upgrade.endpointIntro,
+            boundary: upgrade.endpointBoundary,
+          }}
           bookingUrl={forwardBookingUrl}
           phoneHref={siteConfig.phoneHref}
           phoneDisplay={siteConfig.phoneDisplay}

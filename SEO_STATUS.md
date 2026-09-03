@@ -1,14 +1,14 @@
 # SEO Project Status
 
-Last updated: 2026-09-03 10:00 +07:00 (Asia/Ho_Chi_Minh)
+Last updated: 2026-09-03 10:05 +07:00 (Asia/Ho_Chi_Minh)
 
 Updated by: Antigravity
 
 ## Current Phase
 
-Phase: OPS-004 Sitemap Freshness & Mobile Polish — COMPLETED
+Phase: SPRINT-005.1 + REM-001 + OPS-004 — INTEGRATED & READY_FOR_REVIEW
 
-Objective: Implement per-asset `lastReviewedAt` freshness in sitemap, enhance mobile booking experience styles, and establish multi-AI handoff documentation.
+Objective: Combine MP-005 endpoint orientation/boundary, public booking pricing integrity semantics, per-asset sitemap freshness, and mobile polish.
 
 ---
 
@@ -18,7 +18,7 @@ Backlog: 0
 
 In Progress: 0
 
-Review: 1
+Review: 2
 
 Approved: 0
 
@@ -35,6 +35,8 @@ Blocked: 0
 | ID | Asset | Type | Cluster | Status | URL | Notes |
 |---|---|---|---|---|---|---|
 | OPS-004 | Sitemap Freshness & Mobile Booking Polish | Technical SEO | Sitewide | COMPLETED | `/sitemap.xml` | `app/sitemap.ts` emits per-asset `lastReviewedAt` timestamp for each route and guide asset; mobile booking form styles polished; `SEO_HANDOFF.md` established. |
+| SPRINT-005.1 | MP-005 Endpoint Orientation / Boundary | Money Page UI / Governance | CLUSTER-B | READY_FOR_REVIEW | `/xe-ghep-hai-duong-quang-ninh` | Renders all seven governed geography labels after the route visual. Only Hạ Long/Bãi Cháy links to published MP-019; other labels remain text. The visible boundary denies uniform availability and pricing. Candidate SEO check returns 374/374; sitemap remains 39. |
+| REM-001 | Public Pricing Integrity | Technical / Data Governance | ALL | READY_FOR_REVIEW | Existing homepage booking flow | Booking quotes now carry `STARTING_FROM`, `ESTIMATE` or `CONTACT` semantics. Verified bases render with `Từ`; only four traceable registered-route legacy estimates can render as explicitly unconfirmed estimates; UNKNOWN/custom routes persist no numeric fare. Cargo dimensions/weight remain lead inputs, but no public calculation formula remains. No URL, money-page price, schema, metadata or publication state changes. |
 | DATA-003 | Quảng Ninh Endpoint Verification | Data / Decision | CLUSTER-B | READY_FOR_REVIEW | None | Audits nine KB endpoints and 90 decision facts. Existing Owner evidence resolves stale `hd-bai-chay` service status, but the record remains `DATA_ONLY`, has no canonical/asset and is publication-ineligible. Hạ Long is already published; Bãi Cháy is `NEAR_READY` but overlaps MP-019; all seven other endpoints are `BLOCKED`. Recommendation for SPRINT-006: `NONE`. |
 | SPRINT-005 | MP-005 Scan-first Money Page | Money Page | CLUSTER-B | PUBLISHED / MONITORING | `/xe-ghep-hai-duong-quang-ninh` | Fast-forwarded to `main` at `1689924` and deployed by Vercel Git integration on 2026-08-23 at 23:22 +07:00 (`dpl_8SQRwqE75FmYo6roD4fnMZwznMBc`). Live QA confirms all four `VERIFIED_FROM` prices render with `Từ`, canonical/schema/FAQ remain correct, all visuals and related links load, mobile has no overflow, and sitemap remains 39 URLs. |
 | SPRINT-004A.1 | MP-003 Mobile Readability Revision | Money Page | CLUSTER-A | PUBLISHED / MONITORING | `/xe-ghep-hai-duong-hai-phong` | Merged into release head `912a0b3` and deployed 2026-08-23 at 20:42 +07:00. Mobile content has an explicit 11px floor; quick-price amounts render at 15px, service prices at 16px, service names at 19px, route names at 18px, descriptions/FAQ answers at 13px. Live QA confirms canonical, CTAs, images and zero horizontal overflow. Content, prices, metadata and schema remain governed. |
@@ -60,6 +62,7 @@ Blocked: 0
 | SPRINT-001A | CP-002/CP-003 content + MP-003/MP-005 upgrade packages | Existing article URLs only | — | `c2b510f5b4b45f6ae9d125a07b899dc7395d303d` |
 | PLAN-002 | Near-Money SEO Queue | — | — | `5288c3b1ecbeac0cab95757ee83df3e1cc0c5f08` |
 | SPRINT-002A | MP-003/MP-005 Commercial Upgrade | 2 existing money pages upgraded in place on 2026-08-22 | `https://xeghepphongcach.com` | `6f0c8c6638bdf7e8015d0927fe7dcda836cd3584` |
+| DATA-003 | Quảng Ninh Endpoint Verification | — | — | `910c7054b386d9bef41599fb47ad9cc5791306ff` |
 
 ---
 
@@ -68,19 +71,15 @@ Blocked: 0
 | ID | Issue | Required From | Impact |
 |---|---|---|---|
 | DATA-002-D01 | Confirm remaining endpoint coverage, operating mode/frequency, hours, lead time, surcharges, and Cát Bi exceptions. | Long / Phong | These details remain optional for MP-004/MP-019 publication because unknown claims are omitted; they are still required before making the corresponding operating claims. |
-| DATA-002-D02 | Resolve unverified booking/cargo formulas in a separate task. | Strategy | Money-page price UI/schema are scoped separately; booking/cargo output remains listed in `PUBLIC_DATA_REMEDIATION_QUEUE.md`. |
-| DATA-003-D01 | MP-005 scan-first does not render its governed endpoint orientation/boundary block, while FAQ copy still refers to listed endpoints. | Strategy / future scoped UI task | Production remains usable and evidence-safe, but two SEO checks fail. DATA-003 does not repair public UI. |
 
 ---
 
 ## Next Queue
 
-1. Strategy Review evaluates DATA-003 and selects `NONE` or requests only the minimal Owner answers in `OWNER_DATA_REQUEST_DATA003.md`; do not start SPRINT-006 yet.
-2. Monitor MP-005 production performance; do not open another parent-route sprint immediately.
-3. T+1 indexation follow-up: recheck MP-003, MP-005, CP-003 and CP-002 and confirm sitemap processing remains healthy.
-4. T+7 on 2026-08-29: review the original four-asset page/query footprint when Search Console performance data becomes available.
-5. T+14 on 2026-09-05: review ranking, opportunity and cannibalization evidence before proposing another wave.
-6. Keep MP-004/MP-019 outside the original four-asset GSC experiment and do not treat `PENDING_GSC_DATA` as zero.
+1. Strategy Review SPRINT-005.1 together with the already approved REM-001 implementation; do not merge or deploy either branch yet.
+2. If the combined release is approved, apply and verify Supabase migration `003_add_booking_price_semantics.sql`, then smoke-test DB/API before fast-forwarding application code to `main`.
+3. After production live QA, send only the minimal approved endpoint questions in `OWNER_DATA_REQUEST_DATA003.md`; do not open SPRINT-006 until an endpoint is `READY`.
+4. Continue MP-003/MP-005/CP-002/CP-003 Search Console monitoring and do not treat `PENDING_GSC_DATA` as zero.
 
 ---
 
@@ -111,6 +110,16 @@ Blocked: 0
 - **DATA-003 Bãi Cháy reconciliation:** existing Owner evidence already confirmed Hải Dương - Hạ Long/Bãi Cháy service. The stale `hd-bai-chay` KB record is aligned to `CONFIRMED`, moving 12 canonical facts from `UNKNOWN` to `VERIFIED`, while staying `DATA_ONLY`, canonical-less, asset-less and publication-ineligible.
 - **DATA-003 publication decision:** Hạ Long is the only `READY` endpoint and is already MP-019. Bãi Cháy is `NEAR_READY` but lacks a distinct operating/content boundary and risks cannibalizing MP-019. The remaining seven endpoints are `BLOCKED`; recommended SPRINT-006 money page is `NONE`.
 - **DATA-003 production finding:** the MP-005 scan-first renderer omits the governed endpoint orientation/boundary block while its FAQ still refers to listed endpoints. Production `seo:check` therefore reports 372 passes and two failures. This render gap predates DATA-003 and is logged for a separately approved UI task; no production code is changed here.
+- **DATA-003 canonical merge:** approved DATA-003 was fast-forwarded to `main` at `910c7054`; the canonical KB now contains 113 `VERIFIED`, 8 `ESTIMATE` and 323 `UNKNOWN` facts without adding a URL or changing publication state.
+- **REM-001 booking semantics:** the success summary and persisted payload distinguish `STARTING_FROM`, `ESTIMATE` and `CONTACT`. Owner-verified starting prices render with `Từ`; traceable registered-route estimates say `Ước tính chưa xác nhận`; UNKNOWN/custom routes render contact-only and persist `estimated_price = null`.
+- **REM-001 cargo integrity:** cargo name, dimensions and weight remain available for lead qualification, while the unverified distance/volumetric-weight formula and its public explanation are removed. Final cargo price is described only as a trip-specific check.
+- **REM-001 persistence rollout:** migration `003_add_booking_price_semantics.sql` adds semantic/unit columns and marks historical numeric records `LEGACY_UNCLASSIFIED`; it must be applied before an eventual REM-001 application deployment. REM-001 itself is not deployed in this task.
+- **REM-001 scope preservation:** money-page prices, metadata, canonical, schema, registry and publication state remain unchanged; the sitemap contract remains 39 URLs. The two known MP-005 endpoint checks remain assigned to SPRINT-005.1.
+- **REM-001 validation:** lint, typecheck, 66/66 full tests, production build and `git diff --check` pass. Candidate sitemap contains 39 URLs. Candidate `seo:check` remains at 372 passes / two known MP-005 endpoint-boundary failures, with no new failure introduced by REM-001.
+- **SPRINT-005.1 endpoint renderer:** the scan-first component renders an endpoint block only when governed `endpointNames` is non-empty. MP-005 receives all seven geography labels from its upgrade record; MP-003 receives no endpoint block.
+- **SPRINT-005.1 link boundary:** only `Hạ Long / Bãi Cháy` maps to published MP-019. Đông Triều, Uông Bí, Quảng Yên, Cẩm Phả, Vân Đồn/Ao Tiên and Móng Cái receive no link or future URL.
+- **SPRINT-005.1 evidence boundary:** visible copy states that naming a region does not confirm every address has a vehicle or one shared fare. No endpoint-specific number or availability claim is added; FAQ UI/schema retain the same semantic.
+- **SPRINT-005.1 validation:** lint, typecheck, 71/71 full tests, production build, `git diff --check` and 374/374 candidate SEO checks pass. Sitemap remains 39 URLs. Playwright QA at 1440px and 390px confirms the block is readable and mobile has no horizontal overflow.
 - **SPRINT-002A schema remediation:** MP-003/MP-005 keep descriptive Offer nodes but remove numeric `price`/`priceCurrency`, preventing a starting price from being machine-read as a fixed guaranteed price.
 - **Readiness recalculated after SPRINT-003A:** five existing/published route records are `PARTIAL`; 11 endpoint records remain `DATA_REQUIRED`; none is mislabeled `READY_FOR_CONTENT`.
 - **Still unknown after DATA-003:** 323 canonical KB facts remain `UNKNOWN`; schedules, hours, lead time, waiting, explicit surcharges, airport exceptions and all service facts for the seven unconfirmed Quảng Ninh endpoint candidates remain unupgraded.

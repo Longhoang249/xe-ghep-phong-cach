@@ -145,7 +145,7 @@ for (const page of pageDefinitions) {
       if (page.path.endsWith("quang-ninh")) {
         check(["Đông Triều", "Uông Bí", "Quảng Yên", "Hạ Long / Bãi Cháy", "Cẩm Phả", "Vân Đồn / Ao Tiên", "Móng Cái"].every((endpoint) => html.includes(endpoint)), `${page.path} có endpoint orientation`);
         check(!/Móng Cái[^<]{0,100}(?:250\.000|900\.000|1\.100\.000)đ/i.test(html), `${page.path} không bịa giá endpoint`);
-        check(html.includes("Danh sách không xác nhận Phong Cách luôn phục vụ từng endpoint"), `${page.path} không biến geography thành availability`);
+        check(html.includes("Việc nêu tên khu vực không xác nhận mọi địa chỉ luôn có xe hoặc cùng một mức giá"), `${page.path} không biến geography thành availability`);
       }
       if (page.path.endsWith("ha-long")) {
         const endpointSection = html.match(/<section class="route-endpoints"[\s\S]*?<\/section>/i)?.[0] || "";

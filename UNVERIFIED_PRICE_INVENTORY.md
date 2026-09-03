@@ -4,7 +4,9 @@ Task: `TECH-001`
 
 Audit date: 2026-08-21
 
-Scope: Existing live numeric prices produced by missing-value fallback formulas. Public output is intentionally unchanged in this task.
+Scope: Historical inventory of numeric prices that were produced by missing-value fallback formulas before REM-001.
+
+Current remediation note (2026-08-24): REM-001 removes runtime distance/cargo formula execution. PF-001–PF-004 may still surface only as their already mapped, traceable `ESTIMATE` amounts with explicit unconfirmed-estimate wording. PF-005–PF-008 custom-route formulas no longer produce a public or persisted numeric fare. This inventory remains the attribution record until Owner evidence replaces the four registered-route estimates.
 
 ## Summary
 

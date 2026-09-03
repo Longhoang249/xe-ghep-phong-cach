@@ -300,6 +300,93 @@
 .routeJourney svg { width: 42px; height: 42px; }
 .routeStrip > p { grid-column: 1 / -1; margin: -3px 0 0; color: #5d767a; font-size: 12px; text-align: center; }
 
+.endpointOrientation {
+  max-width: 1084px;
+  margin: 18px auto 14px;
+  padding: 32px 36px;
+  border: 1px solid #cde5e3;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 15px 42px rgba(31, 78, 80, 0.06);
+}
+
+.endpointHeading > span {
+  color: var(--landing-teal);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+}
+
+.endpointHeading h2 {
+  margin: 8px 0 7px;
+  color: var(--landing-ink);
+  font-size: clamp(27px, 3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.endpointHeading p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--landing-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.endpointList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 22px 0 18px;
+}
+
+.endpointList > span, .endpointList > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 9px 13px;
+  border: 1px solid #cfe5e3;
+  border-radius: 999px;
+  background: #f1faf8;
+  color: #315f5a;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.endpointList > a {
+  border-color: #7accc8;
+  background: #e5f8f6;
+  color: #007f80;
+}
+
+.endpointList > a span { font-size: 15px; }
+
+.endpointBoundary {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 13px 15px;
+  border-left: 3px solid #13a784;
+  background: #f0faf7;
+  color: #486a65;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.endpointBoundary svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin-top: 1px;
+  fill: none;
+  stroke: #008f90;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .services { padding-bottom: 58px; }
 .serviceGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .serviceGrid article { min-width: 0; border: 1px solid var(--landing-line); border-radius: 24px; background: #fff; box-shadow: 0 15px 42px rgba(31, 78, 80, 0.07); overflow: hidden; }
@@ -461,6 +548,13 @@
   .routeJourney div { width: 45px; height: 45px; flex-basis: 45px; }
   .routeJourney svg { width: 31px; height: 31px; }
   .routeStrip > p { margin-top: 9px; font-size: 12px; line-height: 1.6; }
+  .endpointOrientation { margin: 15px 14px 0; padding: 24px 17px; border-radius: 20px; }
+  .endpointHeading > span { font-size: 11px; letter-spacing: .09em; }
+  .endpointHeading h2 { font-size: 25px; }
+  .endpointHeading p { font-size: 13px; }
+  .endpointList { gap: 7px; margin: 18px 0 15px; }
+  .endpointList > span, .endpointList > a { min-height: 39px; padding: 8px 11px; font-size: 12px; }
+  .endpointBoundary { padding: 12px; font-size: 12px; }
   .services { padding-top: 59px; }
   .serviceGrid { grid-template-columns: 1fr; gap: 12px; }
   .serviceGrid article { display: grid; grid-template-columns: 0.85fr 1.15fr; border-radius: 19px; }

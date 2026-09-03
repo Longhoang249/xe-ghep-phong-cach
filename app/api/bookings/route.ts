@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+import { normalizeBookingPricePayload } from "@/lib/booking-pricing.mjs";
 import { getRequestId, logServerEvent } from "@/lib/server-logging";
 
 export async function POST(request: Request) {
   const startedAt = Date.now();
   const requestId = getRequestId(request);
   try {
-    const booking = await request.json() as Record<string, unknown>;
+    const booking = normalizeBookingPricePayload(await request.json()) as Record<string, unknown>;
     if (typeof booking.booking_id !== "string" || !booking.booking_id.startsWith("PC-")) {
       logServerEvent("warning", "booking_rejected", { route: "/api/bookings", requestId, reason: "invalid_booking_id", durationMs: Date.now() - startedAt });
       return NextResponse.json({ ok: false, error: "INVALID_BOOKING" }, { status: 400 });

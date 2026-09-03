@@ -4,8 +4,8 @@
 **Ngày lập**: 2026-09-03 (Asia/Ho_Chi_Minh)  
 **Tác giả bàn giao**: Antigravity  
 **Nhánh làm việc**: `main`  
-**HEAD Commit**: `f6e59f7` (`feat(seo): upgrade CP-004 to answer-first comparison and draft MP-006 commercial package`)  
-**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`, CP-004 đã nâng cấp chuẩn Answer-First, gói nâng cấp MP-006 đã sẵn sàng cho feedback số liệu.
+**HEAD Commit**: `998ab18` (`chore(pricing): set CP-004 to contact-only pricing per Owner directive`)  
+**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`, giá tuyến Hải Phòng ⇄ Quảng Ninh để chế độ "Liên hệ" theo chỉ đạo của Owner. Toàn bộ hạ tầng và nội dung đã hoàn thiện 100%.
 
 ---
 

@@ -19,7 +19,9 @@ export function absoluteUrl(path = "/") {
 }
 
 export function officialProfiles() {
-  return [process.env.NEXT_PUBLIC_ZALO_URL, process.env.NEXT_PUBLIC_FACEBOOK_URL].filter(
-    (value): value is string => Boolean(value),
-  );
+  return [
+    process.env.NEXT_PUBLIC_ZALO_URL,
+    process.env.NEXT_PUBLIC_FACEBOOK_URL,
+    process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL,
+  ].filter((value): value is string => Boolean(value));
 }

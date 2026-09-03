@@ -4,8 +4,8 @@
 **Ngày lập**: 2026-09-03 (Asia/Ho_Chi_Minh)  
 **Tác giả bàn giao**: Antigravity  
 **Nhánh làm việc**: `main`  
-**HEAD Commit**: `998ab18` (`chore(pricing): set CP-004 to contact-only pricing per Owner directive`)  
-**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`, giá tuyến Hải Phòng ⇄ Quảng Ninh để chế độ "Liên hệ" theo chỉ đạo của Owner. Toàn bộ hạ tầng và nội dung đã hoàn thiện 100%.
+**HEAD Commit**: `f64ed8f` (`feat(seo): upgrade CP-001 (Hà Nội) and CP-007 (Cát Bi) to comprehensive Answer-First comparison guides`)  
+**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`, CP-001 (Hà Nội) & CP-007 (Cát Bi) đã nâng cấp toàn diện chuẩn Answer-First, IndexNow đã ping 39 URLs thành công (HTTP 200).
 
 ---
 

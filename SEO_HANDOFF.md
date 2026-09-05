@@ -4,8 +4,8 @@
 **Ngày lập**: 2026-09-03 (Asia/Ho_Chi_Minh)  
 **Tác giả bàn giao**: Antigravity  
 **Nhánh làm việc**: `main`  
-**HEAD Commit**: `49feaf2` (`feat(seo): add real high-res illustration images, responsive figures and openGraph image metadata to guide posts`)  
-**Tình trạng**: `PRODUCTION_SYNCED` — Đã tích hợp ảnh thật độ nét cao cho các bài Cát Bi, Cao tốc Hà Nội, Cầu Bạch Đằng và đội xe Phong Cách. Đã cập nhật OpenGraph image và Schema Image cho mạng xã hội. 71/71 tests PASS.
+**HEAD Commit**: `a67d77a` (`feat(seo): upgrade SC-003 (Sân bay Nội Bài) and CP-005 (Xe ghép vs Xe khách) to Answer-First guides with real terminal photo`)  
+**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`, SC-003 (Nội Bài) và CP-005 (Xe ghép vs Xe khách) đã nâng cấp toàn diện chuẩn Answer-First kèm ảnh thật nhà ga Nội Bài. IndexNow đã ping 39 URLs thành công (HTTP 200). 71/71 tests PASS.
 
 ---
 

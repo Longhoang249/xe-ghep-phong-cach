@@ -98,6 +98,10 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         : `Có. Phong Cách tiếp nhận nhu cầu xe ghép, bao xe 4–7 chỗ và gửi hàng trên tuyến ${route.origin} – ${route.destination} cả hai chiều.`,
     },
     {
+      q: `Có xe đón chiều từ ${route.destination} về lại ${route.origin} không?`,
+      a: `Có. Phong Cách phục vụ cả hai chiều: ${route.origin} đi ${route.destination} và đón tận nơi từ ${route.destination} về lại ${route.origin}. Quý khách vui lòng cung cấp địa chỉ đón/trả và thời gian dự kiến để nhà xe sắp xếp chuyến chu đáo nhất.`,
+    },
+    {
       q: `Muốn đi tuyến ${route.origin} – ${route.destination} thì liên hệ thế nào?`,
       a: `Gọi ${siteConfig.phoneDisplay} và cho Phong Cách biết nơi đón, nơi trả và thời điểm bạn muốn đi. Bên mình sẽ kiểm tra xe phù hợp.`,
     },
@@ -108,6 +112,10 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
     {
       q: "Giá xe được xác nhận như thế nào?",
       a: "Phong Cách xác nhận mức giá sau khi biết điểm đón, điểm trả, thời điểm, số khách và nhu cầu hành lý hoặc hàng hóa.",
+    },
+    {
+      q: `Đặt xe chiều về từ ${route.destination} về ${route.origin} có cần đặt cọc trước không?`,
+      a: `Không cần đặt cọc. Phong Cách áp dụng chính sách đặt trước 0đ cọc cho cả chiều đi lẫn chiều về. Khách hàng chỉ thanh toán sau khi đã đến nơi an toàn.`,
     },
   ];
   const faq = (upgrade?.faq ?? legacyFaq) as ReadonlyArray<{ q: string; a: string }>;

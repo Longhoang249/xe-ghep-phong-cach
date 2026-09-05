@@ -48,7 +48,19 @@ export default async function GuidePostPage({ params }: { params: Promise<{ slug
 
   const pageUrl = absoluteUrl(`/blog/${post.slug}`);
   const routeUrl = `/${post.routeSlug}`;
-  const relatedPosts = guidePosts.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const isHpQnSlug = (s: string) => s.includes("hai-phong") || s.includes("quang-ninh") || s.includes("cat-bi") || s.includes("ha-long");
+  const isHnNbSlug = (s: string) => s.includes("ha-noi") || s.includes("noi-bai");
+  const postIsHpQn = isHpQnSlug(post.slug);
+  const postIsHnNb = isHnNbSlug(post.slug);
+
+  const relatedPosts = [...guidePosts]
+    .filter((item) => item.slug !== post.slug)
+    .sort((a, b) => {
+      const aScore = (a.routeSlug === post.routeSlug ? 4 : 0) + (postIsHpQn && isHpQnSlug(a.slug) ? 2 : 0) + (postIsHnNb && isHnNbSlug(a.slug) ? 2 : 0);
+      const bScore = (b.routeSlug === post.routeSlug ? 4 : 0) + (postIsHpQn && isHpQnSlug(b.slug) ? 2 : 0) + (postIsHnNb && isHnNbSlug(b.slug) ? 2 : 0);
+      return bScore - aScore;
+    })
+    .slice(0, 3);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [

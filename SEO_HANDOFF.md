@@ -4,8 +4,8 @@
 **Ngày lập**: 2026-09-03 (Asia/Ho_Chi_Minh)  
 **Tác giả bàn giao**: Antigravity  
 **Nhánh làm việc**: `main`  
-**HEAD Commit**: `cabd9e7` (`feat(seo): upgrade SC-002 (Gửi hàng Hải Phòng) and CP-006 (Hà Nội về Hải Dương) to Answer-First guides`)  
-**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`. 9 bài viết cốt lõi đã đạt chuẩn Answer-First toàn diện kèm bảng so sánh, ảnh minh họa và trích dẫn HTTPS. IndexNow đã ping 39 URLs thành công (HTTP 200). 71/71 tests PASS.
+**HEAD Commit**: `cd06433` (`feat(seo): upgrade SC-001, SC-004, SC-005, SC-006 - all 13 blog articles now 100% Answer-First standard`)  
+**Tình trạng**: `PRODUCTION_SYNCED` — Đã đẩy lên GitHub `origin/main`. Toàn bộ 13/13 bài viết cẩm nang đã đạt chuẩn Answer-First toàn diện. Cả 2 endpoint AI Search `/llms.txt` và `/llms-full.txt` đã triển khai và live 100% trên Vercel CDN. IndexNow đã ping 39 URLs thành công (HTTP 200). 71/71 tests PASS.
 
 ---
 

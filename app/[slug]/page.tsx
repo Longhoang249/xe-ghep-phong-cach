@@ -136,7 +136,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       ]
     : [
         { "@type": "ListItem", position: 1, name: "Trang chủ", item: absoluteUrl() },
-        { "@type": "ListItem", position: 2, name: "Blog", item: absoluteUrl("/blog") },
+        { "@type": "ListItem", position: 2, name: "Tuyến xe", item: absoluteUrl("/tuyen-xe") },
         { "@type": "ListItem", position: 3, name: `${route.origin} ⇄ ${route.destination}`, item: pageUrl },
       ];
   const serviceOffers = isCommercialUpgrade
@@ -257,7 +257,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           {isCommercialUpgrade ? (
             <nav className="route-breadcrumb" aria-label="Breadcrumb"><Link href="/">Trang chủ</Link><span>›</span><Link href="/tuyen-xe">Tuyến xe</Link><span>›</span><span aria-current="page">{upgrade.h1}</span></nav>
           ) : (
-            <nav className="route-breadcrumb" aria-label="Breadcrumb"><Link href="/">Trang chủ</Link><span>›</span><Link href="/blog">Blog</Link><span>›</span><span aria-current="page">{route.origin} – {route.destination}</span></nav>
+            <nav className="route-breadcrumb" aria-label="Breadcrumb"><Link href="/">Trang chủ</Link><span>›</span><Link href="/tuyen-xe">Tuyến xe</Link><span>›</span><span aria-current="page">{route.origin} – {route.destination}</span></nav>
           )}
           <span className="route-eyebrow">{upgrade?.eyebrow ?? route.tag ?? "Xe ghép liên tỉnh"}</span>
           {isCommercialUpgrade ? <h1 className="route-commercial-h1">{upgrade.h1}</h1> : <h1>

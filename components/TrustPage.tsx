@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import SiteFooter from "@/components/SiteFooter";
 import TrackedLink from "@/components/TrackedLink";
 import { siteConfig } from "@/lib/site";
 
@@ -31,6 +32,7 @@ export default function TrustPage({ kicker, title, intro, children }: TrustPageP
         <Link href="/an-toan-va-doi-xe">An toàn & đội xe</Link>
         <Link href="/tuyen-xe">Tất cả tuyến</Link>
       </nav>
+      <SiteFooter placement="trust_page" />
     </main>
   );
 }

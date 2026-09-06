@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
+import SiteFooter from "@/components/SiteFooter";
 import TrackedLink from "@/components/TrackedLink";
 import { findPublishedGuidePost, publishedGuidePosts as guidePosts } from "@/data/seo/published-content";
 import { absoluteUrl, siteConfig } from "@/lib/site";
@@ -220,6 +221,7 @@ export default async function GuidePostPage({ params }: { params: Promise<{ slug
       </section>
 
       <section className="final-cta guide-final-cta"><div><span>PHONG CÁCH CÓ XE</span><h2>Muốn đi, hãy gọi để kiểm tra</h2><p>Mỗi chuyến được trao đổi theo nhu cầu thực tế.</p></div><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "guide_footer", article_slug: post.slug }}>☎ {siteConfig.phoneDisplay}</TrackedLink></section>
+      <SiteFooter placement="guide_footer" />
     </main>
   );
 }

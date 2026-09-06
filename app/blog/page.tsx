@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import SiteFooter from "@/components/SiteFooter";
 import TrackedLink from "@/components/TrackedLink";
 import { blogPosts } from "@/data/blog-posts";
 import { publishedGuidePosts as guidePosts } from "@/data/seo/published-content";
@@ -117,6 +118,7 @@ export default function BlogPage() {
       </section>
 
       <section className="final-cta blog-final-cta"><div><span>CHƯA THẤY TUYẾN CẦN ĐI?</span><h2>Gọi Phong Cách để kiểm tra xe</h2><p>Cho bên mình biết nơi đón, nơi trả và thời điểm mong muốn.</p></div><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "blog_footer_cta" }}>☎ {siteConfig.phoneDisplay}</TrackedLink></section>
+      <SiteFooter placement="blog_page" />
     </main>
   );
 }

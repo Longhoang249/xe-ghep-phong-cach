@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import RoutesDirectory from "@/components/RoutesDirectory";
+import SiteFooter from "@/components/SiteFooter";
 import TrackedLink from "@/components/TrackedLink";
 import { publishedRoutes as routes } from "@/data/seo/published-content";
 import { absoluteUrl, siteConfig } from "@/lib/site";
@@ -62,6 +63,7 @@ export default function RoutesPage() {
       <header className="inner-header"><Link className="brand" href="/"><span className="brand-mark">PC</span><span><strong>PHONG CÁCH</strong><small>Xe ghép & bao xe liên tỉnh</small></span></Link><div className="inner-header-actions"><Link className="inner-blog-link" href="/blog">Blog tuyến xe</Link><TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "routes_directory_header" }}>☎ Gọi tư vấn</TrackedLink></div></header>
       <section className="directory-hero"><Link href="/">← Trang chủ</Link><span className="section-kicker">MẠNG LƯỚI TUYẾN XE</span><h1>Xe ghép Hải Dương<br />Hải Phòng · Quảng Ninh.</h1><p>Chọn tuyến bạn quan tâm và gọi Phong Cách để kiểm tra xe theo nhu cầu thực tế.</p></section>
       <RoutesDirectory routes={routes} />
+      <SiteFooter placement="routes_directory" />
     </main>
   );
 }

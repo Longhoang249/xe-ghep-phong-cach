@@ -4,6 +4,7 @@ import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import MoneyLandingPage from "@/components/MoneyLandingPage";
 import RouteViewTracker from "@/components/RouteViewTracker";
+import SiteFooter from "@/components/SiteFooter";
 import TrackedLink from "@/components/TrackedLink";
 import { blogPostForSlug, blogPosts } from "@/data/blog-posts";
 import { moneyPageLayoutForRoute } from "@/data/seo/money-page-layouts";
@@ -241,6 +242,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           phoneDisplay={siteConfig.phoneDisplay}
           zaloUrl={zaloUrl}
         />
+        <SiteFooter placement="money_page" />
       </main>
     );
   }
@@ -406,6 +408,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         <Link href={upgrade.support.href}>{upgrade.support.cta ?? "Đọc bài so sánh →"}</Link>
       </section> : relatedPosts.length > 0 && <section className="related-routes"><div className="related-routes-heading"><div><span className="section-kicker">BÀI VIẾT LIÊN QUAN</span><h2>Xem thêm các tuyến Phong Cách có xe</h2></div><Link href="/blog">Vào Blog →</Link></div><div>{relatedPosts.map((item) => <Link href={`/${item.route.slug}`} key={item.route.id}><small>{item.category}</small><b>{item.route.origin} ⇄ {item.route.destination}</b><span>Đọc bài viết →</span></Link>)}</div></section>}
       {isCommercialUpgrade ? <section className="final-cta"><div><span>{upgrade.summaryTitle}</span><h2>Gọi hoặc nhắn Zalo để kiểm tra chuyến</h2><p>Gửi ngày đi, thời gian, điểm đón, điểm trả và số khách để Phong Cách xác nhận xe và giá.</p></div><div className="final-cta-actions"><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_footer", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink><TrackedLink className="btn btn-outline-white" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_footer", route_slug: route.slug }}>Nhắn Zalo</TrackedLink></div></section> : <section className="final-cta"><div><span>TUYẾN {route.origin.toUpperCase()} – {route.destination.toUpperCase()}</span><h2>Phong Cách có xe cho tuyến này</h2><p>Muốn đi, hãy gọi để bên mình kiểm tra xe phù hợp.</p></div><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_footer", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink></section>}
+      <SiteFooter placement="route_page" />
     </main>
   );
 }

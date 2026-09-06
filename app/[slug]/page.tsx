@@ -11,6 +11,7 @@ import { moneyPageLayoutForRoute } from "@/data/seo/money-page-layouts";
 import { moneyPageUpgradeForRoute } from "@/data/seo/money-page-upgrades.mjs";
 import { routeEvidenceByDataKey } from "@/data/seo/route-evidence.mjs";
 import { publicEvidenceValue, publicPricePresentation } from "@/lib/seo/publication.mjs";
+import { publishedGuidePosts as guidePosts } from "@/data/seo/published-content";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -71,6 +72,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
   const relatedPosts = blogPosts
     .filter((item) => item.route.id !== route.id && item.route.region === route.region)
     .slice(0, 3);
+  const companionGuide = guidePosts.find((item) => item.routeSlug === route.slug);
   const routeEvidence = routeEvidenceByDataKey[route.id as keyof typeof routeEvidenceByDataKey];
   const legacyPublicSharedPrice = route.id === "hd-pt" ? route.sharedPrice : null;
   const publicSeoPrice = publicEvidenceValue(routeEvidence?.price) ?? legacyPublicSharedPrice;
@@ -403,10 +405,20 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         </div>
         <div className="faq"><span className="section-kicker">CÂU HỎI THƯỜNG GẶP</span><h2>Thông tin cần biết</h2>{faq.map((item) => <details key={item.q}><summary>{item.q}<span>＋</span></summary><p>{item.a}</p></details>)}</div>
       </section>
-      {isCommercialUpgrade ? <section className="route-supporting-content">
-        <div><span className="section-kicker">{upgrade.support.kicker ?? "BÀI SO SÁNH LIÊN QUAN"}</span><h2>{upgrade.support.label}</h2><p>{upgrade.support.copy}</p></div>
-        <Link href={upgrade.support.href}>{upgrade.support.cta ?? "Đọc bài so sánh →"}</Link>
-      </section> : relatedPosts.length > 0 && <section className="related-routes"><div className="related-routes-heading"><div><span className="section-kicker">BÀI VIẾT LIÊN QUAN</span><h2>Xem thêm các tuyến Phong Cách có xe</h2></div><Link href="/blog">Vào Blog →</Link></div><div>{relatedPosts.map((item) => <Link href={`/${item.route.slug}`} key={item.route.id}><small>{item.category}</small><b>{item.route.origin} ⇄ {item.route.destination}</b><span>Đọc bài viết →</span></Link>)}</div></section>}
+      {isCommercialUpgrade ? (
+        <section className="route-supporting-content">
+          <div><span className="section-kicker">{upgrade.support.kicker ?? "BÀI SO SÁNH LIÊN QUAN"}</span><h2>{upgrade.support.label}</h2><p>{upgrade.support.copy}</p></div>
+          <Link href={upgrade.support.href}>{upgrade.support.cta ?? "Đọc bài so sánh →"}</Link>
+        </section>
+      ) : companionGuide ? (
+        <section className="route-supporting-content">
+          <div><span className="section-kicker">CẨM NANG SO SÁNH PHƯƠNG TIỆN</span><h2>{companionGuide.title}</h2><p>{companionGuide.directAnswer}</p></div>
+          <Link href={`/blog/${companionGuide.slug}`}>Đọc bài so sánh chi tiết →</Link>
+        </section>
+      ) : null}
+      {!isCommercialUpgrade && relatedPosts.length > 0 && (
+        <section className="related-routes"><div className="related-routes-heading"><div><span className="section-kicker">BÀI VIẾT LIÊN QUAN</span><h2>Xem thêm các tuyến Phong Cách có xe</h2></div><Link href="/blog">Vào Blog →</Link></div><div>{relatedPosts.map((item) => <Link href={`/${item.route.slug}`} key={item.route.id}><small>{item.category}</small><b>{item.route.origin} ⇄ {item.route.destination}</b><span>Đọc bài viết →</span></Link>)}</div></section>
+      )}
       {isCommercialUpgrade ? <section className="final-cta"><div><span>{upgrade.summaryTitle}</span><h2>Gọi hoặc nhắn Zalo để kiểm tra chuyến</h2><p>Gửi ngày đi, thời gian, điểm đón, điểm trả và số khách để Phong Cách xác nhận xe và giá.</p></div><div className="final-cta-actions"><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_footer", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink><TrackedLink className="btn btn-outline-white" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_footer", route_slug: route.slug }}>Nhắn Zalo</TrackedLink></div></section> : <section className="final-cta"><div><span>TUYẾN {route.origin.toUpperCase()} – {route.destination.toUpperCase()}</span><h2>Phong Cách có xe cho tuyến này</h2><p>Muốn đi, hãy gọi để bên mình kiểm tra xe phù hợp.</p></div><TrackedLink className="btn btn-white" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_footer", route_slug: route.slug }}>☎ Gọi {siteConfig.phoneDisplay}</TrackedLink></section>}
       <SiteFooter placement="route_page" />
     </main>

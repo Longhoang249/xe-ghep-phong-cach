@@ -124,9 +124,9 @@ export const guidePosts: GuidePost[] = [
     secondaryKeywords: ["xe Hải Dương đi Quảng Ninh", "nhà xe Hải Dương Quảng Ninh", "xe ghép Hải Dương Quảng Ninh"],
     directAnswer: "Nếu dùng được bến hoặc điểm hẹn của nhà xe, hãy kiểm tra xe khách theo đúng điểm đến. Nếu ưu tiên đón tận nơi, trả tận nơi, xe ghép phù hợp với khách lẻ; nhóm muốn đi riêng nên cân nhắc bao xe. Quảng Ninh có nhiều điểm đến cách xa nhau, vì vậy phải so sánh theo đúng endpoint thay vì xem cả tỉnh là một điểm.",
     image: {
-      src: "/images/dich-vu-xe-7-cho.png",
-      alt: "Dịch vụ xe 7 chỗ đón trả tận nơi tuyến Hải Dương đi các điểm Quảng Ninh như Hạ Long Cẩm Phả Vân Đồn",
-      caption: "Dòng xe 7 chỗ tiện nghi của Phong Cách chuyên phục vụ các tuyến liên tỉnh Hải Dương ⇄ Quảng Ninh.",
+      src: "/images/xe-ghep-phong-cach-hai-duong-hai-phong-quang-ninh.jpg",
+      alt: "Xe ghép Phong Cách chuyên tuyến Hải Dương đi Hạ Long Bãi Cháy Vân Đồn Quảng Ninh đón trả tận nơi",
+      caption: "Đội xe hiện đại của Xe Ghép Phong Cách phục vụ chuyên tuyến Hải Dương ⇄ Quảng Ninh đưa đón tận nơi 24/7.",
     },
     choices: [
       { title: "Xe khách / limousine", bestFor: "Ưu tiên chuyến công bố", description: "Tìm theo đúng điểm đến, sau đó kiểm tra lại lịch, giá và điểm đón trả với đơn vị khai thác." },
@@ -180,9 +180,9 @@ export const guidePosts: GuidePost[] = [
     secondaryKeywords: ["xe Hải Dương đi Hải Phòng", "phương tiện Hải Dương Hải Phòng", "xe ghép Hải Dương Hải Phòng"],
     directAnswer: "Xe khách phù hợp khi bạn dùng được bến hoặc điểm hẹn; xe ghép hợp với khách lẻ muốn trao đổi đón trả tận nơi. Nhóm gia đình hoặc người muốn đi riêng nên so sánh bao xe với tự lái. Đừng chọn chỉ theo giá vé: hãy tính cả chặng ra điểm đón, số lần đổi xe và hành lý.",
     image: {
-      src: "/images/dich-vu-xe-4-cho.png",
-      alt: "Dịch vụ xe 4 chỗ và 7 chỗ đón trả tận nhà tuyến Hải Dương Hải Phòng của Phong Cách",
-      caption: "Dịch vụ xe 4 chỗ và 7 chỗ của Xe Ghép Phong Cách phục vụ liên tục hàng ngày tuyến Hải Dương ⇄ Hải Phòng.",
+      src: "/images/xe-ghep-phong-cach-khoang-xe.jpg",
+      alt: "Khoang xe tiện nghi thoải mái của xe ghép Phong Cách tuyến Hải Dương - Hải Phòng",
+      caption: "Không gian khoang xe rộng rãi, sạch sẽ, điều hòa mát sâu trên các chuyến xe ghép Hải Dương ⇄ Hải Phòng của Phong Cách.",
     },
     choices: [
       { title: "Xe khách / limousine", bestFor: "Ưu tiên chuyến công bố", description: "Kiểm tra lịch, giá, điểm đón trả và đơn vị vận hành tại thời điểm đặt." },
@@ -288,9 +288,9 @@ export const guidePosts: GuidePost[] = [
     secondaryKeywords: ["xe khách Hải Dương Hà Nội", "xe ghép Hải Dương Hà Nội", "nên đi xe ghép hay xe khách"],
     directAnswer: "Xe khách có giá vé rẻ (60.000đ - 90.000đ) nhưng chỉ đón trả tại bến xe cố định, bạn phải tự tốn thêm tiền xe ôm/taxi hai đầu và xách vác đồ đạc. Xe ghép đưa đón tận cửa tại Hải Dương và trả tận nơi tại Hà Nội bằng xe 4-7 chỗ sạch sẽ, chạy cao tốc 5B chỉ mất 50 - 60 phút. Nếu tính tổng chi phí trung chuyển và công sức, xe ghép là lựa chọn tiện lợi và êm ái hơn hẳn cho người đi khám bệnh, người có hành lý hoặc gia đình có con nhỏ.",
     image: {
-      src: "/images/dich-vu-xe-4-cho.png",
-      alt: "So sánh xe ghép đưa đón tận nhà và xe khách bến bãi tuyến Hải Dương Hà Nội",
-      caption: "Dịch vụ xe ô tô 4-7 chỗ đưa đón tận cửa của Xe Ghép Phong Cách giúp hành khách không phải ra bến xe đông đúc.",
+      src: "/images/xe-ghep-phong-cach-don-tan-nha.jpg",
+      alt: "Xe ghép Phong Cách đón tận nhà trả tận cửa tuyến Hải Dương - Hà Nội",
+      caption: "Dịch vụ xe đưa đón tận cửa hai đầu Hải Dương và Hà Nội của Xe Ghép Phong Cách giúp hành khách thoải mái không phải chen chúc bến bãi.",
     },
     choices: [
       { title: "Xe ghép đón tận nơi", bestFor: "Khách lẻ, người đi khám bệnh, người nhiều đồ", description: "Đón trả tận cửa hai đầu Hải Dương và các quận nội thành Hà Nội; đi cao tốc 5B êm ái." },
@@ -557,9 +557,9 @@ export const guidePosts: GuidePost[] = [
     secondaryKeywords: ["xe Hải Phòng Hải Dương", "xe ghép Hải Phòng Hải Dương", "đặt xe Hải Phòng về Hải Dương", "xe từ Hải Phòng về Hải Dương"],
     directAnswer: "Từ Hải Phòng về Hải Dương qua Quốc lộ 5 hoặc cao tốc 5B chỉ mất 40 - 60 phút (khoảng 40 - 55km). Khi đặt xe ghép (từ 250.000đ/người) hoặc bao xe 4-7 chỗ (từ 600.000đ/chuyến), bạn nên chuẩn bị địa chỉ đón cụ thể tại các quận Hải Phòng (Hồng Bàng, Ngô Quyền, Lê Chân, Hải An...) hoặc sảnh ga đến Cát Bi, điểm trả tại các huyện Hải Dương, số người và vali. Phong Cách áp dụng chính sách đón tận nơi, đặt trước 0đ cọc, thanh toán sau chuyến an toàn.",
     image: {
-      src: "/images/dich-vu-xe-4-cho.png",
+      src: "/images/xe-ghep-phong-cach-don-tan-nha.jpg",
       alt: "Xe ghép Hải Phòng về Hải Dương đón tận nơi trả tận nhà êm ái",
-      caption: "Dịch vụ xe ghép ô tô du lịch 4-7 chỗ Phong Cách phục vụ chiều Hải Phòng về Hải Dương đón trả tận cửa.",
+      caption: "Dịch vụ xe ô tô đón trả tận nhà chiều Hải Phòng về Hải Dương của Xe Ghép Phong Cách, đặt trước không cần cọc.",
     },
     choices: [
       { title: "Xe ghép Phong Cách", bestFor: "Khách lẻ 1-2 người, ít hành lý", description: "Đón tận nơi tại các quận nội thành Hải Phòng, trả tận nhà tại các huyện Hải Dương; giá từ 250.000đ." },

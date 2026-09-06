@@ -24,7 +24,7 @@ export function GET() {
     if (route.sharedPrice) parts.push(`- Giá xe ghép: từ ${new Intl.NumberFormat("vi-VN").format(route.sharedPrice)}đ/người`);
     if (route.private4Price) parts.push(`- Bao xe 4 chỗ: từ ${new Intl.NumberFormat("vi-VN").format(route.private4Price)}đ/chuyến`);
     if (route.private7Price) parts.push(`- Bao xe 7 chỗ: từ ${new Intl.NumberFormat("vi-VN").format(route.private7Price)}đ/chuyến`);
-    if (route.parcelPrice) parts.push(`- Cước gửi hàng: từ ${new Intl.NumberFormat("vi-VN").format(route.parcelPrice)}/kiện`);
+    if (route.parcelPrice) parts.push(`- Cước gửi hàng: từ ${new Intl.NumberFormat("vi-VN").format(route.parcelPrice)}đ/kiện`);
     if (route.distanceKm) parts.push(`- Cự ly ước tính: ~${route.distanceKm} km`);
     if (route.durationMinutes) parts.push(`- Thời gian di chuyển: ~${route.durationMinutes} phút`);
     parts.push(`- Đặt trước: 0đ cọc, gọi hoặc Zalo hotline ${siteConfig.phoneDisplay} trước 30-60 phút.\n`);

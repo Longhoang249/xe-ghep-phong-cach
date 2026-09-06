@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { absoluteUrl, siteConfig } from "@/lib/site";
+import MobileContactBar from "@/components/MobileContactBar";
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="vi" className={`${beVietnam.variable} ${manrope.variable}`}>
       <body>
         {children}
+        <MobileContactBar />
         <Analytics />
         <SpeedInsights />
       </body>

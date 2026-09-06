@@ -1851,3 +1851,108 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
     box-shadow: 0 0 0 0 rgba(0, 183, 179, 0);
   }
 }
+
+/* ==========================================================================
+   Mobile Sticky Bottom Contact Bar (High-Conversion UX)
+   ========================================================================== */
+.mobile-contact-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(18, 53, 87, 0.12);
+  box-shadow: 0 -4px 20px rgba(18, 53, 87, 0.14);
+  padding: 8px 12px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+
+.mobile-contact-bar-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.mobile-bar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-family: var(--font-heading), sans-serif;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  user-select: none;
+}
+
+.mobile-bar-btn:active {
+  transform: scale(0.97);
+}
+
+.mobile-bar-call {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.38);
+}
+
+.mobile-bar-zalo {
+  background: linear-gradient(135deg, #0068ff 0%, #1e88e5 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 104, 255, 0.38);
+}
+
+.mobile-bar-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.mobile-bar-copy small {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.92;
+  text-transform: uppercase;
+}
+
+.mobile-bar-copy strong {
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.mobile-bar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@keyframes pulsePhoneIcon {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+.mobile-bar-icon.pulse {
+  animation: pulsePhoneIcon 1.8s infinite ease-in-out;
+}
+
+@media (min-width: 769px) {
+  .mobile-contact-bar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 72px;
+  }
+}
+

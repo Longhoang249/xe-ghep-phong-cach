@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { normalizeBookingPricePayload } from "@/lib/booking-pricing.mjs";
 import { getRequestId, logServerEvent } from "@/lib/server-logging";
+import { sendEmailAlert } from "@/lib/booking-email";
 
 async function sendTelegramAlert(booking: Record<string, unknown>) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -62,8 +63,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, error: "INVALID_BOOKING" }, { status: 400 });
     }
 
-    // Gửi thông báo Telegram tức thì tới chủ xe
-    await sendTelegramAlert(booking);
+    // Gửi thông báo tức thì tới chủ xe (Telegram + Email)
+    await Promise.allSettled([
+      sendTelegramAlert(booking),
+      sendEmailAlert(booking),
+    ]);
 
     const url = process.env.SUPABASE_URL;
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY;

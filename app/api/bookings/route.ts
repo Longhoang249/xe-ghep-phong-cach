@@ -33,6 +33,7 @@ async function sendTelegramAlert(booking: Record<string, unknown>) {
     `💰 *Giá dự kiến*: ${price}`,
     `━━━━━━━━━━━━━━━━━━━━`,
     cleanPhone ? `👉 *BẤM GỌI CHO KHÁCH*: tel:${cleanPhone}` : null,
+    cleanPhone ? `💬 *MỞ ZALO CHÁT VỚI KHÁCH*: https://zalo.me/${cleanPhone}` : null,
   ].filter(Boolean).join("\n");
 
   try {

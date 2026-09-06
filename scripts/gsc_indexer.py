@@ -14,20 +14,23 @@ def inspect_and_request(target_url):
     print(f"-> {target_url}")
     print(f"==========================================")
     
-    # 1. Focus search bar by activating "Kiểm tra URL"
-    print("[1/4] Focusing GSC inspection bar...")
+    # 1. Reset to GSC overview page to ensure clean search bar state
+    print("[1/4] Resetting to GSC overview & focusing search bar...")
     focus_script = '''
-    set the clipboard to "Kiểm tra URL"
     tell application "Google Chrome"
         repeat with w in windows
-            if title of active tab of w contains "Kiểm tra URL" or title of active tab of w contains "Search Console" then
-                set index of w to 1
-                activate
-                exit repeat
-            end if
+            repeat with t in tabs of w
+                if url of t contains "search.google.com" then
+                    set url of t to "https://search.google.com/u/4/search-console?resource_id=sc-domain:xeghepphongcach.com"
+                    set index of w to 1
+                    activate
+                    exit repeat
+                end if
+            end repeat
         end repeat
     end tell
-    delay 0.3
+    delay 2.5
+    set the clipboard to "Kiểm tra URL"
     tell application "System Events"
         tell process "Google Chrome"
             keystroke "f" using {command down}

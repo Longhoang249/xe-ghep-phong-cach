@@ -25,11 +25,11 @@ const featuredProvinces = new Set(["Hải Dương", "Hải Phòng", "Quảng Nin
 const provinceShortcutOrder = ["Hải Dương", "Hải Phòng", "Quảng Ninh", "Hà Nội", "Bắc Ninh", "Bắc Giang", "Thái Nguyên", "Vĩnh Phúc", "Phú Thọ", "Thái Bình", "Nam Định", "Hưng Yên", "Hà Nam", "Ninh Bình", "Thanh Hoá"];
 const provinceShortcutRank = new Map(provinceShortcutOrder.map((province, index) => [province, index]));
 const heroSlides = [
-  { src: "/images/xe-ghep-phong-cach-hai-duong-hai-phong-quang-ninh.jpg", alt: "Xe Ghép Phong Cách chuyên tuyến Hải Dương - Hải Phòng - Quảng Ninh", fit: "cover" as const, position: "center" },
-  { src: "/images/xe-ghep-phong-cach-khoang-xe.jpg", alt: "Khoang xe tiện nghi, êm ái của Xe Ghép Phong Cách", fit: "cover" as const, position: "center" },
-  { src: "/images/xe-ghep-phong-cach-don-tan-nha.jpg", alt: "Xe Ghép Phong Cách đón tận nhà, trả tận nơi 2 chiều", fit: "cover" as const, position: "center" },
-  { src: "/images/hero-xe-ghep-phong-cach.png", alt: "Xe Ghép Phong Cách chuyên tuyến Hải Dương, Hải Phòng và Quảng Ninh", fit: "contain" as const, position: "center" },
+  { src: "/images/hero-xe-ghep-phong-cach.png", alt: "Xe Ghép Phong Cách chuyên tuyến Hải Dương, Hải Phòng và Quảng Ninh", fit: "cover" as const, position: "center" },
   { src: "/images/hero-phong-cach-fleet.png", alt: "Đội xe 4 đến 7 chỗ phục vụ các tuyến liên tỉnh của Phong Cách", fit: "cover" as const, position: "center 62%" },
+  { src: "/images/xe-ghep-phong-cach-khoang-xe.jpg", alt: "Khoang xe tiện nghi, êm ái của Xe Ghép Phong Cách", fit: "cover" as const, position: "center" },
+  { src: "/images/hero-phong-cach.jpg", alt: "Xe du lịch đời mới di chuyển êm ái trên các tuyến liên tỉnh", fit: "cover" as const, position: "center" },
+  { src: "/images/don-tan-noi.jpg", alt: "Tài xế Phong Cách đón tận nơi và hỗ trợ hành lý chu đáo", fit: "cover" as const, position: "55% center" },
 ];
 
 type Props = { routes: RoutePrice[] };
@@ -288,7 +288,7 @@ export default function BookingExperience({ routes }: Props) {
       <section className="section services" id="dich-vu">
         <div className="section-heading centered services-heading"><div><span className="section-kicker">DI CHUYỂN AN TÂM</span><h2>Xe Ghép Phong Cách Liên Tỉnh</h2><p><span>Chuyên tuyến Hải Dương - Hải Phòng - Quảng Ninh</span><span>Dịch vụ chuyên nghiệp, giá cả hợp lý</span></p></div></div>
         <div className="service-showcase">
-          <div className="service-showcase-photo campaign-photo"><Image src="/images/xe-ghep-phong-cach-hai-duong-hai-phong-quang-ninh.jpg" alt="Dịch vụ xe ghép Phong Cách chuyên tuyến Hải Dương, Hải Phòng, Quảng Ninh đón trả tận nơi" fill sizes="(max-width: 700px) 100vw, 54vw" /></div>
+          <div className="service-showcase-photo"><Image src="/images/hero-phong-cach.jpg" alt="Dịch vụ xe ghép Phong Cách chuyên tuyến Hải Dương, Hải Phòng, Quảng Ninh đón trả tận nơi" fill sizes="(max-width: 700px) 100vw, 54vw" /></div>
           <div className="service-showcase-copy"><span>XE GHÉP LIÊN TỈNH MIỀN BẮC</span><h3>Dịch vụ xe ghép Hải Dương, Hải Phòng, Quảng Ninh tiếp nhận yêu cầu đưa đón 2 chiều tận nơi.</h3><div className="care-points"><b>✓ Kiểm tra xe theo yêu cầu</b><b>✓ Xác nhận giờ đón trước chuyến</b><b>✓ Thống nhất điểm đón và trả</b></div></div>
         </div>
         <div className="service-grid"><Service image="/images/dich-vu-xe-4-cho.png" position="center 58%" label="01" title="Xe 4 chỗ" text="Gọn gàng, linh hoạt cho 1–3 khách và hành lý vừa phải." /><Service image="/images/dich-vu-xe-7-cho.png" position="center 58%" label="02" title="Xe 7 chỗ" text="Thoải mái hơn cho gia đình hoặc nhóm từ 4–6 khách." /><Service image="/images/don-tan-noi.jpg" position="55% center" label="03" title="Bao xe riêng" text="Chủ động giờ đón, không gian riêng và lịch trình theo nhu cầu." /><Service image="/images/gui-hang-theo-chuyen.png" position="center 54%" label="04" title="Gửi hàng theo chuyến" text="Nhận gửi hàng gọn nhẹ trên các tuyến liên tỉnh đang hoạt động." /></div>

@@ -340,8 +340,7 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
   .services-heading p { gap:3px; font-size:12px; }
   .hero-photo>img { object-position:59% center; }
   .hero-service-pill { right:10px; bottom:10px; padding:8px 10px; }
-  .service-showcase-photo { min-height:calc(100vw - 36px); }
-  .service-showcase-photo.campaign-photo img { object-position:center; }
+  .service-showcase-photo { min-height:240px; }
   .compact-booking { padding:18px 16px 14px!important; }
   .compact-booking .booking-head h2 { max-width:260px; font-size:19px; line-height:1.2; }
   .compact-booking .booking-head p { font-size:9px; }
@@ -714,7 +713,7 @@ h1,h2,h3,.brand strong,.btn,.submit-button { font-family:var(--font-heading),"Be
 .route-result-summary span { color:#405f65; font-size:12px; font-weight:700; }
 .route-result-summary+.route-corridor-block { margin-top:10px; }
 .desktop-nav { gap:24px; }
-#tuyen-xe,#dich-vu,#cam-ket,#dat-xe,#lien-he { scroll-margin-top:92px; }
+#tuyen-xe,#dich-vu,#cam-ket,#dat-xe,#lien-he { scroll-margin-top:118px; }
 .floating-contacts { position:fixed; right:16px; bottom:18px; z-index:120; display:flex; flex-direction:column; align-items:center; gap:8px; }
 .floating-contact { box-sizing:border-box; width:42px; height:42px; min-width:42px; min-height:42px; max-width:42px; max-height:42px; display:grid; place-items:center; overflow:hidden; padding:0; border:1px solid rgba(255,255,255,.8); border-radius:13px; line-height:1; box-shadow:0 9px 22px rgba(18,76,81,.2); transition:transform .18s ease,box-shadow .18s ease; }
 .floating-contact:hover { transform:translateY(-2px); box-shadow:0 16px 32px rgba(18,76,81,.28); }

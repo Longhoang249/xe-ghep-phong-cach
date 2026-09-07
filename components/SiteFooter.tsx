@@ -46,6 +46,9 @@ export default function SiteFooter({ placement = "site_footer" }: SiteFooterProp
         <TrackedLink href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement }}>
           Zalo Phong Cách
         </TrackedLink>
+        <a href={siteConfig.facebookUrl} target="_blank" rel="noopener noreferrer">
+          Facebook Nhà Xe
+        </a>
         <Link href="/lien-he">Thông tin liên hệ</Link>
       </div>
       <div>

@@ -20,6 +20,7 @@ export default function ContactPage() {
         <section className="contact-cards"><div><span>HOTLINE ĐẶT XE</span><h2>{siteConfig.phoneDisplay}</h2><p>Dùng để gọi tư vấn và xác nhận yêu cầu chuyến.</p><TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "contact_page" }}>Gọi ngay</TrackedLink></div><div><span>NHẮN ZALO</span><h2>Zalo Phong Cách</h2><p>Gửi địa chỉ, thời gian và nhu cầu để tư vấn viên kiểm tra.</p><TrackedLink className="btn btn-ghost" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "contact_page" }}>Mở Zalo</TrackedLink></div></section>
         <section><h2>Thông tin nên chuẩn bị</h2><ul><li>Điểm đón và điểm trả dự kiến.</li><li>Ngày đi, giờ muốn đón và chiều đi hoặc chiều về.</li><li>Số khách, loại xe ghép hay bao xe.</li><li>Hành lý hoặc thông tin hàng hóa nếu có.</li></ul></section>
         <section><h2>Khu vực phục vụ</h2><p>Phong Cách ưu tiên Hải Dương, Hải Phòng và Quảng Ninh; đồng thời tiếp nhận yêu cầu trên các tuyến liên tỉnh đang hiển thị tại trang danh sách tuyến.</p></section>
+        <section><h2>Kênh mạng xã hội chính thức</h2><p>Theo dõi lịch trình chuyến, đánh giá thực tế và liên hệ qua Fanpage chính thức: <a href={siteConfig.facebookUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#008f90", fontWeight: 700 }}>facebook.com/xeghepphongcach →</a></p></section>
       </TrustPage>
     </>
   );

@@ -8,6 +8,7 @@ export const siteConfig = {
   phoneDisplay: "0987 663 883",
   phoneHref: "tel:+84987663883",
   zaloFallbackUrl: "https://zalo.me/0987663883",
+  facebookUrl: process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/xeghepphongcach",
   locale: "vi_VN",
   language: "vi-VN",
   contentUpdatedAt: "2026-08-21T00:00:00+07:00",
@@ -21,7 +22,7 @@ export function absoluteUrl(path = "/") {
 export function officialProfiles() {
   return [
     process.env.NEXT_PUBLIC_ZALO_URL,
-    process.env.NEXT_PUBLIC_FACEBOOK_URL,
+    siteConfig.facebookUrl,
     process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL,
   ].filter((value): value is string => Boolean(value));
 }

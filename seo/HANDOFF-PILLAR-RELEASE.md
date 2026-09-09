@@ -1,30 +1,28 @@
-# HANDOFF REPORT — PILLAR RELEASE GATE (TASK 2C)
+# HANDOFF REPORT — PILLAR RELEASE GATE (TASK 2C.1 CLOSEOUT)
 
 **Project**: Xe Ghép Phong Cách — https://xeghepphongcach.com  
 **Date**: September 9, 2026  
-**Status**: **PILLAR PHASE = RELEASED**  
-**Release Commit**: `9df06eb`  
-**Production Domain**: `https://xeghepphongcach.com`  
-**Vercel Production Deployment**: `https://xe-ghep-phong-cach-phpnc4rmv-longhoang249s-projects.vercel.app`  
-**Vercel Inspect**: `https://vercel.com/longhoang249s-projects/xe-ghep-phong-cach/C9w5hvzo6Va7HjKBn6ybtYcoxumY`  
+**Status**: **PILLAR PHASE = CLOSED (READY FOR TASK 3A)**  
 
 ---
 
-## 1. Executive Summary
+## 1. Release Commit & Deployment Metadata
 
-Task 2C officially marks the completion and release of both foundational Pillar Money Pages for the Xe Ghép Phong Cách organic search cluster:
-1. `/xe-ghep-hai-duong-hai-phong` (Gold Standard Template)
-2. `/xe-ghep-hai-duong-quang-ninh` (High-Volume Secondary Pillar)
+To prevent confusion and ensure rollback safety, release commits are strictly disambiguated:
 
-Both pages have successfully passed every engineering, factual, architectural, administrative, and real browser verification gate directly on the live production environment (`https://xeghepphongcach.com`) via Google Chrome Blink remote debugging (CDP).
-
-Zero synthetic HTML was used in the final qualification tests; every DOM inspection, viewport measurement, network check, schema parse, and screenshot was executed against the authentic production Next.js application bundle.
+| Metadata Field | Value / Identifier | Notes |
+| :--- | :--- | :--- |
+| **PRODUCTION_CODE_COMMIT** | `9df06ebc3d1461049d13924f915c3014adb169c5` (`9df06eb`) | The exact git commit containing application code running live on `xeghepphongcach.com` |
+| **PRODUCTION_DEPLOYMENT** | `https://xe-ghep-phong-cach-phpnc4rmv-longhoang249s-projects.vercel.app` | Vercel production deployment aliased to `https://xeghepphongcach.com` |
+| **PRODUCTION_INSPECT** | `https://vercel.com/longhoang249s-projects/xe-ghep-phong-cach/C9w5hvzo6Va7HjKBn6ybtYcoxumY` | Vercel build & inspect log URI |
+| **DOCUMENTATION_COMMIT** | `17cf96ccb44a3f2c19802943e5e57c1b38570348` (`17cf96c`) | Added initial Pillar Release Gate handoff report |
+| **SCREENSHOT_COMMIT** | `3c0ac34fbb91a9f7516adfa62f1b8e123f5e509d` (`3c0ac34`) | Refreshed live production Chrome CDP screenshots |
 
 ---
 
 ## 2. Pillar Route Summary & Deliverables
 
-| Attribute | Hải Dương ⇄ Hải Phòng | Hải Dương ⇄ Quảng Ninh |
+| Attribute | Hải Dương ⇄ Hải Phòng (`MP-003`) | Hải Dương ⇄ Quảng Ninh (`MP-005`) |
 | :--- | :--- | :--- |
 | **Live Production URL** | `https://xeghepphongcach.com/xe-ghep-hai-duong-hai-phong` | `https://xeghepphongcach.com/xe-ghep-hai-duong-quang-ninh` |
 | **Canonical URL** | `https://xeghepphongcach.com/xe-ghep-hai-duong-hai-phong` | `https://xeghepphongcach.com/xe-ghep-hai-duong-quang-ninh` |
@@ -33,91 +31,83 @@ Zero synthetic HTML was used in the final qualification tests; every DOM inspect
 | **H1 Tag** | `Xe ghép Hải Dương - Hải Phòng` | `Xe ghép Hải Dương - Quảng Ninh` |
 | **Starting Fare** | Từ 250.000đ/người | Từ 250.000đ/người |
 | **Pricing Endpoints** | Exactly 11 endpoints | Exactly 16 endpoints |
-| **Endpoint Fare Range** | Ghép: 250.000đ - 300.000đ<br>Bao xe: 500.000đ - 10.000đ/km | Ghép: 250.000đ - 700.000đ<br>Bao xe: 600.000đ - Liên hệ |
+| **HP Price Summary** | **Xe ghép**: `250.000đ – 400.000đ` tùy điểm đến (Đồ Sơn, Cát Hải đạt 350k–400k).<br>**Bao xe**: Giá theo điểm đến (cố định hoặc khoảng giá 500k–700k); riêng Tiên Lãng và Vĩnh Bảo áp dụng `10.000đ/km`. | — |
+| **QN Price Summary** | — | **Xe ghép**: `250.000đ – 700.000đ` tùy điểm đến.<br>**Bao xe**: Giá theo điểm đến (600k–1.500k); riêng Đông Triều, Mạo Khê tính `10.000đ/km`; 8 điểm đến xa giữ `Liên hệ` (`UNKNOWN`). |
 | **Toll Fee Policy** | `tollIncluded: false` (Chưa gồm vé cầu đường cao tốc) | `tollIncluded: false` (Chưa gồm vé cầu đường cao tốc) |
-| **Parcel Delivery Policy**| Nhận gửi theo chuyến từ 150.000đ/kiện | Nhận gửi theo chuyến từ 150.000đ/kiện |
+| **Parcel Delivery Policy**| Nhận gửi theo chuyến từ `150.000đ` (kế thừa Phase 1, tùy loại hàng, kích thước, nơi nhận) | Nhận gửi theo chuyến, khoảng `150.000 – 200.000đ trở lên`, tùy điểm đến và hàng hóa cụ thể (theo nguồn 09/09) |
 | **Canonical Contact** | Hotline: `0987 663 883` \| Zalo: `0987 663 883` | Hotline: `0987 663 883` \| Zalo: `0987 663 883` |
 | **Booking CTA Link** | `/?from=Hải Dương&to=Hải Phòng#dat-xe` | `/?from=Hải Dương&to=Quảng Ninh#dat-xe` |
 | **Schema Types** | `Service`, `BreadcrumbList` (FAQPage REMOVED) | `Service`, `BreadcrumbList` (FAQPage REMOVED) |
-| **Administrative Boundary**| Neutral 2026 terminology (Khu vực...) | Neutral 2026 terminology (Khu vực...) |
-| **Factual Integrity** | 0 unverified claims (CLM-01 to CLM-10 PASS) | 0 unverified claims (CLM-01 to CLM-10 PASS) |
+| **Administrative Boundary**| Neutral 2026 terminology (`Khu vực...`) | Neutral 2026 terminology (`Khu vực...`) |
+| **Fact Ledger Coverage** | **37 material claims audited** (100% accounted for, 0 unknown) | **45 material claims audited** (100% accounted for, 0 unknown) |
 
 ---
 
-## 3. Price Source Precedence Policy Lock
+## 3. Verified Source IDs & Governance Audit
 
-The permanent precedence rule is locked in `seo/PRICE_SOURCE_PRECEDENCE.md` and enforced by automated tests in `tests/price-source-precedence.test.mjs`:
+### Invalid / Synthetic Source IDs Removed
+The synthetic provenance names `owner_corridor_2026_03_14` and `owner_interview_2026_09_09` have been **COMPLETELY AUDITED AND REMOVED**. They were AI-generated descriptive aliases that did not map to any underlying physical artifact on disk.
 
-```
-TIER 1: LATEST VERIFIED ENDPOINT-SPECIFIC SOURCE (owner_price_sheet_2026_09_09)
-         ⬇ (overrides)
-TIER 2: OLDER CORRIDOR-LEVEL VERIFIED SOURCE (owner_corridor_2026_03_14)
-         ⬇ (overrides)
-TIER 3: LEGACY IMPLEMENTATION DATA (data/routes.ts base fares)
-         ⬇ (overrides)
-TIER 4: UNKNOWN / DATA_REQUIRED (strict contact fallback)
-```
+### Canonical Verified First-Party Source Records
 
-### Critical Policy Decisions Enforced:
-1. **Quảng Ninh Commercial Cards (UI Cleanliness)**:
-   - Because `owner_price_sheet_2026_09_09` defines specific bao xe rates per endpoint (600k Uông Bí, 1.000k Hạ Long, 1.200k Cẩm Phả, 1.500k Vân Đồn) rather than flat 4-seat/7-seat rates, public summary cards do NOT display legacy 900k/1.1m rates.
-   - Instead, the UI displays `"Bao xe theo chuyến"`: `"Giá theo điểm đến"` and points directly to the 16-endpoint detailed table.
-2. **Toll Fee Transparency**:
-   - Every private car record is explicitly marked `tollIncluded: false`.
-   - Clear footnote: `* Giá bao xe chưa bao gồm vé cầu đường cao tốc (nếu quý khách chọn đi cao tốc)`.
-3. **Parcel Rate Range**:
-   - Fixed promises (e.g. 2-3h delivery SLA or flat 150k for all sizes) are eliminated.
-   - Qualified statement: `Từ 150.000đ/kiện tùy kích thước, khối lượng và điểm giao nhận thực tế`.
+| Source ID | Artifact Path on Disk | Source Owner | Verified Date | Facts Supported |
+| :--- | :--- | :--- | :--- | :--- |
+| **`owner_price_sheet_2026_09_09`** | `seo/pricing-source.md` (implemented in `data/seo/pricing-engine.ts`) | Chủ nhà xe Phong Cách | `2026-09-09` | - **11 điểm đến Hải Phòng**: Ghép 250k–400k (Đồ Sơn/Cát Hải 350k–400k); Bao xe 500k–700k; Tiên Lãng & Vĩnh Bảo 10k/km.<br>- **16 điểm đến Quảng Ninh**: Ghép 250k–700k; Bao xe 600k–1.500k; Đông Triều & Mạo Khê 10k/km; 8 điểm xa để `Liên hệ` (`UNKNOWN`).<br>- **Vé cao tốc bao xe**: `tollIncluded: false` cho mọi chuyến bao xe.<br>- **Cước gửi hàng Quảng Ninh**: Khoảng `150.000 – 200.000đ trở lên`, tùy điểm đến và hàng hóa cụ thể. |
+| **`OWNER_VERIFICATION_RECORD_PHASE1.md`** | `OWNER_VERIFICATION_RECORD_PHASE1.md` | Chủ nhà xe Phong Cách | `2026-08-22` | - **Hành lang khởi điểm**: Xe ghép từ 250k; gửi hàng từ 150k (Hải Phòng).<br>- **Cam kết dịch vụ**: Đón trả tận nơi hai chiều; phục vụ xe gia đình 4–7 chỗ; đặt trước không mất phí, thanh toán sau chuyến đi.<br>- **Ranh giới cấm**: Cấm tự suy diễn giờ chạy cố định, tần suất xe/ngày, lead time đón khách, chính sách bảo dưỡng hay SLA hỏa tốc 2-3h. |
+
+> Implementation files such as `data/routes.ts` or `data/seo/pricing-engine.ts` are technical storage files and are **NOT** evidence sources.
 
 ---
 
-## 4. Factual Audit & Provenance Separation
+## 4. Complete Fact Ledger Reference
 
-In previous iterations, factual claims had two issues:
-1. Conflating **Provenance** (Evidence Source: *why trusted*) with **Implementation Storage** (*where stored in codebase*).
-2. Introducing operational promises beyond verified owner records.
+Every factual statement published across both pillar pages has been mapped to its comprehensive ledger.
 
-### Resolved in Release Gate:
-- **Evidence Source vs Storage**:
-  - `Evidence Source`: `owner_price_sheet_2026_09_09` / `owner_corridor_2026_03_14` / `owner_interview_2026_09_09`.
-  - `Storage Path`: `data/seo/pricing-engine.ts`, `data/seo/hd-hp-gold-content.ts`, `data/seo/hd-qn-gold-content.ts`.
-- **Scrubbed Operational Claims**:
-  - "0đ cọc" ➔ "Đặt trước không mất phí - thanh toán sau chuyến".
-  - "Giao nhận 2-3h hỏa tốc" ➔ "Gửi hàng theo chuyến xe chạy hàng ngày".
-  - "100% không khói thuốc" ➔ "Xe vệ sinh sạch sẽ, ưu tiên không gian thông thoáng".
-  - "Đúng số ghế quy định" ➔ "Bố trí ghế ngồi hợp lý theo thỏa thuận".
-  - "Tài xế bốc xếp hành lý tận nơi" ➔ "Hỗ trợ sắp xếp hành lý gọn gàng vào cốp".
-  - Outdated administrative designations (`thị xã Quảng Yên`, `thành phố Uông Bí`, `huyện Vân Đồn`) ➔ Neutral geographic labels (`Khu vực Quảng Yên`, `Khu vực Uông Bí`, `Khu vực Vân Đồn`).
+### Hải Phòng Fact Ledger (`seo/facts/xe-ghep-hai-duong-hai-phong-fact-ledger.md`)
+- **HP material claims audited**: **37** (CLM-01 to CLM-37)
+  - Verified first-party: 19
+  - Verified external fact: 3 (CLM-16 cự ly, CLM-26 trục giao thông QL5/CT04, CLM-28 địa chỉ bệnh viện/KCN/sân bay)
+  - Legacy geographic label / Search language: 1 (CLM-22 11 khu vực theo Nghị quyết 76/2025/UBTVQH15)
+  - Estimate with source: 6 (CLM-13, CLM-17, CLM-21, CLM-27, CLM-36, CLM-37)
+  - Removed unsupported claims: 8 (CLM-11 giờ chạy cố định, CLM-15 lead time 30-60p, CLM-18 tần suất liên tục, CLM-29 xe không hút thuốc, CLM-30 dung sai 10-15p, CLM-31 SLA hỏa tốc 2-3h, CLM-32 xe đời mới 2022-2025, CLM-33 100% không mùi say xe)
+- **Unknown remaining**: **0**
+
+### Quảng Ninh Fact Ledger (`seo/facts/xe-ghep-hai-duong-quang-ninh-fact-ledger.md`)
+- **QN material claims audited**: **45** (CLM-01 to CLM-45)
+  - Verified first-party: 28
+  - Verified external fact: 7 (CLM-14 trục đường QL18/CT06, CLM-18 cự ly, CLM-28 địa lý, CLM-29 lộ trình, CLM-31 cầu Bạch Đằng, CLM-34 điểm đón, CLM-36 so sánh chi phí)
+  - Estimate with source: 5 (CLM-15, CLM-19, CLM-27, CLM-33, CLM-37)
+  - Customer guidance: 5 (CLM-17 liên hệ trước, CLM-30 tư vấn chọn xe, CLM-32 thông báo giờ tàu/bay, CLM-35 hành trình riêng, CLM-38 trao đổi hành lý trước)
+  - Removed unsupported promises: 11 (CLM-08 sửa giá 800k, CLM-11 giờ chạy, CLM-26 suy diễn trọn gói BOT vé ghép, CLM-38 quy định 1 vali 1 túi, CLM-39 dừng nghỉ bất kỳ lúc nào, CLM-40 chu đáo mẹ và bé, CLM-41 chuyên gia công nhân, CLM-42 hỗ trợ bốc xếp hành lý, CLM-43 suy luận đảo ngược BOT, CLM-44 căn giờ chính xác, CLM-45 xuất phát ngay/tiết kiệm 45-60p)
+- **Unknown remaining**: **0**
 
 ---
 
 ## 5. Live Production Browser QA Verification
 
-Testing was conducted using real Google Chrome (Blink engine) via Chrome DevTools Protocol (`scripts/qa-live-route.mjs`) hitting `https://xeghepphongcach.com` directly.
+Testing was executed on Google Chrome (Blink engine) via Chrome DevTools Protocol (`scripts/qa-live-route.mjs`) directly inspecting `https://xeghepphongcach.com` (ZERO synthetic HTML generation).
 
-### Verification Results Summary:
-
-| Check | Hải Dương ⇄ Hải Phòng | Hải Dương ⇄ Quảng Ninh | Status |
+| Check Dimension | Hải Dương ⇄ Hải Phòng | Hải Dương ⇄ Quảng Ninh | Status |
 | :--- | :--- | :--- | :--- |
-| **HTTP Status** | 200 OK | 200 OK | **PASS** |
-| **Canonical Tag** | `https://xeghepphongcach.com/xe-ghep-hai-duong-hai-phong` | `https://xeghepphongcach.com/xe-ghep-hai-duong-quang-ninh` | **PASS** |
+| **HTTP Status Code** | 200 OK | 200 OK | **PASS** |
+| **Canonical Header/Tag** | `https://xeghepphongcach.com/xe-ghep-hai-duong-hai-phong` | `https://xeghepphongcach.com/xe-ghep-hai-duong-quang-ninh` | **PASS** |
 | **Meta Robots** | `index, follow` | `index, follow` | **PASS** |
-| **H1 Heading** | `Xe ghép Hải Dương - Hải Phòng` | `Xe ghép Hải Dương - Quảng Ninh` | **PASS** |
-| **Hero Price** | `Từ 250.000đ/người` | `Từ 250.000đ/người` | **PASS** |
-| **Table Rows** | Exactly 11 rows in `pricingTable` | Exactly 16 rows in `pricingTable` | **PASS** |
-| **Sample Endpoint Verification** | Trung tâm (250k/500k)<br>Cát Bi (300k/550k)<br>Tiên Lãng (300k/10k/km) | Đông Triều (250k/10k/km)<br>Uông Bí (300k/600k)<br>Hạ Long (400k/1.000k)<br>Cẩm Phả (450k/1.2m-1.3m)<br>Vân Đồn (500k/1.5m)<br>Móng Cái (700k/Liên hệ) | **PASS** |
-| **Phone CTA** | `tel:+84987663883` | `tel:+84987663883` | **PASS** |
+| **H1 Heading Tag** | `Xe ghép Hải Dương - Hải Phòng` | `Xe ghép Hải Dương - Quảng Ninh` | **PASS** |
+| **Starting Price Display** | `Từ 250.000đ/người` | `Từ 250.000đ/người` | **PASS** |
+| **Pricing Table Rows** | Exactly 11 rows in `pricingTable` | Exactly 16 rows in `pricingTable` | **PASS** |
+| **Endpoint Verification** | Trung tâm (250k/500k)<br>Cát Bi (300k/550k)<br>Tiên Lãng (300k/10k/km) | Đông Triều (250k/10k/km)<br>Uông Bí (300k/600k)<br>Hạ Long (400k/1.000k)<br>Cẩm Phả (450k/1.2m-1.3m)<br>Vân Đồn (500k/1.5m)<br>Móng Cái (700k/Liên hệ) | **PASS** |
+| **Phone CTA** | `tel:+84987663883` (calls canonical hotline) | `tel:+84987663883` (calls canonical hotline) | **PASS** |
 | **Zalo CTA** | `https://zalo.me/0987663883` | `https://zalo.me/0987663883` | **PASS** |
-| **Booking CTA** | `to=Hải Phòng#dat-xe` | `to=Quảng Ninh#dat-xe` | **PASS** |
-| **Schema: Service** | Present | Present | **PASS** |
-| **Schema: BreadcrumbList** | Present | Present | **PASS** |
+| **Booking CTA Link** | `to=Hải Phòng#dat-xe` | `to=Quảng Ninh#dat-xe` | **PASS** |
+| **Schema: Service** | Present & Valid | Present & Valid | **PASS** |
+| **Schema: BreadcrumbList** | Present & Valid | Present & Valid | **PASS** |
 | **Schema: FAQPage** | REMOVED (Deprecated) | REMOVED (Deprecated) | **PASS** |
-| **Desktop Overflow** | `scrollWidth=1425 <= clientWidth=1425` | `scrollWidth=1425 <= clientWidth=1425` | **PASS** |
-| **Mobile Overflow (390px)** | `scrollWidth=390 <= clientWidth=390` | `scrollWidth=390 <= clientWidth=390` | **PASS** |
-| **Mobile Table Scroll** | `canScroll=true`, `scrollLeft=120` | `canScroll=true`, `scrollLeft=120` | **PASS** |
-| **Touch Target Size** | `354x51px` (>= 40px standard) | `354x51px` (>= 40px standard) | **PASS** |
+| **Desktop Layout (1440x900)** | Zero horizontal overflow (`scrollWidth <= clientWidth`) | Zero horizontal overflow (`scrollWidth <= clientWidth`) | **PASS** |
+| **Mobile Layout (390x844)** | Zero page overflow (`scrollWidth = 390px`) | Zero page overflow (`scrollWidth = 390px`) | **PASS** |
+| **Mobile Table Scrolling** | `canScroll=true`, `scrollLeft=120` | `canScroll=true`, `scrollLeft=120` | **PASS** |
+| **Hero Touch Target** | `354x51px` (>= 40px standard) | `354x51px` (>= 40px standard) | **PASS** |
 
-### Live Screenshots Saved:
+### Verified Live Screenshots
 - `seo/screenshots/live-xe-ghep-hai-duong-hai-phong-desktop.png`
 - `seo/screenshots/live-xe-ghep-hai-duong-hai-phong-mobile.png`
 - `seo/screenshots/live-xe-ghep-hai-duong-quang-ninh-desktop.png`
@@ -125,49 +115,60 @@ Testing was conducted using real Google Chrome (Blink engine) via Chrome DevTool
 
 ---
 
-## 6. Search Engine Release Check
+## 6. Task 3 URL Governance & Architecture Lock
 
-- **Canonical Check**: PASS. Both pages self-canonicalize with absolute HTTPS URLs.
-- **Robots.txt Check**: PASS. `Allow: /`, `Disallow: /admin`, `Disallow: /api`, `Sitemap: https://xeghepphongcach.com/sitemap.xml`.
-- **Sitemap XML Check**: PASS. Both routes are indexed in `https://xeghepphongcach.com/sitemap.xml`.
-- **FAQPage Schema Elimination**: PASS. Zero deprecated `FAQPage` schemas found in application DOM.
-- **Google Search Console**: `GSC = NOT RUN` (No API service account or OAuth credentials configured in local environment; manual submission via Search Console URL Inspection is recommended).
+To prevent cannibalization and keep the index strictly unified, the following rules are permanently locked for all endpoint pages:
+
+1. **Mandatory Inventory Check**:
+   - Before drafting any endpoint route, the agent must inspect:
+     - `seo/url-inventory.json`
+     - `seo/content-map.json`
+2. **Upgrade Existing Canonical URLs (Zero Synonyms)**:
+   - If a URL for the intent already exists in the inventory, **UPGRADE THAT EXISTING URL**.
+   - For Sân bay Cát Bi: The existing canonical URL is **`/xe-hai-duong-cat-bi`** (Asset `MP-004`).
+   - **NEVER create**:
+     - `/xe-hai-duong-san-bay-cat-bi`
+     - `/xe-ghep-hai-duong-cat-bi`
+   - **One intent cluster = One canonical endpoint page**.
+3. **Endpoint Inventory Mapping for Task 3**:
+   - **Task 3A**: Sân bay Cát Bi ➔ Existing URL **`/xe-hai-duong-cat-bi`** (Asset `MP-004`).
+   - **Task 3B**: Hạ Long / Bãi Cháy ➔ Existing URL **`/xe-ghep-hai-duong-ha-long`** (Asset `MP-019`).
+   - **Task 3C**: Vân Đồn / Cảng Ao Tiên ➔ **`/xe-ghep-hai-duong-van-don`** (Planned in `content-map.json`).
+   - **Task 3D**: Cẩm Phả / Cửa Ông ➔ **`/xe-ghep-hai-duong-cam-pha`** (Planned in `content-map.json`).
+   - **Task 3E**: Uông Bí / Yên Tử ➔ **`/xe-ghep-hai-duong-uong-bi`** (Planned in `content-map.json`).
 
 ---
 
-## 7. Automated Test Suite Metrics
-
-- **Unit Test Suite**: `node --test tests/*.test.mjs`  
-  - Total Tests: 92 passed, 0 failed (15.5s)
-- **TypeScript Typecheck**: `npm run typecheck` (`tsc --noEmit`)  
-  - Result: Exit code 0 (0 errors)
-- **SEO Audit Linting**: `npm run seo:audit` (`scripts/seo-audit.mjs`)  
-  - Result: 100 / 100 points, 0 critical issues, 0 warnings
-
----
-
-## 8. Transition Recommendation: Task 3 (Endpoint Expansion)
-
-With both Corridor Pillars locked, tested, and released to production, the architecture is ready for **Task 3: High-Intent Endpoint Money Pages**.
-
-### Recommended Task 3 Phasing:
-1. **Task 3A — Sân bay Cát Bi (`/xe-hai-duong-san-bay-cat-bi`)**:
-   - Hai Phong cluster high-intent money query.
-   - Price verified: 300.000đ/ghế ghép, 550.000đ/bao xe.
-   - Flight-delay waiting policy & terminal drop-off focus.
-2. **Task 3B — Hạ Long / Bãi Cháy (`/xe-ghep-hai-duong-ha-long`)**:
-   - High-volume tourism & business query.
-   - Price verified: 400.000đ/ghế ghép, 1.000.000đ/bao xe.
-   - Tuan Chau & Sun World port drop-offs.
-3. **Task 3C — Vân Đồn / Cảng Ao Tiên (`/xe-ghep-hai-duong-van-don`)**:
-   - Island transit query (Co To, Quan Lan ferries).
-   - Price verified: 500.000đ/ghế ghép, 1.500.000đ/bao xe.
-4. **Task 3D — Cẩm Phả / Cửa Ông (`/xe-ghep-hai-duong-cam-pha`)**:
-   - Spiritual tourism & commercial industrial hub.
-   - Price verified: 450.000đ/ghế ghép, 1.200.000 - 1.300.000đ/bao xe.
-5. **Task 3E — Uông Bí / Yên Tử (`/xe-ghep-hai-duong-uong-bi`)**:
-   - Nearest Quang Ninh endpoint, high spiritual pilgrimage demand.
-   - Price verified: 300.000đ/ghế ghép, 600.000đ/bao xe.
+## 7. Task 3 Factual Invariant: Search Intent Does Not Prove An Operating Policy
 
 > [!IMPORTANT]
-> **Scope Guard**: Zero endpoint pages have been created during Task 2C. Awaiting explicit user approval before initiating Task 3.
+> **PERMANENT INVARIANT**:  
+> **SEARCH INTENT DOES NOT PROVE AN OPERATING POLICY.**
+
+Just because users search for "xe ghép đón sảnh ga bay" or "xe đi kịp giờ tàu đảo", the agent **MUST NOT** invent unverified operational policies.
+
+### Strictly Forbidden Inventions:
+- Flight delay waiting policy / miễn phí chờ hoãn chuyến bay.
+- Guaranteed airport arrival time / cam kết có mặt đúng giờ bay.
+- Exact waiting allowance / dung sai thời gian chờ tài xế.
+- Guaranteed ferry connection / cam kết kịp giờ tàu cao tốc ra đảo.
+- Guaranteed pickup lead time / cam kết đón sau 15–30 phút.
+- Fixed luggage limits / mỗi khách 1 vali + 1 túi.
+- Driver waiting or baggage handling SLAs.
+
+### Required Customer Guidance Pattern:
+Unless an explicit first-party verified source document exists, use neutral customer guidance:
+> *"Quý khách nên cung cấp mã chuyến bay hoặc giờ tàu khi gửi thông tin đặt xe để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp."*
+
+---
+
+## 8. Final Status & Lifecycle Transition
+
+- **Task 1 (Audit & Clean Build)**: **CLOSED**
+- **Task 2A (Hải Dương ⇄ Hải Phòng Gold Standard)**: **RELEASED**
+- **Task 2B (Hải Dương ⇄ Quảng Ninh Secondary Pillar)**: **RELEASED**
+- **Task 2C (Pillar Release Gate & Governance Patch)**: **CLOSED**
+
+**PILLAR PHASE = CLOSED**
+
+Next step upon user instruction: Initiate **Task 3A: Sân bay Cát Bi** upgrading existing canonical URL `/xe-hai-duong-cat-bi` (`MP-004`).

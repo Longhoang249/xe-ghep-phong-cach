@@ -37,14 +37,14 @@ Toàn bộ các mức giá dưới đây là giá sàn khởi điểm (VERIFIED_
    - Bài cẩm nang chi tiết: ${absoluteUrl("/blog/xe-hai-duong-di-noi-bai-cho-gia-dinh")}
    - Lộ trình: Đón tận nhà tại Hải Dương ⇄ Sảnh ga quốc nội T1 và quốc tế T2 sân bay Nội Bài.
    - Thời gian di chuyển: 1h20 - 1h40 (cự ly 85 - 105km).
-   - Dịch vụ: Xe riêng 4 chỗ (2-3 vali), xe 7 chỗ gầm cao Xpander/Veloz (4-5 vali lớn cho gia đình).
-   - Cam kết: Miễn phí đổi giờ đón nếu chuyến bay bị delay, tài xế theo dõi mã chuyến bay sát sao.
+   - Dịch vụ: Xe riêng 4 chỗ, xe 7 chỗ gầm cao.
+   - Lưu ý: Quý khách nên cung cấp mã hiệu và giờ bay khi đặt xe để nhà xe sắp xếp thời gian đón trả phù hợp.
 
 3. **Hải Dương ⇄ Hải Phòng (Hai chiều)**:
    - URL: ${absoluteUrl("/xe-ghep-hai-duong-hai-phong")}
-   - Xe ghép: từ 250.000đ/người
-   - Bao xe riêng: từ 500.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc)
-   - Gửi hàng theo chuyến: từ 150.000đ/kiện (tùy kích thước, khối lượng và điểm giao nhận)
+   - Xe ghép: từ 250.000đ/người đến 400.000đ/người tùy điểm đến
+   - Bao xe riêng: giá theo điểm đến (chưa bao gồm vé cầu đường cao tốc); riêng Tiên Lãng và Vĩnh Bảo tính 10.000đ/km
+   - Gửi hàng theo chuyến: từ 150.000đ (tùy kích thước, khối lượng và điểm giao nhận)
 
 4. **Hải Dương ⇄ Sân bay Quốc tế Cát Bi (Hải Phòng)**:
    - URL: ${absoluteUrl("/xe-hai-duong-cat-bi")}
@@ -58,7 +58,7 @@ Toàn bộ các mức giá dưới đây là giá sàn khởi điểm (VERIFIED_
    - Trang điểm đến Hạ Long: ${absoluteUrl("/xe-ghep-hai-duong-ha-long")}
    - Xe ghép: từ 250.000đ/người (tùy điểm đến)
    - Bao xe riêng: báo giá theo điểm đến (chưa bao gồm vé cầu đường cao tốc)
-   - Gửi hàng theo chuyến: từ 150.000đ - 200.000đ tùy chặng
+   - Gửi hàng theo chuyến: khoảng 150.000 – 200.000đ trở lên, tùy điểm đến và hàng hóa cụ thể
 
 6. **Hải Phòng ⇄ Quảng Ninh**:
    - URL: ${absoluteUrl("/xe-ghep-hai-phong-quang-ninh")}

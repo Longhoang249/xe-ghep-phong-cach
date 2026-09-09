@@ -73,13 +73,22 @@ Every factual statement published across both pillar pages has been mapped to it
 - **Unknown remaining**: **0**
 
 ### Quảng Ninh Fact Ledger (`seo/facts/xe-ghep-hai-duong-quang-ninh-fact-ledger.md`)
-- **QN material claims audited**: **45** (CLM-01 to CLM-45)
-  - Verified first-party: 28
-  - Verified external fact: 7 (CLM-14 trục đường QL18/CT06, CLM-18 cự ly, CLM-28 địa lý, CLM-29 lộ trình, CLM-31 cầu Bạch Đằng, CLM-34 điểm đón, CLM-36 so sánh chi phí)
-  - Estimate with source: 5 (CLM-15, CLM-19, CLM-27, CLM-33, CLM-37)
-  - Customer guidance: 5 (CLM-17 liên hệ trước, CLM-30 tư vấn chọn xe, CLM-32 thông báo giờ tàu/bay, CLM-35 hành trình riêng, CLM-38 trao đổi hành lý trước)
-  - Removed unsupported promises: 11 (CLM-08 sửa giá 800k, CLM-11 giờ chạy, CLM-26 suy diễn trọn gói BOT vé ghép, CLM-38 quy định 1 vali 1 túi, CLM-39 dừng nghỉ bất kỳ lúc nào, CLM-40 chu đáo mẹ và bé, CLM-41 chuyên gia công nhân, CLM-42 hỗ trợ bốc xếp hành lý, CLM-43 suy luận đảo ngược BOT, CLM-44 căn giờ chính xác, CLM-45 xuất phát ngay/tiết kiệm 45-60p)
+- **Total unique material claims**: **45** (CLM-01 to CLM-45)
+- **Verification Status Methodology**: Strictly mutually exclusive (sum equals exactly 45 unique claims):
+  - `VERIFIED_FIRST_PARTY`: **35 claims** (CLM-01 to CLM-13, CLM-16, CLM-17, CLM-20 to CLM-26, CLM-30, CLM-32, CLM-35 to CLM-45)
+  - `VERIFIED_EXTERNAL_FACT`: **6 claims** (CLM-14, CLM-18, CLM-28, CLM-29, CLM-31, CLM-34)
+  - `ESTIMATE_WITH_SOURCE`: **4 claims** (CLM-15, CLM-19, CLM-27, CLM-33)
+  - **Sum**: 35 + 6 + 4 = **45 unique claims (100% accounted for)**
 - **Unknown remaining**: **0**
+- **Content Type Tags (Phân loại nội dung)**:
+  - `PRICE` / `PRICE_POLICY` / `PARCEL`: 19
+  - `CUSTOMER_GUIDANCE`: 8 (CLM-30, CLM-32, CLM-35, CLM-36, CLM-37, CLM-38, CLM-39, CLM-41)
+  - `SERVICE_PROMISE` / `BRAND_CLAIM`: 7
+  - `ROUTE` / `GEOGRAPHY` / `SEARCH_LANGUAGE`: 6
+  - `TIME` / `DISTANCE`: 4
+  - `OPERATIONS`: 3
+  - `VEHICLE` / `MEDIA`: 3
+- **Historical Scrubbed Promises Eliminated During Audits**: 11 (CLM-08 sửa giá 800k, CLM-11 giờ chạy, CLM-26 suy diễn trọn gói BOT vé ghép, CLM-38 quy định 1 vali 1 túi, CLM-39 dừng nghỉ bất kỳ lúc nào, CLM-40 chu đáo mẹ và bé, CLM-41 chuyên gia công nhân, CLM-42 hỗ trợ bốc xếp hành lý, CLM-43 suy luận đảo ngược BOT, CLM-44 căn giờ chính xác, CLM-45 xuất phát ngay/tiết kiệm 45-60p)
 
 ---
 

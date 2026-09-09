@@ -12,11 +12,11 @@ To prevent confusion and ensure rollback safety, release commits are strictly di
 
 | Metadata Field | Value / Identifier | Notes |
 | :--- | :--- | :--- |
-| **PRODUCTION_CODE_COMMIT** | `9df06ebc3d1461049d13924f915c3014adb169c5` (`9df06eb`) | The exact git commit containing application code running live on `xeghepphongcach.com` |
-| **PRODUCTION_DEPLOYMENT** | `https://xe-ghep-phong-cach-phpnc4rmv-longhoang249s-projects.vercel.app` | Vercel production deployment aliased to `https://xeghepphongcach.com` |
-| **PRODUCTION_INSPECT** | `https://vercel.com/longhoang249s-projects/xe-ghep-phong-cach/C9w5hvzo6Va7HjKBn6ybtYcoxumY` | Vercel build & inspect log URI |
-| **DOCUMENTATION_COMMIT** | `17cf96ccb44a3f2c19802943e5e57c1b38570348` (`17cf96c`) | Added initial Pillar Release Gate handoff report |
-| **SCREENSHOT_COMMIT** | `3c0ac34fbb91a9f7516adfa62f1b8e123f5e509d` (`3c0ac34`) | Refreshed live production Chrome CDP screenshots |
+| **REPO_HEAD** | `52cfcf8` | Git HEAD commit containing llms.txt, governance documentation, and tests |
+| **PRODUCTION_CODE_COMMIT** | `52cfcf86b1f2ef2750849202511413a9ba01ea53` (`52cfcf8`) | Deployed and active on `xeghepphongcach.com` |
+| **PRODUCTION_DEPLOYMENT** | `https://xe-ghep-phong-cach-od8qgc4r8-longhoang249s-projects.vercel.app` | Vercel production deployment aliased to `https://xeghepphongcach.com` |
+| **PRODUCTION_INSPECT** | `https://vercel.com/longhoang249s-projects/xe-ghep-phong-cach/4jkAULSJpYAZz54tjSjJuHkrJGUk` | Vercel build & inspect log URI |
+| **REPO / PRODUCTION STATUS** | **ALIGNED** | Repo HEAD and production application code are 100% identical |
 
 ---
 

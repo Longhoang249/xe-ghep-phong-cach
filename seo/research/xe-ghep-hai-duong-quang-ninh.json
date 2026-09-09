@@ -1,0 +1,91 @@
+{
+  "route": "Hải Dương ⇄ Quảng Ninh",
+  "slug": "xe-ghep-hai-duong-quang-ninh",
+  "assetId": "MP-005",
+  "retrievalDate": "2026-09-09",
+  "queries": [
+    "xe ghép Hải Dương Quảng Ninh",
+    "xe Hải Dương Quảng Ninh",
+    "xe ghép Quảng Ninh Hải Dương",
+    "giá xe ghép Hải Dương Quảng Ninh",
+    "bao xe Hải Dương Quảng Ninh",
+    "xe ghép Hải Dương Hạ Long",
+    "xe ghép Hải Dương Bãi Cháy",
+    "xe ghép Hải Dương Uông Bí",
+    "xe ghép Hải Dương Cẩm Phả",
+    "xe ghép Hải Dương Cửa Ông",
+    "xe ghép Hải Dương Vân Đồn",
+    "xe ghép Hải Dương Cảng Ao Tiên",
+    "xe ghép Hải Dương Móng Cái"
+  ],
+  "competitors": [
+    {
+      "domain": "ghephaiduong.com",
+      "url": "https://www.ghephaiduong.com/hai-duong-quang-ninh",
+      "title": "Xe Ghép Hải Dương Quảng Ninh Giá Rẻ",
+      "strengths": [
+        "Domain chứa keyword",
+        "Có form đặt xe"
+      ],
+      "weaknesses": [
+        "Nội dung mỏng (~400 từ)",
+        "Giá mập mờ từ 250k - 450k",
+        "Thiếu bảng giá 16 điểm đến",
+        "Không phân định rõ chiều dài hành trình đến Móng Cái/Ao Tiên"
+      ]
+    },
+    {
+      "domain": "nhaxetienminh.com",
+      "url": "https://nhaxetienminh.com/xe-ghep-hai-duong-quang-ninh",
+      "title": "Dịch vụ xe ghép Hải Dương Quảng Ninh - Nhà xe Tiến Minh",
+      "strengths": [
+        "Có số hotline nổi bật",
+        "Đưa ra danh sách xe 4-7 chỗ"
+      ],
+      "weaknesses": [
+        "Thiếu minh bạch phí cao tốc",
+        "Không có thông tin cước gửi hàng chi tiết",
+        "Chưa tối ưu schema và mobile horizontal scrolling"
+      ]
+    },
+    {
+      "domain": "xeghephaiduong24h.net",
+      "url": "https://xeghephaiduong24h.net/xe-ghep-quang-ninh",
+      "title": "Xe ghép Hải Dương Quảng Ninh 24h đưa đón tận nơi",
+      "strengths": [
+        "Nhấn mạnh dịch vụ đưa đón tận nơi 24/7"
+      ],
+      "weaknesses": [
+        "Tuyên bố 24/7 không thực tế",
+        "Không có bảng chi tiết từng trạm dừng QL18",
+        "Nhiều hình ảnh stock thiếu thực tế"
+      ]
+    },
+    {
+      "domain": "vexere.com",
+      "url": "https://vexere.com/vi-VN/ve-xe-khach-tu-hai-duong-di-quang-ninh",
+      "title": "Vé xe khách từ Hải Dương đi Quảng Ninh - VeXeRe",
+      "strengths": [
+        "Thương hiệu lớn",
+        "Có lịch trình xe tuyến cố định"
+      ],
+      "weaknesses": [
+        "Chỉ phục vụ xe khách tuyến cố định bến-bến",
+        "Không có dịch vụ xe ghép đón tận cửa nhà",
+        "Không đưa đón các điểm sâu như Cảng Ao Tiên hay KCN"
+      ]
+    }
+  ],
+  "searchIntentSummary": {
+    "primaryIntent": "Khách hàng cần tìm phương tiện xe ghép hoặc bao xe đi từ Hải Dương đến các địa bàn tại Quảng Ninh (hoặc ngược lại) được đón tận nơi trả tận nhà.",
+    "pricingIntent": "Cực kỳ nhạy cảm và cần biết chính xác giá theo từng chặng vì Quảng Ninh trải dài hơn 250km: Đông Triều/Uông Bí bao nhiêu, Hạ Long bao nhiêu, Cảng Ao Tiên (ra đảo Cô Tô) bao nhiêu, Móng Cái bao nhiêu.",
+    "corridorIntent": "Cung đường di chuyển qua QL18 hay Cao tốc CT06; thời gian đón và di chuyển thực tế.",
+    "reverseIntent": "Đón chiều về từ Quảng Ninh (đặc biệt từ Cảng Ao Tiên sau khi đi đảo về, từ các bệnh viện Bãi Cháy/Hạ Long, từ các KCN, hoặc từ Móng Cái) về lại Hải Dương."
+  },
+  "contentGapsToExploit": [
+    "Công khai bảng giá minh bạch 16 điểm đến chính thức từ pricing-engine.ts, giải quyết dứt điểm nỗi lo mập mờ cước phí theo cự ly xa.",
+    "Minh bạch quy tắc phí cao tốc khi bao xe (chưa bao gồm vé BOT) và đơn giá 10.000đ/km cho Đông Triều & Mạo Khê.",
+    "Nêu rõ các chặng xa (Cửa Ông, Ao Tiên, Ba Chẽ, Tiên Yên, Đầm Hà, Bình Liêu, Hải Hà, Móng Cái) với trạng thái chính xác: vé ghép niêm yết từ 500k-700k, bao xe riêng liên hệ xác nhận chuyến.",
+    "Khai thác chiều sâu hành trình nối dài từ Tây sang Đông: kết nối các trung tâm du lịch biển (Bãi Cháy, Tuần Châu, Cảng Ao Tiên), công nghiệp (KCN Sông Khoai, Đông Mai), tâm linh (Yên Tử, Đền Cửa Ông), và kinh tế cửa khẩu (Móng Cái)."
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "timestamp": "2026-09-09T09:13:10.084Z",
+  "totalUrlsAudited": 39,
+  "scores": {
+    "contentQuality": {
+      "score": 30,
+      "max": 30,
+      "details": [
+        {
+          "criterion": "Accuracy & Verified Facts (Pricing)",
+          "pointsEarned": 10,
+          "maxPoints": 10
+        },
+        {
+          "criterion": "Intent Completeness",
+          "pointsEarned": 8,
+          "maxPoints": 8
+        },
+        {
+          "criterion": "Readability & Useful Structure",
+          "pointsEarned": 6,
+          "maxPoints": 6
+        },
+        {
+          "criterion": "Endpoint / Content Uniqueness (<65% similarity)",
+          "pointsEarned": 6,
+          "maxPoints": 6
+        }
+      ]
+    },
+    "onPageSeo": {
+      "score": 20,
+      "max": 20,
+      "details": [
+        {
+          "criterion": "Title, H1 & Direct Opening",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Semantic Keyword Coverage & Cannibalization Prevention",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Internal Linking Hierarchy",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Metadata Quality & Media Alt",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        }
+      ]
+    },
+    "technicalSeo": {
+      "score": 20,
+      "max": 20,
+      "details": [
+        {
+          "criterion": "Canonical & Indexability",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Sitemap & Robots.txt",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Structured Data Integrity (No Fake Schema)",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Performance Readiness (Static Script & Image Tags)",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        }
+      ]
+    },
+    "mediaEvidence": {
+      "score": 10,
+      "max": 10,
+      "details": [
+        {
+          "criterion": "Relevant Visual Coverage",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Ownership, License & Authenticity",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        }
+      ]
+    },
+    "conversionUx": {
+      "score": 10,
+      "max": 10,
+      "details": [
+        {
+          "criterion": "Price Immediately Visible (Answer-First)",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Call / Zalo / Booking Usability (Static Markup)",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        }
+      ]
+    },
+    "trustGeo": {
+      "score": 10,
+      "max": 10,
+      "details": [
+        {
+          "criterion": "Brand, Entity & Pricing Source Consistency",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        },
+        {
+          "criterion": "Structured Factual Answers & Entity Data",
+          "pointsEarned": 5,
+          "maxPoints": 5
+        }
+      ]
+    }
+  },
+  "totalScore": 100,
+  "criticalIssues": [],
+  "warnings": [],
+  "passedChecks": []
+}

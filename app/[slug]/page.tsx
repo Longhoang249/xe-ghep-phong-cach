@@ -86,12 +86,19 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
     { label: "Bao xe 4 chỗ", detail: "Đi riêng theo chuyến", value: publicCharter4Price, suffix: "/chuyến" },
     { label: "Bao xe 7 chỗ", detail: "Đi riêng theo chuyến", value: publicCharter7Price, suffix: "/chuyến" },
   ];
-  const commercialPriceRows = [
-    { label: "Giá xe ghép", detail: "Theo người", text: formatGovernedPrice(routeEvidence?.price, "/người") },
-    { label: "Bao xe 4 chỗ", detail: "Đi riêng theo chuyến", text: formatGovernedPrice(routeEvidence?.charter4Price, "/chuyến") },
-    { label: "Bao xe 7 chỗ", detail: "Đi riêng theo chuyến", text: formatGovernedPrice(routeEvidence?.charter7Price, "/chuyến") },
-    { label: "Gửi hàng", detail: "Theo hàng và chuyến", text: formatGovernedPrice(routeEvidence?.parcelPrice) },
-  ];
+  const isQnRoute = route.slug === "xe-ghep-hai-duong-quang-ninh" || route.id === "hd-qn";
+  const commercialPriceRows = isQnRoute
+    ? [
+        { label: "Giá xe ghép", detail: "Theo người (16 điểm đến)", text: formatGovernedPrice(routeEvidence?.price, "/người") },
+        { label: "Bao xe theo chuyến", detail: "Giá theo điểm đến", text: "Từ 600.000đ/chuyến" },
+        { label: "Gửi hàng", detail: "Theo hàng và chuyến", text: "150.000 – 200.000đ trở lên" },
+      ]
+    : [
+        { label: "Giá xe ghép", detail: "Theo người", text: formatGovernedPrice(routeEvidence?.price, "/người") },
+        { label: "Bao xe 4 chỗ", detail: "Đi riêng theo chuyến", text: formatGovernedPrice(routeEvidence?.charter4Price, "/chuyến") },
+        { label: "Bao xe 7 chỗ", detail: "Đi riêng theo chuyến", text: formatGovernedPrice(routeEvidence?.charter7Price, "/chuyến") },
+        { label: "Gửi hàng", detail: "Theo hàng và chuyến", text: formatGovernedPrice(routeEvidence?.parcelPrice) },
+      ];
 
   const legacyFaq = [
     {
@@ -118,7 +125,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
     },
     {
       q: `Đặt xe chiều về từ ${route.destination} về ${route.origin} có cần đặt cọc trước không?`,
-      a: `Không cần đặt cọc. Phong Cách áp dụng chính sách đặt trước 0đ cọc cho cả chiều đi lẫn chiều về. Khách hàng chỉ thanh toán sau khi đã đến nơi an toàn.`,
+      a: `Không cần đặt cọc. Phong Cách áp dụng chính sách đặt trước không mất phí cho cả chiều đi lẫn chiều về. Khách hàng chỉ thanh toán sau chuyến đi an toàn.`,
     },
   ];
   const faq = (upgrade?.faq ?? legacyFaq) as ReadonlyArray<{ q: string; a: string }>;
@@ -204,15 +211,6 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           servicePhone: { "@type": "ContactPoint", telephone: siteConfig.phone },
         },
         ...(serviceOffers ? { offers: serviceOffers } : {}),
-      },
-      {
-        "@type": "FAQPage",
-        "@id": `${pageUrl}#faq`,
-        mainEntity: faq.map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: { "@type": "Answer", text: item.a },
-        })),
       },
     ],
   };

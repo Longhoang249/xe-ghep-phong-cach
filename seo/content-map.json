@@ -1,0 +1,156 @@
+{
+  "contract": "SEO_CONTENT_MAP_V2",
+  "domain": "https://xeghepphongcach.com",
+  "entityHub": "Hải Dương",
+  "primaryCorridor": "Hải Dương ⇄ Hải Phòng ⇄ Quảng Ninh",
+  "lastUpdated": "2026-09-09",
+  "clusters": {
+    "CLUSTER-A": {
+      "name": "Hải Dương ⇄ Hải Phòng",
+      "pillar": {
+        "assetId": "MP-003",
+        "slug": "xe-ghep-hai-duong-hai-phong",
+        "url": "/xe-ghep-hai-duong-hai-phong",
+        "role": "PARENT_PILLAR",
+        "targetIntent": ["xe ghep hai duong hai phong", "xe hai duong hai phong", "xe ghep hai phong hai duong", "gia xe ghep hai duong hai phong"]
+      },
+      "publishedEndpoints": [
+        {
+          "assetId": "MP-004",
+          "slug": "xe-hai-duong-cat-bi",
+          "url": "/xe-hai-duong-cat-bi",
+          "role": "ENDPOINT_AIRPORT",
+          "targetIntent": ["xe hai duong cat bi", "xe ghep hai duong san bay cat bi", "xe cat bi ve hai duong"]
+        }
+      ],
+      "plannedP1Endpoints": [
+        {
+          "slug": "xe-ghep-hai-duong-thuy-nguyen",
+          "url": "/xe-ghep-hai-duong-thuy-nguyen",
+          "targetIntent": ["xe ghep hai duong thuy nguyen"],
+          "readiness": "PLANNED_PHASE_3"
+        },
+        {
+          "slug": "xe-ghep-hai-duong-do-son",
+          "url": "/xe-ghep-hai-duong-do-son",
+          "targetIntent": ["xe ghep hai duong do son"],
+          "readiness": "PLANNED_PHASE_3"
+        }
+      ],
+      "subsumedInPillar": [
+        { "name": "An Dương", "policy": "COVERED_IN_PILLAR_TABLE", "reason": "Tiếp giáp Hải Phòng, chưa đủ search demand độc lập" },
+        { "name": "An Lão", "policy": "COVERED_IN_PILLAR_TABLE", "reason": "Bao phủ bảng giá tuyến, tránh thin page" },
+        { "name": "Kiến Thụy", "policy": "COVERED_IN_PILLAR_TABLE", "reason": "Bao phủ bảng giá tuyến" },
+        { "name": "Dương Kinh", "policy": "COVERED_IN_PILLAR_TABLE", "reason": "Bao phủ bảng giá tuyến" },
+        { "name": "Tiên Lãng", "policy": "COVERED_IN_PILLAR_TABLE", "reason": "Giá bao xe tính theo km (10k/km), chưa đủ dữ liệu trang độc lập" },
+        { "name": "Vĩnh Bảo", "policy": "COVERED_IN_PILLAR_TABLE", "reason": "Giá bao xe tính theo km (10k/km), bao phủ bảng giá tuyến" },
+        { "name": "Cát Hải", "policy": "COVERED_IN_PILLAR_TABLE", "reason": "Khu vực phà/đảo, bao phủ bảng giá tuyến" }
+      ],
+      "supportGuides": [
+        { "assetId": "CP-003", "slug": "di-hai-duong-hai-phong-bang-phuong-tien-gi", "url": "/blog/di-hai-duong-hai-phong-bang-phuong-tien-gi" },
+        { "assetId": "SC-002", "slug": "gui-hang-hai-duong-hai-phong-theo-chuyen", "url": "/blog/gui-hang-hai-duong-hai-phong-theo-chuyen" },
+        { "assetId": "SC-004", "slug": "xe-hai-phong-ve-hai-duong-can-chuan-bi-gi", "url": "/blog/xe-hai-phong-ve-hai-duong-can-chuan-bi-gi" },
+        { "assetId": "CP-007", "slug": "xe-hai-duong-di-cat-bi-chon-xe-ghep-hay-bao-xe", "url": "/blog/xe-hai-duong-di-cat-bi-chon-xe-ghep-hay-bao-xe" }
+      ]
+    },
+    "CLUSTER-B": {
+      "name": "Hải Dương ⇄ Quảng Ninh",
+      "pillar": {
+        "assetId": "MP-005",
+        "slug": "xe-ghep-hai-duong-quang-ninh",
+        "url": "/xe-ghep-hai-duong-quang-ninh",
+        "role": "PARENT_PILLAR",
+        "targetIntent": ["xe ghep hai duong quang ninh", "xe quang ninh hai duong", "gia xe ghep hai duong quang ninh"]
+      },
+      "publishedEndpoints": [
+        {
+          "assetId": "MP-019",
+          "slug": "xe-ghep-hai-duong-ha-long",
+          "url": "/xe-ghep-hai-duong-ha-long",
+          "role": "ENDPOINT_CORE",
+          "targetIntent": ["xe ghep hai duong ha long", "xe ha long hai duong", "xe hai duong bai chay"]
+        }
+      ],
+      "plannedP1Endpoints": [
+        {
+          "slug": "xe-ghep-hai-duong-van-don",
+          "url": "/xe-ghep-hai-duong-van-don",
+          "targetIntent": ["xe ghep hai duong van don", "xe hai duong ao tien"],
+          "readiness": "PLANNED_PHASE_3"
+        },
+        {
+          "slug": "xe-ghep-hai-duong-cam-pha",
+          "url": "/xe-ghep-hai-duong-cam-pha",
+          "targetIntent": ["xe ghep hai duong cam pha", "xe hai duong cua ong"],
+          "readiness": "PLANNED_PHASE_3"
+        },
+        {
+          "slug": "xe-ghep-hai-duong-uong-bi",
+          "url": "/xe-ghep-hai-duong-uong-bi",
+          "targetIntent": ["xe ghep hai duong uong bi", "xe hai duong yen tu"],
+          "readiness": "PLANNED_PHASE_3"
+        },
+        {
+          "slug": "xe-ghep-hai-duong-mong-cai",
+          "url": "/xe-ghep-hai-duong-mong-cai",
+          "targetIntent": ["xe ghep hai duong mong cai"],
+          "readiness": "PLANNED_PHASE_3"
+        },
+        {
+          "slug": "xe-ghep-hai-duong-quang-yen",
+          "url": "/xe-ghep-hai-duong-quang-yen",
+          "targetIntent": ["xe ghep hai duong quang yen"],
+          "readiness": "PLANNED_PHASE_3"
+        },
+        {
+          "slug": "xe-ghep-hai-duong-dong-trieu",
+          "url": "/xe-ghep-hai-duong-dong-trieu",
+          "targetIntent": ["xe ghep hai duong dong trieu", "xe hai duong mao khe"],
+          "readiness": "PLANNED_PHASE_3"
+        }
+      ],
+      "subsumedInEndpoints": [
+        { "name": "Bãi Cháy", "subsumedUnder": "/xe-ghep-hai-duong-ha-long", "policy": "SECTION_IN_HA_LONG", "reason": "Tránh cannibalization với Hạ Long; cùng cụm địa lý du lịch trung tâm" },
+        { "name": "Mạo Khê", "subsumedUnder": "/xe-ghep-hai-duong-dong-trieu", "policy": "SECTION_IN_DONG_TRIEU", "reason": "Thuộc thị xã Đông Triều; cùng mức giá 250k ghép và 10k/km bao xe" },
+        { "name": "Cửa Ông", "subsumedUnder": "/xe-ghep-hai-duong-cam-pha", "policy": "SECTION_IN_CAM_PHA", "reason": "Phường thuộc Cẩm Phả; tránh thin page" },
+        { "name": "Ao Tiên", "subsumedUnder": "/xe-ghep-hai-duong-van-don", "policy": "SECTION_IN_VAN_DON", "reason": "Cảng tàu khách quốc tế tại Vân Đồn; phục vụ cùng tuyến" }
+      ],
+      "supportGuides": [
+        { "assetId": "CP-002", "slug": "nhung-chuyen-xe-tu-hai-duong-di-quang-ninh", "url": "/blog/nhung-chuyen-xe-tu-hai-duong-di-quang-ninh" },
+        { "assetId": "SC-001", "slug": "cach-dat-xe-ghep-hai-duong-quang-ninh", "url": "/blog/cach-dat-xe-ghep-hai-duong-quang-ninh" }
+      ]
+    },
+    "CLUSTER-C": {
+      "name": "Hải Phòng ⇄ Quảng Ninh (Hành lang bổ trợ)",
+      "pillar": {
+        "assetId": "MP-006",
+        "slug": "xe-ghep-hai-phong-quang-ninh",
+        "url": "/xe-ghep-hai-phong-quang-ninh",
+        "role": "SECONDARY_CORRIDOR",
+        "targetIntent": ["xe ghep hai phong quang ninh"]
+      },
+      "supportGuides": [
+        { "assetId": "CP-004", "slug": "di-hai-phong-quang-ninh-bang-phuong-tien-gi", "url": "/blog/di-hai-phong-quang-ninh-bang-phuong-tien-gi" }
+      ]
+    },
+    "OTHER": {
+      "name": "Tuyến tỉnh lân cận (P2 Expansion)",
+      "routes": [
+        "xe-ghep-hai-duong-ha-noi",
+        "xe-hai-duong-noi-bai",
+        "xe-ghep-hai-duong-bac-ninh",
+        "xe-ghep-hai-duong-bac-giang",
+        "xe-ghep-hai-duong-thai-nguyen",
+        "xe-ghep-hai-duong-vinh-phuc",
+        "xe-ghep-hai-duong-phu-tho",
+        "xe-ghep-hai-duong-thai-binh",
+        "xe-ghep-hai-duong-nam-dinh",
+        "xe-ghep-hai-duong-hung-yen",
+        "xe-ghep-hai-duong-ha-nam",
+        "xe-ghep-hai-duong-phu-ly",
+        "xe-ghep-hai-duong-ninh-binh",
+        "xe-ghep-hai-duong-thanh-hoa"
+      ]
+    }
+  }
+}

@@ -94,8 +94,7 @@ test("MP-005 keeps canonical, FAQ ownership and non-Article schema", async () =>
   ]) assert.match(faqCopy, new RegExp(intent.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 
   assert.match(pageSource, /alternates: \{ canonical \}/);
-  assert.match(pageSource, /"@type": "FAQPage"/);
-  assert.match(pageSource, /mainEntity: faq\.map/);
+  assert.doesNotMatch(pageSource, /"@type": "FAQPage"/, "FAQPage JSON-LD deprecated and removed per Google Search June 2026 update");
   assert.match(pageSource, /faq=\{faq\}/);
   assert.match(pageSource, /\.\.\.\(!isCommercialUpgrade \? \[\{/);
   assert.match(pageSource, /if \(landingLayout && upgrade\)/);

@@ -68,8 +68,7 @@ test("visible endpoint boundary and FAQ schema retain the same non-service seman
   assert.match(faq.a, /Availability và giá cho từng địa chỉ phải được Phong Cách kiểm tra riêng/i);
 
   const pageSource = await readFile(new URL("../app/[slug]/page.tsx", import.meta.url), "utf8");
-  assert.match(pageSource, /"@type": "FAQPage"/);
-  assert.match(pageSource, /mainEntity: faq\.map/);
+  assert.doesNotMatch(pageSource, /"@type": "FAQPage"/, "FAQPage JSON-LD deprecated and removed per Google Search June 2026 update");
   assert.match(pageSource, /faq=\{faq\}/);
 });
 

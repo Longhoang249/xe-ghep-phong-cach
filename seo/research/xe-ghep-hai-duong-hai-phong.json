@@ -1,0 +1,201 @@
+{
+  "routeId": "hd-hp",
+  "primaryQuery": "xe ghép Hải Dương Hải Phòng",
+  "targetUrl": "https://xeghepphongcach.com/xe-ghep-hai-duong-hai-phong",
+  "researchTimestamp": "2026-09-09T11:05:00+07:00",
+  "searchesConducted": [
+    {
+      "query": "xe ghép Hải Dương Hải Phòng",
+      "intent": "Transactional / Local Commercial",
+      "topResultsObserved": [
+        "xeghephaiduonghaiphong.com",
+        "xeghephaiphong24h.com",
+        "xeghephaiduongdicactinh24h.com",
+        "taxihaiduong24h.net",
+        "xeghephaiduong24h.com"
+      ]
+    },
+    {
+      "query": "xe Hải Dương Hải Phòng",
+      "intent": "Mixed Informational & Commercial",
+      "topResultsObserved": [
+        "haiduongtoplist.com",
+        "dungminh.vn",
+        "limoutrip.com",
+        "vexere.com",
+        "redbus.vn"
+      ]
+    },
+    {
+      "query": "xe ghép Hải Phòng Hải Dương",
+      "intent": "Transactional (Reverse Direction)",
+      "topResultsObserved": [
+        "xeghephaiduonghaiphong.com",
+        "xeghephaiphong24h.com",
+        "xeghephaiphong.vn",
+        "taxihaiduong24h.net",
+        "vicar.vn"
+      ]
+    },
+    {
+      "query": "giá xe ghép Hải Dương Hải Phòng",
+      "intent": "Transactional Price Investigation",
+      "topResultsObserved": [
+        "xeghephaiduong24h.com",
+        "ghephaiduong.com",
+        "xeghephaiduonghaiphong.com",
+        "xeghephaiphong24h.com",
+        "motortrip.vn"
+      ]
+    },
+    {
+      "query": "bao xe Hải Dương Hải Phòng",
+      "intent": "High Transactional Commercial (Private Car)",
+      "topResultsObserved": [
+        "xeghephaiphong24h.com",
+        "xeghep-haiduong.net",
+        "xeghephaiduonghaiphong.com",
+        "thuexehaiphong.net",
+        "dungminh.vn"
+      ]
+    }
+  ],
+  "competitors": [
+    {
+      "url": "https://xeghephaiphong24h.com/dich-vu-xe-ghep-hai-duong-hai-phong-gia-re",
+      "domain": "xeghephaiphong24h.com",
+      "title": "Dịch vụ Xe ghép Hải Dương - Hải Phòng giá rẻ",
+      "type": "WordPress Blog Post / Landing Page",
+      "estimatedWordCount": 460,
+      "priceRangeReported": {
+        "shared": "250.000đ/người (trung tâm), Cát Bi 300.000đ",
+        "private": "4 chỗ 600.000đ, 7 chỗ 750.000đ, 16 chỗ 1.000.000đ",
+        "parcel": "200.000đ"
+      },
+      "headings": [
+        "H1: Dịch vụ Xe ghép Hải Dương - Hải Phòng giá rẻ",
+        "H3: 1. Thông tin xe ghép Hải Dương - Hải Phòng",
+        "H3: 2. Xe Ghép Hải Dương - Hải Phòng đưa đón tận nơi.",
+        "H3: 3. Tại sao nên lựa chọn dịch vụ xe ghép Hải Phòng",
+        "H3: 4. Các dịch vụ xe ghép Hải Phòng cung cấp",
+        "H3: 5. Hình thức đặt xe",
+        "H3: 6. Hình thức thanh toán",
+        "H2: Liên hệ đặt xe ngay!"
+      ],
+      "trustSignals": ["Hotline nổi bật 0961.531.844", "Cam kết không bắt khách dọc đường, không phóng nhanh", "Cam kết xe đời mới"],
+      "cta": ["tel:0961531844", "Zalo / Floating call buttons"],
+      "strengths": ["CTA hotline trực quan", "Giá tóm tắt nhanh gọn trong 4 dòng", "Index tốt nhờ từ khóa chính xác trong slug"],
+      "weaknesses": ["Nội dung mỏng (<500 từ)", "Không có bảng chi tiết từng quận huyện", "Không phân tích tuyến đường/cao tốc", "Hình ảnh stock chung chung", "Không có FAQ schema hay review thực tế"],
+      "gaps": ["Thiếu 11 điểm đến cụ thể ở Hải Phòng", "Thiếu chiều ngược lại chuyên sâu", "Không giải thích phụ phí/vé cầu đường"]
+    },
+    {
+      "url": "https://xeghephaiduonghaiphong.com/",
+      "domain": "xeghephaiduonghaiphong.com",
+      "title": "Xe Ghép Hải Dương - Hải Phòng - Sân Bay Cát Bi Giá Rẻ - Hotline 0846 616 616",
+      "type": "Flatsome Theme Landing Page",
+      "estimatedWordCount": 380,
+      "priceRangeReported": {
+        "shared": "Từ 200.000đ - 250.000đ",
+        "private": "500.000đ - 650.000đ",
+        "catBi": "300.000đ"
+      },
+      "headings": [
+        "H1: Xe Ghép Hải Dương - Hải Phòng - Sân Bay Cát Bi",
+        "H2: Bảng giá dịch vụ xe ghép",
+        "H2: Lộ trình và khung giờ xuất bến",
+        "H3: Liên hệ đặt xe"
+      ],
+      "trustSignals": ["Số hotline 0846.616.616", "Cam kết giờ chạy 5h - 21h"],
+      "cta": ["Hotline 0846.616.616", "Form liên hệ CF7"],
+      "strengths": ["Domain EMD (Exact Match Domain) mạnh", "Tập trung vào sân bay Cát Bi"],
+      "weaknesses": ["Nội dung sơ sài, thiết kế lỗi thời", "Không có bảng giá theo từng huyện", "Thiếu chứng thực năng lực pháp lý/đội xe"],
+      "gaps": ["Không có thông tin chi tiết về cao tốc QL5B", "Không có hướng dẫn đặt xe cho người lần đầu đi", "Không có FAQ"]
+    },
+    {
+      "url": "https://xeghephaiduong24h.com/",
+      "domain": "xeghephaiduong24h.com",
+      "title": "Xe Ghép Hải Dương 24h - Dịch vụ xe ghép liên tỉnh",
+      "type": "Multi-route Service Site",
+      "estimatedWordCount": 650,
+      "priceRangeReported": {
+        "shared": "150.000đ - 250.000đ",
+        "private": "500.000đ - 700.000đ"
+      },
+      "headings": [
+        "H1: Dịch Vụ Xe Ghép Hải Dương Đi Các Tỉnh",
+        "H2: Xe Ghép Tuyến Hải Dương - Hải Phòng",
+        "H2: Cam kết chất lượng 5 không",
+        "H3: Quy trình đặt xe nhanh"
+      ],
+      "trustSignals": ["Địa chỉ văn phòng tại Hải Phòng & Hải Dương", "Cam kết 5 không", "Chạy liên tục 5h-21h"],
+      "cta": ["0961.531.844", "Nút gọi rung lắc"],
+      "strengths": ["Bao quát nhiều tỉnh (Hà Nội, Hải Phòng, Quảng Ninh)", "Trình bày các cam kết rõ ràng"],
+      "weaknesses": ["Trang bị phân tán, không chuyên sâu cho tuyến Hải Phòng", "Bảng giá không có phân loại cụ thể từng huyện xa"],
+      "gaps": ["Không giải thích cước huyện ngoại thành như Đồ Sơn, Cát Hải, Tiên Lãng", "Thiếu thông tin chiều Hải Phòng về Hải Dương"]
+    },
+    {
+      "url": "https://dungminh.vn/",
+      "domain": "dungminh.vn",
+      "title": "Nhà Xe Dũng Minh - Xe Ghép Hải Dương Hải Phòng",
+      "type": "Company Brand Site",
+      "estimatedWordCount": 550,
+      "priceRangeReported": {
+        "shared": "200.000đ - 250.000đ",
+        "private": "Từ 550.000đ"
+      },
+      "headings": [
+        "H1: Xe Ghép Dũng Minh Tuyến Hải Dương - Hải Phòng",
+        "H2: Ưu điểm dịch vụ xe 7 chỗ",
+        "H2: Địa chỉ văn phòng và đặt chuyến"
+      ],
+      "trustSignals": ["Địa chỉ văn phòng: 118 Bùi Thị Xuân, TP Hải Dương", "Hotline 0586 363 363"],
+      "cta": ["Hotline/Zalo: 0586 363 363"],
+      "strengths": ["Thương hiệu có pháp nhân và văn phòng thực tế", "Nhấn mạnh xe 7 chỗ rộng rãi"],
+      "weaknesses": ["Trang chưa tối ưu cấu trúc Onpage SEO", "Không có bảng giá chi tiết các điểm đến", "Thiếu structured data Schema.org"],
+      "gaps": ["Không có so sánh hình thức ghép vs bao xe", "Không có chính sách hàng hóa rõ ràng"]
+    },
+    {
+      "url": "https://ghephaiduong.com/",
+      "domain": "ghephaiduong.com",
+      "title": "Dịch vụ xe ghép Hải Dương đi Hải Phòng, Quảng Ninh 24/7",
+      "type": "Lead Gen Portal",
+      "estimatedWordCount": 420,
+      "priceRangeReported": {
+        "shared": "150.000đ - 250.000đ",
+        "private": "Báo giá trực tiếp"
+      },
+      "headings": [
+        "H1: Xe Ghép Tiện Chuyến Hải Dương - Hải Phòng",
+        "H2: Lợi ích khi chọn xe ghép",
+        "H2: Báo giá theo quãng đường"
+      ],
+      "trustSignals": ["Phục vụ 24/7", "Hotline 0362.533.999"],
+      "cta": ["0362.533.999", "Zalo chat"],
+      "strengths": ["Nhấn mạnh tiện chuyến giá rẻ", "Giao diện đơn giản trên điện thoại"],
+      "weaknesses": ["Thiếu minh bạch giá bao xe", "Hình ảnh mờ, không chuyên nghiệp", "Nội dung trùng lặp giữa các tuyến"],
+      "gaps": ["Thiếu toàn bộ thông tin chi tiết về điểm đón tại Hải Dương và điểm trả tại Hải Phòng", "Không có quy trình đón trả sân bay Cát Bi"]
+    }
+  ],
+  "searchIntentAnalysis": {
+    "primaryIntent": "Transactional (Người dùng muốn đặt xe ngay, biết giá rõ ràng và xác nhận thời gian đón tận nơi)",
+    "secondaryIntent": "Commercial Investigation (So sánh giá giữa xe khách Hải Âu / Vexere ~130k-150k vs Xe ghép 250k đón tận nhà vs Taxi riêng 600k-700k)",
+    "userPainPoints": [
+      "Sợ bị nhồi nhét, bắt khách dọc đường làm trễ giờ tàu bay hoặc công việc",
+      "Sợ phát sinh phụ phí huyện xa bất ngờ khi lên xe",
+      "Cần đi sân bay Cát Bi đúng giờ check-in",
+      "Không biết xe có đón tận ngõ ở Hải Dương và trả đúng điểm ở Hải Phòng hay không",
+      "Cần gửi hàng hóa gấp trong ngày giao nhận tận tay"
+    ]
+  },
+  "contentGapAndStrategy": {
+    "contentGapOpportunity": [
+      "Toàn bộ đối thủ cạnh tranh có bài viết mỏng (< 700 từ), thiếu chiều sâu và thiếu tính minh bạch về giá theo từng huyện.",
+      "Không có đối thủ nào có BẢNG GIÁ ĐẦY ĐỦ 11 ĐIỂM ĐẾN HẢI PHÒNG (bao gồm Hồng Bàng, Ngô Quyền, Lê Chân, Hải An, Đồ Sơn, Dương Kinh, Cát Hải, Kiến Thụy, Thủy Nguyên, An Dương, An Lão, Tiên Lãng, Vĩnh Bảo).",
+      "Không có đối thủ nào giải thích rõ quy tắc tính cước (10.000đ/km cho Tiên Lãng & Vĩnh Bảo, vé cầu đường cao tốc 5B chưa bao gồm trong giá bao xe).",
+      "Không có đối thủ nào khai thác tốt CHIỀU NGƯỢC LẠI (Hải Phòng về Hải Dương) ngay trên cùng một URL để bắt trọn các truy vấn 'xe Hải Phòng về Hải Dương' và 'xe ghép Hải Phòng Hải Dương'.",
+      "Thiếu FAQ schema có cấu trúc chuẩn theo Google Search Essentials."
+    ],
+    "targetContentLength": "1,800 - 2,600 từ chất lượng cao, súc tích, hoàn toàn không đệm rác từ.",
+    "pricingIntegrityRequirement": "Khóa chặt theo data/seo/pricing-engine.ts. Tuyệt đối không tự suy diễn giá ngoài nguồn dữ liệu chính thức."
+  }
+}

@@ -11,7 +11,7 @@ export function GET() {
   parts.push(`> Tài liệu đầy đủ cung cấp cho các mô hình ngôn ngữ lớn (OpenAI ChatGPT, Google Gemini, Anthropic Claude, Perplexity AI) để tra cứu thông tin chính xác về dịch vụ xe ghép, bao xe 4-7 chỗ và gửi hàng liên tỉnh tại Hải Dương, Hà Nội, Hải Phòng, Quảng Ninh và các tỉnh miền Bắc.\n`);
   parts.push(`- Hotline / Zalo đặt xe: ${siteConfig.phoneDisplay}`);
   parts.push(`- Website: ${absoluteUrl()}`);
-  parts.push(`- Cam kết độc quyền: Đặt trước 0đ cọc (không cọc tiền trước), chỉ thanh toán sau khi hoàn thành chuyến đi.\n`);
+  parts.push(`- Chính sách đặt xe: Đặt trước không mất phí, thanh toán sau chuyến đi an toàn.\n`);
   parts.push(`---\n`);
 
   parts.push(`## Danh mục các tuyến xe ghép & bao xe hai chiều (Toàn bộ 19 Tuyến)\n`);
@@ -27,7 +27,7 @@ export function GET() {
     if (route.parcelPrice) parts.push(`- Cước gửi hàng: từ ${new Intl.NumberFormat("vi-VN").format(route.parcelPrice)}đ/kiện`);
     if (route.distanceKm) parts.push(`- Cự ly ước tính: ~${route.distanceKm} km`);
     if (route.durationMinutes) parts.push(`- Thời gian di chuyển: ~${route.durationMinutes} phút`);
-    parts.push(`- Đặt trước: 0đ cọc, gọi hoặc Zalo hotline ${siteConfig.phoneDisplay} trước 30-60 phút.\n`);
+    parts.push(`- Đặt trước: Không mất phí, liên hệ hotline hoặc Zalo ${siteConfig.phoneDisplay} để kiểm tra xe.\n`);
   }
 
   parts.push(`---\n`);

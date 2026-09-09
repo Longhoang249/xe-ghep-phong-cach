@@ -140,7 +140,7 @@ export default function MoneyLandingPage({
             <p className={styles.heroSubline}>
               {layout.subline ?? `Dịch vụ xe ghép và bao xe 4-7 chỗ hai chiều ${route.origin} - ${route.destination}, đón trả tận nơi, đặt trước không mất phí, thanh toán sau chuyến.`}
             </p>
-            <div className={styles.heroPriceTag}>
+            <div className={styles.heroPrice}>
               <span>Mức giá xuất phát điểm</span>
               <strong>{sharedPrice}</strong>
               <small>Giá thay đổi theo địa chỉ đón/trả, thời gian và điều kiện thực tế</small>

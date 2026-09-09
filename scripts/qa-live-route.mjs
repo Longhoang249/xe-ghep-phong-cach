@@ -58,49 +58,51 @@ process.on("exit", cleanup);
 process.on("SIGINT", () => { cleanup(); process.exit(1); });
 process.on("SIGTERM", () => { cleanup(); process.exit(1); });
 
-// Wait for Chrome DevTools endpoint
-let wsUrl = null;
+// Wait for Chrome DevTools endpoint and create target page
+let target = null;
 for (let i = 0; i < 30; i++) {
   await new Promise((r) => setTimeout(r, 200));
   try {
-    const res = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/version`);
+    const res = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/new?${encodeURIComponent(targetUrl)}`, { method: "PUT" });
     if (res.ok) {
-      const data = await res.json();
-      wsUrl = data.webSocketDebuggerUrl;
+      target = await res.json();
       break;
     }
   } catch (_) {}
 }
 
-if (!wsUrl) {
+if (!target || !target.webSocketDebuggerUrl) {
   cleanup();
-  console.error("❌ Failed to connect to Chrome DevTools Protocol");
+  console.error("❌ Failed to connect to Chrome DevTools Protocol or create page target");
   process.exit(1);
 }
 
-console.log("[Browser QA] Chrome CDP connected successfully.");
+console.log("[Browser QA] Chrome CDP page target created successfully.");
 
-// WebSocket helper
-const { WebSocket } = await import("ws");
-const ws = new WebSocket(wsUrl);
-
+// Native WebSocket client
+const ws = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise((res, rej) => {
-  ws.on("open", res);
-  ws.on("error", rej);
+  ws.onopen = res;
+  ws.onerror = rej;
 });
 
 let msgId = 1;
 const pendingCalls = new Map();
 
-ws.on("message", (raw) => {
-  const data = JSON.parse(raw.toString());
+const eventListeners = new Set();
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
   if (data.id && pendingCalls.has(data.id)) {
     const { resolve, reject } = pendingCalls.get(data.id);
     pendingCalls.delete(data.id);
     if (data.error) reject(data.error);
     else resolve(data.result);
   }
-});
+  for (const listener of eventListeners) {
+    try { listener(data); } catch (_) {}
+  }
+};
 
 function sendCDP(method, params = {}) {
   return new Promise((resolve, reject) => {
@@ -144,11 +146,10 @@ async function runLiveQA() {
     mobile: false,
   });
 
-  // Track HTTP response status
+  // Track network response status code
   let responseStatusCode = null;
-  const onResponse = (data) => {
+  const onResponse = (msg) => {
     try {
-      const msg = JSON.parse(data.toString());
       if (msg.method === "Network.responseReceived") {
         const url = msg.params.response.url;
         if (url.includes(slug)) {
@@ -157,7 +158,7 @@ async function runLiveQA() {
       }
     } catch (_) {}
   };
-  ws.on("message", onResponse);
+  eventListeners.add(onResponse);
 
   console.log(`[Desktop] Navigating to ${targetUrl}...`);
   await sendCDP("Page.navigate", { url: targetUrl });
@@ -194,11 +195,18 @@ async function runLiveQA() {
     throw new Error(`H1 mismatch! Expected "${expectedH1}", got "${h1Text}"`);
   }
 
-  const startingPrice = await evaluate(`document.querySelector('.MoneyLandingPage_heroPriceTag__.* strong, [class*="heroPriceTag"] strong')?.innerText?.trim()`);
+  const startingPrice = await evaluate(`
+    (() => {
+      const el = document.querySelector('[class*="heroPrice"] strong') ||
+                 document.querySelector('[class*="heroPriceTag"] strong') ||
+                 Array.from(document.querySelectorAll('strong')).find(s => s.parentElement?.innerText?.includes('Mức giá xuất phát điểm'));
+      return el?.innerText?.trim();
+    })()
+  `);
   console.log(`[Desktop] Hero Starting Price: "${startingPrice}"`);
 
   // 4. Pricing Table verification
-  const tableRowsCount = await evaluate(`document.querySelectorAll('table tbody tr').length`);
+  const tableRowsCount = await evaluate(`document.querySelectorAll('table[class*="pricingTable"] tbody tr').length`);
   console.log(`[Desktop] Pricing Table Rows: ${tableRowsCount} rows found`);
   const expectedRows = isQn ? 16 : 11;
   if (tableRowsCount !== expectedRows) {
@@ -208,7 +216,7 @@ async function runLiveQA() {
   // Route-specific detailed pricing checks
   if (isQn) {
     const tableData = await evaluate(`
-      Array.from(document.querySelectorAll('table tbody tr')).map(row => {
+      Array.from(document.querySelectorAll('table[class*="pricingTable"] tbody tr')).map(row => {
         const cols = row.querySelectorAll('td');
         return {
           name: cols[0]?.innerText?.trim(),
@@ -238,7 +246,7 @@ async function runLiveQA() {
 
   if (isHp) {
     const tableData = await evaluate(`
-      Array.from(document.querySelectorAll('table tbody tr')).map(row => {
+      Array.from(document.querySelectorAll('table[class*="pricingTable"] tbody tr')).map(row => {
         const cols = row.querySelectorAll('td');
         return {
           name: cols[0]?.innerText?.trim(),
@@ -375,10 +383,12 @@ async function runLiveQA() {
   `);
   console.log(`[Mobile] Scrolled scrollLeft: ${scrolledMetrics.scrollLeft} ${scrolledMetrics.scrollLeft > 0 ? "(PASS)" : "(FAIL)"}`);
 
-  // CTA touch target size
+  // CTA touch target size (Hero CTA action button)
   const ctaBox = await evaluate(`
     (() => {
-      const btn = document.querySelector('a[href^="tel:"]');
+      const btn = document.querySelector("div[class*='heroActions'] a[href^='tel:']") ||
+                  document.querySelector("div[class*='heroActions'] a") ||
+                  document.querySelector("a[class*='btn']");
       if (!btn) return null;
       const rect = btn.getBoundingClientRect();
       return { width: Math.round(rect.width), height: Math.round(rect.height) };

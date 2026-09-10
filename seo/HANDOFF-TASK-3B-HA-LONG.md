@@ -28,9 +28,9 @@ All fares reflect the owner's latest verified price sheet (`2026-09-09`). Legacy
 
 | Dịch vụ | Khu vực Hạ Long (Hòn Gai / TT) | Khu vực Bãi Cháy (Ven biển / Du lịch) | Ghi chú vận hành |
 | :--- | :--- | :--- | :--- |
-| **Xe ghép** | **400.000đ/người** | **350.000đ/người** | Đón trả tận nơi hai chiều; Bãi Cháy có biểu giá độc lập theo cự ly thực tế |
+| **Xe ghép** | **400.000đ/người** | **350.000đ/người** | Đón trả tận nơi hai chiều; giá endpoint đã xác thực: 350.000đ/người và 900.000đ/chuyến. |
 | **Bao xe theo chuyến** | **1.000.000đ/chuyến** | **900.000đ/chuyến** | Không phân loại 4c/7c; **chưa bao gồm vé cầu đường cao tốc (`tollIncluded: false`)** |
-| **Gửi hàng** | **150.000 – 200.000đ trở lên** | **150.000 – 200.000đ trở lên** | Giá thay đổi tùy khối lượng, kích thước bưu phẩm và điểm giao nhận |
+| **Gửi hàng** | **150.000–200.000đ trở lên, tùy điểm đến và hàng hóa cụ thể.** | **150.000–200.000đ trở lên, tùy điểm đến và hàng hóa cụ thể.** | Giá theo hàng và chuyến, tùy điểm đến và hàng hóa cụ thể |
 
 ### Exact Commercial Copy Standards
 - **Booking Terms**: `"Đặt trước không mất phí."` và `"Thanh toán sau chuyến."` (Khách thanh toán trực tiếp cho lái xe sau khi hoàn thành chuyến đi an toàn).

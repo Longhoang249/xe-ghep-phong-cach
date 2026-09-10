@@ -66,7 +66,7 @@ export function getHaLongComparisonRows(): DestinationComparisonItem[] {
       distanceKm: "~75 - 85 km",
       description: "Phục vụ các khách sạn ven biển, khu du lịch Bãi Cháy, tổ hợp giải trí và các bến tàu tham quan vịnh.",
       popularSpots: ["Khu du lịch Bãi Cháy", "Cảng tàu khách quốc tế Hạ Long", "Sun World Hạ Long", "Bãi tắm Bãi Cháy"],
-      note: "Bãi Cháy có biểu giá riêng theo cự ly thực tế, không tính phụ phí cộng dồn từ Hạ Long. Bao xe chưa gồm vé cao tốc.",
+      note: "Bãi Cháy áp dụng giá endpoint đã xác thực: 350.000đ/người ghép và 900.000đ/chuyến bao xe (chưa gồm vé cao tốc), không tính phụ phí cộng dồn từ Hạ Long.",
     },
   ];
 }
@@ -123,9 +123,9 @@ export const HA_LONG_DECISION_GUIDE: DecisionGuideRow[] = [
   },
   {
     criterion: "Đến khách sạn ven biển Bãi Cháy",
-    sharedRide: "350.000đ/người (biểu giá riêng Bãi Cháy)",
-    privateCar: "900.000đ/chuyến (biểu giá riêng Bãi Cháy)",
-    recommendation: "Áp dụng biểu giá riêng cho Bãi Cháy theo cự ly thực tế, tiết kiệm hơn khi đến các khách sạn ven biển.",
+    sharedRide: "350.000đ/người (giá endpoint Bãi Cháy)",
+    privateCar: "900.000đ/chuyến (giá endpoint Bãi Cháy)",
+    recommendation: "Khu vực Bãi Cháy áp dụng giá endpoint đã xác thực: 350.000đ/người ghép và 900.000đ/chuyến bao xe.",
   },
   {
     criterion: "Đến cảng tàu hoặc tour tham quan vịnh",

@@ -227,7 +227,7 @@ export const moneyPageUpgrades = Object.freeze({
     description: "Xe ghép Hải Dương - Hạ Long hai chiều đón tận nơi. Xe ghép 400.000đ/người, bao xe 1.000.000đ/chuyến (Bãi Cháy từ 350k). Đặt trước không mất phí, gọi 0987 663 883.",
     h1: "Xe Ghép Hải Dương - Hạ Long",
     eyebrow: "XE GHÉP VÀ BAO XE HAI CHIỀU",
-    answer: "Xe Hải Dương đi Hạ Long giá bao nhiêu? Phong Cách phục vụ xe ghép 400.000đ/người và bao xe riêng theo chuyến 1.000.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc) đón trả tận nơi. Với điểm đến khu vực Bãi Cháy, giá xe ghép là 350.000đ/người và bao xe là 900.000đ/chuyến theo biểu giá độc lập. Dịch vụ gửi hàng khoảng 150.000 - 200.000đ trở lên tùy điểm đến và hàng hóa cụ thể. Đặt trước không mất phí. Thanh toán sau chuyến.",
+    answer: "Xe Hải Dương đi Hạ Long giá bao nhiêu? Phong Cách phục vụ xe ghép 400.000đ/người và bao xe riêng theo chuyến 1.000.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc) đón trả tận nơi. Với điểm đến khu vực Bãi Cháy, giá xe ghép là 350.000đ/người và bao xe là 900.000đ/chuyến theo giá endpoint đã xác thực. Dịch vụ gửi hàng khoảng 150.000 - 200.000đ trở lên, tùy điểm đến và hàng hóa cụ thể. Đặt trước không mất phí. Thanh toán sau chuyến.",
     heroBookingPrompt: "Gửi điểm đón, điểm trả, ngày đi và thời gian để kiểm tra xe",
     summaryTitle: "HẢI DƯƠNG - HẠ LONG / BÃI CHÁY",
     summaryItems: Object.freeze([
@@ -254,7 +254,7 @@ export const moneyPageUpgrades = Object.freeze({
     decisionRows: Object.freeze([
       Object.freeze({ need: "Đi cá nhân 1-2 người", guidance: "Nên chọn xe ghép 400.000đ/người (hoặc 350.000đ đi Bãi Cháy) để tối ưu chi phí, đón trả tận nơi hai chiều." }),
       Object.freeze({ need: "Nhóm bạn hoặc gia đình", guidance: "Bao xe riêng 1.000.000đ/chuyến (900.000đ đi Bãi Cháy) mang lại không gian riêng tư và linh hoạt lộ trình cá nhân." }),
-      Object.freeze({ need: "Đến khách sạn Bãi Cháy", guidance: "Khu vực Bãi Cháy áp dụng mức riêng 350.000đ/người ghép và 900.000đ/chuyến bao xe theo cự ly thực tế." }),
+      Object.freeze({ need: "Đến khách sạn Bãi Cháy", guidance: "Khu vực Bãi Cháy áp dụng giá endpoint đã xác thực: 350.000đ/người ghép và 900.000đ/chuyến bao xe." }),
       Object.freeze({ need: "Đến cảng tàu hoặc tour vịnh", guidance: "Nên chọn bao xe riêng và cung cấp giờ xuất bến dự kiến để nhà xe tư vấn giờ xuất phát phù hợp." }),
       Object.freeze({ need: "Nhiều hành lý du lịch", guidance: "Khách nên thông báo trước số lượng vali để nhà xe bố trí khoang cốp xe rộng rãi phù hợp." }),
     ]),
@@ -279,7 +279,7 @@ export const moneyPageUpgrades = Object.freeze({
     endpointNames: Object.freeze(["Hạ Long", "Bãi Cháy"]),
     endpointKicker: "BỐI CẢNH HẠ LONG / BÃI CHÁY",
     endpointTitle: "Tên khu vực giúp xác định đúng điểm đến",
-    endpointIntro: "Hạ Long và Bãi Cháy được nhắc để người đọc mô tả nhu cầu và địa lý điểm đến. Việc nêu tên không xác nhận mọi địa chỉ luôn có xe và không tạo giá riêng cho Bãi Cháy.",
+    endpointIntro: "Hạ Long và Bãi Cháy được nhắc để người đọc mô tả nhu cầu và địa lý điểm đến. Điểm đến Bãi Cháy có giá endpoint đã xác thực riêng, việc nêu tên không xác nhận mọi địa chỉ luôn có xe.",
     endpointBoundary: "Giá chuyến cụ thể được xác nhận theo điểm đón/trả, ngày, giờ và điều kiện chuyến.",
     schemaOfferDescription: "Giá vé xe ghép tuyến Hải Dương - Hạ Long là 400.000đ/người (Bãi Cháy 350.000đ/người); bao xe riêng là 1.000.000đ/chuyến (Bãi Cháy 900.000đ/chuyến, chưa bao gồm vé cầu đường cao tốc).",
     faq: Object.freeze([
@@ -293,7 +293,7 @@ export const moneyPageUpgrades = Object.freeze({
       }),
       Object.freeze({
         q: "Đi Bãi Cháy giá bao nhiêu?",
-        a: "Khu vực Bãi Cháy có biểu giá riêng theo cự ly thực tế: xe ghép 350.000đ/người và bao xe riêng 900.000đ/chuyến (chưa gồm vé cao tốc). Đây là mức cước độc lập cho điểm đến Bãi Cháy, không phải phụ phí cộng dồn.",
+        a: "Khu vực Bãi Cháy có giá endpoint đã xác thực: xe ghép 350.000đ/người và bao xe riêng 900.000đ/chuyến (chưa gồm vé cao tốc). Đây là mức cước độc lập cho điểm đến Bãi Cháy, không phải phụ phí cộng dồn.",
       }),
       Object.freeze({
         q: "Có xe Hạ Long về Hải Dương không?",

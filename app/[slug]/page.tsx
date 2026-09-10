@@ -105,7 +105,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
     ? [
         { label: "Giá xe ghép", detail: "Theo người (Hạ Long)", text: "400.000đ/người" },
         { label: "Bao xe theo chuyến", detail: "Đi riêng theo chuyến (chưa gồm vé cao tốc)", text: "1.000.000đ/chuyến" },
-        { label: "Gửi hàng", detail: "Theo hàng và chuyến", text: "150.000 – 200.000đ trở lên" },
+        { label: "Gửi hàng", detail: "Theo hàng và chuyến", text: "Khoảng 150.000 – 200.000đ trở lên, tùy điểm đến và hàng hóa cụ thể." },
       ]
     : [
         { label: "Giá xe ghép", detail: "Theo người", text: formatGovernedPrice(routeEvidence?.price, "/người") },
@@ -339,7 +339,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         {isCommercialUpgrade ? <article className="route-price-panel">
           <span className="section-kicker">GIÁ BẮT ĐẦU ĐÃ XÁC NHẬN</span>
           <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : isHlRoute ? "Bảng giá xe Hải Dương ⇄ Hạ Long" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
-          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : isHlRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Hạ Long (Bãi Cháy có biểu giá riêng)." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
+          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : isHlRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Hạ Long (Bãi Cháy có giá endpoint đã xác thực riêng)." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
           <div className="route-price-table">
             {commercialPriceRows.map((item) => <div key={item.label}>
               <span><b>{item.label}</b><small>{item.detail}</small></span>
@@ -352,7 +352,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                 SO SÁNH THƯƠNG MẠI: HẠ LONG VS BÃI CHÁY
               </div>
               <p style={{ margin: "0 0 0.75rem", fontSize: "0.9rem", color: "#475569" }}>
-                Biểu giá được xác định theo cự ly và vị trí độc lập, Bãi Cháy không phải là phụ phí của Hạ Long:
+                Bãi Cháy có giá endpoint đã xác thực, không phải là phụ phí cộng dồn của Hạ Long:
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
                 <div style={{ padding: "0.75rem", background: "#ffffff", borderRadius: "6px", border: "1px solid #cbd5e1" }}>

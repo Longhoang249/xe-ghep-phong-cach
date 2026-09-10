@@ -84,7 +84,7 @@ test("Wave 2 copy covers required commercial intent and omits unsupported operat
   const haLong = moneyPageUpgrades["hd-ha-long"];
   assert.equal(haLong.support.href, "/xe-ghep-hai-duong-quang-ninh");
   assert.match(haLong.endpointIntro, /không xác nhận mọi địa chỉ luôn có xe/i);
-  assert.match(haLong.endpointIntro, /không tạo giá riêng cho Bãi Cháy/i);
+  assert.match(haLong.endpointIntro, /giá endpoint đã xác thực riêng/i);
   assert.doesNotMatch(JSON.stringify({ endpointNames: haLong.endpointNames, endpointIntro: haLong.endpointIntro }), /(?:250\.000|900\.000|1\.100\.000|180\.000)đ/);
 });
 

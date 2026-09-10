@@ -17,15 +17,15 @@
 
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const rootDir = resolve(fileURLToPath(import.meta.url), "../..");
 
 // Dynamic imports of project data
-const { routePricingDataset, getRoutePrice } = await import(join(rootDir, "data/seo/pricing-engine.ts"));
-const { seoAssets } = await import(join(rootDir, "data/seo/asset-registry.mjs"));
-const { moneyPageUpgrades } = await import(join(rootDir, "data/seo/money-page-upgrades.mjs"));
-const { guidePosts } = await import(join(rootDir, "data/guide-posts.ts"));
+const { routePricingDataset, getRoutePrice } = await import(pathToFileURL(join(rootDir, "data/seo/pricing-engine.ts")).href);
+const { seoAssets } = await import(pathToFileURL(join(rootDir, "data/seo/asset-registry.mjs")).href);
+const { moneyPageUpgrades } = await import(pathToFileURL(join(rootDir, "data/seo/money-page-upgrades.mjs")).href);
+const { guidePosts } = await import(pathToFileURL(join(rootDir, "data/guide-posts.ts")).href);
 
 const urlInventoryRaw = await readFile(join(rootDir, "seo/url-inventory.json"), "utf8");
 const urlInventory = JSON.parse(urlInventoryRaw);

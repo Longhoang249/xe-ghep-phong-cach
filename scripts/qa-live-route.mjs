@@ -223,6 +223,31 @@ async function runLiveQA() {
     if (cbPriceStr.includes("600.000") || cbPriceStr.includes("750.000")) {
       throw new Error(`Legacy prices (600k/750k) detected on Cát Bi page!`);
     }
+
+    // Task 3A.1: Factual Hotfix DOM assertions
+    const pageText = await evaluate(`document.body.innerText`);
+    const forbiddenPatterns = [
+      /vé sảnh/i,
+      /phí sảnh/i,
+      /vé vào cổng sảnh/i,
+      /vé vào sảnh/i,
+      /đúng sảnh ga đi T1 để kịp chuyến/i,
+      /đón tại sảnh ga đến T1 sau khi máy bay hạ cánh/i,
+      /hỗ trợ hành lý/i,
+      /xác nhận xe và tài xế trước giờ đón/i,
+      /xe và thời gian được sắp xếp theo khung giờ bay/i,
+      /áp dụng đồng bộ cho cả hai chiều/i,
+      /không mất phí đặt cọc/i,
+    ];
+    for (const pattern of forbiddenPatterns) {
+      if (pattern.test(pageText)) {
+        throw new Error(`Forbidden copy pattern detected on live Cát Bi page: ${pattern}`);
+      }
+    }
+    if (!pageText.includes("Đặt trước không mất phí")) {
+      throw new Error(`Expected exact booking copy 'Đặt trước không mất phí' on Cát Bi page`);
+    }
+    console.log(`  ✅ Verified Task 3A.1: Airport fee removed, operating promises neutralized, exact booking copy verified`);
     console.log(`  ✅ Verified Cát Bi pricing: Ghép=300.000đ/người, Bao xe=550.000đ/chuyến`);
   } else {
     // 4. Pricing Table verification for pillars

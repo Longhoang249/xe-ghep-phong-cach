@@ -96,7 +96,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       ]
     : isCbRoute
     ? [
-        { label: "Giá xe ghép", detail: "Theo người / vé sảnh ga", text: "300.000đ/người" },
+        { label: "Giá xe ghép", detail: "Theo người", text: "300.000đ/người" },
         { label: "Bao xe theo chuyến", detail: "Đi riêng theo chuyến (chưa gồm vé cao tốc)", text: "550.000đ/chuyến" },
         { label: "Gửi hàng", detail: "Theo thỏa thuận chuyến", text: "Liên hệ" },
       ]
@@ -305,7 +305,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           {isCommercialUpgrade ? <>
             <span>{upgrade.summaryTitle}</span>
             <div className="route-summary-list">{upgrade.summaryItems.map((item: string) => <p key={item}><i aria-hidden="true">✓</i>{item}</p>)}</div>
-            <p>{isCbRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí, thanh toán sau chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
+            <p>{isCbRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
             <TrackedLink className="btn btn-primary route-call-button" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_summary", route_slug: route.slug }}>Gọi kiểm tra chuyến →</TrackedLink>
           </> : <>
             <span>PHONG CÁCH CÓ XE CHO TUYẾN NÀY</span>
@@ -320,14 +320,14 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         {isCommercialUpgrade ? <article className="route-price-panel">
           <span className="section-kicker">GIÁ BẮT ĐẦU ĐÃ XÁC NHẬN</span>
           <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
-          <p>{isCbRoute ? "Bảng giá niêm yết chính thức áp dụng đồng bộ cho cả hai chiều đón trả tận nơi." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
+          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
           <div className="route-price-table">
             {commercialPriceRows.map((item) => <div key={item.label}>
               <span><b>{item.label}</b><small>{item.detail}</small></span>
               <strong>{item.text}</strong>
             </div>)}
           </div>
-          <p className="route-variable-note">{isCbRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc / vé sảnh sân bay (tollIncluded: false).</b> Đặt trước không mất phí, thanh toán sau chuyến đi an toàn.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
+          <p className="route-variable-note">{isCbRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Đặt trước không mất phí. Thanh toán sau chuyến.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
           <div className="route-price-actions">
             <TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_price", route_slug: route.slug }}>☎ Gọi kiểm tra giá</TrackedLink>
             <TrackedLink className="btn btn-ghost" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_price", route_slug: route.slug }}>Nhắn Zalo</TrackedLink>
@@ -409,10 +409,10 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
             {isCommercialUpgrade ? (
               isCbRoute ? (
                 <>
-                  <article><b>01</b><h3>Xe ghép sân bay</h3><p>300.000đ/người đón tận nhà tại Hải Dương, trả đúng sảnh ga đi T1 Cát Bi.</p></article>
-                  <article><b>02</b><h3>Bao xe riêng</h3><p>550.000đ/chuyến đi riêng (chưa gồm vé cao tốc), chủ động thời gian theo lịch bay.</p></article>
-                  <article><b>03</b><h3>Đón trả hai chiều</h3><p>Nhận cả chiều đi Cát Bi và đón tại sảnh ga đến Cát Bi khi máy bay hạ cánh về Hải Dương.</p></article>
-                  <article><b>04</b><h3>Đặt trước không mất phí</h3><p>Không mất phí đặt cọc; thanh toán trực tiếp sau chuyến đi an toàn.</p></article>
+                  <article><b>01</b><h3>Xe ghép sân bay</h3><p>300.000đ/người đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi.</p></article>
+                  <article><b>02</b><h3>Bao xe riêng</h3><p>550.000đ/chuyến đi riêng (chưa gồm vé cao tốc), linh hoạt thời gian theo lịch trình cá nhân.</p></article>
+                  <article><b>03</b><h3>Đón trả hai chiều</h3><p>Phục vụ cả hai chiều Hải Dương đi Sân bay Cát Bi và đón từ Sân bay Cát Bi về Hải Dương.</p></article>
+                  <article><b>04</b><h3>Đặt trước không mất phí</h3><p>Đặt trước không mất phí. Thanh toán sau chuyến.</p></article>
                 </>
               ) : (
                 <>

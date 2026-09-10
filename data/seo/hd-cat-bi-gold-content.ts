@@ -32,23 +32,23 @@ export function getHdCbEndpointRows(): EndpointGuideItem[] {
   return [
     {
       id: "cat-bi-ga-di",
-      name: "Sảnh Ga Đi T1 (Tầng 2) - Cát Bi",
+      name: "Ga Đi Sân bay Cát Bi",
       sharedPriceDisplay,
       privatePriceDisplay,
       travelTime: "50 - 65 phút (ước tính)",
-      hubs: ["Đón tận nhà tại Hải Dương", "Trả sảnh check-in ga đi tầng 2", "Hỗ trợ hành lý khoang cốp"],
-      description: "Đưa đón tận cửa nhà tại Hải Dương đến đúng sảnh ga đi T1 Cát Bi, hỗ trợ sắp xếp hành lý chu đáo, phù hợp lịch bay của quý khách.",
-      pickupNote: "Bao xe riêng chưa gồm vé cao tốc/vé vào sảnh (tollIncluded: false). Đặt trước không mất phí cọc, thanh toán sau chuyến đi an toàn.",
+      hubs: ["Đón tận nơi tại Hải Dương", "Khu vực Ga Đi Sân bay Cát Bi", "Khoang để hành lý"],
+      description: "Quý khách cung cấp điểm đón tại Hải Dương, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
+      pickupNote: "Bao xe riêng chưa gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến.",
     },
     {
       id: "cat-bi-ga-den",
-      name: "Sảnh Ga Đến T1 (Tầng 1) - Cát Bi",
+      name: "Ga Đến Sân bay Cát Bi",
       sharedPriceDisplay,
       privatePriceDisplay,
       travelTime: "50 - 65 phút (ước tính)",
-      hubs: ["Đón tại sảnh ra ga đến T1", "Đưa về tận nhà tại Hải Dương", "Tài xế chủ động liên hệ trước"],
-      description: "Đón khách ngay sau khi máy bay hạ cánh tại sảnh ga đến Cát Bi, đưa về tận cửa nhà tại Hải Dương, không lo chờ đợi hay giá taxi dù.",
-      pickupNote: "Khách nên gửi mã chuyến bay hoặc giờ hạ cánh khi đặt xe để tài xế chủ động liên lạc và đón đúng sảnh tầng 1.",
+      hubs: ["Khu vực Ga Đến Sân bay Cát Bi", "Đưa về tận nơi tại Hải Dương", "Liên hệ trao đổi trước chuyến"],
+      description: "Quý khách cung cấp điểm đón tại Sân bay Cát Bi, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
+      pickupNote: "Quý khách nên cung cấp ngày đi và giờ bay dự kiến để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
     },
     {
       id: "cat-bi-khach-san",
@@ -57,8 +57,8 @@ export function getHdCbEndpointRows(): EndpointGuideItem[] {
       privatePriceDisplay,
       travelTime: "50 - 65 phút (ước tính)",
       hubs: ["Trục đường Lê Hồng Phong", "Khu vực Tràng Cát", "Khách sạn ven sân bay"],
-      description: "Đưa đón khách lưu trú tại các khách sạn quanh khu vực sân bay Cát Bi hoặc các khu công nghiệp phụ trợ lân cận trục đường Bùi Viện.",
-      pickupNote: "Đón trả linh hoạt theo địa chỉ khách sạn hoặc văn phòng làm việc đã hẹn trước với tổng đài.",
+      description: "Đưa đón khách tại các khách sạn quanh khu vực sân bay Cát Bi hoặc các khu công nghiệp phụ trợ lân cận trục đường Bùi Viện.",
+      pickupNote: "Đón trả linh hoạt theo địa chỉ khách sạn hoặc điểm hẹn đã trao đổi trước với tổng đài.",
     },
   ];
 }
@@ -78,9 +78,9 @@ export const HD_CB_DECISION_ROWS: readonly DecisionGuideRow[] = Object.freeze([
   },
   {
     criterion: "Thời gian xuất phát",
-    sharedRide: "Xe đón theo lịch hẹn sắp xếp cùng các hành khách trên tuyến cùng khung giờ bay.",
-    privateCar: "Khách hàng hoàn toàn chủ động chọn giờ xe đón tận cửa nhà theo đúng kế hoạch chuyến bay.",
-    recommendation: "Chuyến bay sáng sớm hoặc cần có mặt sớm làm thủ tục nên ưu tiên bao xe để làm chủ thời gian.",
+    sharedRide: "Khách cung cấp giờ bay mong muốn để nhà xe kiểm tra và sắp xếp chuyến xe ghép phù hợp.",
+    privateCar: "Khách hàng chủ động chọn giờ xuất phát và điểm đón trả theo nhu cầu cá nhân.",
+    recommendation: "Nếu có nhu cầu xuất phát theo khung giờ riêng, bao xe là giải pháp linh hoạt thời gian.",
   },
   {
     criterion: "Không gian chuyến đi",
@@ -102,9 +102,9 @@ export const HD_CB_REVERSE_HUBS: readonly HubCategory[] = Object.freeze([
     icon: "pin",
     hubs: [
       {
-        name: "Sảnh Ga Đến T1 (Tầng 1)",
-        addressOrArea: "Cửa đón ô tô sảnh tầng 1 Sân bay Quốc tế Cát Bi",
-        note: "Tài xế đón khách ngay khi hạ cánh và lấy hành lý",
+        name: "Khu vực Ga Đến Sân bay Cát Bi",
+        addressOrArea: "Khu vực đón trả khách Cảng hàng không Quốc tế Cát Bi",
+        note: "Đón theo thỏa thuận chuyến thực tế",
       },
       {
         name: "Bãi đỗ xe Cảng hàng không Cát Bi",
@@ -125,7 +125,7 @@ export const HD_CB_REVERSE_HUBS: readonly HubCategory[] = Object.freeze([
       {
         name: "Khu vực trung tâm Hải Dương",
         addressOrArea: "Các tuyến đường Trần Phú, Lê Thanh Nghị, Bạch Đằng, Nguyễn Lương Bằng...",
-        note: "Đưa về tận cửa nhà, hỗ trợ dỡ hành lý",
+        note: "Đưa về tận nơi tại các trục đường trung tâm",
       },
       {
         name: "Khu vực Gia Lộc, Tứ Kỳ, Cẩm Giàng, Nam Sách",
@@ -143,14 +143,14 @@ export const HD_CB_REVERSE_HUBS: readonly HubCategory[] = Object.freeze([
 
 export const HD_CB_QUALITY_COMMITMENTS: readonly QualityCommitment[] = Object.freeze([
   {
-    title: "Đưa đón đúng sảnh ga, tận cửa nhà",
-    description: "Xe đón tận cửa nhà tại Hải Dương và trả đúng sảnh ga đi T1; chiều về đón tại sảnh ga đến T1 Cát Bi đưa về tận nhà an toàn, thuận tiện.",
+    title: "Đón trả tận nơi hai chiều",
+    description: "Phong Cách phục vụ đón trả tận nơi hai chiều giữa Hải Dương và Sân bay Cát Bi theo lịch hẹn đã thống nhất.",
     badge: "TẬN NƠI HAI CHIỀU",
   },
   {
-    title: "Đặt trước không mất phí — Trả sau chuyến",
-    description: "Chính sách đặt xe minh bạch tuyệt đối: quý khách không cần chuyển khoản đặt cọc trước, chỉ thanh toán khi đã về đến nơi an toàn.",
-    badge: "KHÔNG CẦN CỌC",
+    title: "Đặt trước không mất phí",
+    description: "Đặt trước không mất phí. Quý khách thanh toán sau chuyến đi an toàn.",
+    badge: "ĐẶT TRƯỚC 0Đ",
   },
   {
     title: "Phương tiện xe gia đình sạch sẽ, rộng rãi",
@@ -158,17 +158,17 @@ export const HD_CB_QUALITY_COMMITMENTS: readonly QualityCommitment[] = Object.fr
     badge: "XE GIA ĐÌNH",
   },
   {
-    title: "Tài xế chuyên nghiệp, hỗ trợ hành lý",
-    description: "Lái xe lịch sự, cẩn thận, hỗ trợ khuân vác hành lý tận tình, có kinh nghiệm đưa đón tuyến sân bay, lái xe an toàn trên cao tốc.",
-    badge: "CHU ĐÁO TẬN TÂM",
+    title: "Lái xe an toàn, lịch sự",
+    description: "Tài xế nhiều năm kinh nghiệm, phục vụ nhã nhặn, tuân thủ tốc độ và lái xe an toàn trên cao tốc.",
+    badge: "LÁI XE AN TOÀN",
   },
 ]);
 
 export const HD_CB_MEDIA_GALLERY: readonly MediaGalleryItem[] = Object.freeze([
   {
     src: "/images/san-bay-cat-bi-terminal.jpg",
-    alt: "Khu vực sảnh ga Cảng hàng không Quốc tế Cát Bi",
-    caption: "Sảnh đón trả khách Cảng hàng không Quốc tế Cát Bi (Hải Phòng)",
+    alt: "Khu vực nhà ga Cảng hàng không Quốc tế Cát Bi",
+    caption: "Khu vực đón trả khách Cảng hàng không Quốc tế Cát Bi (Hải Phòng)",
     width: 1200,
     height: 800,
   },

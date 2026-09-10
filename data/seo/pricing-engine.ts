@@ -269,7 +269,7 @@ export const routePricingDataset: ReadonlyArray<RoutePriceRecord> = Object.freez
     priceMax: 550000,
     unit: "trip",
     tollIncluded: false,
-    notes: "Giá chưa bao gồm vé cao tốc / vé sảnh sân bay",
+    notes: "Giá chưa bao gồm vé cầu đường cao tốc",
     sourceId: PRICING_SOURCE_ID,
     verifiedAt: PRICING_VERIFIED_AT,
     status: "VERIFIED",

@@ -75,13 +75,13 @@ export const moneyPageUpgrades = Object.freeze({
     description: "Xe Hải Dương - Sân bay Cát Bi hai chiều đón tận nơi. Xe ghép 300.000đ/người, bao xe 550.000đ/chuyến. Đặt trước không mất phí, gọi 0987 663 883.",
     h1: "Xe Hải Dương - Sân bay Cát Bi",
     eyebrow: "XE ĐƯA ĐÓN SÂN BAY CÁT BI HAI CHIỀU",
-    answer: "Phong Cách nhận đưa đón khách tuyến Hải Dương - Sân bay Cát Bi hai chiều, đón tận nhà và trả đúng sảnh ga đi/đến. Giá vé xe ghép 300.000đ/người; bao xe riêng 550.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc). Đặt trước không mất phí, thanh toán sau chuyến đi an toàn.",
-    heroBookingPrompt: "Gửi điểm đón, điểm trả, ngày đi và giờ bay hoặc giờ cần có mặt để kiểm tra xe",
+    answer: "Phong Cách phục vụ xe ghép và bao xe tuyến Hải Dương - Sân bay Cát Bi hai chiều đón trả tận nơi. Giá vé xe ghép từ 300.000đ/người; bao xe riêng 550.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc). Đặt trước không mất phí. Thanh toán sau chuyến.",
+    heroBookingPrompt: "Gửi điểm đón, điểm trả, ngày đi và giờ bay để kiểm tra xe",
     summaryTitle: "HẢI DƯƠNG - SÂN BAY CÁT BI",
     summaryItems: Object.freeze([
       "Xe ghép và bao xe hai chiều",
       "Đón tận nơi tại Hải Dương",
-      "Đưa đón sảnh ga đi và ga đến Cát Bi",
+      "Đưa đón Sân bay Cát Bi hai chiều",
       "Trả tận nơi theo địa chỉ",
       "Đặt trước không mất phí",
       "Thanh toán sau chuyến",
@@ -90,31 +90,31 @@ export const moneyPageUpgrades = Object.freeze({
     directions: Object.freeze([
       Object.freeze({
         title: "Hải Dương đến Sân bay Cát Bi",
-        copy: "Xe đón tận nơi tại Hải Dương, xuất phát theo khung giờ hẹn trước và trả khách đúng sảnh ga đi T1 Cát Bi để kịp làm thủ tục chuyến bay.",
+        copy: "Quý khách cung cấp điểm đón tại Hải Dương, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
       }),
       Object.freeze({
         title: "Sân bay Cát Bi về Hải Dương",
-        copy: "Tài xế đón tại sảnh ga đến T1 sau khi chuyến bay hạ cánh, hỗ trợ hành lý và đưa quý khách trả tận nơi an toàn tại mọi khu vực ở Hải Dương.",
+        copy: "Quý khách cung cấp điểm đón tại Sân bay Cát Bi, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
       }),
     ]),
     decisionKicker: "NHU CẦU ĐI SÂN BAY",
     decisionTitle: "Chọn xe theo chuyến và hành lý",
     decisionRows: Object.freeze([
-      Object.freeze({ need: "Đi ra sân bay", guidance: "Cung cấp giờ bay hoặc giờ cần có mặt để Phong Cách kiểm tra xe và tư vấn phương án phù hợp." }),
-      Object.freeze({ need: "Từ sân bay về Hải Dương", guidance: "Gửi ngày, giờ hạ cánh dự kiến, điểm đón tại sảnh Cát Bi và địa chỉ trả tại Hải Dương để kiểm tra chiều về." }),
+      Object.freeze({ need: "Đi ra sân bay", guidance: "Quý khách cung cấp điểm đón/trả tại Sân bay Cát Bi, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp." }),
+      Object.freeze({ need: "Từ sân bay về Hải Dương", guidance: "Quý khách cung cấp điểm đón tại Sân bay Cát Bi, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp." }),
       Object.freeze({ need: "Đi một người", guidance: "Nên chọn xe ghép 300.000đ/người để tối ưu chi phí, đón trả tận nơi hai chiều." }),
-      Object.freeze({ need: "Nhóm hoặc gia đình", guidance: "Bao xe riêng 550.000đ/chuyến mang lại không gian riêng tư, chủ động giờ xuất phát theo giờ bay." }),
+      Object.freeze({ need: "Nhóm hoặc gia đình", guidance: "Bao xe riêng 550.000đ/chuyến mang lại không gian riêng tư và linh hoạt thời gian theo lịch trình cá nhân." }),
       Object.freeze({ need: "Nhiều hành lý ký gửi", guidance: "Khách nên thông báo trước số lượng vali để nhà xe bố trí khoang cốp xe rộng rãi phù hợp." }),
     ]),
-    decisionNote: "Quý khách nên cung cấp giờ bay để nhà xe tư vấn khung giờ đón hợp lý nhất.",
+    decisionNote: "Quý khách cung cấp điểm đón/trả tại Sân bay Cát Bi, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
     bookingGuide: Object.freeze({
       kicker: "ĐẶT XE SÂN BAY DỄ DÀNG",
       title: "Ba bước để kiểm tra xe đi Cát Bi",
-      intro: "Phong Cách kiểm tra xe và giá theo chuyến thực tế. Đặt trước không mất phí, thanh toán sau chuyến.",
+      intro: "Phong Cách kiểm tra xe và giá theo chuyến thực tế. Đặt trước không mất phí. Thanh toán sau chuyến.",
       steps: Object.freeze([
-        Object.freeze({ title: "Gửi điểm đón và điểm trả", copy: "Cung cấp địa chỉ cụ thể tại Hải Dương và thông tin sảnh ga đi hoặc ga đến tại Sân bay Cát Bi." }),
-        Object.freeze({ title: "Gửi ngày và giờ bay", copy: "Cung cấp ngày đi, mã chuyến bay hoặc giờ cất cánh để nhà xe tư vấn khung giờ xuất phát phù hợp." }),
-        Object.freeze({ title: "Xác nhận và đón xe", copy: "Phong Cách xác nhận xe và tài xế trước giờ đón. Quý khách lên xe và thanh toán sau chuyến." }),
+        Object.freeze({ title: "Gửi điểm đón và điểm trả", copy: "Cung cấp địa chỉ cụ thể tại Hải Dương và khu vực đón/trả tại Sân bay Cát Bi." }),
+        Object.freeze({ title: "Gửi ngày và giờ bay", copy: "Quý khách cung cấp điểm đón/trả tại Sân bay Cát Bi, ngày đi và giờ bay hoặc giờ cần có mặt để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp." }),
+        Object.freeze({ title: "Xác nhận và đón xe", copy: "Phong Cách trao đổi và thống nhất lịch hẹn trước chuyến đi. Quý khách lên xe và thanh toán sau chuyến." }),
       ]),
     }),
     support: Object.freeze({
@@ -129,15 +129,15 @@ export const moneyPageUpgrades = Object.freeze({
     faq: Object.freeze([
       Object.freeze({
         q: "Giá xe Hải Dương - Sân bay Cát Bi bao nhiêu?",
-        a: "Giá xe ghép là 300.000đ/người (đón trả tận nơi) và bao xe riêng theo chuyến là 550.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc). Mức giá này áp dụng đồng bộ cho cả hai chiều.",
+        a: "Giá xe ghép từ 300.000đ/người và bao xe riêng theo chuyến từ 550.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc). Nhà xe phục vụ cả hai chiều giữa Hải Dương và Sân bay Cát Bi.",
       }),
       Object.freeze({
         q: "Có xe ghép từ Hải Dương đi sân bay Cát Bi không?",
-        a: "Có. Phong Cách nhận xe ghép tuyến Hải Dương - Sân bay Cát Bi; đưa đón tận nơi ra đúng sảnh ga đi T1 Cát Bi.",
+        a: "Có. Phong Cách phục vụ xe ghép tuyến Hải Dương đi Sân bay Cát Bi đón trả tận nơi.",
       }),
       Object.freeze({
         q: "Có xe đón từ Sân bay Cát Bi về Hải Dương khi máy bay hạ cánh không?",
-        a: "Có. Phong Cách nhận đón cả hai chiều. Tài xế liên hệ trước và đón quý khách tại sảnh ga đến T1 Sân bay Cát Bi sau khi hạ cánh, đưa về trả tận nơi tại Hải Dương.",
+        a: "Có. Phong Cách phục vụ cả hai chiều: đón từ Hải Dương đi Sân bay Cát Bi và đón từ Sân bay Cát Bi về lại Hải Dương.",
       }),
       Object.freeze({
         q: "Có đón tận nơi và trả tận nơi không?",
@@ -145,19 +145,19 @@ export const moneyPageUpgrades = Object.freeze({
       }),
       Object.freeze({
         q: "Một người đi Cát Bi có thể đặt xe ghép không?",
-        a: "Có thể đặt xe ghép. Mức cước 300.000đ/người tối ưu chi phí cho khách đi 1 - 2 người; xe và thời gian được sắp xếp theo khung giờ bay.",
+        a: "Có thể đặt xe ghép. Quý khách cung cấp điểm đón/trả tại Sân bay Cát Bi, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
       }),
       Object.freeze({
         q: "Nhóm 2 - 4 người nên ghép hay bao xe?",
-        a: "Nên cân nhắc bao xe riêng 550.000đ/chuyến để có không gian riêng tư, nhiều chỗ để hành lý và chủ động giờ xuất phát theo lịch bay.",
+        a: "Nên cân nhắc bao xe riêng 550.000đ/chuyến để có không gian riêng tư và linh hoạt thời gian theo lịch trình cá nhân.",
       }),
       Object.freeze({
-        q: "Giá bao xe đã bao gồm vé cao tốc và vé vào sảnh sân bay chưa?",
-        a: "Chưa bao gồm. Mức giá bao xe 550.000đ/chuyến chưa bao gồm vé trạm thu phí BOT cao tốc hoặc vé vào cổng sảnh sân bay (tollIncluded: false). Quý khách có thể tự thanh toán hoặc gửi tài xế thanh toán theo biên lai thực tế.",
+        q: "Giá bao xe đã bao gồm vé cao tốc chưa?",
+        a: "Chưa bao gồm. Mức giá bao xe 550.000đ/chuyến chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Quý khách có thể tự thanh toán hoặc gửi tài xế thanh toán theo thực tế.",
       }),
       Object.freeze({
         q: "Cần cung cấp thông tin gì khi đặt xe sân bay?",
-        a: "Quý khách nên cung cấp địa chỉ đón trả cụ thể, ngày đi, mã chuyến bay hoặc giờ cất cánh để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp nhất.",
+        a: "Quý khách cung cấp điểm đón/trả tại Sân bay Cát Bi, ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp.",
       }),
     ]),
   }),

@@ -37,8 +37,8 @@ test("TASK-3A: Pricing strictly matches owner_price_sheet_2026_09_09 (300k ghép
 
   // Verify dynamic endpoint rows match pricing engine in hd-cat-bi-gold-content.ts
   const goldSource = await readFile(new URL("../data/seo/hd-cat-bi-gold-content.ts", import.meta.url), "utf8");
-  assert.match(goldSource, /name:\s*"Sảnh Ga Đi T1/);
-  assert.match(goldSource, /name:\s*"Sảnh Ga Đến T1/);
+  assert.match(goldSource, /name:\s*"Ga Đi Sân bay Cát Bi"/);
+  assert.match(goldSource, /name:\s*"Ga Đến Sân bay Cát Bi"/);
   assert.match(goldSource, /tollIncluded:\s*false/);
 });
 
@@ -67,7 +67,7 @@ test("TASK-3A: Parent pillar /xe-ghep-hai-duong-hai-phong is linked in breadcrum
   assert.match(pageSource, /href="\/xe-ghep-hai-duong-hai-phong"[^>]*>Xe ghép Hải Dương - Hải Phòng<\/Link>/);
 });
 
-test("TASK-3A: Zero unverified operational claims (flight delays, missed flight, 24/7, 0đ cọc)", async () => {
+test("TASK-3A: Zero unverified operational claims and airport fee scrubbed (Task 3A.1)", async () => {
   const [upgradeCopy, goldSource, pageSource] = await Promise.all([
     JSON.stringify(moneyPageUpgrades["hd-cb"]),
     readFile(new URL("../data/seo/hd-cat-bi-gold-content.ts", import.meta.url), "utf8"),
@@ -76,7 +76,7 @@ test("TASK-3A: Zero unverified operational claims (flight delays, missed flight,
 
   const combined = upgradeCopy + "\n" + goldSource + "\n" + pageSource;
 
-  // Forbidden operational claims
+  // Forbidden operational claims & airport fees
   assert.doesNotMatch(combined, /chờ\s*(?:miễn phí\s*)?(?:khi\s*)?(?:hoãn|delay)\s*\d+/i);
   assert.doesNotMatch(combined, /đền bù|bồi thường\s*(?:lỡ|trễ|muộn)\s*chuyến bay/i);
   assert.doesNotMatch(combined, /cam kết (?:kịp|đúng) giờ bay 100%/i);
@@ -84,9 +84,19 @@ test("TASK-3A: Zero unverified operational claims (flight delays, missed flight,
   assert.doesNotMatch(combined, /0đ cọc/i);
   assert.doesNotMatch(combined, /không khói thuốc/i);
   assert.doesNotMatch(combined, /đời mới 100%/i);
+  assert.doesNotMatch(combined, /vé sảnh|phí sảnh|vé vào cổng sảnh|vé vào sảnh/i);
+  assert.doesNotMatch(combined, /đúng sảnh ga đi T1 để kịp chuyến/i);
+  assert.doesNotMatch(combined, /đón tại sảnh ga đến T1 sau khi máy bay hạ cánh/i);
+  assert.doesNotMatch(combined, /hỗ trợ hành lý/i);
+  assert.doesNotMatch(combined, /xác nhận xe và tài xế trước giờ đón/i);
+  assert.doesNotMatch(combined, /xe và thời gian được sắp xếp theo khung giờ bay/i);
+  assert.doesNotMatch(combined, /áp dụng đồng bộ cho cả hai chiều/i);
+  assert.doesNotMatch(combined, /không mất phí đặt cọc/i);
 
-  // Guidance compliant
-  assert.match(combined, /giờ bay hoặc giờ cần có mặt|cung cấp giờ bay để nhà xe kiểm tra/i);
+  // Guidance compliant & exact booking wording
+  assert.match(combined, /cung cấp điểm đón.+ngày đi và giờ bay để nhà xe kiểm tra và tư vấn phương án di chuyển phù hợp/i);
+  assert.match(combined, /Đặt trước không mất phí/i);
   assert.match(combined, /thanh toán sau chuyến/i);
-  assert.match(combined, /tollIncluded:\s*false|chưa bao gồm vé cầu đường/i);
+  assert.match(combined, /tollIncluded:\s*false|chưa bao gồm vé cầu đường cao tốc/i);
 });
+

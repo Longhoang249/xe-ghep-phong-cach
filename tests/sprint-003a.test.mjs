@@ -77,8 +77,8 @@ test("Wave 2 copy covers required commercial intent and omits unsupported operat
   assert.doesNotMatch(catBi, /cổng\s*\d+|cửa\s*\d+|delay[^.]{0,80}\d+/i);
   assert.match(catBi, /giờ bay hoặc giờ cần có mặt/i);
   assert.match(catBi, /300\.000đ\/người/);
-  assert.match(catBi, /600\.000đ\/chuyến/);
-  assert.match(catBi, /750\.000đ\/chuyến/);
+  assert.match(catBi, /550\.000đ\/chuyến/);
+  assert.doesNotMatch(catBi, /(?:600\.000|750\.000)đ/);
   assert.doesNotMatch(catBi, /kế thừa hành lang Hải Dương - Hải Phòng/i);
 
   const haLong = moneyPageUpgrades["hd-ha-long"];

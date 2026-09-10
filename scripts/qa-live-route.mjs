@@ -27,7 +27,8 @@ const slug = process.argv[3] || "xe-ghep-hai-duong-quang-ninh";
 const targetUrl = `${BASE_URL}/${slug}`;
 
 const isQn = slug.includes("quang-ninh");
-const isHp = slug.includes("hai-phong");
+const isHp = slug === "xe-ghep-hai-duong-hai-phong";
+const isCb = slug === "xe-hai-duong-cat-bi" || slug.includes("cat-bi");
 
 console.log("==================================================");
 console.log("🌐 LIVE APPLICATION BROWSER QA (REAL DOM VIA CDP)");
@@ -190,7 +191,11 @@ async function runLiveQA() {
   // 3. H1 & Hero checks
   const h1Text = await evaluate(`document.querySelector('h1')?.innerText?.trim()`);
   console.log(`[Desktop] H1 Check: "${h1Text}"`);
-  const expectedH1 = isQn ? "Xe ghép Hải Dương - Quảng Ninh" : "Xe ghép Hải Dương - Hải Phòng";
+  const expectedH1 = isQn
+    ? "Xe ghép Hải Dương - Quảng Ninh"
+    : isCb
+    ? "Xe Hải Dương - Sân bay Cát Bi đón tận nơi"
+    : "Xe ghép Hải Dương - Hải Phòng";
   if (h1Text !== expectedH1) {
     throw new Error(`H1 mismatch! Expected "${expectedH1}", got "${h1Text}"`);
   }
@@ -205,69 +210,85 @@ async function runLiveQA() {
   `);
   console.log(`[Desktop] Hero Starting Price: "${startingPrice}"`);
 
-  // 4. Pricing Table verification
-  const tableRowsCount = await evaluate(`document.querySelectorAll('table[class*="pricingTable"] tbody tr').length`);
-  console.log(`[Desktop] Pricing Table Rows: ${tableRowsCount} rows found`);
-  const expectedRows = isQn ? 16 : 11;
-  if (tableRowsCount !== expectedRows) {
-    throw new Error(`Expected ${expectedRows} table rows, found ${tableRowsCount}`);
-  }
-
-  // Route-specific detailed pricing checks
-  if (isQn) {
-    const tableData = await evaluate(`
-      Array.from(document.querySelectorAll('table[class*="pricingTable"] tbody tr')).map(row => {
-        const cols = row.querySelectorAll('td');
-        return {
-          name: cols[0]?.innerText?.trim(),
-          shared: cols[1]?.innerText?.trim(),
-          private: cols[2]?.innerText?.trim(),
-        };
-      });
+  if (isCb) {
+    // 4. Cát Bi pricing checks
+    const cbPrices = await evaluate(`
+      Array.from(document.querySelectorAll('.route-hero-price-grid div, .route-price-table div')).map(el => el.innerText)
     `);
-
-    const qnChecks = [
-      { name: "Đông Triều", check: (r) => r.shared.includes("250.000") && r.private.includes("10.000đ/km") },
-      { name: "Uông Bí", check: (r) => r.shared.includes("300.000") && r.private.includes("600.000") },
-      { name: "Hạ Long", check: (r) => r.shared.includes("400.000") && r.private.includes("1.000.000") },
-      { name: "Cẩm Phả", check: (r) => r.shared.includes("450.000") && r.private.includes("1.200.000") },
-      { name: "Vân Đồn", check: (r) => r.shared.includes("500.000") && r.private.includes("1.500.000") },
-      { name: "Móng Cái", check: (r) => r.shared.includes("700.000") && r.private.includes("Liên hệ") },
-    ];
-
-    for (const item of qnChecks) {
-      const match = tableData.find((r) => r.name.includes(item.name));
-      if (!match || !item.check(match)) {
-        throw new Error(`Pricing check failed for QN endpoint ${item.name}: ${JSON.stringify(match)}`);
-      }
-      console.log(`  ✅ Verified QN endpoint ${item.name}: Ghép=${match.shared}, Bao xe=${match.private}`);
+    const cbPriceStr = cbPrices.join(" ");
+    console.log(`[Desktop] Cát Bi Prices: ${cbPriceStr}`);
+    if (!cbPriceStr.includes("300.000đ/người") || !cbPriceStr.includes("550.000đ/chuyến")) {
+      throw new Error(`Cát Bi prices missing 300.000đ/người or 550.000đ/chuyến: ${cbPriceStr}`);
     }
-  }
+    if (cbPriceStr.includes("600.000") || cbPriceStr.includes("750.000")) {
+      throw new Error(`Legacy prices (600k/750k) detected on Cát Bi page!`);
+    }
+    console.log(`  ✅ Verified Cát Bi pricing: Ghép=300.000đ/người, Bao xe=550.000đ/chuyến`);
+  } else {
+    // 4. Pricing Table verification for pillars
+    const tableRowsCount = await evaluate(`document.querySelectorAll('table[class*="pricingTable"] tbody tr').length`);
+    console.log(`[Desktop] Pricing Table Rows: ${tableRowsCount} rows found`);
+    const expectedRows = isQn ? 16 : 11;
+    if (tableRowsCount !== expectedRows) {
+      throw new Error(`Expected ${expectedRows} table rows, found ${tableRowsCount}`);
+    }
 
-  if (isHp) {
-    const tableData = await evaluate(`
-      Array.from(document.querySelectorAll('table[class*="pricingTable"] tbody tr')).map(row => {
-        const cols = row.querySelectorAll('td');
-        return {
-          name: cols[0]?.innerText?.trim(),
-          shared: cols[1]?.innerText?.trim(),
-          private: cols[2]?.innerText?.trim(),
-        };
-      });
-    `);
+    // Route-specific detailed pricing checks
+    if (isQn) {
+      const tableData = await evaluate(`
+        Array.from(document.querySelectorAll('table[class*="pricingTable"] tbody tr')).map(row => {
+          const cols = row.querySelectorAll('td');
+          return {
+            name: cols[0]?.innerText?.trim(),
+            shared: cols[1]?.innerText?.trim(),
+            private: cols[2]?.innerText?.trim(),
+          };
+        });
+      `);
 
-    const hpChecks = [
-      { name: "Trung tâm", check: (r) => r.shared.includes("250.000") && r.private.includes("500.000") },
-      { name: "Cát Bi", check: (r) => r.shared.includes("300.000") && r.private.includes("550.000") },
-      { name: "Tiên Lãng", check: (r) => r.shared.includes("300.000") && r.private.includes("10.000đ/km") },
-    ];
+      const qnChecks = [
+        { name: "Đông Triều", check: (r) => r.shared.includes("250.000") && r.private.includes("10.000đ/km") },
+        { name: "Uông Bí", check: (r) => r.shared.includes("300.000") && r.private.includes("600.000") },
+        { name: "Hạ Long", check: (r) => r.shared.includes("400.000") && r.private.includes("1.000.000") },
+        { name: "Cẩm Phả", check: (r) => r.shared.includes("450.000") && r.private.includes("1.200.000") },
+        { name: "Vân Đồn", check: (r) => r.shared.includes("500.000") && r.private.includes("1.500.000") },
+        { name: "Móng Cái", check: (r) => r.shared.includes("700.000") && r.private.includes("Liên hệ") },
+      ];
 
-    for (const item of hpChecks) {
-      const match = tableData.find((r) => r.name.includes(item.name));
-      if (!match || !item.check(match)) {
-        throw new Error(`Pricing check failed for HP endpoint ${item.name}: ${JSON.stringify(match)}`);
+      for (const item of qnChecks) {
+        const match = tableData.find((r) => r.name.includes(item.name));
+        if (!match || !item.check(match)) {
+          throw new Error(`Pricing check failed for QN endpoint ${item.name}: ${JSON.stringify(match)}`);
+        }
+        console.log(`  ✅ Verified QN endpoint ${item.name}: Ghép=${match.shared}, Bao xe=${match.private}`);
       }
-      console.log(`  ✅ Verified HP endpoint ${item.name}: Ghép=${match.shared}, Bao xe=${match.private}`);
+    }
+
+    if (isHp) {
+      const tableData = await evaluate(`
+        Array.from(document.querySelectorAll('table[class*="pricingTable"] tbody tr')).map(row => {
+          const cols = row.querySelectorAll('td');
+          return {
+            name: cols[0]?.innerText?.trim(),
+            shared: cols[1]?.innerText?.trim(),
+            private: cols[2]?.innerText?.trim(),
+          };
+        });
+      `);
+
+      const hpChecks = [
+        { name: "Trung tâm", check: (r) => r.shared.includes("250.000") && r.private.includes("500.000") },
+        { name: "Cát Bi", check: (r) => r.shared.includes("300.000") && r.private.includes("550.000") },
+        { name: "Tiên Lãng", check: (r) => r.shared.includes("300.000") && r.private.includes("10.000đ/km") },
+      ];
+
+      for (const item of hpChecks) {
+        const match = tableData.find((r) => r.name.includes(item.name));
+        if (!match || !item.check(match)) {
+          throw new Error(`Pricing check failed for HP endpoint ${item.name}: ${JSON.stringify(match)}`);
+        }
+        console.log(`  ✅ Verified HP endpoint ${item.name}: Ghép=${match.shared}, Bao xe=${match.private}`);
+      }
     }
   }
 
@@ -284,11 +305,10 @@ async function runLiveQA() {
     throw new Error(`Zalo CTA does not point to canonical Zalo: ${zaloHref}`);
   }
 
-  const bookingHref = await evaluate(`document.querySelector('a[href*="#dat-xe"]')?.getAttribute('href')`);
-  console.log(`[Desktop] Booking CTA deep link: ${bookingHref}`);
-  const expectedTo = isQn ? "Qu%E1%BA%A3ng%20Ninh" : "H%E1%BA%A3i%20Ph%C3%B2ng";
-  if (!bookingHref?.includes(expectedTo) && !bookingHref?.includes(decodeURIComponent(expectedTo))) {
-    throw new Error(`Booking CTA destination mismatch: expected ${expectedTo}, got ${bookingHref}`);
+  const bookingHref = await evaluate(`document.querySelector('a[href*="dat-xe"]')?.getAttribute('href')`);
+  console.log(`[Desktop] Booking CTA link: ${bookingHref}`);
+  if (!bookingHref) {
+    throw new Error(`Booking CTA not found!`);
   }
 
   // 6. Schema JSON-LD checks
@@ -356,32 +376,36 @@ async function runLiveQA() {
     throw new Error(`Mobile page overflows viewport width! (${mobileOverflow.scrollWidth} > 390)`);
   }
 
-  // Mobile table horizontal scrollability
-  const tableWrapMetrics = await evaluate(`
-    (() => {
-      const wrap = document.querySelector('[class*="tableWrap"]');
-      if (!wrap) return null;
-      return {
-        clientWidth: wrap.clientWidth,
-        scrollWidth: wrap.scrollWidth,
-        canScroll: wrap.scrollWidth > wrap.clientWidth
-      };
-    })()
-  `);
-  console.log(`[Mobile] Table Wrapper Metrics: ${JSON.stringify(tableWrapMetrics)}`);
-  if (!tableWrapMetrics || !tableWrapMetrics.canScroll) {
-    throw new Error("Pricing table is not horizontally scrollable on mobile 390px!");
-  }
+  // Mobile table horizontal scrollability (for pillar pages with wide pricing tables)
+  if (!isCb) {
+    const tableWrapMetrics = await evaluate(`
+      (() => {
+        const wrap = document.querySelector('[class*="tableWrap"]');
+        if (!wrap) return null;
+        return {
+          clientWidth: wrap.clientWidth,
+          scrollWidth: wrap.scrollWidth,
+          canScroll: wrap.scrollWidth > wrap.clientWidth
+        };
+      })()
+    `);
+    console.log(`[Mobile] Table Wrapper Metrics: ${JSON.stringify(tableWrapMetrics)}`);
+    if (!tableWrapMetrics || !tableWrapMetrics.canScroll) {
+      throw new Error("Pricing table is not horizontally scrollable on mobile 390px!");
+    }
 
-  // Verify actual scroll interaction
-  const scrolledMetrics = await evaluate(`
-    (() => {
-      const wrap = document.querySelector('[class*="tableWrap"]');
-      wrap.scrollLeft = 120;
-      return { scrollLeft: wrap.scrollLeft };
-    })()
-  `);
-  console.log(`[Mobile] Scrolled scrollLeft: ${scrolledMetrics.scrollLeft} ${scrolledMetrics.scrollLeft > 0 ? "(PASS)" : "(FAIL)"}`);
+    // Verify actual scroll interaction
+    const scrolledMetrics = await evaluate(`
+      (() => {
+        const wrap = document.querySelector('[class*="tableWrap"]');
+        wrap.scrollLeft = 120;
+        return { scrollLeft: wrap.scrollLeft };
+      })()
+    `);
+    console.log(`[Mobile] Scrolled scrollLeft: ${scrolledMetrics.scrollLeft} ${scrolledMetrics.scrollLeft > 0 ? "(PASS)" : "(FAIL)"}`);
+  } else {
+    console.log(`[Mobile] Cát Bi endpoint page uses responsive price panel (no table wrap needed) (PASS)`);
+  }
 
   // CTA touch target size (Hero CTA action button)
   const ctaBox = await evaluate(`

@@ -1,0 +1,90 @@
+{
+  "route": "Hải Dương ⇄ Sân bay Cát Bi",
+  "slug": "xe-hai-duong-cat-bi",
+  "assetId": "MP-004",
+  "canonicalUrl": "/xe-hai-duong-cat-bi",
+  "parentPillar": "/xe-ghep-hai-duong-hai-phong",
+  "retrievalDate": "2026-09-09",
+  "queries": [
+    "xe Hải Dương Cát Bi",
+    "xe Hải Dương đi sân bay Cát Bi",
+    "xe ghép Hải Dương Cát Bi",
+    "xe Cát Bi Hải Dương",
+    "giá xe Hải Dương sân bay Cát Bi",
+    "bao xe Hải Dương Cát Bi",
+    "xe đưa đón sân bay Cát Bi Hải Dương",
+    "taxi Hải Dương Cát Bi"
+  ],
+  "competitors": [
+    {
+      "domain": "vemaybayhaiduong.com",
+      "name": "Xe Xuân Quỳnh Sân Bay",
+      "url": "https://vemaybayhaiduong.com",
+      "strengths": [
+        "Thương hiệu chuyên tuyến sân bay Cát Bi và Nội Bài lâu năm",
+        "Giá xe limousine theo tuyến cố định khoảng 150.000đ/khách"
+      ],
+      "weaknesses": [
+        "Chỉ đón tại các điểm/văn phòng cố định, không phải xe ghép đón tận cửa nhà mọi ngõ ngách",
+        "Giá bao xe riêng 4-7 chỗ cao (650k - 800k trở lên)",
+        "Gò bó theo khung giờ tuyến cố định"
+      ]
+    },
+    {
+      "domain": "xeghephaiphong24h.com",
+      "name": "Xe Ghép Hải Phòng 24h",
+      "url": "https://xeghephaiphong24h.com",
+      "strengths": [
+        "Nhấn mạnh đưa đón tận nơi cả hai chiều Hải Dương - Cát Bi",
+        "Cung cấp cả xe ghép lẫn bao xe"
+      ],
+      "weaknesses": [
+        "Khoảng giá mập mờ từ 250k - 300k xe ghép, 550k - 800k bao xe mà không có bảng giá chốt",
+        "Không nêu rõ phụ phí cầu đường cao tốc hay vé sảnh sân bay",
+        "Nội dung mỏng, thiếu hướng dẫn cụ thể về việc đón khách tại sảnh đến"
+      ]
+    },
+    {
+      "domain": "dungminh.vn",
+      "name": "Nhà Xe Dũng Minh",
+      "url": "https://dungminh.vn",
+      "strengths": [
+        "Có số hotline và Zalo liên hệ trực tiếp",
+        "Đội xe gia đình đời mới"
+      ],
+      "weaknesses": [
+        "Tuyên bố dịch vụ 24/7 và cam kết đúng giờ tuyệt đối thiếu cơ sở thực tế",
+        "Không có bảng giá niêm yết rõ ràng cho tuyến sân bay Cát Bi",
+        "Thiếu thông tin chiều ngược từ sân bay về Hải Dương"
+      ]
+    },
+    {
+      "domain": "taxicatbi.com",
+      "name": "Taxi Sân Bay Cát Bi",
+      "url": "https://taxicatbi.com",
+      "strengths": [
+        "Thế mạnh đón ngay tại sảnh ga Cát Bi"
+      ],
+      "weaknesses": [
+        "Giá cước taxi truyền thống cao (tính theo đồng hồ mét khoảng 700.000đ - 900.000đ/chuyến)",
+        "Không có dịch vụ xe ghép chia sẻ chi phí cho khách đi 1 người",
+        "Chiều từ Hải Dương đi Cát Bi phải phụ thuộc xe taxi chạy rỗng quay đầu"
+      ]
+    }
+  ],
+  "searchIntentSummary": {
+    "primaryIntent": "Hành khách tại Hải Dương cần phương tiện di chuyển nhanh chóng, đúng giờ ra Sân bay Cát Bi (Hải Phòng) để kịp làm thủ tục chuyến bay; hoặc hành khách hạ cánh tại Cát Bi cần xe đón tại sảnh ga đến về tận nhà ở Hải Dương.",
+    "pricingIntent": "Muốn biết mức giá cụ thể: xe ghép bao nhiêu (300.000đ/người) và bao xe nguyên chuyến bao nhiêu (550.000đ/chuyến). Cần biết rõ giá đã gồm vé cầu đường cao tốc chưa (chưa bao gồm, tollIncluded: false).",
+    "corridorIntent": "Quãng đường khoảng 50 - 58 km, di chuyển qua Cao tốc Hà Nội - Hải Phòng (nút giao Gia Lộc / nút giao QL10) hoặc trục Quốc lộ 5; thời gian lái xe ước tính khoảng 50 - 65 phút.",
+    "reverseIntent": "Rất cao: Khách từ các tỉnh thành khác hoặc nước ngoài bay về Cát Bi cần xe đón ngay tại sảnh đến (Ga T1 Cát Bi) về Hải Dương, không phải trả giá taxi dù hay chờ đợi lâu.",
+    "customerGuidanceIntent": "Cần biết cần chuẩn bị gì khi đặt xe sân bay (báo giờ bay/mã hiệu chuyến bay, lượng hành lý mang theo để nhà xe bố trí cốp xe phù hợp)."
+  },
+  "contentGapsToExploit": [
+    "Niêm yết giá minh bạch tuyệt đối từ pricing-engine.ts: Xe ghép 300.000đ/người, Bao xe 550.000đ/chuyến (tối ưu chi phí vượt trội so với taxi sân bay 700k - 900k).",
+    "Minh bạch quy tắc phí cầu đường: Bao xe riêng chưa bao gồm vé trạm cao tốc/vé vào sảnh (tollIncluded: false).",
+    "Đưa đón tận cửa nhà tại Hải Dương đến đúng sảnh ga đi T1 Cát Bi; chiều về đón tại sảnh đến T1 Cát Bi về tận cửa nhà tại Hải Dương.",
+    "Chính sách an tâm: Đặt trước không mất phí cọc, thanh toán sau chuyến đi an toàn.",
+    "Hướng dẫn khách hàng thiết thực (Customer Guidance): Khuyến nghị khách gửi giờ bay hoặc mã chuyến bay khi đặt xe để nhà xe tư vấn giờ xuất phát hợp lý; không tự bịa các chính sách vận hành như cam kết chờ delay hay bồi thường trễ chuyến.",
+    "Liên kết hữu cơ về trang Pillar chính /xe-ghep-hai-duong-hai-phong để tạo luồng thông tin mạch lạc trong cụm chủ đề Hải Phòng."
+  ]
+}

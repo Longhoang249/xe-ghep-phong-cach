@@ -45,7 +45,8 @@ const chromeProc = spawn(CHROME_PATH, [
   "--disable-gpu",
   "--no-first-run",
   "--no-default-browser-check",
-  "--user-data-dir=/tmp/chrome-live-qa-profile-" + Date.now(),
+  "--disable-background-networking",
+  "--disable-sync",
   "about:blank",
 ]);
 
@@ -62,8 +63,8 @@ process.on("SIGTERM", () => { cleanup(); process.exit(1); });
 
 // Wait for Chrome DevTools endpoint and create target page
 let target = null;
-for (let i = 0; i < 30; i++) {
-  await new Promise((r) => setTimeout(r, 200));
+for (let i = 0; i < 60; i++) {
+  await new Promise((r) => setTimeout(r, 250));
   try {
     const res = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/new?${encodeURIComponent(targetUrl)}`, { method: "PUT" });
     if (res.ok) {
@@ -273,7 +274,7 @@ async function runLiveQA() {
     const comparisonText = await evaluate(`
       document.querySelector('.route-comparison-box')?.innerText || ""
     `);
-    console.log(`[Desktop] Bãi Cháy Comparison Box: ${comparisonText.replace(/\\s+/g, " ")}`);
+    console.log(`[Desktop] Bãi Cháy Comparison Box: ${comparisonText.replace(/\s+/g, " ")}`);
     if (!comparisonText.includes("350.000đ") || !comparisonText.includes("900.000đ")) {
       throw new Error(`Bãi Cháy comparison missing 350.000đ or 900.000đ: ${comparisonText}`);
     }
@@ -281,8 +282,8 @@ async function runLiveQA() {
     // Check forbidden copy
     const pageText = await evaluate(`document.body.innerText`);
     const forbiddenPatterns = [
-      /24\\/7/i,
-      /24\\/24/i,
+      /24\/7/i,
+      /24\/24/i,
       /0đ cọc/i,
       /0 đồng cọc/i,
       /không cần cọc trước/i,

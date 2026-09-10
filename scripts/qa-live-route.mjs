@@ -194,7 +194,7 @@ async function runLiveQA() {
   const expectedH1 = isQn
     ? "Xe ghép Hải Dương - Quảng Ninh"
     : isCb
-    ? "Xe Hải Dương - Sân bay Cát Bi đón tận nơi"
+    ? "Xe Hải Dương - Sân bay Cát Bi"
     : "Xe ghép Hải Dương - Hải Phòng";
   if (h1Text !== expectedH1) {
     throw new Error(`H1 mismatch! Expected "${expectedH1}", got "${h1Text}"`);
@@ -411,7 +411,9 @@ async function runLiveQA() {
   const ctaBox = await evaluate(`
     (() => {
       const btn = document.querySelector("div[class*='heroActions'] a[href^='tel:']") ||
+                  document.querySelector("div.route-detail-actions a[href^='tel:']") ||
                   document.querySelector("div[class*='heroActions'] a") ||
+                  document.querySelector("div.route-detail-actions a") ||
                   document.querySelector("a[class*='btn']");
       if (!btn) return null;
       const rect = btn.getBoundingClientRect();

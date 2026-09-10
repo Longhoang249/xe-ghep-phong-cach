@@ -26,9 +26,10 @@ const BASE_URL = rawBaseUrl.replace(/\/$/, "");
 const slug = process.argv[3] || "xe-ghep-hai-duong-quang-ninh";
 const targetUrl = `${BASE_URL}/${slug}`;
 
-const isQn = slug.includes("quang-ninh");
+const isQn = slug === "xe-ghep-hai-duong-quang-ninh";
 const isHp = slug === "xe-ghep-hai-duong-hai-phong";
 const isCb = slug === "xe-hai-duong-cat-bi" || slug.includes("cat-bi");
+const isHl = slug === "xe-ghep-hai-duong-ha-long" || slug.includes("ha-long");
 
 console.log("==================================================");
 console.log("🌐 LIVE APPLICATION BROWSER QA (REAL DOM VIA CDP)");
@@ -136,6 +137,12 @@ async function captureScreenshot(filePath) {
   await mkdir(join(rootDir, "seo/screenshots"), { recursive: true });
   await writeFile(filePath, Buffer.from(res.data, "base64"));
   console.log(`[Screenshot] Saved: ${filePath}`);
+  const brainScreenshotsDir = "/Users/hoangvan/.gemini/antigravity/brain/f55e09b5-4b83-4505-86ca-8f87c4fb6040/screenshots";
+  try {
+    await mkdir(brainScreenshotsDir, { recursive: true });
+    const fileName = filePath.split("/").pop();
+    await writeFile(join(brainScreenshotsDir, fileName), Buffer.from(res.data, "base64"));
+  } catch (_) {}
 }
 
 async function runLiveQA() {
@@ -195,6 +202,8 @@ async function runLiveQA() {
     ? "Xe ghép Hải Dương - Quảng Ninh"
     : isCb
     ? "Xe Hải Dương - Sân bay Cát Bi"
+    : isHl
+    ? "Xe Ghép Hải Dương - Hạ Long"
     : "Xe ghép Hải Dương - Hải Phòng";
   if (h1Text !== expectedH1) {
     throw new Error(`H1 mismatch! Expected "${expectedH1}", got "${h1Text}"`);
@@ -249,6 +258,57 @@ async function runLiveQA() {
     }
     console.log(`  ✅ Verified Task 3A.1: Airport fee removed, operating promises neutralized, exact booking copy verified`);
     console.log(`  ✅ Verified Cát Bi pricing: Ghép=300.000đ/người, Bao xe=550.000đ/chuyến`);
+  } else if (isHl) {
+    // 4. Hạ Long pricing & commercial checks
+    const hlPrices = await evaluate(`
+      Array.from(document.querySelectorAll('.route-hero-price-grid div, .route-price-table div')).map(el => el.innerText)
+    `);
+    const hlPriceStr = hlPrices.join(" ");
+    console.log(`[Desktop] Hạ Long Prices: ${hlPriceStr}`);
+    if (!hlPriceStr.includes("400.000đ/người") || !hlPriceStr.includes("1.000.000đ/chuyến")) {
+      throw new Error(`Hạ Long prices missing 400.000đ/người or 1.000.000đ/chuyến: ${hlPriceStr}`);
+    }
+
+    // Check comparison box contains 350.000đ and 900.000đ for Bãi Cháy
+    const comparisonText = await evaluate(`
+      document.querySelector('.route-comparison-box')?.innerText || ""
+    `);
+    console.log(`[Desktop] Bãi Cháy Comparison Box: ${comparisonText.replace(/\\s+/g, " ")}`);
+    if (!comparisonText.includes("350.000đ") || !comparisonText.includes("900.000đ")) {
+      throw new Error(`Bãi Cháy comparison missing 350.000đ or 900.000đ: ${comparisonText}`);
+    }
+
+    // Check forbidden copy
+    const pageText = await evaluate(`document.body.innerText`);
+    const forbiddenPatterns = [
+      /24\\/7/i,
+      /24\\/24/i,
+      /0đ cọc/i,
+      /0 đồng cọc/i,
+      /không cần cọc trước/i,
+      /không mất cọc/i,
+      /áp dụng đồng bộ cho cả hai chiều/i,
+      /giá hai chiều như nhau/i,
+      /giá hai chiều giống nhau/i,
+      /đồng giá hai chiều/i,
+      /kịp giờ tàu xuất bến/i,
+      /đón tận cửa sảnh cảng tàu/i,
+      /đưa đón tận cổng sun world/i,
+    ];
+    for (const pattern of forbiddenPatterns) {
+      if (pattern.test(pageText)) {
+        throw new Error(`Forbidden copy pattern detected on live Hạ Long page: ${pattern}`);
+      }
+    }
+
+    // Check exact booking text
+    if (!pageText.includes("Đặt trước không mất phí")) {
+      throw new Error(`Expected exact booking copy 'Đặt trước không mất phí' on Hạ Long page`);
+    }
+    if (!pageText.includes("Thanh toán sau chuyến")) {
+      throw new Error(`Expected exact booking copy 'Thanh toán sau chuyến' on Hạ Long page`);
+    }
+    console.log(`  ✅ Verified Task 3B: Fares (400k/1.000k, BC 350k/900k), forbidden copy neutralized, exact booking copy verified`);
   } else {
     // 4. Pricing Table verification for pillars
     const tableRowsCount = await evaluate(`document.querySelectorAll('table[class*="pricingTable"] tbody tr').length`);
@@ -335,6 +395,12 @@ async function runLiveQA() {
   if (!bookingHref) {
     throw new Error(`Booking CTA not found!`);
   }
+  if (isHl) {
+    if (!bookingHref.includes("H%E1%BA%A1%20Long") && !bookingHref.includes("Hạ%20Long")) {
+      throw new Error(`Booking link does not prefill Hạ Long destination: ${bookingHref}`);
+    }
+    console.log(`  ✅ Verified Booking prefill destination for Hạ Long: ${bookingHref}`);
+  }
 
   // 6. Schema JSON-LD checks
   const schemas = await evaluate(`
@@ -402,7 +468,7 @@ async function runLiveQA() {
   }
 
   // Mobile table horizontal scrollability (for pillar pages with wide pricing tables)
-  if (!isCb) {
+  if (!isCb && !isHl) {
     const tableWrapMetrics = await evaluate(`
       (() => {
         const wrap = document.querySelector('[class*="tableWrap"]');
@@ -429,7 +495,7 @@ async function runLiveQA() {
     `);
     console.log(`[Mobile] Scrolled scrollLeft: ${scrolledMetrics.scrollLeft} ${scrolledMetrics.scrollLeft > 0 ? "(PASS)" : "(FAIL)"}`);
   } else {
-    console.log(`[Mobile] Cát Bi endpoint page uses responsive price panel (no table wrap needed) (PASS)`);
+    console.log(`[Mobile] ${isCb ? "Cát Bi" : "Hạ Long"} endpoint page uses responsive price panel (no table wrap needed) (PASS)`);
   }
 
   // CTA touch target size (Hero CTA action button)

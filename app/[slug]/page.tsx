@@ -88,6 +88,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
   ];
   const isQnRoute = route.slug === "xe-ghep-hai-duong-quang-ninh" || route.id === "hd-qn";
   const isCbRoute = route.slug === "xe-hai-duong-cat-bi" || route.id === "hd-cb";
+  const isHlRoute = route.slug === "xe-ghep-hai-duong-ha-long" || route.id === "hd-ha-long";
   const commercialPriceRows = isQnRoute
     ? [
         { label: "Giá xe ghép", detail: "Theo người (16 điểm đến)", text: formatGovernedPrice(routeEvidence?.price, "/người") },
@@ -99,6 +100,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         { label: "Giá xe ghép", detail: "Theo người", text: "300.000đ/người" },
         { label: "Bao xe theo chuyến", detail: "Đi riêng theo chuyến (chưa gồm vé cao tốc)", text: "550.000đ/chuyến" },
         { label: "Gửi hàng", detail: "Theo thỏa thuận chuyến", text: "Liên hệ" },
+      ]
+    : isHlRoute
+    ? [
+        { label: "Giá xe ghép", detail: "Theo người (Hạ Long)", text: "400.000đ/người" },
+        { label: "Bao xe theo chuyến", detail: "Đi riêng theo chuyến (chưa gồm vé cao tốc)", text: "1.000.000đ/chuyến" },
+        { label: "Gửi hàng", detail: "Theo hàng và chuyến", text: "150.000 – 200.000đ trở lên" },
       ]
     : [
         { label: "Giá xe ghép", detail: "Theo người", text: formatGovernedPrice(routeEvidence?.price, "/người") },
@@ -150,6 +157,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       ? [
           { "@type": "ListItem", position: 1, name: "Trang chủ", item: absoluteUrl() },
           { "@type": "ListItem", position: 2, name: "Xe ghép Hải Dương - Hải Phòng", item: absoluteUrl("/xe-ghep-hai-duong-hai-phong") },
+          { "@type": "ListItem", position: 3, name: upgrade.h1, item: pageUrl },
+        ]
+      : isHlRoute
+      ? [
+          { "@type": "ListItem", position: 1, name: "Trang chủ", item: absoluteUrl() },
+          { "@type": "ListItem", position: 2, name: "Xe ghép Hải Dương - Quảng Ninh", item: absoluteUrl("/xe-ghep-hai-duong-quang-ninh") },
           { "@type": "ListItem", position: 3, name: upgrade.h1, item: pageUrl },
         ]
       : [
@@ -276,6 +289,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                 <Link href="/xe-ghep-hai-duong-hai-phong">Xe ghép Hải Dương - Hải Phòng</Link><span>›</span>
                 <span aria-current="page">{upgrade.h1}</span>
               </nav>
+            ) : isHlRoute ? (
+              <nav className="route-breadcrumb" aria-label="Breadcrumb">
+                <Link href="/">Trang chủ</Link><span>›</span>
+                <Link href="/xe-ghep-hai-duong-quang-ninh">Xe ghép Hải Dương - Quảng Ninh</Link><span>›</span>
+                <span aria-current="page">Hạ Long</span>
+              </nav>
             ) : (
               <nav className="route-breadcrumb" aria-label="Breadcrumb"><Link href="/">Trang chủ</Link><span>›</span><Link href="/tuyen-xe">Tuyến xe</Link><span>›</span><span aria-current="page">{upgrade.h1}</span></nav>
             )
@@ -305,7 +324,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           {isCommercialUpgrade ? <>
             <span>{upgrade.summaryTitle}</span>
             <div className="route-summary-list">{upgrade.summaryItems.map((item: string) => <p key={item}><i aria-hidden="true">✓</i>{item}</p>)}</div>
-            <p>{isCbRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
+            <p>{isCbRoute || isHlRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
             <TrackedLink className="btn btn-primary route-call-button" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_summary", route_slug: route.slug }}>Gọi kiểm tra chuyến →</TrackedLink>
           </> : <>
             <span>PHONG CÁCH CÓ XE CHO TUYẾN NÀY</span>
@@ -319,15 +338,42 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       <section className="route-commercial" aria-labelledby="route-service-title">
         {isCommercialUpgrade ? <article className="route-price-panel">
           <span className="section-kicker">GIÁ BẮT ĐẦU ĐÃ XÁC NHẬN</span>
-          <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
-          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
+          <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : isHlRoute ? "Bảng giá xe Hải Dương ⇄ Hạ Long" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
+          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : isHlRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Hạ Long (Bãi Cháy có biểu giá riêng)." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
           <div className="route-price-table">
             {commercialPriceRows.map((item) => <div key={item.label}>
               <span><b>{item.label}</b><small>{item.detail}</small></span>
               <strong>{item.text}</strong>
             </div>)}
           </div>
-          <p className="route-variable-note">{isCbRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Đặt trước không mất phí. Thanh toán sau chuyến.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
+          {isHlRoute ? (
+            <div className="route-comparison-box" style={{ marginTop: "1rem", padding: "1rem", background: "#f8fafc", borderRadius: "8px", border: "1px solid #e2e8f0" }}>
+              <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "#0f172a", marginBottom: "0.35rem" }}>
+                SO SÁNH THƯƠNG MẠI: HẠ LONG VS BÃI CHÁY
+              </div>
+              <p style={{ margin: "0 0 0.75rem", fontSize: "0.9rem", color: "#475569" }}>
+                Biểu giá được xác định theo cự ly và vị trí độc lập, Bãi Cháy không phải là phụ phí của Hạ Long:
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
+                <div style={{ padding: "0.75rem", background: "#ffffff", borderRadius: "6px", border: "1px solid #cbd5e1" }}>
+                  <div style={{ fontWeight: 600, color: "#0369a1", fontSize: "0.95rem" }}>Khu vực Bãi Cháy</div>
+                  <div style={{ fontSize: "0.9rem", marginTop: "0.25rem" }}>• Xe ghép: <strong>350.000đ/người</strong></div>
+                  <div style={{ fontSize: "0.9rem" }}>• Bao xe: <strong>900.000đ/chuyến</strong></div>
+                  <div style={{ fontSize: "0.8rem", color: "#64748b", marginTop: "0.25rem" }}>Khách sạn ven biển, Sun World, cảng tàu</div>
+                </div>
+                <div style={{ padding: "0.75rem", background: "#ffffff", borderRadius: "6px", border: "1px solid #cbd5e1" }}>
+                  <div style={{ fontWeight: 600, color: "#0369a1", fontSize: "0.95rem" }}>Khu vực Hạ Long (Hòn Gai)</div>
+                  <div style={{ fontSize: "0.9rem", marginTop: "0.25rem" }}>• Xe ghép: <strong>400.000đ/người</strong></div>
+                  <div style={{ fontSize: "0.9rem" }}>• Bao xe: <strong>1.000.000đ/chuyến</strong></div>
+                  <div style={{ fontSize: "0.8rem", color: "#64748b", marginTop: "0.25rem" }}>Trung tâm Hòn Gai, Cột 5 - Cột 8, Bảo tàng</div>
+                </div>
+              </div>
+              <div style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "0.5rem" }}>
+                <em>Bao xe cả hai khu vực đều chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</em>
+              </div>
+            </div>
+          ) : null}
+          <p className="route-variable-note">{isCbRoute || isHlRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Đặt trước không mất phí. Thanh toán sau chuyến.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
           <div className="route-price-actions">
             <TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_price", route_slug: route.slug }}>☎ Gọi kiểm tra giá</TrackedLink>
             <TrackedLink className="btn btn-ghost" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_price", route_slug: route.slug }}>Nhắn Zalo</TrackedLink>
@@ -412,6 +458,13 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                   <article><b>01</b><h3>Xe ghép sân bay</h3><p>300.000đ/người đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi.</p></article>
                   <article><b>02</b><h3>Bao xe riêng</h3><p>550.000đ/chuyến đi riêng (chưa gồm vé cao tốc), linh hoạt thời gian theo lịch trình cá nhân.</p></article>
                   <article><b>03</b><h3>Đón trả hai chiều</h3><p>Phục vụ cả hai chiều Hải Dương đi Sân bay Cát Bi và đón từ Sân bay Cát Bi về Hải Dương.</p></article>
+                  <article><b>04</b><h3>Đặt trước không mất phí</h3><p>Đặt trước không mất phí. Thanh toán sau chuyến.</p></article>
+                </>
+              ) : isHlRoute ? (
+                <>
+                  <article><b>01</b><h3>Xe ghép Hạ Long</h3><p>400.000đ/người (Bãi Cháy 350.000đ) đón trả tận nơi hai chiều an toàn.</p></article>
+                  <article><b>02</b><h3>Bao xe theo chuyến</h3><p>1.000.000đ/chuyến (Bãi Cháy 900.000đ, chưa gồm vé cao tốc), riêng tư và chủ động thời gian.</p></article>
+                  <article><b>03</b><h3>Đón trả hai chiều</h3><p>Nhận đón tại nhà ở Hải Dương và đón từ Hạ Long / Bãi Cháy về lại Hải Dương.</p></article>
                   <article><b>04</b><h3>Đặt trước không mất phí</h3><p>Đặt trước không mất phí. Thanh toán sau chuyến.</p></article>
                 </>
               ) : (

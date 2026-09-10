@@ -1,0 +1,106 @@
+{
+  "targetRoute": "/xe-ghep-hai-duong-ha-long",
+  "assetId": "MP-019",
+  "auditedAt": "2026-09-10",
+  "primaryIntent": "xe ghép Hải Dương Hạ Long",
+  "secondaryIntents": [
+    "xe Hải Dương Hạ Long",
+    "xe Hạ Long Hải Dương",
+    "xe ghép Hải Dương Bãi Cháy",
+    "xe Hải Dương đi Bãi Cháy",
+    "giá xe Hải Dương Hạ Long",
+    "bao xe Hải Dương Hạ Long"
+  ],
+  "serpObservations": [
+    {
+      "query": "xe ghép Hải Dương Hạ Long",
+      "rankingUrl": "https://xeghephaiduonghaiphongquangninh.io.vn",
+      "title": "Xe Ghép Hải Dương Đi Hạ Long Quảng Ninh Giá Rẻ Đón Tận Nơi",
+      "pageType": "Landing Page / Directory",
+      "pricingShown": "250.000đ - 400.000đ/người (xe ghép), 800.000đ - 1.200.000đ (bao xe)",
+      "topicsCovered": ["Xe ghép gia đình 4-7 chỗ", "Đón tận nơi tại nhà", "Gửi hàng bưu phẩm", "Chạy cao tốc"],
+      "cta": "Hotline gọi điện trực tiếp, Zalo",
+      "contentGaps": [
+        "Không công bố rõ ràng bao xe đã bao gồm vé BOT cao tốc hay chưa",
+        "Cam kết tần suất '1 tiếng/chuyến' không có căn cứ vận hành thực tế",
+        "Trộn lẫn giá hành lang 250k với giá trung tâm Hạ Long"
+      ]
+    },
+    {
+      "query": "xe Hải Dương Hạ Long",
+      "rankingUrl": "https://vexere.com/vi-VN/ve-xe-khach-tu-hai-duong-di-ha-long-quang-ninh-127t25181.html",
+      "title": "Đặt vé xe từ Hải Dương đi Hạ Long - Quảng Ninh: 150K - 240K | Vexere",
+      "pageType": "Aggregator / OTA",
+      "pricingShown": "150.000đ - 240.000đ/vé (xe khách, limousine tuyến cố định)",
+      "topicsCovered": ["Xe khách liên tỉnh", "Limousine 9-11 chỗ", "Lịch trình bến xe Sao Đỏ - Bến xe Bãi Cháy"],
+      "cta": "Đặt vé online, chọn chỗ ngồi",
+      "contentGaps": [
+        "Chỉ đón trả tại bến xe cố định hoặc trục đường lớn, không đón tận nhà ở Hải Dương và trả tận khách sạn/cảng tàu Hạ Long",
+        "Không có dịch vụ bao xe riêng hoặc gửi hàng cồng kềnh linh hoạt theo yêu cầu",
+        "Phải phụ thuộc vào khung giờ cố định của nhà xe bến"
+      ]
+    },
+    {
+      "query": "xe ghép Hải Dương Bãi Cháy",
+      "rankingUrl": "https://xeghephaiduong247.com",
+      "title": "Xe Ghép Hải Dương Bãi Cháy Đón Trả Tận Nơi Giá Tốt Nhất",
+      "pageType": "Service Website",
+      "pricingShown": "Khoảng 350.000đ/người (xe ghép Bãi Cháy)",
+      "topicsCovered": ["Du lịch Bãi Cháy", "Khách sạn ven biển", "Đưa đón tận nơi", "Xe tiện chuyến"],
+      "cta": "Gọi điện tổng đài, nhắn tin Zalo",
+      "contentGaps": [
+        "Không phân định rõ sự khác biệt giá giữa Bãi Cháy (350k) và Hòn Gai/Hạ Long (400k)",
+        "Đưa ra các cam kết không xác thực như 'đón sau 15 phút', 'chạy thẳng tuyệt đối không đón khách dọc đường'",
+        "Không có bảng giá minh bạch cho từng loại hình xe ghép và bao xe riêng"
+      ]
+    },
+    {
+      "query": "bao xe Hải Dương Hạ Long",
+      "rankingUrl": "https://taxihaiduong24h.net",
+      "title": "Thuê Xe Riêng Bao Xe Hải Dương Đi Hạ Long Giá Rẻ Trọn Gói",
+      "pageType": "Taxi / Rental Service",
+      "pricingShown": "1.200.000đ - 1.500.000đ (xe 4 chỗ 1 chiều), 1.800.000đ - 2.200.000đ (2 chiều)",
+      "topicsCovered": ["Bao xe 4-7-16 chỗ", "Hợp đồng du lịch", "Giá trọn gói xăng xe"],
+      "cta": "Hotline đặt xe trước",
+      "contentGaps": [
+        "Mức giá bao xe thị trường (1.2m - 1.5m) cao hơn đáng kể so với mức bao xe Phong Cách xác thực (1.000.000đ/chuyến)",
+        "Có xu hướng tự phát sinh phụ thu cuối tuần, cao điểm mùa hè mà không công bố trước",
+        "Không có quy trình đặt trước 0đ cọc và thanh toán sau chuyến an toàn"
+      ]
+    },
+    {
+      "query": "xe Hạ Long Hải Dương",
+      "rankingUrl": "https://nhaxetienminh.com",
+      "title": "Xe Tiện Chuyến Hạ Long Về Hải Dương Đón Tận Nơi 24/7",
+      "pageType": "Transport Service",
+      "pricingShown": "Từ 250.000đ/người (tùy vị trí)",
+      "topicsCovered": ["Chiều về Hạ Long - Hải Dương", "Đón tại khách sạn, bến tàu", "Xe tiện chuyến hai chiều"],
+      "cta": "Gọi hotline, đặt xe qua Zalo",
+      "contentGaps": [
+        "Sử dụng tuyên bố thổi phồng '24/7' và 'xe đời mới 100%'",
+        "Tuyên bố đối xứng giá hai chiều không có căn cứ",
+        "Thiếu thông tin hướng dẫn chuẩn bị chuyến cho khách du lịch về đất liền"
+      ]
+    }
+  ],
+  "synthesis": {
+    "pricingLandscape": {
+      "sharedRideRange": "350.000đ - 450.000đ/người (Bãi Cháy ~350k, trung tâm Hạ Long ~400k)",
+      "privateCharterRange": "1.000.000đ - 1.500.000đ/chuyến (thị trường 1.2m - 1.5m; Phong Cách đã khóa 1.000.000đ/chuyến cho Hạ Long, 900.000đ cho Bãi Cháy)",
+      "parcelRange": "150.000đ - 200.000đ trở lên tùy loại hàng và điểm giao nhận"
+    },
+    "keyCustomerNeeds": [
+      "Đón tận nhà tại Hải Dương, trả tận khách sạn tại Bãi Cháy hoặc bến tàu quốc tế Hạ Long / Tuần Châu",
+      "Nhu cầu chiều về Hạ Long ➔ Hải Dương sau các tour du lịch hoặc công tác",
+      "Minh bạch về phí cầu đường cao tốc (tránh tài xế tự ý thu thêm không rõ ràng)",
+      "Quy trình đặt trước minh bạch không mất phí, thanh toán sau chuyến"
+    ],
+    "winningContentStrategy": [
+      "Cung cấp câu trả lời trực diện về giá (400k ghép / 1.000k bao xe Hạ Long; 350k ghép / 900k bao xe Bãi Cháy) ngay trong 150 từ đầu tiên",
+      "Bảng so sánh thương mại minh bạch giữa Hạ Long và Bãi Cháy",
+      "Định hướng địa lý trung lập cho khách du lịch (khách sạn, cảng tàu, khu vui chơi)",
+      "Tuyệt đối loại bỏ các cam kết vận hành vô căn cứ (không cam kết giờ phà/tàu, không cam kết chạy thẳng không nghỉ)",
+      "Giữ vững chính sách thương mại: Đặt trước không mất phí, thanh toán sau chuyến"
+    ]
+  }
+}

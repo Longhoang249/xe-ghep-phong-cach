@@ -83,15 +83,16 @@
           "url": "/xe-ghep-hai-duong-cam-pha",
           "role": "ENDPOINT_CORE",
           "targetIntent": ["xe ghep hai duong cam pha", "xe hai duong cua ong"]
+        },
+        {
+          "assetId": "MP-022",
+          "slug": "xe-ghep-hai-duong-uong-bi",
+          "url": "/xe-ghep-hai-duong-uong-bi",
+          "role": "ENDPOINT_CORE",
+          "targetIntent": ["xe ghep hai duong uong bi", "xe hai duong yen tu"]
         }
       ],
       "plannedP1Endpoints": [
-        {
-          "slug": "xe-ghep-hai-duong-uong-bi",
-          "url": "/xe-ghep-hai-duong-uong-bi",
-          "targetIntent": ["xe ghep hai duong uong bi", "xe hai duong yen tu"],
-          "readiness": "PLANNED_PHASE_3"
-        },
         {
           "slug": "xe-ghep-hai-duong-mong-cai",
           "url": "/xe-ghep-hai-duong-mong-cai",

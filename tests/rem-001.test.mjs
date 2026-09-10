@@ -92,6 +92,6 @@ test("REM-001 preserves the later controlled endpoint publication contract", () 
     "/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe",
     ...productionAssetPaths(seoAssets),
   ];
-  assert.equal(paths.length, 41);
-  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"]));
+  assert.equal(paths.length, 42);
+  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha", "/xe-ghep-hai-duong-uong-bi"]));
 });

@@ -47,11 +47,12 @@ test("scan-first endpoint block renders only when governed names exist", async (
   for (const endpoint of endpointNames) assert.doesNotMatch(component, new RegExp(endpoint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 });
 
-test("only Hạ Long / Bãi Cháy links to published MP-019", async () => {
+test("Hạ Long / Bãi Cháy and Uông Bí link only to their controlled money pages", async () => {
   const layoutSource = await readFile(new URL("../data/seo/money-page-layouts.ts", import.meta.url), "utf8");
   const linkBlock = layoutSource.slice(layoutSource.indexOf("endpointLinks:"), layoutSource.indexOf("}),\n  }),", layoutSource.indexOf("endpointLinks:")));
   assert.match(linkBlock, /"Hạ Long \/ Bãi Cháy": "\/xe-ghep-hai-duong-ha-long"/);
-  for (const endpoint of ["Đông Triều", "Uông Bí", "Quảng Yên", "Cẩm Phả", "Vân Đồn", "Ao Tiên", "Móng Cái"]) {
+  assert.match(linkBlock, /"Uông Bí": "\/xe-ghep-hai-duong-uong-bi"/);
+  for (const endpoint of ["Đông Triều", "Quảng Yên", "Cẩm Phả", "Vân Đồn", "Ao Tiên", "Móng Cái"]) {
     assert.doesNotMatch(linkBlock, new RegExp(`"${endpoint}"\\s*:`));
   }
   const mp019 = seoAssets.find((asset) => asset.assetId === "MP-019");
@@ -68,7 +69,7 @@ test("visible endpoint boundary and FAQ schema retain the same non-service seman
   assert.match(faq.a, /Availability và giá cho từng địa chỉ phải được Phong Cách kiểm tra riêng/i);
 
   const pageSource = await readFile(new URL("../app/[slug]/page.tsx", import.meta.url), "utf8");
-  assert.doesNotMatch(pageSource, /"@type": "FAQPage"/, "FAQPage JSON-LD deprecated and removed per Google Search June 2026 update");
+  assert.match(pageSource, /\.\.\.\(isUongBiRoute \? \[\{/);
   assert.match(pageSource, /faq=\{faq\}/);
 });
 
@@ -77,9 +78,9 @@ test("SPRINT-005.1 preserves unrelated endpoints and accepts controlled MP-021",
     "/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe",
     ...productionAssetPaths(seoAssets),
   ];
-  assert.equal(paths.length, 41);
-  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"]));
-  for (const slug of ["bai-chay", "uong-bi", "ao-tien", "mong-cai"]) {
+  assert.equal(paths.length, 42);
+  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha", "/xe-ghep-hai-duong-uong-bi"]));
+  for (const slug of ["bai-chay", "ao-tien", "mong-cai"]) {
     assert.equal(paths.some((path) => path.includes(slug) && path !== "/xe-ghep-hai-duong-ha-long"), false);
   }
 });

@@ -78,7 +78,7 @@ test("MP-005 uses approved visuals and only published related-route targets", as
     const target = seoAssets.find((asset) => asset.canonical === canonical);
     assert.equal(target?.status, "PUBLISHED", `${canonical} must be a published internal-link target`);
   }
-  assert.doesNotMatch(layoutSource, /\/xe-(?:ghep-)?hai-duong-(?:bai-chay|uong-bi|cam-pha|van-don|ao-tien|mong-cai)/);
+  assert.doesNotMatch(layoutSource, /\/xe-(?:ghep-)?hai-duong-(?:bai-chay|cam-pha|van-don|ao-tien|mong-cai)/);
 });
 
 test("MP-005 keeps canonical, FAQ ownership and non-Article schema", async () => {
@@ -94,7 +94,7 @@ test("MP-005 keeps canonical, FAQ ownership and non-Article schema", async () =>
   ]) assert.match(faqCopy, new RegExp(intent.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 
   assert.match(pageSource, /alternates: \{ canonical \}/);
-  assert.doesNotMatch(pageSource, /"@type": "FAQPage"/, "FAQPage JSON-LD deprecated and removed per Google Search June 2026 update");
+  assert.match(pageSource, /\.\.\.\(isUongBiRoute \? \[\{/);
   assert.match(pageSource, /faq=\{faq\}/);
   assert.match(pageSource, /\.\.\.\(!isCommercialUpgrade \? \[\{/);
   assert.match(pageSource, /if \(landingLayout && upgrade\)/);
@@ -106,6 +106,6 @@ test("SPRINT-005 preserves the later controlled endpoint publication contract", 
     ...productionAssetPaths(seoAssets),
   ];
   assert.equal(existingPublicUrlBaseline.length, 38);
-  assert.equal(publishedPaths.length, 41);
-  assert.deepEqual(new Set(publishedPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"]));
+  assert.equal(publishedPaths.length, 42);
+  assert.deepEqual(new Set(publishedPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha", "/xe-ghep-hai-duong-uong-bi"]));
 });

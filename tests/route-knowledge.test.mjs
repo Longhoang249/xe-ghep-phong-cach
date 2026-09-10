@@ -53,21 +53,21 @@ test("C: every parent route and sub-route belongs to a Phase 1 cluster", () => {
 
 test("D: candidate endpoints remain data-only unless superseded by a controlled publication", () => {
   const publicAssetKeys = new Set(seoAssets.flatMap((asset) => [asset.assetId, asset.slug, asset.canonical]));
-  for (const route of phase1SubRoutes.filter((item) => item.endpointLifecycle === "CANDIDATE" && item.subRouteId !== "hd-cam-pha")) {
+  for (const route of phase1SubRoutes.filter((item) => item.endpointLifecycle === "CANDIDATE" && !["hd-cam-pha", "hd-uong-bi"].includes(item.subRouteId))) {
     assert.equal(route.publicationState, "DATA_ONLY");
     assert.equal(route.canonical, null);
     assert.deepEqual(route.existingAssetIds, []);
     assert.equal(publicAssetKeys.has(route.subRouteId), false);
   }
-  assert.equal(seoAssets.length, 34);
+  assert.equal(seoAssets.length, 35);
 });
 
 test("E: later controlled endpoint publications preserve the 38-URL baseline", () => {
   const staticPaths = ["/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe"];
   const currentPaths = [...staticPaths, ...productionAssetPaths(seoAssets)].sort();
-  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"].sort());
+  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha", "/xe-ghep-hai-duong-uong-bi"].sort());
   assert.equal(existingPublicUrlBaseline.length, 38);
-  assert.equal(currentPaths.length, 41);
+  assert.equal(currentPaths.length, 42);
 });
 
 test("Phase 1 maps the original assets plus explicitly published MP-019", () => {

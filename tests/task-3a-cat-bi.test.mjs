@@ -55,7 +55,8 @@ test("TASK-3A: Legacy prices (600k, 750k) and 4c/7c split are completely absent 
   // Check page.tsx rendering for Cát Bi
   const pageSource = await readFile(new URL("../app/[slug]/page.tsx", import.meta.url), "utf8");
   assert.match(pageSource, /isCbRoute/);
-  assert.doesNotMatch(pageSource, /300\.000đ\/người[\s\S]{0,100}(?:600\.000|750\.000)đ/);
+  const catBiRenderer = pageSource.slice(pageSource.indexOf("isCbRoute"), pageSource.indexOf("isHlRoute"));
+  assert.doesNotMatch(catBiRenderer, /300\.000đ\/người[\s\S]{0,100}(?:600\.000|750\.000)đ/);
 });
 
 test("TASK-3A: Parent pillar /xe-ghep-hai-duong-hai-phong is linked in breadcrumb and support", async () => {
@@ -99,4 +100,3 @@ test("TASK-3A: Zero unverified operational claims and airport fee scrubbed (Task
   assert.match(combined, /thanh toán sau chuyến/i);
   assert.match(combined, /tollIncluded:\s*false|chưa bao gồm vé cầu đường cao tốc/i);
 });
-

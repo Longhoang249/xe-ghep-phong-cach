@@ -97,6 +97,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
   const isHlRoute = route.slug === "xe-ghep-hai-duong-ha-long" || route.id === "hd-ha-long";
   const isVdRoute = route.slug === "xe-ghep-hai-duong-van-don" || route.id === "hd-van-don";
   const isCamPhaRoute = route.slug === "xe-ghep-hai-duong-cam-pha" || route.id === "hd-cam-pha";
+  const isUongBiRoute = route.slug === "xe-ghep-hai-duong-uong-bi" || route.id === "hd-uong-bi";
   const commercialPriceRows = isQnRoute
     ? [
         { label: "Giá xe ghép", detail: "Theo người (16 điểm đến)", text: formatGovernedPrice(routeEvidence?.price, "/người") },
@@ -125,6 +126,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
     ? [
         { label: "Giá xe ghép", detail: "Theo người", text: formatEnginePrice("Cẩm Phả", "shared") },
         { label: "Bao xe riêng", detail: "Theo chuyến", text: formatEnginePrice("Cẩm Phả", "private") },
+        { label: "Gửi hàng", detail: "Chưa có dịch vụ hoặc giá tuyến đã xác thực", text: "Liên hệ" },
+      ]
+    : isUongBiRoute
+    ? [
+        { label: "Giá xe ghép", detail: "Theo người", text: formatEnginePrice("Uông Bí", "shared") },
+        { label: "Bao xe riêng", detail: "Theo chuyến", text: formatEnginePrice("Uông Bí", "private") },
         { label: "Gửi hàng", detail: "Chưa có dịch vụ hoặc giá tuyến đã xác thực", text: "Liên hệ" },
       ]
     : [
@@ -179,7 +186,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           { "@type": "ListItem", position: 2, name: "Xe ghép Hải Dương - Hải Phòng", item: absoluteUrl("/xe-ghep-hai-duong-hai-phong") },
           { "@type": "ListItem", position: 3, name: upgrade.h1, item: pageUrl },
         ]
-      : isHlRoute || isVdRoute || isCamPhaRoute
+      : isHlRoute || isVdRoute || isCamPhaRoute || isUongBiRoute
       ? [
           { "@type": "ListItem", position: 1, name: "Trang chủ", item: absoluteUrl() },
           { "@type": "ListItem", position: 2, name: "Xe ghép Hải Dương - Quảng Ninh", item: absoluteUrl("/xe-ghep-hai-duong-quang-ninh") },
@@ -258,6 +265,15 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         },
         ...(serviceOffers ? { offers: serviceOffers } : {}),
       },
+      ...(isUongBiRoute ? [{
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      }] : []),
     ],
   };
   if (landingLayout && upgrade) {
@@ -327,6 +343,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                 <Link href="/xe-ghep-hai-duong-quang-ninh">Xe ghép Hải Dương - Quảng Ninh</Link><span>›</span>
                 <span aria-current="page">Cẩm Phả</span>
               </nav>
+            ) : isUongBiRoute ? (
+              <nav className="route-breadcrumb" aria-label="Breadcrumb">
+                <Link href="/">Trang chủ</Link><span>›</span>
+                <Link href="/xe-ghep-hai-duong-quang-ninh">Xe ghép Hải Dương - Quảng Ninh</Link><span>›</span>
+                <span aria-current="page">Uông Bí</span>
+              </nav>
             ) : (
               <nav className="route-breadcrumb" aria-label="Breadcrumb"><Link href="/">Trang chủ</Link><span>›</span><Link href="/tuyen-xe">Tuyến xe</Link><span>›</span><span aria-current="page">{upgrade.h1}</span></nav>
             )
@@ -356,7 +378,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           {isCommercialUpgrade ? <>
             <span>{upgrade.summaryTitle}</span>
             <div className="route-summary-list">{upgrade.summaryItems.map((item: string) => <p key={item}><i aria-hidden="true">✓</i>{item}</p>)}</div>
-            <p>{isCbRoute || isHlRoute || isVdRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến." : isCamPhaRoute ? "Giá bao xe là khoảng đã xác thực; hãy cung cấp điểm đón, điểm trả và thời gian để xác nhận chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
+            <p>{isCbRoute || isHlRoute || isVdRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến." : isUongBiRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Cung cấp điểm đón, điểm trả và thời gian để xác nhận chuyến." : isCamPhaRoute ? "Giá bao xe là khoảng đã xác thực; hãy cung cấp điểm đón, điểm trả và thời gian để xác nhận chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
             <TrackedLink className="btn btn-primary route-call-button" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_summary", route_slug: route.slug }}>Gọi kiểm tra chuyến →</TrackedLink>
           </> : <>
             <span>PHONG CÁCH CÓ XE CHO TUYẾN NÀY</span>
@@ -370,8 +392,8 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       <section className="route-commercial" aria-labelledby="route-service-title">
         {isCommercialUpgrade ? <article className="route-price-panel">
           <span className="section-kicker">GIÁ BẮT ĐẦU ĐÃ XÁC NHẬN</span>
-          <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : isHlRoute ? "Bảng giá xe Hải Dương ⇄ Hạ Long" : isVdRoute ? "Bảng giá xe Hải Dương ⇄ Vân Đồn" : isCamPhaRoute ? "Bảng giá xe Hải Dương ⇄ Cẩm Phả" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
-          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : isHlRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Hạ Long (Bãi Cháy có giá endpoint đã xác thực riêng)." : isVdRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Vân Đồn / Cảng Ao Tiên." : isCamPhaRoute ? "Xe ghép có giá chính xác 450.000đ/người; bao xe riêng là khoảng giá đã xác thực, không tách theo xe 4 chỗ và 7 chỗ." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
+          <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : isHlRoute ? "Bảng giá xe Hải Dương ⇄ Hạ Long" : isVdRoute ? "Bảng giá xe Hải Dương ⇄ Vân Đồn" : isCamPhaRoute ? "Bảng giá xe Hải Dương ⇄ Cẩm Phả" : isUongBiRoute ? "Bảng giá xe Hải Dương ⇄ Uông Bí" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
+          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : isHlRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Hạ Long (Bãi Cháy có giá endpoint đã xác thực riêng)." : isVdRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Vân Đồn / Cảng Ao Tiên." : isCamPhaRoute ? "Xe ghép có giá chính xác 450.000đ/người; bao xe riêng là khoảng giá đã xác thực, không tách theo xe 4 chỗ và 7 chỗ." : isUongBiRoute ? "Xe ghép có giá chính xác 300.000đ/người; bao xe riêng có giá chính xác 600.000đ/chuyến, không tách theo xe 4 chỗ và 7 chỗ." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
           <div className="route-price-table">
             {commercialPriceRows.map((item) => <div key={item.label}>
               <span><b>{item.label}</b><small>{item.detail}</small></span>
@@ -429,7 +451,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
               </div>
             </div>
           ) : null}
-          <p className="route-variable-note">{isCbRoute || isHlRoute || isVdRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Đặt trước không mất phí. Thanh toán sau chuyến.</> : isCamPhaRoute ? <><b>Khoảng giá bao xe không phải giá cố định.</b> Phong Cách xác nhận theo điểm đón, điểm trả và thời gian chuyến; website không công bố dịch vụ hoặc giá gửi hàng riêng cho tuyến này.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
+          <p className="route-variable-note">{isCbRoute || isHlRoute || isVdRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Đặt trước không mất phí. Thanh toán sau chuyến.</> : isUongBiRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Cung cấp điểm đón, điểm trả và thời gian để Phong Cách xác nhận chuyến.</> : isCamPhaRoute ? <><b>Khoảng giá bao xe không phải giá cố định.</b> Phong Cách xác nhận theo điểm đón, điểm trả và thời gian chuyến; website không công bố dịch vụ hoặc giá gửi hàng riêng cho tuyến này.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
           <div className="route-price-actions">
             <TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_price", route_slug: route.slug }}>☎ Gọi kiểm tra giá</TrackedLink>
             <TrackedLink className="btn btn-ghost" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_price", route_slug: route.slug }}>Nhắn Zalo</TrackedLink>
@@ -535,6 +557,13 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                   <article><b>01</b><h3>Xe ghép Cẩm Phả</h3><p>Giá xe ghép Hải Dương ⇄ Cẩm Phả là 450.000đ/người theo pricing engine hiện hành.</p></article>
                   <article><b>02</b><h3>Bao xe theo chuyến</h3><p>Giá bao xe riêng là khoảng 1.200.000 – 1.300.000đ/chuyến, không tách thành giá xe 4 chỗ và 7 chỗ.</p></article>
                   <article><b>03</b><h3>Khu vực Cửa Ông</h3><p>Chưa công bố giá số riêng trên trang Cẩm Phả; cần cung cấp điểm đón và điểm trả để kiểm tra chuyến.</p></article>
+                  <article><b>04</b><h3>Gửi thông tin chuyến</h3><p>Gọi hoặc nhắn Zalo, cho biết ngày đi, thời gian, điểm đón, điểm trả và số khách để xác nhận.</p></article>
+                </>
+              ) : isUongBiRoute ? (
+                <>
+                  <article><b>01</b><h3>Xe ghép Uông Bí</h3><p>Giá xe ghép Hải Dương ⇄ Uông Bí là 300.000đ/người theo pricing engine hiện hành.</p></article>
+                  <article><b>02</b><h3>Bao xe theo chuyến</h3><p>Giá bao xe riêng là 600.000đ/chuyến, không tách thành giá xe 4 chỗ và 7 chỗ.</p></article>
+                  <article><b>03</b><h3>Khu vực Yên Tử</h3><p>Chưa công bố giá số riêng cho Yên Tử; cần cung cấp điểm trả cụ thể để kiểm tra chuyến.</p></article>
                   <article><b>04</b><h3>Gửi thông tin chuyến</h3><p>Gọi hoặc nhắn Zalo, cho biết ngày đi, thời gian, điểm đón, điểm trả và số khách để xác nhận.</p></article>
                 </>
               ) : (

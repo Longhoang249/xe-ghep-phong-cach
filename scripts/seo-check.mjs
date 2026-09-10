@@ -10,6 +10,7 @@ const sampledRoutePages = [
   { path: "/xe-ghep-hai-duong-ha-long", origin: "Hải Dương", destination: "Hạ Long", offer: "STARTING_FROM_DESCRIPTION" },
   { path: "/xe-ghep-hai-duong-van-don", origin: "Hải Dương", destination: "Vân Đồn", offer: "STARTING_FROM_DESCRIPTION" },
   { path: "/xe-ghep-hai-duong-cam-pha", origin: "Hải Dương", destination: "Cẩm Phả", offer: "STARTING_FROM_DESCRIPTION" },
+  { path: "/xe-ghep-hai-duong-uong-bi", origin: "Hải Dương", destination: "Uông Bí", offer: "STARTING_FROM_DESCRIPTION" },
   { path: "/xe-ghep-hai-phong-quang-ninh", origin: "Hải Phòng", destination: "Quảng Ninh", offer: false },
 ];
 const upgradedMoneyPagePaths = new Set(sampledRoutePages.filter((page) => page.offer === "STARTING_FROM_DESCRIPTION").map((page) => page.path));
@@ -24,6 +25,7 @@ const expectedSupportPath = Object.freeze({
   "/xe-ghep-hai-duong-ha-long": "/xe-ghep-hai-duong-quang-ninh",
   "/xe-ghep-hai-duong-van-don": "/xe-ghep-hai-duong-quang-ninh",
   "/xe-ghep-hai-duong-cam-pha": "/xe-ghep-hai-duong-quang-ninh",
+  "/xe-ghep-hai-duong-uong-bi": "/xe-ghep-hai-duong-quang-ninh",
 });
 const failures = [];
 const passes = [];
@@ -184,7 +186,7 @@ const sitemap = await fetchPage("/sitemap.xml");
 check(sitemap.response.status === 200, "sitemap.xml trả HTTP 200");
 const sitemapUrls = [...sitemap.html.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
 check(sitemapUrls.length > 0, "sitemap có URL");
-check(sitemapUrls.length === 41, "sitemap có đúng 41 URL sau khi thêm MP-021", `${sitemapUrls.length} URL`);
+check(sitemapUrls.length === 42, "sitemap có đúng 42 URL sau khi thêm MP-022", `${sitemapUrls.length} URL`);
 check(new Set(sitemapUrls).size === sitemapUrls.length, "sitemap không có URL trùng");
 check(sitemapUrls.every((url) => url.startsWith(`${canonicalOrigin}/`) || url === `${canonicalOrigin}/`), "sitemap chỉ dùng domain chính");
 check(sitemapUrls.every((url) => !/vercel\.app|www\.|[?#]/.test(url)), "sitemap không chứa preview/www/query/hash");
@@ -194,7 +196,8 @@ check(sitemapUrls.includes(`${canonicalOrigin}/blog`), "/blog có trong sitemap"
 check(sitemapUrls.includes(`${canonicalOrigin}/xe-ghep-hai-duong-ha-long`), "MP-019 có trong sitemap");
 check(sitemapUrls.includes(`${canonicalOrigin}/xe-ghep-hai-duong-van-don`), "MP-020 có trong sitemap");
 check(sitemapUrls.includes(`${canonicalOrigin}/xe-ghep-hai-duong-cam-pha`), "MP-021 có trong sitemap");
-check(!sitemapUrls.some((url) => /\/xe-ghep-hai-duong-(?:bai-chay|dong-trieu|uong-bi|quang-yen|ao-tien|mong-cai)\/?$/.test(url)), "sitemap không tự sinh URL endpoint Quảng Ninh khác");
+check(sitemapUrls.includes(`${canonicalOrigin}/xe-ghep-hai-duong-uong-bi`), "MP-022 có trong sitemap");
+check(!sitemapUrls.some((url) => /\/xe-ghep-hai-duong-(?:bai-chay|dong-trieu|quang-yen|ao-tien|mong-cai)\/?$/.test(url)), "sitemap không tự sinh URL endpoint Quảng Ninh khác");
 for (const page of sampledRoutePages) check(sitemapUrls.includes(expectedCanonical(page.path)), `${page.path} có trong sitemap`);
 
 const blog = await fetchPage("/blog");

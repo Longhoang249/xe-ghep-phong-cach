@@ -150,14 +150,14 @@ test("a verified variable price clears a legacy numeric value", () => {
 
 test("F: migration baseline remains intact through controlled endpoint publications", () => {
   const migratedPaths = [...corePaths, ...productionAssetPaths(seoAssets)];
-  const expectedPaths = [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"];
+  const expectedPaths = [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha", "/xe-ghep-hai-duong-uong-bi"];
   assert.equal(assertValidRegistry(seoAssets), true);
-  assert.equal(seoAssets.length, 34);
-  assert.equal(seoAssets.filter((asset) => asset.assetType === "MONEY_PAGE").length, 21);
+  assert.equal(seoAssets.length, 35);
+  assert.equal(seoAssets.filter((asset) => asset.assetType === "MONEY_PAGE").length, 22);
   assert.equal(seoAssets.filter((asset) => asset.assetType !== "MONEY_PAGE").length, 13);
   assert.equal(seoAssets.filter((asset) => asset.legacy).length, 20);
-  assert.equal(seoAssets.filter((asset) => !asset.legacy).length, 14);
-  assert.equal(migratedPaths.length, 41);
+  assert.equal(seoAssets.filter((asset) => !asset.legacy).length, 15);
+  assert.equal(migratedPaths.length, 42);
   assert.deepEqual(new Set(migratedPaths), new Set(expectedPaths));
   assert.equal(existingPublicUrlBaseline.every((path) => migratedPaths.includes(path)), true);
 });

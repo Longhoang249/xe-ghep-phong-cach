@@ -70,6 +70,9 @@ test("MP-005 uses approved visuals and only published related-route targets", as
   const layoutSource = await readFile(new URL("../data/seo/money-page-layouts.ts", import.meta.url), "utf8");
   const relatedPaths = [
     "/xe-ghep-hai-duong-ha-long",
+    "/xe-ghep-hai-duong-uong-bi",
+    "/xe-ghep-hai-duong-cam-pha",
+    "/xe-ghep-hai-duong-van-don",
     "/xe-ghep-hai-duong-hai-phong",
     "/xe-ghep-hai-phong-quang-ninh",
   ];
@@ -78,7 +81,7 @@ test("MP-005 uses approved visuals and only published related-route targets", as
     const target = seoAssets.find((asset) => asset.canonical === canonical);
     assert.equal(target?.status, "PUBLISHED", `${canonical} must be a published internal-link target`);
   }
-  assert.doesNotMatch(layoutSource, /\/xe-(?:ghep-)?hai-duong-(?:bai-chay|cam-pha|van-don|ao-tien|mong-cai)/);
+  assert.doesNotMatch(layoutSource, /\/xe-(?:ghep-)?hai-duong-(?:bai-chay|ao-tien|mong-cai)/);
 });
 
 test("MP-005 keeps canonical, FAQ ownership and non-Article schema", async () => {

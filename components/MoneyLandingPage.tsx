@@ -352,8 +352,9 @@ export default function MoneyLandingPage({
             <p>Mỗi khu vực đều có mạng lưới xe đưa đón tận cửa ngõ, đáp ứng chính xác điểm đến của quý khách.</p>
           </div>
           <div className={styles.endpointsCardsGrid}>
-            {goldContent.pricingTable.endpoints.map((ep) => (
-              <article key={ep.id} className={styles.endpointCard}>
+            {goldContent.pricingTable.endpoints.map((ep) => {
+              const href = layout.endpointLinks?.[ep.name];
+              const card = <>
                 <div>
                   <div className={styles.endpointCardHeader}>
                     <h3>{ep.name}</h3>
@@ -372,8 +373,11 @@ export default function MoneyLandingPage({
                   </div>
                 </div>
                 <p><small><strong>Điểm đón trả:</strong> {ep.pickupNote}</small></p>
-              </article>
-            ))}
+              </>;
+              return href
+                ? <Link href={href} key={ep.id} className={`${styles.endpointCard} ${styles.endpointCardLink}`}>{card}</Link>
+                : <article key={ep.id} className={styles.endpointCard}>{card}</article>;
+            })}
           </div>
         </section>
       ) : endpointOrientation?.names.length ? (

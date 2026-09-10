@@ -93,6 +93,12 @@ const moneyPageLayouts: Readonly<Record<string, ScanFirstMoneyPageLayout>> = Obj
     endpointLinks: Object.freeze({
       "Hạ Long / Bãi Cháy": "/xe-ghep-hai-duong-ha-long",
       "Uông Bí": "/xe-ghep-hai-duong-uong-bi",
+      "Hạ Long": "/xe-ghep-hai-duong-ha-long",
+      "Bãi Cháy": "/xe-ghep-hai-duong-ha-long",
+      "Cẩm Phả": "/xe-ghep-hai-duong-cam-pha",
+      "Vân Đồn / Ao Tiên": "/xe-ghep-hai-duong-van-don",
+      "Vân Đồn": "/xe-ghep-hai-duong-van-don",
+      "Ao Tiên": "/xe-ghep-hai-duong-van-don",
     }),
   }),
 });

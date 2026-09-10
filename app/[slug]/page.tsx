@@ -556,7 +556,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                 <>
                   <article><b>01</b><h3>Xe ghép Cẩm Phả</h3><p>Giá xe ghép Hải Dương ⇄ Cẩm Phả là 450.000đ/người theo pricing engine hiện hành.</p></article>
                   <article><b>02</b><h3>Bao xe theo chuyến</h3><p>Giá bao xe riêng là khoảng 1.200.000 – 1.300.000đ/chuyến, không tách thành giá xe 4 chỗ và 7 chỗ.</p></article>
-                  <article><b>03</b><h3>Khu vực Cửa Ông</h3><p>Chưa công bố giá số riêng trên trang Cẩm Phả; cần cung cấp điểm đón và điểm trả để kiểm tra chuyến.</p></article>
+                  <article><b>03</b><h3>Khu vực Cửa Ông</h3><p>Xe ghép Hải Dương ⇄ Cửa Ông có giá chính xác {formatEnginePrice("Cửa Ông", "shared")}; bao xe riêng và gửi hàng cần liên hệ xác nhận theo điểm đón, điểm trả.</p></article>
                   <article><b>04</b><h3>Gửi thông tin chuyến</h3><p>Gọi hoặc nhắn Zalo, cho biết ngày đi, thời gian, điểm đón, điểm trả và số khách để xác nhận.</p></article>
                 </>
               ) : isUongBiRoute ? (

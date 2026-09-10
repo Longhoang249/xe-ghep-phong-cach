@@ -35,12 +35,16 @@ test("TASK-3D: Cẩm Phả uses the central exact and range records without a 4/
   assert.doesNotMatch(JSON.stringify(upgrade), /Bao xe 4 chỗ|Bao xe 7 chỗ/);
 });
 
-test("TASK-3D: Cửa Ông and parcel remain contact-only on the Cẩm Phả page", () => {
+test("TASK-3D: Cửa Ông preserves its verified shared price while private and parcel stay contact-only", () => {
   const copy = JSON.stringify(upgrade);
   const cuaOngFaq = upgrade.faq.find((item) => item.q === "Giá xe Hải Dương - Cửa Ông bao nhiêu?");
   assert.ok(cuaOngFaq);
-  assert.match(cuaOngFaq.a, /không công bố giá số riêng/i);
-  assert.doesNotMatch(cuaOngFaq.a, /\d[\d.]*(?:đ|k)(?:\/người|\/chuyến)?/i);
+  const cuaOngShared = getRoutePrice("Cửa Ông", "shared");
+  const cuaOngPrivate = getRoutePrice("Cửa Ông", "private");
+  assert.equal(formatPriceDisplay(cuaOngShared), "500.000đ/người");
+  assert.equal(cuaOngPrivate?.pricingType, "CONTACT");
+  assert.match(cuaOngFaq.a, /500\.000đ\/người/);
+  assert.match(cuaOngFaq.a, /Bao xe riêng và gửi hàng chưa có giá/i);
   assert.match(upgrade.endpointBoundary, /Cửa Ông/);
   assert.match(copy, /gửi hàng.*chưa có dịch vụ hoặc giá/i);
   assert.doesNotMatch(copy, /tollIncluded|vé cao tốc/);

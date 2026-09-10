@@ -47,12 +47,16 @@ test("scan-first endpoint block renders only when governed names exist", async (
   for (const endpoint of endpointNames) assert.doesNotMatch(component, new RegExp(endpoint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 });
 
-test("Hạ Long / Bãi Cháy and Uông Bí link only to their controlled money pages", async () => {
+test("Quảng Ninh pillar links each published core endpoint to its controlled money page", async () => {
   const layoutSource = await readFile(new URL("../data/seo/money-page-layouts.ts", import.meta.url), "utf8");
   const linkBlock = layoutSource.slice(layoutSource.indexOf("endpointLinks:"), layoutSource.indexOf("}),\n  }),", layoutSource.indexOf("endpointLinks:")));
   assert.match(linkBlock, /"Hạ Long \/ Bãi Cháy": "\/xe-ghep-hai-duong-ha-long"/);
   assert.match(linkBlock, /"Uông Bí": "\/xe-ghep-hai-duong-uong-bi"/);
-  for (const endpoint of ["Đông Triều", "Quảng Yên", "Cẩm Phả", "Vân Đồn", "Ao Tiên", "Móng Cái"]) {
+  assert.match(linkBlock, /"Cẩm Phả": "\/xe-ghep-hai-duong-cam-pha"/);
+  assert.match(linkBlock, /"Vân Đồn \/ Ao Tiên": "\/xe-ghep-hai-duong-van-don"/);
+  assert.match(linkBlock, /"Bãi Cháy": "\/xe-ghep-hai-duong-ha-long"/);
+  assert.match(linkBlock, /"Ao Tiên": "\/xe-ghep-hai-duong-van-don"/);
+  for (const endpoint of ["Đông Triều", "Quảng Yên", "Móng Cái"]) {
     assert.doesNotMatch(linkBlock, new RegExp(`"${endpoint}"\\s*:`));
   }
   const mp019 = seoAssets.find((asset) => asset.assetId === "MP-019");

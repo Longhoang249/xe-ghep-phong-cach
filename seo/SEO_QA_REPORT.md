@@ -4,7 +4,7 @@
 > **Phạm vi kiểm tra**: Báo cáo này ghi nhận kết quả kiểm tra **nội bộ tĩnh (Static Code & Data QA)** dựa trên các luật ràng buộc cứng, Single Source of Truth về giá, cấu trúc on-page, và ranh giới cannibalization. Điểm số này **KHÔNG** đại diện cho cam kết thứ hạng bên ngoài của Google, chưa bao gồm dữ liệu thực địa người dùng (CrUX Field Data), và chưa chạy qua Semrush API trả phí.
 
 **Dự án**: Xe Ghép Phong Cách (`https://xeghepphongcach.com`)
-**Thời gian chạy audit**: `2026-09-10T16:16:50.966Z`
+**Thời gian chạy audit**: `2026-09-10T16:42:51.709Z`
 **Tổng số URL kiểm kê**: `42`
 **Điểm chất lượng nội bộ (Internal QA Score)**: **100 / 100 ĐIỂM**
 **Trạng thái cổng xuất bản nội bộ (Release Gate)**: **ĐẠT CHUẨN XUẤT BẢN NỘI BỘ (PASSED)**

@@ -41,6 +41,7 @@ function verifiedPhase1RouteEvidence(priceSourceKey) {
 const phase1EvidencePriceSourceByDataKey = Object.freeze({
   ...Object.fromEntries(Object.keys(phase1OwnerPriceFactsByDataKey).map((dataKey) => [dataKey, dataKey])),
   "hd-ha-long": "hd-qn",
+  "hd-van-don": "hd-qn",
 });
 
 export const routeEvidenceByDataKey = Object.freeze(Object.fromEntries(

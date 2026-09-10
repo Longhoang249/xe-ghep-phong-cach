@@ -180,7 +180,7 @@ const sitemap = await fetchPage("/sitemap.xml");
 check(sitemap.response.status === 200, "sitemap.xml trả HTTP 200");
 const sitemapUrls = [...sitemap.html.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
 check(sitemapUrls.length > 0, "sitemap có URL");
-check(sitemapUrls.length === 39, "sitemap có đúng 39 URL sau khi thêm MP-019", `${sitemapUrls.length} URL`);
+check(sitemapUrls.length === 40, "sitemap có đúng 40 URL sau khi thêm MP-020", `${sitemapUrls.length} URL`);
 check(new Set(sitemapUrls).size === sitemapUrls.length, "sitemap không có URL trùng");
 check(sitemapUrls.every((url) => url.startsWith(`${canonicalOrigin}/`) || url === `${canonicalOrigin}/`), "sitemap chỉ dùng domain chính");
 check(sitemapUrls.every((url) => !/vercel\.app|www\.|[?#]/.test(url)), "sitemap không chứa preview/www/query/hash");
@@ -188,7 +188,8 @@ check(sitemapUrls.every((url) => !/\/admin|\/api/.test(url)), "sitemap không ch
 check(sitemap.html.includes(`${canonicalOrigin}/images/hero-xe-ghep-phong-cach.png`), "image sitemap dùng ảnh hero hiện tại");
 check(sitemapUrls.includes(`${canonicalOrigin}/blog`), "/blog có trong sitemap");
 check(sitemapUrls.includes(`${canonicalOrigin}/xe-ghep-hai-duong-ha-long`), "MP-019 có trong sitemap");
-check(!sitemapUrls.some((url) => /\/xe-ghep-hai-duong-(?:bai-chay|dong-trieu|uong-bi|quang-yen|cam-pha|van-don|ao-tien|mong-cai)\/?$/.test(url)), "sitemap không tự sinh URL endpoint Quảng Ninh khác");
+check(sitemapUrls.includes(`${canonicalOrigin}/xe-ghep-hai-duong-van-don`), "MP-020 có trong sitemap");
+check(!sitemapUrls.some((url) => /\/xe-ghep-hai-duong-(?:bai-chay|dong-trieu|uong-bi|quang-yen|cam-pha|ao-tien|mong-cai)\/?$/.test(url)), "sitemap không tự sinh URL endpoint Quảng Ninh khác");
 for (const page of sampledRoutePages) check(sitemapUrls.includes(expectedCanonical(page.path)), `${page.path} có trong sitemap`);
 
 const blog = await fetchPage("/blog");

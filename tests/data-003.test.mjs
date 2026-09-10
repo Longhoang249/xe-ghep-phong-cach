@@ -43,11 +43,11 @@ test("DATA-003 preserves the public URL baseline and all publication states", ()
     "/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe",
     ...productionAssetPaths(seoAssets),
   ];
-  assert.equal(seoAssets.length, 32);
+  assert.equal(seoAssets.length, 33);
   assert.ok(seoAssets.every((asset) => asset.status === "PUBLISHED"));
-  assert.equal(currentPaths.length, 39);
-  assert.deepEqual(new Set(currentPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"]));
-  assert.deepEqual(Object.keys(moneyPageUpgrades), ["hd-hp", "hd-cb", "hd-qn", "hd-ha-long"]);
+  assert.equal(currentPaths.length, 40);
+  assert.deepEqual(new Set(currentPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"]));
+  assert.deepEqual(Object.keys(moneyPageUpgrades), ["hd-hp", "hd-cb", "hd-qn", "hd-ha-long", "hd-van-don"]);
 });
 
 test("Bãi Cháy is aligned to existing Owner evidence without becoming publishable", () => {

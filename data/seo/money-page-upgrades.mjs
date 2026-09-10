@@ -317,6 +317,103 @@ export const moneyPageUpgrades = Object.freeze({
       }),
     ]),
   }),
+  "hd-van-don": Object.freeze({
+    assetId: "MP-020",
+    updatedAt: "2026-09-10",
+    title: "Xe ghép Hải Dương - Vân Đồn / Cảng Ao Tiên từ 500K | Phong Cách",
+    description: "Xe ghép Hải Dương - Vân Đồn, Cảng Ao Tiên đón trả tận nơi. Xe ghép 500.000đ/người, bao xe 1.500.000đ/chuyến. Đặt trước không mất phí, gọi 0987 663 883.",
+    h1: "Xe Ghép Hải Dương - Vân Đồn",
+    eyebrow: "XE GHÉP VÀ BAO XE HAI CHIỀU",
+    answer: "Xe Hải Dương đi Vân Đồn hiện có giá ghép 500.000đ/người và bao xe 1.500.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc). Khách đi Cảng Ao Tiên để tiếp tục hành trình ra Cô Tô, Quan Lạn nên cung cấp giờ tàu dự kiến khi đặt xe để nhà xe kiểm tra chuyến phù hợp. Đặt trước không mất phí. Thanh toán sau chuyến.",
+    heroBookingPrompt: "Gửi điểm đón, điểm trả, ngày đi và giờ tàu dự kiến để kiểm tra xe",
+    summaryTitle: "HẢI DƯƠNG - VÂN ĐỒN / CẢNG AO TIÊN",
+    summaryItems: Object.freeze([
+      "Xe ghép và bao xe hai chiều",
+      "Đón tận nơi tại Hải Dương",
+      "Trả tận nơi Vân Đồn và Cảng Ao Tiên",
+      "Bao xe chưa gồm vé cao tốc",
+      "Đặt trước không mất phí",
+      "Thanh toán sau chuyến",
+    ]),
+    serviceTags: sharedServiceTags,
+    directions: Object.freeze([
+      Object.freeze({
+        title: "Hải Dương đến Vân Đồn / Cảng Ao Tiên",
+        copy: "Quý khách cung cấp điểm đón tại Hải Dương, điểm trả cụ thể (nhà ga Cảng quốc tế Ao Tiên, khách sạn hoặc địa chỉ tại Vân Đồn), ngày đi, giờ tàu dự kiến nếu ra đảo để nhà xe kiểm tra chuyến phù hợp.",
+      }),
+      Object.freeze({
+        title: "Vân Đồn về Hải Dương",
+        copy: "Phong Cách nhận chiều về từ Vân Đồn và Cảng Ao Tiên về Hải Dương. Quý khách cung cấp điểm đón, giờ cập bến tàu cao tốc dự kiến và điểm trả tại Hải Dương để nhà xe sắp xếp xe đón phù hợp.",
+      }),
+    ]),
+    decisionKicker: "PHÙ HỢP VỚI NHU CẦU NÀO?",
+    decisionTitle: "Chọn xe theo mục đích và hành trình đi đảo",
+    decisionRows: Object.freeze([
+      Object.freeze({ need: "Đi cá nhân 1-2 người", guidance: "Nên chọn xe ghép 500.000đ/người để tối ưu chi phí, đón trả tận nơi hai chiều an toàn." }),
+      Object.freeze({ need: "Khách đi tour ra đảo Cô Tô / Quan Lạn", guidance: "Nên cung cấp giờ tàu xuất bến dự kiến tại Cảng Ao Tiên khi đặt xe để nhà xe tư vấn khung giờ xuất phát đường bộ phù hợp." }),
+      Object.freeze({ need: "Nhóm bạn hoặc gia đình", guidance: "Bao xe riêng 1.500.000đ/chuyến mang lại sự riêng tư trọn vẹn, chủ động giờ giấc và không gian hành lý thoải mái." }),
+      Object.freeze({ need: "Đi du lịch nhiều hành lý", guidance: "Khách nên thông báo trước số lượng kiện vali lớn để nhà xe bố trí khoang cốp xe rộng rãi phù hợp." }),
+      Object.freeze({ need: "Đi công tác hoặc thăm thân Vân Đồn", guidance: "Tùy số lượng người để chọn xe ghép 500k/người hoặc bao xe 1.500k/chuyến đón trả tận nhà tại các xã thuộc huyện Vân Đồn." }),
+    ]),
+    decisionNote: "Nhà Xe Phong Cách chỉ phục vụ vận chuyển đường bộ đến Vân Đồn / Cảng Ao Tiên; không vận hành tàu cao tốc ra các đảo Cô Tô, Quan Lạn.",
+    bookingGuide: Object.freeze({
+      kicker: "GỬI ĐỦ THÔNG TIN CHUYẾN",
+      title: "Ba bước để kiểm tra xe và giá",
+      intro: "Phong Cách kiểm tra xe và giá theo chuyến thực tế. Đặt trước không mất phí. Thanh toán sau chuyến.",
+      steps: Object.freeze([
+        Object.freeze({ title: "Gửi điểm đón và điểm trả", copy: "Cung cấp địa chỉ cụ thể tại Hải Dương và điểm trả tại Cảng Ao Tiên hoặc khu vực huyện Vân Đồn." }),
+        Object.freeze({ title: "Gửi ngày đi và giờ tàu dự kiến", copy: "Quý khách cho biết ngày đi, giờ tàu xuất bến ra đảo (nếu có) và số người để nhà xe kiểm tra xe phù hợp." }),
+        Object.freeze({ title: "Xác nhận và đón xe", copy: "Phong Cách trao đổi và thống nhất lịch hẹn trước chuyến đi. Quý khách lên xe và thanh toán sau chuyến." }),
+      ]),
+    }),
+    support: Object.freeze({
+      href: "/xe-ghep-hai-duong-quang-ninh",
+      label: "Xem tuyến Hải Dương - Quảng Ninh",
+      copy: "Trang tuyến chính Quảng Ninh cung cấp thông tin chi tiết bảng giá 16 điểm đến và các khu vực lân cận.",
+      kicker: "TUYẾN CHÍNH (PILLAR)",
+      cta: "Xem tuyến Hải Dương - Quảng Ninh →",
+    }),
+    endpointNames: Object.freeze(["Vân Đồn", "Cảng Ao Tiên"]),
+    endpointKicker: "BỐI CẢNH VÂN ĐỒN / CẢNG AO TIÊN",
+    endpointTitle: "Tên khu vực giúp xác định đúng điểm đến",
+    endpointIntro: "Vân Đồn và Cảng Ao Tiên được nhắc để người đọc mô tả nhu cầu và bến cảng trung chuyển ra các tuyến đảo Cô Tô, Quan Lạn.",
+    endpointBoundary: "Nhà Xe Phong Cách phục vụ chặng đường bộ đến cảng; cước bao xe chưa gồm vé cao tốc (tollIncluded: false). Quý khách tự túc vé tàu cao tốc ra các đảo.",
+    schemaOfferDescription: "Giá vé xe ghép tuyến Hải Dương - Vân Đồn là 500.000đ/người; bao xe riêng là 1.500.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc).",
+    faq: Object.freeze([
+      Object.freeze({
+        q: "Xe Hải Dương đi Vân Đồn giá bao nhiêu?",
+        a: "Giá xe ghép tuyến Hải Dương - Vân Đồn là 500.000đ/người đón trả tận nơi. Bao xe riêng theo chuyến là 1.500.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc). Mức giá được xác nhận theo chuyến thực tế.",
+      }),
+      Object.freeze({
+        q: "Xe Hải Dương đi Cảng Ao Tiên giá bao nhiêu?",
+        a: "Giá xe ghép từ Hải Dương đến Cảng tàu quốc tế Ao Tiên là 500.000đ/người. Với nhu cầu bao xe riêng đến Cảng Ao Tiên, quý khách vui lòng liên hệ trực tiếp tổng đài để xác nhận theo điểm đón, điểm trả và chuyến thực tế.",
+      }),
+      Object.freeze({
+        q: "Bao xe Hải Dương đi Vân Đồn giá bao nhiêu?",
+        a: "Mức cước bao xe riêng tuyến Hải Dương - Vân Đồn là 1.500.000đ/chuyến (chưa bao gồm vé cầu đường cao tốc). Dịch vụ không phân loại giá theo số chỗ 4 hay 7 chỗ; nhà xe sắp xếp xe phù hợp với số lượng khách và hành lý.",
+      }),
+      Object.freeze({
+        q: "Bao xe đã bao gồm vé cầu đường cao tốc chưa?",
+        a: "Chưa bao gồm. Mức giá bao xe 1.500.000đ/chuyến chưa bao gồm vé trạm thu phí cao tốc (tollIncluded: false). Quý khách có thể tự thanh toán tại trạm hoặc gửi tài xế thanh toán theo biên lai thực tế.",
+      }),
+      Object.freeze({
+        q: "Khách đi tàu cao tốc ra đảo Cô Tô, Quan Lạn cần lưu ý gì?",
+        a: "Quý khách nên cung cấp giờ tàu cao tốc xuất bến dự kiến tại Cảng Ao Tiên khi đặt xe để nhà xe tư vấn khung giờ xuất phát đường bộ phù hợp từ Hải Dương, giúp quý khách chủ động hành trình ra bến cảng.",
+      }),
+      Object.freeze({
+        q: "Nhà xe có phục vụ chặng tàu cao tốc ra đảo không?",
+        a: "Không. Nhà Xe Phong Cách chỉ cung cấp dịch vụ vận tải đường bộ từ Hải Dương đến Cảng Ao Tiên / Vân Đồn. Quý khách chủ động mua vé tàu cao tốc và các dịch vụ du lịch trên đảo.",
+      }),
+      Object.freeze({
+        q: "Có xe chiều từ Vân Đồn hoặc Cảng Ao Tiên về Hải Dương không?",
+        a: "Có. Phong Cách phục vụ cả hai chiều. Quý khách từ đảo Cô Tô, Quan Lạn trở về đất liền có thể hẹn trước giờ tàu cập Cảng Ao Tiên để nhà xe bố trí xe đường bộ đón về Hải Dương an toàn.",
+      }),
+      Object.freeze({
+        q: "Gửi hàng từ Hải Dương đi Vân Đồn tính phí thế nào?",
+        a: "Cước gửi hàng tuyến Hải Dương - Vân Đồn được liên hệ xác nhận theo điểm đón, điểm trả và kiện hàng thực tế. Quý khách vui lòng liên hệ tổng đài 0987 663 883 để được tư vấn cụ thể.",
+      }),
+    ]),
+  }),
 });
 
 export function moneyPageUpgradeForRoute(routeId) {

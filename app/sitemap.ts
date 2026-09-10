@@ -5,7 +5,7 @@ import { absoluteUrl, siteConfig } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date(siteConfig.contentUpdatedAt);
   const trustPages = ["/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe"];
-  const goldenCorridorIds = new Set(["hd-hp", "hd-qn", "hp-qn", "hd-cb", "hd-ha-long"]);
+  const goldenCorridorIds = new Set(["hd-hp", "hd-qn", "hp-qn", "hd-cb", "hd-ha-long", "hd-van-don"]);
   const goldenCorridorGuides = new Set([
     "di-hai-duong-hai-phong-bang-phuong-tien-gi",
     "nhung-chuyen-xe-tu-hai-duong-di-quang-ninh",

@@ -20,8 +20,8 @@ test("SPRINT-002A changes only the two existing money-page owners", () => {
 
   const staticPaths = ["/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe"];
   const currentPaths = [...staticPaths, ...productionAssetPaths(seoAssets)].sort();
-  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"].sort());
-  assert.equal(currentPaths.length, 39);
+  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"].sort());
+  assert.equal(currentPaths.length, 40);
 });
 
 test("all eight commercial amounts retain VERIFIED_FROM semantics", () => {

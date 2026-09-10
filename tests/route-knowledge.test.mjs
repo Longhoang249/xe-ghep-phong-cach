@@ -59,15 +59,15 @@ test("D: candidate endpoints remain data-only and cannot create public assets", 
     assert.deepEqual(route.existingAssetIds, []);
     assert.equal(publicAssetKeys.has(route.subRouteId), false);
   }
-  assert.equal(seoAssets.length, 32);
+  assert.equal(seoAssets.length, 33);
 });
 
 test("E: SPRINT-003A preserves the 38-URL baseline and adds only MP-019", () => {
   const staticPaths = ["/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe"];
   const currentPaths = [...staticPaths, ...productionAssetPaths(seoAssets)].sort();
-  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"].sort());
+  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"].sort());
   assert.equal(existingPublicUrlBaseline.length, 38);
-  assert.equal(currentPaths.length, 39);
+  assert.equal(currentPaths.length, 40);
 });
 
 test("Phase 1 maps the original assets plus explicitly published MP-019", () => {

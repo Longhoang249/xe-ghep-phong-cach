@@ -20,7 +20,7 @@ function guideFor(assetId) {
 }
 
 test("SPRINT-001A updates only existing governed article URLs", () => {
-  assert.equal(seoAssets.length, 32);
+  assert.equal(seoAssets.length, 33);
   for (const [assetId, slug] of Object.entries(sprintAssets)) {
     const asset = seoAssets.find((item) => item.assetId === assetId);
     assert.equal(asset?.slug, slug);
@@ -30,8 +30,8 @@ test("SPRINT-001A updates only existing governed article URLs", () => {
 
   const staticPaths = ["/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe"];
   const currentPaths = [...staticPaths, ...productionAssetPaths(seoAssets)].sort();
-  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"].sort());
-  assert.equal(currentPaths.length, 39);
+  assert.deepEqual(currentPaths, [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"].sort());
+  assert.equal(currentPaths.length, 40);
 });
 
 test("CP-002 and CP-003 contain answer-first comparison content", () => {

@@ -29,8 +29,8 @@ test("SPRINT-003A upgrades MP-004 in place and publishes exactly one new MP-019 
     "/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe",
     ...productionAssetPaths(seoAssets),
   ];
-  assert.equal(currentPaths.length, 39);
-  assert.deepEqual(new Set(currentPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"]));
+  assert.equal(currentPaths.length, 40);
+  assert.deepEqual(new Set(currentPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"]));
 });
 
 test("both Wave 2 pages render only traceable VERIFIED_FROM prices", () => {

@@ -85,6 +85,14 @@ for (const [key, upgrade] of Object.entries(moneyPageUpgrades)) {
       pricingScore -= 4;
     }
   }
+  if (key === "hd-van-don") {
+    const vdShared = getRoutePrice("Vân Đồn", "shared");
+    const vdPrivate = getRoutePrice("Vân Đồn", "private");
+    if (vdShared.priceMin !== 500000 || vdPrivate.priceMin !== 1500000) {
+      auditResults.criticalIssues.push("Pricing engine Vân Đồn price mismatch (expected 500k shared, 1.5m private)");
+      pricingScore -= 4;
+    }
+  }
 }
 
 // 1.2 Check PER_KM compliance
@@ -207,7 +215,7 @@ let keywordCoverageScore = 5;
 let internalLinkingScore = 5;
 let metadataAltScore = 5;
 
-// Verify unique titles and valid lengths across 39 URLs
+// Verify unique titles and valid lengths across 40 URLs
 const titles = new Set();
 for (const entry of urlInventory.urls) {
   if (entry.title) {
@@ -230,8 +238,8 @@ if (!contentMap.clusters["CLUSTER-B"].subsumedInEndpoints.some((e) => e.name ===
 
 // Internal linking check: All published assets exist in registry and sitemap
 const publishedAssets = seoAssets.filter((a) => a.status === "PUBLISHED");
-if (publishedAssets.length !== 32) {
-  auditResults.criticalIssues.push(`Expected 32 published assets, found ${publishedAssets.length}`);
+if (publishedAssets.length !== 33) {
+  auditResults.criticalIssues.push(`Expected 33 published assets, found ${publishedAssets.length}`);
   internalLinkingScore -= 2;
 }
 
@@ -261,8 +269,8 @@ let structuredDataScore = 5;
 let perfScore = 5;
 
 // Check sitemap consistency
-if (urlInventory.totalUrls !== 39) {
-  auditResults.criticalIssues.push(`URL inventory count mismatch: expected 39, got ${urlInventory.totalUrls}`);
+if (urlInventory.totalUrls !== 40) {
+  auditResults.criticalIssues.push(`URL inventory count mismatch: expected 40, got ${urlInventory.totalUrls}`);
   sitemapRobotsScore -= 3;
 }
 
@@ -388,7 +396,7 @@ const mdContent = `# BÁO CÁO KIỂM TRA CHẤT LƯỢNG SEO NỘI BỘ (INTERN
 | **Single Source of Truth về giá** | \`data/seo/pricing-engine.ts\` | Toàn bộ 27 điểm đến | ✅ PASS (Khớp 100% sheet chủ xe) |
 | **Cấu trúc mở bài trực diện (Answer-First)** | Static AST Analysis (\`guidePosts\`) | Toàn bộ 3 bài cẩm nang | ✅ PASS (Đoạn trả lời đầu trang) |
 | **Ngăn chặn Cannibalization (Độ tương đồng)** | Jaccard Similarity (<65%) | Toàn bộ cặp bài viết | ✅ PASS (Không bài nào vượt ngưỡng) |
-| **Toàn vẹn URL & Canonical** | \`seo/url-inventory.json\` | 39 URLs toàn site | ✅ PASS (Khớp sitemap/routes) |
+| **Toàn vẹn URL & Canonical** | \`seo/url-inventory.json\` | 40 URLs toàn site | ✅ PASS (Khớp sitemap/routes) |
 | **Cấu trúc Robots.txt & Sitemap** | AST Check \`app/robots.ts\`, \`sitemap.ts\` | Toàn site | ✅ PASS |
 | **Điểm hiệu năng thực tế (Lighthouse Score)** | Chrome DevTools Lighthouse / PSI | Runtime browser | ⚠️ NOT RUN (Yêu cầu runtime headless) |
 | **Dữ liệu thực tế Core Web Vitals (CrUX)** | Google Chrome UX Report | Dữ liệu field 28 ngày | ⚠️ UNAVAILABLE (Cần lưu lượng người dùng) |
@@ -430,7 +438,7 @@ ${auditResults.warnings.length === 0 ? "✅ Không có cảnh báo nào." : audi
 ---
 
 ## 6. KẾT LUẬN & ĐIỀU KIỆN TIÊN QUYẾT CHO TASK 2
-1. **Bộ quy tắc nội bộ đạt 100/100**: Toàn bộ cấu trúc thư mục, tệp nguồn giá, kiểm kê URL (39 URLs), và hàng rào phòng thủ chống trùng lặp nội dung đã được tự động hóa và vượt qua kiểm tra tĩnh.
+1. **Bộ quy tắc nội bộ đạt 100/100**: Toàn bộ cấu trúc thư mục, tệp nguồn giá, kiểm kê URL (40 URLs), và hàng rào phòng thủ chống trùng lặp nội dung đã được tự động hóa và vượt qua kiểm tra tĩnh.
 2. **Minh bạch hóa giới hạn**: Điểm số này đo lường tính tuân thủ quy chuẩn kỹ thuật nội bộ (Internal Compliance), không thay thế việc theo dõi thứ hạng Google Search Console hay điểm số Semrush khi đưa vào vận hành.
 3. **Sẵn sàng chuyển giao**: Nguồn dữ liệu giá chuẩn \`data/seo/pricing-engine.ts\` đã khóa chặt các bất biến (Hải Phòng 250k/300k, Tiên Lãng/Vĩnh Bảo 10k/km, 8 điểm xa Quảng Ninh UNKNOWN/CONTACT, vé cầu đường không bao gồm cho xe bao), sẵn sàng triển khai Task 2.
 `;

@@ -87,11 +87,11 @@ test("REM-001 payload normalization preserves the lead and strips unclassified p
   assert.equal(normalized.estimated_price_unit, null);
 });
 
-test("REM-001 adds no URL and keeps the sitemap contract at 39", () => {
+test("REM-001 adds no URL and keeps the sitemap contract at 40", () => {
   const paths = [
     "/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe",
     ...productionAssetPaths(seoAssets),
   ];
-  assert.equal(paths.length, 39);
-  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long"]));
+  assert.equal(paths.length, 40);
+  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"]));
 });

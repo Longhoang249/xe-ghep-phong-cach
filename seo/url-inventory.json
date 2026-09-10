@@ -2,11 +2,11 @@
   "contract": "SEO_URL_INVENTORY_V2",
   "domain": "https://xeghepphongcach.com",
   "auditedAt": "2026-09-09",
-  "totalUrls": 39,
+  "totalUrls": 40,
   "breakdown": {
     "core": 3,
     "trust": 4,
-    "moneyPages": 19,
+    "moneyPages": 20,
     "guides": 13
   },
   "urls": [
@@ -292,6 +292,18 @@
       "priority": 0.98,
       "changefreq": "daily",
       "dataKey": "hd-ha-long",
+      "status": "PUBLISHED"
+    },
+    {
+      "assetId": "MP-020",
+      "path": "/xe-ghep-hai-duong-van-don",
+      "canonical": "https://xeghepphongcach.com/xe-ghep-hai-duong-van-don",
+      "type": "MONEY_PAGE",
+      "cluster": "CLUSTER-B",
+      "role": "ENDPOINT",
+      "priority": 0.98,
+      "changefreq": "daily",
+      "dataKey": "hd-van-don",
       "status": "PUBLISHED"
     },
     {

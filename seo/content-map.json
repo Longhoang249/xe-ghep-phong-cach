@@ -3,7 +3,7 @@
   "domain": "https://xeghepphongcach.com",
   "entityHub": "Hải Dương",
   "primaryCorridor": "Hải Dương ⇄ Hải Phòng ⇄ Quảng Ninh",
-  "lastUpdated": "2026-09-09",
+  "lastUpdated": "2026-09-10",
   "clusters": {
     "CLUSTER-A": {
       "name": "Hải Dương ⇄ Hải Phòng",
@@ -76,15 +76,16 @@
           "url": "/xe-ghep-hai-duong-van-don",
           "role": "ENDPOINT_SUB",
           "targetIntent": ["xe ghep hai duong van don", "xe hai duong ao tien"]
+        },
+        {
+          "assetId": "MP-021",
+          "slug": "xe-ghep-hai-duong-cam-pha",
+          "url": "/xe-ghep-hai-duong-cam-pha",
+          "role": "ENDPOINT_CORE",
+          "targetIntent": ["xe ghep hai duong cam pha", "xe hai duong cua ong"]
         }
       ],
       "plannedP1Endpoints": [
-        {
-          "slug": "xe-ghep-hai-duong-cam-pha",
-          "url": "/xe-ghep-hai-duong-cam-pha",
-          "targetIntent": ["xe ghep hai duong cam pha", "xe hai duong cua ong"],
-          "readiness": "PLANNED_PHASE_3"
-        },
         {
           "slug": "xe-ghep-hai-duong-uong-bi",
           "url": "/xe-ghep-hai-duong-uong-bi",

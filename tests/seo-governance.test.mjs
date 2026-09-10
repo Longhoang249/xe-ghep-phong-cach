@@ -148,16 +148,16 @@ test("a verified variable price clears a legacy numeric value", () => {
   assert.equal(governed.sharedPrice, null);
 });
 
-test("F: migration baseline remains intact and SPRINT-003A adds exactly one governed URL", () => {
+test("F: migration baseline remains intact through controlled endpoint publications", () => {
   const migratedPaths = [...corePaths, ...productionAssetPaths(seoAssets)];
-  const expectedPaths = [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"];
+  const expectedPaths = [...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"];
   assert.equal(assertValidRegistry(seoAssets), true);
-  assert.equal(seoAssets.length, 33);
-  assert.equal(seoAssets.filter((asset) => asset.assetType === "MONEY_PAGE").length, 20);
+  assert.equal(seoAssets.length, 34);
+  assert.equal(seoAssets.filter((asset) => asset.assetType === "MONEY_PAGE").length, 21);
   assert.equal(seoAssets.filter((asset) => asset.assetType !== "MONEY_PAGE").length, 13);
   assert.equal(seoAssets.filter((asset) => asset.legacy).length, 20);
-  assert.equal(seoAssets.filter((asset) => !asset.legacy).length, 13);
-  assert.equal(migratedPaths.length, 40);
+  assert.equal(seoAssets.filter((asset) => !asset.legacy).length, 14);
+  assert.equal(migratedPaths.length, 41);
   assert.deepEqual(new Set(migratedPaths), new Set(expectedPaths));
   assert.equal(existingPublicUrlBaseline.every((path) => migratedPaths.includes(path)), true);
 });

@@ -3,10 +3,10 @@
 > [!NOTE]
 > **Phạm vi kiểm tra**: Báo cáo này ghi nhận kết quả kiểm tra **nội bộ tĩnh (Static Code & Data QA)** dựa trên các luật ràng buộc cứng, Single Source of Truth về giá, cấu trúc on-page, và ranh giới cannibalization. Điểm số này **KHÔNG** đại diện cho cam kết thứ hạng bên ngoài của Google, chưa bao gồm dữ liệu thực địa người dùng (CrUX Field Data), và chưa chạy qua Semrush API trả phí.
 
-**Dự án**: Xe Ghép Phong Cách (`https://xeghepphongcach.com`)  
-**Thời gian chạy audit**: `2026-09-10T08:47:19.894Z`  
-**Tổng số URL kiểm kê**: `40`  
-**Điểm chất lượng nội bộ (Internal QA Score)**: **100 / 100 ĐIỂM**  
+**Dự án**: Xe Ghép Phong Cách (`https://xeghepphongcach.com`)
+**Thời gian chạy audit**: `2026-09-10T15:44:23.950Z`
+**Tổng số URL kiểm kê**: `41`
+**Điểm chất lượng nội bộ (Internal QA Score)**: **100 / 100 ĐIỂM**
 **Trạng thái cổng xuất bản nội bộ (Release Gate)**: **ĐẠT CHUẨN XUẤT BẢN NỘI BỘ (PASSED)**
 
 ---
@@ -32,7 +32,7 @@
 | **Single Source of Truth về giá** | `data/seo/pricing-engine.ts` | Toàn bộ 27 điểm đến | ✅ PASS (Khớp 100% sheet chủ xe) |
 | **Cấu trúc mở bài trực diện (Answer-First)** | Static AST Analysis (`guidePosts`) | Toàn bộ 3 bài cẩm nang | ✅ PASS (Đoạn trả lời đầu trang) |
 | **Ngăn chặn Cannibalization (Độ tương đồng)** | Jaccard Similarity (<65%) | Toàn bộ cặp bài viết | ✅ PASS (Không bài nào vượt ngưỡng) |
-| **Toàn vẹn URL & Canonical** | `seo/url-inventory.json` | 40 URLs toàn site | ✅ PASS (Khớp sitemap/routes) |
+| **Toàn vẹn URL & Canonical** | `seo/url-inventory.json` | 41 URLs toàn site | ✅ PASS (Khớp sitemap/routes) |
 | **Cấu trúc Robots.txt & Sitemap** | AST Check `app/robots.ts`, `sitemap.ts` | Toàn site | ✅ PASS |
 | **Điểm hiệu năng thực tế (Lighthouse Score)** | Chrome DevTools Lighthouse / PSI | Runtime browser | ⚠️ NOT RUN (Yêu cầu runtime headless) |
 | **Dữ liệu thực tế Core Web Vitals (CrUX)** | Google Chrome UX Report | Dữ liệu field 28 ngày | ⚠️ UNAVAILABLE (Cần lưu lượng người dùng) |
@@ -86,6 +86,6 @@
 ---
 
 ## 6. KẾT LUẬN & ĐIỀU KIỆN TIÊN QUYẾT CHO TASK 2
-1. **Bộ quy tắc nội bộ đạt 100/100**: Toàn bộ cấu trúc thư mục, tệp nguồn giá, kiểm kê URL (40 URLs), và hàng rào phòng thủ chống trùng lặp nội dung đã được tự động hóa và vượt qua kiểm tra tĩnh.
+1. **Bộ quy tắc nội bộ đạt 100/100**: Toàn bộ cấu trúc thư mục, tệp nguồn giá, kiểm kê URL (41 URLs), và hàng rào phòng thủ chống trùng lặp nội dung đã được tự động hóa và vượt qua kiểm tra tĩnh.
 2. **Minh bạch hóa giới hạn**: Điểm số này đo lường tính tuân thủ quy chuẩn kỹ thuật nội bộ (Internal Compliance), không thay thế việc theo dõi thứ hạng Google Search Console hay điểm số Semrush khi đưa vào vận hành.
 3. **Sẵn sàng chuyển giao**: Nguồn dữ liệu giá chuẩn `data/seo/pricing-engine.ts` đã khóa chặt các bất biến (Hải Phòng 250k/300k, Tiên Lãng/Vĩnh Bảo 10k/km, 8 điểm xa Quảng Ninh UNKNOWN/CONTACT, vé cầu đường không bao gồm cho xe bao), sẵn sàng triển khai Task 2.

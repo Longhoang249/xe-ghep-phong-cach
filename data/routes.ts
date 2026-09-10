@@ -30,6 +30,7 @@ export const routes: RoutePrice[] = [
   { id:"hd-qn",origin:"Hải Dương",destination:"Quảng Ninh",slug:"xe-ghep-hai-duong-quang-ninh",distanceKm:105,durationMinutes:120,...hdQnPrices,region:"mien-bac",featured:true },
   { id:"hd-ha-long",origin:"Hải Dương",destination:"Hạ Long",slug:"xe-ghep-hai-duong-ha-long",distanceKm:null,durationMinutes:null,...hdHaLongPrices,region:"mien-bac",priceFallbackPolicy:"GOVERNED" },
   { id:"hd-van-don",origin:"Hải Dương",destination:"Vân Đồn",slug:"xe-ghep-hai-duong-van-don",distanceKm:null,durationMinutes:null,sharedPrice:500000,private4Price:null,private7Price:null,parcelPrice:null,region:"mien-bac",priceFallbackPolicy:"GOVERNED" },
+  { id:"hd-cam-pha",origin:"Hải Dương",destination:"Cẩm Phả",slug:"xe-ghep-hai-duong-cam-pha",distanceKm:null,durationMinutes:null,sharedPrice:450000,private4Price:null,private7Price:null,parcelPrice:null,region:"mien-bac",priceFallbackPolicy:"GOVERNED" },
   { id:"hp-qn",origin:"Hải Phòng",destination:"Quảng Ninh",slug:"xe-ghep-hai-phong-quang-ninh",distanceKm:null,durationMinutes:null,...hpQnPrices,region:"mien-bac",featured:true },
   { id:"hd-bn",origin:"Hải Dương",destination:"Bắc Ninh",slug:"xe-ghep-hai-duong-bac-ninh",distanceKm:48,durationMinutes:65,sharedPrice:250000,private4Price:500000,private7Price:650000,parcelPrice:150000,region:"mien-bac" },
   { id:"hd-bg",origin:"Hải Dương",destination:"Bắc Giang",slug:"xe-ghep-hai-duong-bac-giang",distanceKm:66,durationMinutes:85,sharedPrice:300000,private4Price:650000,private7Price:800000,parcelPrice:150000,region:"mien-bac" },

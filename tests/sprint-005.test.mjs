@@ -100,12 +100,12 @@ test("MP-005 keeps canonical, FAQ ownership and non-Article schema", async () =>
   assert.match(pageSource, /if \(landingLayout && upgrade\)/);
 });
 
-test("SPRINT-005 creates no URL and keeps the sitemap baseline at 40", () => {
+test("SPRINT-005 preserves the later controlled endpoint publication contract", () => {
   const publishedPaths = [
     "/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe",
     ...productionAssetPaths(seoAssets),
   ];
   assert.equal(existingPublicUrlBaseline.length, 38);
-  assert.equal(publishedPaths.length, 40);
-  assert.deepEqual(new Set(publishedPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"]));
+  assert.equal(publishedPaths.length, 41);
+  assert.deepEqual(new Set(publishedPaths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"]));
 });

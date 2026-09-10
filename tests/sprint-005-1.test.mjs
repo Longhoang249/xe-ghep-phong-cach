@@ -72,14 +72,14 @@ test("visible endpoint boundary and FAQ schema retain the same non-service seman
   assert.match(pageSource, /faq=\{faq\}/);
 });
 
-test("SPRINT-005.1 creates no endpoint URL and keeps sitemap at 39", () => {
+test("SPRINT-005.1 preserves unrelated endpoints and accepts controlled MP-021", () => {
   const paths = [
     "/", "/tuyen-xe", "/blog", "/gioi-thieu", "/lien-he", "/chinh-sach-dat-xe", "/an-toan-va-doi-xe",
     ...productionAssetPaths(seoAssets),
   ];
-  assert.equal(paths.length, 40);
-  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don"]));
-  for (const slug of ["bai-chay", "uong-bi", "cam-pha", "ao-tien", "mong-cai"]) {
+  assert.equal(paths.length, 41);
+  assert.deepEqual(new Set(paths), new Set([...existingPublicUrlBaseline, "/xe-ghep-hai-duong-ha-long", "/xe-ghep-hai-duong-van-don", "/xe-ghep-hai-duong-cam-pha"]));
+  for (const slug of ["bai-chay", "uong-bi", "ao-tien", "mong-cai"]) {
     assert.equal(paths.some((path) => path.includes(slug) && path !== "/xe-ghep-hai-duong-ha-long"), false);
   }
 });

@@ -9,6 +9,7 @@ import TrackedLink from "@/components/TrackedLink";
 import { blogPostForSlug, blogPosts } from "@/data/blog-posts";
 import { moneyPageLayoutForRoute } from "@/data/seo/money-page-layouts";
 import { moneyPageUpgradeForRoute } from "@/data/seo/money-page-upgrades.mjs";
+import { formatPriceDisplay, getRoutePrice } from "@/data/seo/pricing-engine";
 import { routeEvidenceByDataKey } from "@/data/seo/route-evidence.mjs";
 import { publicEvidenceValue, publicPricePresentation } from "@/lib/seo/publication.mjs";
 import { publishedGuidePosts as guidePosts } from "@/data/seo/published-content";
@@ -30,6 +31,11 @@ function formatGovernedPrice(fact: unknown, suffix = "") {
   if (presentation.kind === "CONTACT" || presentation.amount == null) return "Liên hệ";
   const amount = `${new Intl.NumberFormat("vi-VN").format(presentation.amount)}đ${suffix}`;
   return presentation.prefix ? `${presentation.prefix} ${amount}` : amount;
+}
+
+function formatEnginePrice(destination: string, service: "shared" | "private" | "parcel") {
+  const record = getRoutePrice(destination, service);
+  return record ? formatPriceDisplay(record) : "Liên hệ";
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -90,6 +96,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
   const isCbRoute = route.slug === "xe-hai-duong-cat-bi" || route.id === "hd-cb";
   const isHlRoute = route.slug === "xe-ghep-hai-duong-ha-long" || route.id === "hd-ha-long";
   const isVdRoute = route.slug === "xe-ghep-hai-duong-van-don" || route.id === "hd-van-don";
+  const isCamPhaRoute = route.slug === "xe-ghep-hai-duong-cam-pha" || route.id === "hd-cam-pha";
   const commercialPriceRows = isQnRoute
     ? [
         { label: "Giá xe ghép", detail: "Theo người (16 điểm đến)", text: formatGovernedPrice(routeEvidence?.price, "/người") },
@@ -113,6 +120,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
         { label: "Giá xe ghép", detail: "Theo người (Vân Đồn / Ao Tiên)", text: "500.000đ/người" },
         { label: "Bao xe theo chuyến", detail: "Đi riêng theo chuyến (chưa gồm vé cao tốc)", text: "1.500.000đ/chuyến" },
         { label: "Gửi hàng", detail: "Theo thỏa thuận chuyến", text: "Liên hệ" },
+      ]
+    : isCamPhaRoute
+    ? [
+        { label: "Giá xe ghép", detail: "Theo người", text: formatEnginePrice("Cẩm Phả", "shared") },
+        { label: "Bao xe riêng", detail: "Theo chuyến", text: formatEnginePrice("Cẩm Phả", "private") },
+        { label: "Gửi hàng", detail: "Chưa có dịch vụ hoặc giá tuyến đã xác thực", text: "Liên hệ" },
       ]
     : [
         { label: "Giá xe ghép", detail: "Theo người", text: formatGovernedPrice(routeEvidence?.price, "/người") },
@@ -166,7 +179,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           { "@type": "ListItem", position: 2, name: "Xe ghép Hải Dương - Hải Phòng", item: absoluteUrl("/xe-ghep-hai-duong-hai-phong") },
           { "@type": "ListItem", position: 3, name: upgrade.h1, item: pageUrl },
         ]
-      : isHlRoute || isVdRoute
+      : isHlRoute || isVdRoute || isCamPhaRoute
       ? [
           { "@type": "ListItem", position: 1, name: "Trang chủ", item: absoluteUrl() },
           { "@type": "ListItem", position: 2, name: "Xe ghép Hải Dương - Quảng Ninh", item: absoluteUrl("/xe-ghep-hai-duong-quang-ninh") },
@@ -308,6 +321,12 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                 <Link href="/xe-ghep-hai-duong-quang-ninh">Xe ghép Hải Dương - Quảng Ninh</Link><span>›</span>
                 <span aria-current="page">Vân Đồn</span>
               </nav>
+            ) : isCamPhaRoute ? (
+              <nav className="route-breadcrumb" aria-label="Breadcrumb">
+                <Link href="/">Trang chủ</Link><span>›</span>
+                <Link href="/xe-ghep-hai-duong-quang-ninh">Xe ghép Hải Dương - Quảng Ninh</Link><span>›</span>
+                <span aria-current="page">Cẩm Phả</span>
+              </nav>
             ) : (
               <nav className="route-breadcrumb" aria-label="Breadcrumb"><Link href="/">Trang chủ</Link><span>›</span><Link href="/tuyen-xe">Tuyến xe</Link><span>›</span><span aria-current="page">{upgrade.h1}</span></nav>
             )
@@ -337,7 +356,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
           {isCommercialUpgrade ? <>
             <span>{upgrade.summaryTitle}</span>
             <div className="route-summary-list">{upgrade.summaryItems.map((item: string) => <p key={item}><i aria-hidden="true">✓</i>{item}</p>)}</div>
-            <p>{isCbRoute || isHlRoute || isVdRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
+            <p>{isCbRoute || isHlRoute || isVdRoute ? "Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false). Đặt trước không mất phí. Thanh toán sau chuyến." : isCamPhaRoute ? "Giá bao xe là khoảng đã xác thực; hãy cung cấp điểm đón, điểm trả và thời gian để xác nhận chuyến." : "Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến."}</p>
             <TrackedLink className="btn btn-primary route-call-button" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_summary", route_slug: route.slug }}>Gọi kiểm tra chuyến →</TrackedLink>
           </> : <>
             <span>PHONG CÁCH CÓ XE CHO TUYẾN NÀY</span>
@@ -351,8 +370,8 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       <section className="route-commercial" aria-labelledby="route-service-title">
         {isCommercialUpgrade ? <article className="route-price-panel">
           <span className="section-kicker">GIÁ BẮT ĐẦU ĐÃ XÁC NHẬN</span>
-          <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : isHlRoute ? "Bảng giá xe Hải Dương ⇄ Hạ Long" : isVdRoute ? "Bảng giá xe Hải Dương ⇄ Vân Đồn" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
-          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : isHlRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Hạ Long (Bãi Cháy có giá endpoint đã xác thực riêng)." : isVdRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Vân Đồn / Cảng Ao Tiên." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
+          <h2 id="route-service-title">{isCbRoute ? "Bảng giá xe Hải Dương ⇄ Sân bay Cát Bi" : isHlRoute ? "Bảng giá xe Hải Dương ⇄ Hạ Long" : isVdRoute ? "Bảng giá xe Hải Dương ⇄ Vân Đồn" : isCamPhaRoute ? "Bảng giá xe Hải Dương ⇄ Cẩm Phả" : "Giá xe ghép, bao xe và gửi hàng"}</h2>
+          <p>{isCbRoute ? "Bảng giá tham khảo cho hành trình đón trả tận nơi giữa Hải Dương và Sân bay Cát Bi." : isHlRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Hạ Long (Bãi Cháy có giá endpoint đã xác thực riêng)." : isVdRoute ? "Bảng giá xe ghép, bao xe riêng và gửi hàng giữa Hải Dương và Vân Đồn / Cảng Ao Tiên." : isCamPhaRoute ? "Xe ghép có giá chính xác 450.000đ/người; bao xe riêng là khoảng giá đã xác thực, không tách theo xe 4 chỗ và 7 chỗ." : "Bốn mức dưới đây là giá bắt đầu, không phải giá cố định cho mọi chuyến."}</p>
           <div className="route-price-table">
             {commercialPriceRows.map((item) => <div key={item.label}>
               <span><b>{item.label}</b><small>{item.detail}</small></span>
@@ -410,7 +429,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
               </div>
             </div>
           ) : null}
-          <p className="route-variable-note">{isCbRoute || isHlRoute || isVdRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Đặt trước không mất phí. Thanh toán sau chuyến.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
+          <p className="route-variable-note">{isCbRoute || isHlRoute || isVdRoute ? <><b>Bao xe riêng chưa bao gồm vé cầu đường cao tốc (tollIncluded: false).</b> Đặt trước không mất phí. Thanh toán sau chuyến.</> : isCamPhaRoute ? <><b>Khoảng giá bao xe không phải giá cố định.</b> Phong Cách xác nhận theo điểm đón, điểm trả và thời gian chuyến; website không công bố dịch vụ hoặc giá gửi hàng riêng cho tuyến này.</> : <><b>Giá thực tế phụ thuộc địa chỉ đón/trả, thời gian di chuyển, ngày đi và điều kiện chuyến.</b> Không có bảng phụ phí tự động; Phong Cách xác nhận giá sau khi có thông tin chuyến.</>}</p>
           <div className="route-price-actions">
             <TrackedLink className="btn btn-primary" href={siteConfig.phoneHref} eventName="click_call" eventData={{ placement: "route_price", route_slug: route.slug }}>☎ Gọi kiểm tra giá</TrackedLink>
             <TrackedLink className="btn btn-ghost" href={zaloUrl} target="_blank" rel="noopener noreferrer" eventName="click_zalo" eventData={{ placement: "route_price", route_slug: route.slug }}>Nhắn Zalo</TrackedLink>
@@ -511,6 +530,13 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
                   <article><b>03</b><h3>Hỗ trợ kết nối ra đảo</h3><p>Tư vấn giờ đón đường bộ theo khung giờ tàu cao tốc dự kiến đi Cô Tô, Quan Lạn.</p></article>
                   <article><b>04</b><h3>Đặt trước không mất phí</h3><p>Đặt trước không mất phí. Thanh toán sau chuyến.</p></article>
                 </>
+              ) : isCamPhaRoute ? (
+                <>
+                  <article><b>01</b><h3>Xe ghép Cẩm Phả</h3><p>Giá xe ghép Hải Dương ⇄ Cẩm Phả là 450.000đ/người theo pricing engine hiện hành.</p></article>
+                  <article><b>02</b><h3>Bao xe theo chuyến</h3><p>Giá bao xe riêng là khoảng 1.200.000 – 1.300.000đ/chuyến, không tách thành giá xe 4 chỗ và 7 chỗ.</p></article>
+                  <article><b>03</b><h3>Khu vực Cửa Ông</h3><p>Chưa công bố giá số riêng trên trang Cẩm Phả; cần cung cấp điểm đón và điểm trả để kiểm tra chuyến.</p></article>
+                  <article><b>04</b><h3>Gửi thông tin chuyến</h3><p>Gọi hoặc nhắn Zalo, cho biết ngày đi, thời gian, điểm đón, điểm trả và số khách để xác nhận.</p></article>
+                </>
               ) : (
                 <>
                   <article><b>01</b><h3>Xe ghép</h3><p>Phù hợp khi khách chấp nhận đi cùng người khác; giá từ được hiển thị ở đầu trang.</p></article>
@@ -534,7 +560,7 @@ export default async function RouteDetail({ params }: { params: Promise<{ slug: 
       </section>
       {isCommercialUpgrade ? (
         <section className="route-supporting-content">
-          <div><span className="section-kicker">{upgrade.support.kicker ?? "BÀI SO SÁNH LIÊN QUAN"}</span><h2>{upgrade.support.label}</h2><p>{upgrade.support.copy}</p></div>
+          <div><span className="section-kicker">{upgrade.support.kicker ?? "BÀI SO SÁNH LIÊN QUAN"}</span><h2>{upgrade.support.label}</h2><p>{upgrade.support.copy}</p>{upgrade.relatedLinks?.map((item: { href: string; label: string }) => <p key={item.href}><Link href={item.href}>{item.label} →</Link></p>)}</div>
           <Link href={upgrade.support.href}>{upgrade.support.cta ?? "Đọc bài so sánh →"}</Link>
         </section>
       ) : companionGuide ? (

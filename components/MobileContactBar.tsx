@@ -7,8 +7,8 @@ import { trackEvent } from "@/lib/analytics";
 export default function MobileContactBar() {
   const pathname = usePathname();
 
-  // Hide on admin routes
-  if (pathname?.startsWith("/admin")) {
+  // The call-only micro landing owns its single sticky CTA.
+  if (pathname?.startsWith("/admin") || pathname === "/dat-xe") {
     return null;
   }
 

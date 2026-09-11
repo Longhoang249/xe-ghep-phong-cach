@@ -1,30 +1,28 @@
 # TASK 4B.3 — FACEBOOK / GEO DISTRIBUTION CONTENT PACK
 
-Bộ nội dung này chỉ để review và chuẩn bị phân phối. Không đăng Facebook kèm theo task này.
-
-Nguồn giá đã kiểm tra: `data/seo/pricing-engine.ts`, `data/seo/route-knowledge/owner-verification.mjs`, content dataset route và production handoff Task 4A. Giá bao xe được ghi rõ là chưa gồm vé cao tốc khi source quy định. Các điểm hỗ trợ không có biểu giá dịch vụ tương ứng chỉ được hướng dẫn liên hệ.
+Bản final để review trước khi publish. Không có bài nào được đăng trong task này.
 
 ## POST 1
 
 PRIMARY ROUTE: Hải Dương ⇄ Quảng Ninh  
 LANDING URL: https://xeghepphongcach.com/xe-ghep-hai-duong-quang-ninh  
-VERIFIED PRICES USED: Uông Bí 300.000đ/người, bao xe 600.000đ/chuyến; Hạ Long 400.000đ/người, bao xe 1.000.000đ/chuyến; Bãi Cháy 350.000đ/người, bao xe 900.000đ/chuyến; Cẩm Phả 450.000đ/người, bao xe 1.200.000–1.300.000đ/chuyến; Vân Đồn 500.000đ/người, bao xe 1.500.000đ/chuyến. Các mức bao xe chưa gồm vé cao tốc.
+VERIFIED PRICES USED: Uông Bí 300.000đ/người; Bãi Cháy 350.000đ/người; Hạ Long 400.000đ/người; Cẩm Phả 450.000đ/người; Vân Đồn 500.000đ/người. Bao xe theo từng điểm, chưa gồm vé cao tốc.
 
 POST COPY:
 
-Hải Dương ⇄ Quảng Ninh: cần đi đâu, nhắn Xe Ghép Phong Cách điểm đón, điểm trả, ngày giờ và số người để chốt chuyến.
+Hải Dương ⇄ Quảng Ninh, nhận xe ghép và bao xe hai chiều.
 
-Giá ghép theo điểm đến: Uông Bí 300.000đ/người, Hạ Long 400.000đ/người, Bãi Cháy 350.000đ/người, Cẩm Phả 450.000đ/người, Vân Đồn 500.000đ/người.
+Giá ghép: Uông Bí 300k · Bãi Cháy 350k · Hạ Long 400k · Cẩm Phả 450k · Vân Đồn 500k/người.
 
-Có nhận cả chiều Hải Dương đi Quảng Ninh và Quảng Ninh về Hải Dương; đón tận nhà, trả tận nơi theo địa chỉ đã hẹn. Đi nhóm hoặc cần chủ động thời gian có thể chọn bao xe: giá theo đúng điểm đến, chưa gồm vé cao tốc.
+Đi nhóm hoặc cần giờ riêng, nhắn điểm đón – điểm trả để Xe Ghép Phong Cách báo giá bao xe. Đón tận nhà, trả tận nơi.
 
-Cần gửi đồ theo chuyến hoặc đi các điểm như Yên Tử, Cửa Ông, Cảng Ao Tiên? Hãy báo loại hàng/điểm trả để được xác nhận phương án phù hợp.
+Cần gửi hàng hoặc đi Yên Tử, Cửa Ông, Cảng Ao Tiên, cứ nhắn điểm trả để nhà xe tư vấn chuyến phù hợp.
 
 Xe Ghép Phong Cách
 Hotline: 0987 663 883
-Xem tuyến và giá theo từng điểm: https://xeghepphongcach.com/xe-ghep-hai-duong-quang-ninh
+https://xeghepphongcach.com/xe-ghep-hai-duong-quang-ninh
 
-#XeGhepPhongCach #HaiDuong #QuangNinh #XeGhepHaiDuongQuangNinh #UongBi #HaLong
+#XeGhepPhongCach #HaiDuong #QuangNinh #XeGhepHaiDuongQuangNinh #XeGhepQuangNinh
 
 ## POST 2
 
@@ -34,15 +32,17 @@ VERIFIED PRICES USED: xe ghép Uông Bí 300.000đ/người; bao xe Uông Bí 60
 
 POST COPY:
 
-Hải Dương ⇄ Uông Bí: xe ghép 300.000đ/người, bao xe 600.000đ/chuyến (chưa gồm vé cao tốc).
+Hải Dương ⇄ Uông Bí.
 
-Xe Ghép Phong Cách nhận cả hai chiều Hải Dương đi Uông Bí và Uông Bí về Hải Dương. Khách gửi địa chỉ đón, địa chỉ trả và giờ cần đi để nhà xe sắp xếp đón tận nhà, trả tận nơi.
+Xe ghép 300k/người · Bao xe 600k/chuyến, chưa gồm vé cao tốc.
 
-Đi Yên Tử hoặc cần gửi đồ theo chuyến, vui lòng báo điểm trả và nhu cầu cụ thể để được xác nhận cước/phương án; không áp dụng sẵn giá Uông Bí cho điểm hỗ trợ này.
+Nhận cả hai chiều. Nhắn điểm đón – điểm trả và giờ đi để Xe Ghép Phong Cách xếp xe nhanh.
+
+Đón tận nhà, trả tận nơi. Đi Yên Tử hoặc cần gửi hàng, nhắn điểm đón – điểm trả để nhà xe báo giá cụ thể.
 
 Xe Ghép Phong Cách
 Hotline: 0987 663 883
-Xem thông tin tuyến: https://xeghepphongcach.com/xe-ghep-hai-duong-uong-bi
+https://xeghepphongcach.com/xe-ghep-hai-duong-uong-bi
 
 #XeGhepPhongCach #HaiDuong #UongBi #YenTu #XeGhepHaiDuongUongBi
 
@@ -54,15 +54,17 @@ VERIFIED PRICES USED: Hạ Long xe ghép 400.000đ/người, bao xe 1.000.000đ/
 
 POST COPY:
 
-Hải Dương ⇄ Hạ Long: xe ghép 400.000đ/người, bao xe 1.000.000đ/chuyến (chưa gồm vé cao tốc).
+Hải Dương ⇄ Hạ Long.
 
-Nếu điểm trả là Bãi Cháy, giá riêng là 350.000đ/người đi ghép hoặc 900.000đ/chuyến bao xe. Khách đi khách sạn, khu dân cư hay bến tàu chỉ cần nhắn điểm đón, điểm trả và giờ cần có mặt.
+Xe ghép 400k/người · Bao xe 1 triệu/chuyến, chưa gồm vé cao tốc.
 
-Xe Ghép Phong Cách nhận hai chiều Hải Dương – Hạ Long, đón tận nhà và trả tận nơi theo lịch hẹn. Có nhu cầu gửi đồ theo chuyến, hãy báo loại hàng và điểm giao để nhà xe xác nhận trước.
+Đi Bãi Cháy: xe ghép 350k/người, bao xe 900k/chuyến. Nhắn điểm đón – điểm trả để Xe Ghép Phong Cách chốt chuyến hai chiều.
+
+Đón tận nhà, trả tận nơi tại Hạ Long hoặc Bãi Cháy. Cần gửi hàng, báo loại hàng và điểm giao để nhà xe sắp xếp.
 
 Xe Ghép Phong Cách
 Hotline: 0987 663 883
-Xem tuyến Hạ Long / Bãi Cháy: https://xeghepphongcach.com/xe-ghep-hai-duong-ha-long
+https://xeghepphongcach.com/xe-ghep-hai-duong-ha-long
 
 #XeGhepPhongCach #HaiDuong #HaLong #BaiChay #XeGhepHaiDuongHaLong
 
@@ -74,15 +76,17 @@ VERIFIED PRICES USED: xe ghép Cẩm Phả 450.000đ/người; bao xe Cẩm Ph�
 
 POST COPY:
 
-Hải Dương ⇄ Cẩm Phả: xe ghép 450.000đ/người. Bao xe 1.200.000–1.300.000đ/chuyến, chưa gồm vé cao tốc; mức cụ thể theo khu vực đón trả.
+Hải Dương ⇄ Cẩm Phả.
 
-Xe Ghép Phong Cách nhận chiều Hải Dương đi Cẩm Phả và chiều về Hải Dương. Gửi địa chỉ hai đầu, ngày giờ và số người để được sắp xếp đón tận nhà, trả tận nơi.
+Xe ghép 450k/người · Bao xe 1,2–1,3 triệu/chuyến, chưa gồm vé cao tốc.
 
-Đi Cửa Ông hoặc cần gửi đồ theo chuyến, vui lòng nhắn chính xác điểm trả/loại hàng để được xác nhận trước; không gán sẵn giá Cẩm Phả cho điểm hỗ trợ này.
+Nhận cả hai chiều. Nhắn điểm đón – điểm trả, ngày đi và số người để Xe Ghép Phong Cách báo đúng giá chuyến.
+
+Đón tận nhà, trả tận nơi. Đi Cửa Ông hoặc cần gửi hàng, vui lòng gửi điểm trả cụ thể để chốt giá.
 
 Xe Ghép Phong Cách
 Hotline: 0987 663 883
-Xem tuyến Cẩm Phả: https://xeghepphongcach.com/xe-ghep-hai-duong-cam-pha
+https://xeghepphongcach.com/xe-ghep-hai-duong-cam-pha
 
 #XeGhepPhongCach #HaiDuong #CamPha #CuaOng #XeGhepHaiDuongCamPha
 
@@ -94,15 +98,17 @@ VERIFIED PRICES USED: xe ghép Vân Đồn 500.000đ/người; bao xe Vân Đồ
 
 POST COPY:
 
-Hải Dương ⇄ Vân Đồn: xe ghép 500.000đ/người, bao xe 1.500.000đ/chuyến (chưa gồm vé cao tốc).
+Hải Dương ⇄ Vân Đồn.
 
-Xe Ghép Phong Cách nhận hai chiều Hải Dương – Vân Đồn, đón tận nhà và trả tận nơi theo địa chỉ đã hẹn. Khách đi Cái Rồng, Cảng Ao Tiên hoặc có giờ tàu cần báo trước để nhà xe sắp xếp chặng đường bộ phù hợp.
+Xe ghép 500k/người · Bao xe 1,5 triệu/chuyến, chưa gồm vé cao tốc.
 
-Với Cảng Ao Tiên, xe ghép áp dụng 500.000đ/người; bao xe và gửi đồ cần liên hệ xác nhận theo điểm đón trả. Nhà xe phục vụ chặng đường bộ tới Vân Đồn / Cảng Ao Tiên, không bao gồm chặng tàu ra đảo.
+Nhận cả hai chiều. Nhắn điểm đón – điểm trả và giờ đi để Xe Ghép Phong Cách xếp xe.
+
+Đón tận nhà, trả tận nơi tại Vân Đồn. Khách đi Cô Tô, Quan Lạn có thể đặt xe tới Cảng Ao Tiên rồi tiếp tục đi tàu. Đi Ao Tiên hoặc cần gửi hàng, nhắn điểm trả để nhà xe báo cụ thể.
 
 Xe Ghép Phong Cách
 Hotline: 0987 663 883
-Xem tuyến Vân Đồn / Ao Tiên: https://xeghepphongcach.com/xe-ghep-hai-duong-van-don
+https://xeghepphongcach.com/xe-ghep-hai-duong-van-don
 
 #XeGhepPhongCach #HaiDuong #VanDon #CangAoTien #XeGhepHaiDuongVanDon
 
@@ -110,10 +116,10 @@ Xem tuyến Vân Đồn / Ao Tiên: https://xeghepphongcach.com/xe-ghep-hai-duon
 
 | Post | Route | Landing | Price checked | GEO entities | Ads-ready |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Hải Dương ⇄ Quảng Ninh | `/xe-ghep-hai-duong-quang-ninh` | Per-endpoint prices; no province-wide fare invented | Xe Ghép Phong Cách, Hải Dương, Quảng Ninh, Uông Bí, Hạ Long, Cẩm Phả, Vân Đồn | Yes |
+| 1 | Hải Dương ⇄ Quảng Ninh | `/xe-ghep-hai-duong-quang-ninh` | Uông Bí 300k; Bãi Cháy 350k; Hạ Long 400k; Cẩm Phả 450k; Vân Đồn 500k | Xe Ghép Phong Cách, Hải Dương, Quảng Ninh | Yes |
 | 2 | Hải Dương ⇄ Uông Bí | `/xe-ghep-hai-duong-uong-bi` | 300.000đ ghép; 600.000đ bao xe | Xe Ghép Phong Cách, Hải Dương, Uông Bí, Yên Tử | Yes |
-| 3 | Hải Dương ⇄ Hạ Long | `/xe-ghep-hai-duong-ha-long` | Hạ Long 400.000đ / 1.000.000đ; Bãi Cháy 350.000đ / 900.000đ | Xe Ghép Phong Cách, Hải Dương, Hạ Long, Bãi Cháy | Yes |
+| 3 | Hải Dương ⇄ Hạ Long | `/xe-ghep-hai-duong-ha-long` | Hạ Long 400k / 1.000k; Bãi Cháy 350k / 900k | Xe Ghép Phong Cách, Hải Dương, Hạ Long, Bãi Cháy | Yes |
 | 4 | Hải Dương ⇄ Cẩm Phả | `/xe-ghep-hai-duong-cam-pha` | 450.000đ ghép; 1.200.000–1.300.000đ bao xe | Xe Ghép Phong Cách, Hải Dương, Cẩm Phả, Cửa Ông | Yes |
-| 5 | Hải Dương ⇄ Vân Đồn | `/xe-ghep-hai-duong-van-don` | Vân Đồn 500.000đ / 1.500.000đ; Ao Tiên ghép 500.000đ, bao xe contact-only | Xe Ghép Phong Cách, Hải Dương, Vân Đồn, Cảng Ao Tiên | Yes |
+| 5 | Hải Dương ⇄ Vân Đồn | `/xe-ghep-hai-duong-van-don` | Vân Đồn 500k / 1.500k; Ao Tiên ghép 500k, bao xe/gửi hàng contact-only | Xe Ghép Phong Cách, Hải Dương, Vân Đồn, Cảng Ao Tiên | Yes |
 
-Checklist complete: 5/5 correct landing URLs; price semantics preserved; no legacy fare, fabricated supporting-point price, keyword stuffing or unsupported superlative claim; hotline is `0987 663 883`; no post is published by this task.
+Checklist complete: five correct landing URLs; verified price facts unchanged; hotline `0987 663 883`; no unverified supporting-point price or new service claim; no post is published by this task.
